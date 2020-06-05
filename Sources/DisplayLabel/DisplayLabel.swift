@@ -8,11 +8,15 @@
 import UIKit
 
 class DisplayLabel: UILabel {
-    convenience init(frame: CGRect, contentString: String, titleColor: LiteChartDarkLightColor) {
-        self.init(frame: frame)
-        self.text = contentString
-        self.textColor = titleColor.color
+    init(configure: DisplayLabelConfigure) {
+        super.init(frame: CGRect())
+        self.text = configure.contentString
+        self.textColor = configure.contentColor.color
         self.textAlignment = .center
         self.adjustsFontSizeToFitWidth = true
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 }

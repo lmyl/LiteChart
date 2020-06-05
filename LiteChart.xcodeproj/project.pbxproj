@@ -3,10 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368E3248A637100D1413C /* FunalFloorBackagroundView.swift */; };
+		080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368E5248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift */; };
+		080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368E7248A7BE300D1413C /* FunalFloorView.swift */; };
+		080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368E9248A7C0C00D1413C /* FunalFloorViewConfigure.swift */; };
+		080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368EB248A7D5E00D1413C /* DisplayLabelConfigure.swift */; };
+		080368EE248A849700D1413C /* FunalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368ED248A849700D1413C /* FunalView.swift */; };
+		080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368EF248A84C100D1413C /* FunalViewConfigure.swift */; };
 		0832B5332489FED000110CBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5322489FED000110CBA /* AppDelegate.swift */; };
 		0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5342489FED000110CBA /* SceneDelegate.swift */; };
 		0832B5372489FED000110CBA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5362489FED000110CBA /* ViewController.swift */; };
@@ -21,6 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		080368E3248A637100D1413C /* FunalFloorBackagroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalFloorBackagroundView.swift; sourceTree = "<group>"; };
+		080368E5248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalFloorBackagroundViewConfigure.swift; sourceTree = "<group>"; };
+		080368E7248A7BE300D1413C /* FunalFloorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalFloorView.swift; sourceTree = "<group>"; };
+		080368E9248A7C0C00D1413C /* FunalFloorViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalFloorViewConfigure.swift; sourceTree = "<group>"; };
+		080368EB248A7D5E00D1413C /* DisplayLabelConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelConfigure.swift; sourceTree = "<group>"; };
+		080368ED248A849700D1413C /* FunalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalView.swift; sourceTree = "<group>"; };
+		080368EF248A84C100D1413C /* FunalViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalViewConfigure.swift; sourceTree = "<group>"; };
 		0832B52F2489FED000110CBA /* LiteChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiteChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0832B5322489FED000110CBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0832B5342489FED000110CBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +64,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080368E2248A630200D1413C /* FunnelChart */ = {
+			isa = PBXGroup;
+			children = (
+				080368E3248A637100D1413C /* FunalFloorBackagroundView.swift */,
+				080368E5248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift */,
+				080368E7248A7BE300D1413C /* FunalFloorView.swift */,
+				080368E9248A7C0C00D1413C /* FunalFloorViewConfigure.swift */,
+				080368ED248A849700D1413C /* FunalView.swift */,
+				080368EF248A84C100D1413C /* FunalViewConfigure.swift */,
+			);
+			path = FunnelChart;
+			sourceTree = "<group>";
+		};
 		0832B5262489FED000110CBA = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +113,7 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				080368E2248A630200D1413C /* FunnelChart */,
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
 			);
@@ -96,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */,
+				080368EB248A7D5E00D1413C /* DisplayLabelConfigure.swift */,
 			);
 			path = DisplayLabel;
 			sourceTree = "<group>";
@@ -124,7 +153,6 @@
 				3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */,
 				43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -245,11 +273,18 @@
 			files = (
 				0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
+				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
+				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
+				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
+				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,
+				080368EE248A849700D1413C /* FunalView.swift in Sources */,
+				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
+				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
