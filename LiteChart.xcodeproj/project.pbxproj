@@ -17,6 +17,7 @@
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
+		3651576EBA66A2D1A7696981 /* Pods_LiteChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,9 @@
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
+		3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.debug.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.debug.xcconfig"; sourceTree = "<group>"; };
+		43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.release.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.release.xcconfig"; sourceTree = "<group>"; };
+		931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiteChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3651576EBA66A2D1A7696981 /* Pods_LiteChart.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +56,8 @@
 				0832B5312489FED000110CBA /* LiteChart */,
 				0832B5462489FF0A00110CBA /* Sources */,
 				0832B5302489FED000110CBA /* Products */,
+				CEBBA2BFCC3C0EF32173DC16 /* Pods */,
+				3B66F43B29CBCCC5B032BC7D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +110,24 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
+		3B66F43B29CBCCC5B032BC7D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEBBA2BFCC3C0EF32173DC16 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */,
+				43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,9 +135,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0832B5432489FED100110CBA /* Build configuration list for PBXNativeTarget "LiteChart" */;
 			buildPhases = (
+				DB5197DE0A48A9DADC2AC943 /* [CP] Check Pods Manifest.lock */,
 				0832B52B2489FED000110CBA /* Sources */,
 				0832B52C2489FED000110CBA /* Frameworks */,
 				0832B52D2489FED000110CBA /* Resources */,
+				0A44AA40A8E4075F124EACC2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +195,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0A44AA40A8E4075F124EACC2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiteChart/Pods-LiteChart-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LiteChart/Pods-LiteChart-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LiteChart/Pods-LiteChart-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB5197DE0A48A9DADC2AC943 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LiteChart-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0832B52B2489FED000110CBA /* Sources */ = {
@@ -322,6 +391,7 @@
 		};
 		0832B5442489FED100110CBA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -341,6 +411,7 @@
 		};
 		0832B5452489FED100110CBA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
