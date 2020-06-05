@@ -13,6 +13,10 @@
 		0832B53A2489FED000110CBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0832B5382489FED000110CBA /* Main.storyboard */; };
 		0832B53C2489FED100110CBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53B2489FED100110CBA /* Assets.xcassets */; };
 		0832B53F2489FED100110CBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53D2489FED100110CBA /* LaunchScreen.storyboard */; };
+		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
+		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
+		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
+		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		0832B53B2489FED100110CBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0832B53E2489FED100110CBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0832B5402489FED100110CBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
+		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
+		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
+		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				0832B5312489FED000110CBA /* LiteChart */,
+				0832B5462489FF0A00110CBA /* Sources */,
 				0832B5302489FED000110CBA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +74,33 @@
 				0832B5402489FED100110CBA /* Info.plist */,
 			);
 			path = LiteChart;
+			sourceTree = "<group>";
+		};
+		0832B5462489FF0A00110CBA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0866FDC02489FF4E004AF645 /* Color */,
+				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		0866FDBE2489FF4E004AF645 /* DisplayLabel */ = {
+			isa = PBXGroup;
+			children = (
+				0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */,
+			);
+			path = DisplayLabel;
+			sourceTree = "<group>";
+		};
+		0866FDC02489FF4E004AF645 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */,
+				0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */,
+				0866FDC32489FF4E004AF645 /* LiteChartColor.swift */,
+			);
+			path = Color;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +174,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
+				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
+				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
+				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +256,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -287,6 +327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2ENC7U2PH;
 				INFOPLIST_FILE = LiteChart/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -294,7 +335,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.token.LiteChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,6 +346,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2ENC7U2PH;
 				INFOPLIST_FILE = LiteChart/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,7 +354,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.token.LiteChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
