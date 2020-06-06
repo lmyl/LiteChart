@@ -25,6 +25,7 @@ class FunalFloorBackagroundView: UIView {
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
+        context?.setShouldAntialias(true)
         context?.setFillColor(self.configure.backgroundColor.color.cgColor)
         context?.fill(rect)
         let topLeft = rect.width * (1 - self.configure.topPercent) / 2

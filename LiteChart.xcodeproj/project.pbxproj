@@ -24,6 +24,15 @@
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
+		08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */; };
+		08F56E5E248B52F4000998F8 /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5D248B52F4000998F8 /* Legend.swift */; };
+		08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5F248B532F000998F8 /* SquareLegend.swift */; };
+		08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E61248B534B000998F8 /* LegendConfigure.swift */; };
+		08F56E64248B6BF7000998F8 /* FunalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E63248B6BF7000998F8 /* FunalChart.swift */; };
+		08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E65248B6C7F000998F8 /* LegendView.swift */; };
+		08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */; };
+		08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E69248B77B0000998F8 /* LegendViews.swift */; };
+		08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */; };
 		3651576EBA66A2D1A7696981 /* Pods_LiteChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +56,15 @@
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
+		08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartConfigure.swift; sourceTree = "<group>"; };
+		08F56E5D248B52F4000998F8 /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
+		08F56E5F248B532F000998F8 /* SquareLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareLegend.swift; sourceTree = "<group>"; };
+		08F56E61248B534B000998F8 /* LegendConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendConfigure.swift; sourceTree = "<group>"; };
+		08F56E63248B6BF7000998F8 /* FunalChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChart.swift; sourceTree = "<group>"; };
+		08F56E65248B6C7F000998F8 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
+		08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViewConfigure.swift; sourceTree = "<group>"; };
+		08F56E69248B77B0000998F8 /* LegendViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViews.swift; sourceTree = "<group>"; };
+		08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViewsConfigure.swift; sourceTree = "<group>"; };
 		3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.debug.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.debug.xcconfig"; sourceTree = "<group>"; };
 		43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.release.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.release.xcconfig"; sourceTree = "<group>"; };
 		931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiteChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +91,8 @@
 				080368E9248A7C0C00D1413C /* FunalFloorViewConfigure.swift */,
 				080368ED248A849700D1413C /* FunalView.swift */,
 				080368EF248A84C100D1413C /* FunalViewConfigure.swift */,
+				08F56E63248B6BF7000998F8 /* FunalChart.swift */,
+				08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */,
 			);
 			path = FunnelChart;
 			sourceTree = "<group>";
@@ -116,6 +136,7 @@
 				080368E2248A630200D1413C /* FunnelChart */,
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
+				08F56E5C248B52D3000998F8 /* Legend */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -137,6 +158,20 @@
 				0866FDC32489FF4E004AF645 /* LiteChartColor.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		08F56E5C248B52D3000998F8 /* Legend */ = {
+			isa = PBXGroup;
+			children = (
+				08F56E5D248B52F4000998F8 /* Legend.swift */,
+				08F56E61248B534B000998F8 /* LegendConfigure.swift */,
+				08F56E5F248B532F000998F8 /* SquareLegend.swift */,
+				08F56E65248B6C7F000998F8 /* LegendView.swift */,
+				08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */,
+				08F56E69248B77B0000998F8 /* LegendViews.swift */,
+				08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */,
+			);
+			path = Legend;
 			sourceTree = "<group>";
 		};
 		3B66F43B29CBCCC5B032BC7D /* Frameworks */ = {
@@ -272,19 +307,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */,
+				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
+				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
+				08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
 				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,
 				080368EE248A849700D1413C /* FunalView.swift in Sources */,
+				08F56E64248B6BF7000998F8 /* FunalChart.swift in Sources */,
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
+				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
+				08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */,
+				08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */,
+				08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
+				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

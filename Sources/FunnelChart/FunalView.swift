@@ -26,7 +26,7 @@ class FunalView: UIView {
     
     override func layoutSubviews() {
         superview?.layoutSubviews()
-        updateFunalFloorViews()
+        updateFunalFloorViewsConstraint()
     }
     
     private func insertFunalFloorViews() {
@@ -37,18 +37,18 @@ class FunalView: UIView {
         }
     }
     
-    private func updateFunalFloorViews() {
+    private func updateFunalFloorViewsConstraint() {
         let fatherRect = self.bounds
         let floorViewHeight = fatherRect.height / CGFloat(self.funalFloorViews.count)
         for (index, floorView) in self.funalFloorViews.enumerated() {
             let originX = fatherRect.origin.x
             let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
             let floorViewRect = CGRect(x: originX, y: originY, width: fatherRect.width, height: floorViewHeight)
-            self.updateFunalFloorView(with: floorViewRect, funalFloorView: floorView)
+            self.updateFunalFloorViewConstraint(with: floorViewRect, funalFloorView: floorView)
         }
     }
     
-    private func updateFunalFloorView(with rect: CGRect, funalFloorView: FunalFloorView) {
+    private func updateFunalFloorViewConstraint(with rect: CGRect, funalFloorView: FunalFloorView) {
         funalFloorView.snp.updateConstraints{
             make in
             make.width.equalTo(rect.width)
