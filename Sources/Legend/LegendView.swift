@@ -74,9 +74,11 @@ class LegendView: UIView {
         guard let leftView = self.legendLeftView else {
             return
         }
+        let remain = self.bounds.width - min(self.bounds.width, self.bounds.height)
+        let offset = min(remain /  10, 4)
         rightView.snp.updateConstraints{
             make in
-            make.left.equalTo(leftView.snp.right)
+            make.left.equalTo(leftView.snp.right).offset(offset)
             make.right.equalToSuperview()
             make.height.equalToSuperview()
             make.centerY.equalToSuperview()

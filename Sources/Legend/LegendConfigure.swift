@@ -11,15 +11,12 @@ import CoreGraphics
 struct LegendConfigure {
     
     let color: LiteChartDarkLightColor
-    let backgroundColor: LiteChartDarkLightColor
     
-    init(color: LiteChartDarkLightColor, backgroundColor: LiteChartDarkLightColor) {
+    init(color: LiteChartDarkLightColor) {
         self.color = color
-        self.backgroundColor = backgroundColor
     }
     
     init() {
         self.color = .init(lightColor: .yellow)
-        self.backgroundColor = .init(lightColor: .white)
     }
 }

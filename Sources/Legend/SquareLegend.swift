@@ -15,11 +15,13 @@ class SquareLegend: UIView {
     init(configure: LegendConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         self.configure = LegendConfigure()
         super.init(coder: coder)
+        self.backgroundColor = .clear
     }
     
     
@@ -30,8 +32,6 @@ class SquareLegend: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setShouldAntialias(true)
         context?.setAllowsAntialiasing(true)
-        context?.setFillColor(self.configure.backgroundColor.color.cgColor)
-        context?.fill(rect)
         let topLeftX = rect.origin.x + (rect.width - squareWidth) / 2
         let topLeftY = rect.origin.y + (rect.height - squareWidth) / 2
         let originPoint = CGPoint(x: topLeftX, y: topLeftY)

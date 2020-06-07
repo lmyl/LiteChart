@@ -22,6 +22,17 @@ struct LiteChartDarkLightColor {
         self.darkColor = nil
     }
     
+    init(lightUIColor: UIColor, darkUIColor: UIColor) {
+        let light = LiteChartColor.customColor(color: lightUIColor)
+        let dark = LiteChartColor.customColor(color: darkUIColor)
+        self.init(lightColor: light, darkColor: dark)
+    }
+    
+    init(lightUIColor: UIColor) {
+        let light = LiteChartColor.customColor(color: lightUIColor)
+        self.init(lightColor: light)
+    }
+    
     var color: UIColor {
         if let darkColor = self.darkColor {
             return  UIColor(dynamicProvider: {

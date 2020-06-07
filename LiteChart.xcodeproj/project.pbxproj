@@ -24,6 +24,8 @@
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
+		0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E3248CCCE40015289B /* FunalChartParameters.swift */; };
+		0876A4E7248CD4110015289B /* PercentDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* PercentDisplayMode.swift */; };
 		08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */; };
 		08F56E5E248B52F4000998F8 /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5D248B52F4000998F8 /* Legend.swift */; };
 		08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5F248B532F000998F8 /* SquareLegend.swift */; };
@@ -56,6 +58,8 @@
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
+		0876A4E3248CCCE40015289B /* FunalChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartParameters.swift; sourceTree = "<group>"; };
+		0876A4E6248CD4110015289B /* PercentDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentDisplayMode.swift; sourceTree = "<group>"; };
 		08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartConfigure.swift; sourceTree = "<group>"; };
 		08F56E5D248B52F4000998F8 /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 		08F56E5F248B532F000998F8 /* SquareLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareLegend.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 				080368EF248A84C100D1413C /* FunalViewConfigure.swift */,
 				08F56E63248B6BF7000998F8 /* FunalChart.swift */,
 				08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */,
+				0876A4E3248CCCE40015289B /* FunalChartParameters.swift */,
 			);
 			path = FunnelChart;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0876A4E5248CD1290015289B /* DisplayDataMode */,
 				080368E2248A630200D1413C /* FunnelChart */,
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
@@ -158,6 +164,14 @@
 				0866FDC32489FF4E004AF645 /* LiteChartColor.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		0876A4E5248CD1290015289B /* DisplayDataMode */ = {
+			isa = PBXGroup;
+			children = (
+				0876A4E6248CD4110015289B /* PercentDisplayMode.swift */,
+			);
+			path = DisplayDataMode;
 			sourceTree = "<group>";
 		};
 		08F56E5C248B52D3000998F8 /* Legend */ = {
@@ -314,7 +328,9 @@
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
+				0876A4E7248CD4110015289B /* PercentDisplayMode.swift in Sources */,
 				08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */,
+				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
 				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,

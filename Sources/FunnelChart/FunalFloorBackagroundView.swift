@@ -15,19 +15,19 @@ class FunalFloorBackagroundView: UIView {
     init(configure: FunalFloorBackagroundViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         self.configure = FunalFloorBackagroundViewConfigure()
         super.init(coder: coder)
+        self.backgroundColor = .clear
     }
     
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
         context?.setShouldAntialias(true)
-        context?.setFillColor(self.configure.backgroundColor.color.cgColor)
-        context?.fill(rect)
         let topLeft = rect.width * (1 - self.configure.topPercent) / 2
         let topStartX = rect.origin.x + topLeft
         let topEndX = rect.origin.x + rect.width - topLeft

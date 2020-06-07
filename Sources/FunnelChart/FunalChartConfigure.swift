@@ -15,22 +15,10 @@ struct FunalChartConfigure {
     
     let legendViewsConfigure: LegendViewsConfigure?
     
-    init(funalViewConfigure: FunalViewConfigure, chartTitleConfigure: DisplayLabelConfigure, legendViewsConfigure: LegendViewsConfigure) {
+    init(funalViewConfigure: FunalViewConfigure, chartTitleConfigure: DisplayLabelConfigure?, legendViewsConfigure: LegendViewsConfigure?) {
         self.chartTitleConfigure = chartTitleConfigure
         self.funalViewConfigure = funalViewConfigure
         self.legendViewsConfigure = legendViewsConfigure
-    }
-    
-    init(funalViewConfigure: FunalViewConfigure, chartTitleConfigure: DisplayLabelConfigure) {
-        self.funalViewConfigure = funalViewConfigure
-        self.chartTitleConfigure = chartTitleConfigure
-        self.legendViewsConfigure = nil
-    }
-    
-    init(funalViewConfigure: FunalViewConfigure, legendViewsConfigure: LegendViewsConfigure) {
-        self.funalViewConfigure = funalViewConfigure
-        self.legendViewsConfigure = legendViewsConfigure
-        self.chartTitleConfigure = nil
     }
     
     init() {
