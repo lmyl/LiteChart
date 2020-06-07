@@ -19,7 +19,7 @@ class DisplayLabel: UILabel {
         self.textAlignment = configure.textAlignment
         self.adjustsFontSizeToFitWidth = true
         self.baselineAdjustment = .alignCenters
-        self.numberOfLines = 0
+        self.numberOfLines = 1
         self.font = UIFont.systemFont(ofSize: 17)
     }
     
