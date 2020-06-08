@@ -15,23 +15,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = FunalChartParameters(inputDatas: [(100, .init(lightUIColor: .blue)), (73, .init(lightUIColor: .yellow)), (34, .init(lightUIColor: .green)), (24, .init(lightUIColor: .systemPink))])
-        configure.displayDataMode = .original
-        configure.titleString = "黄小卉绿了？"
-        configure.inputLegendTitles = ["绿了", "稍微绿了", "有点绿了", "全绿了"]
+        var configure = PieViewsConfigure(models: [PieViewConfigure(startAngle: 0, endAngle: 30, backgroundColor: .init(lightUIColor: .yellow), displayText: "绿色", displayTextColor: .init(lightUIColor: .black)), PieViewConfigure(startAngle: 30, endAngle: 170, backgroundColor: .init(lightUIColor: .green), displayText: "绿色", displayTextColor: .init(lightUIColor: .black)), PieViewConfigure(startAngle: 170, endAngle: 360, backgroundColor: .init(lightUIColor: .orange), displayText: "绿色", displayTextColor: .init(lightUIColor: .black))])
         
-        do {
-            let backgroundView = try FunalChart(parameter: configure)
-            self.view.addSubview(backgroundView)
-            
-            backgroundView.snp.makeConstraints{
-                make in
-                make.center.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalTo(300)
-            }
-        } catch {
-            
+        let backgroundView = PieViews(configure: configure)
+        self.view.addSubview(backgroundView)
+        backgroundView.backgroundColor = .red
+        
+        backgroundView.snp.makeConstraints{
+            make in
+            make.center.equalToSuperview()
+            make.width.equalTo(100)
+            make.height.equalTo(300)
         }
         
         

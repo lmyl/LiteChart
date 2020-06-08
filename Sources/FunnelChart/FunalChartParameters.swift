@@ -18,7 +18,7 @@ struct FunalChartParameters {
     
     var inputLegendTitles: [String]?
     
-    var displayDataMode: PercentDisplayMode = .original
+    var displayDataMode: ChartValueDisplayMode = .original
     
     init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
         self.inputDatas = inputDatas

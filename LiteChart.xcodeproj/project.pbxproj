@@ -21,12 +21,19 @@
 		0832B53C2489FED100110CBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53B2489FED100110CBA /* Assets.xcassets */; };
 		0832B53F2489FED100110CBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53D2489FED100110CBA /* LaunchScreen.storyboard */; };
 		08386C1B248DD97100D0E655 /* ChartError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C1A248DD97100D0E655 /* ChartError.swift */; };
+		08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C1D248E12B700D0E655 /* PieSectorView.swift */; };
+		08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C1F248E12E300D0E655 /* PieSectorViewConfigure.swift */; };
+		08386C22248E236A00D0E655 /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C21248E236A00D0E655 /* PieView.swift */; };
+		08386C24248E238500D0E655 /* PieViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C23248E238500D0E655 /* PieViewConfigure.swift */; };
+		08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C26248E521200D0E655 /* Notification+PieSectorView.swift */; };
+		08386C29248E57AF00D0E655 /* PieViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C28248E57AF00D0E655 /* PieViews.swift */; };
+		08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C2A248E580400D0E655 /* PieViewsConfigure.swift */; };
 		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
 		0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E3248CCCE40015289B /* FunalChartParameters.swift */; };
-		0876A4E7248CD4110015289B /* PercentDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* PercentDisplayMode.swift */; };
+		0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */; };
 		08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */; };
 		08F56E5E248B52F4000998F8 /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5D248B52F4000998F8 /* Legend.swift */; };
 		08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5F248B532F000998F8 /* SquareLegend.swift */; };
@@ -56,12 +63,19 @@
 		0832B53E2489FED100110CBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0832B5402489FED100110CBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08386C1A248DD97100D0E655 /* ChartError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartError.swift; sourceTree = "<group>"; };
+		08386C1D248E12B700D0E655 /* PieSectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSectorView.swift; sourceTree = "<group>"; };
+		08386C1F248E12E300D0E655 /* PieSectorViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSectorViewConfigure.swift; sourceTree = "<group>"; };
+		08386C21248E236A00D0E655 /* PieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
+		08386C23248E238500D0E655 /* PieViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewConfigure.swift; sourceTree = "<group>"; };
+		08386C26248E521200D0E655 /* Notification+PieSectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+PieSectorView.swift"; sourceTree = "<group>"; };
+		08386C28248E57AF00D0E655 /* PieViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViews.swift; sourceTree = "<group>"; };
+		08386C2A248E580400D0E655 /* PieViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewsConfigure.swift; sourceTree = "<group>"; };
 		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
 		0876A4E3248CCCE40015289B /* FunalChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartParameters.swift; sourceTree = "<group>"; };
-		0876A4E6248CD4110015289B /* PercentDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentDisplayMode.swift; sourceTree = "<group>"; };
+		0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDisplayMode.swift; sourceTree = "<group>"; };
 		08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartConfigure.swift; sourceTree = "<group>"; };
 		08F56E5D248B52F4000998F8 /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 		08F56E5F248B532F000998F8 /* SquareLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareLegend.swift; sourceTree = "<group>"; };
@@ -140,6 +154,8 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				08386C25248E51F300D0E655 /* Notification */,
+				08386C1C248E109500D0E655 /* PieChart */,
 				08386C19248DD91000D0E655 /* ChartError */,
 				0876A4E5248CD1290015289B /* DisplayDataMode */,
 				080368E2248A630200D1413C /* FunnelChart */,
@@ -156,6 +172,27 @@
 				08386C1A248DD97100D0E655 /* ChartError.swift */,
 			);
 			path = ChartError;
+			sourceTree = "<group>";
+		};
+		08386C1C248E109500D0E655 /* PieChart */ = {
+			isa = PBXGroup;
+			children = (
+				08386C1D248E12B700D0E655 /* PieSectorView.swift */,
+				08386C1F248E12E300D0E655 /* PieSectorViewConfigure.swift */,
+				08386C21248E236A00D0E655 /* PieView.swift */,
+				08386C23248E238500D0E655 /* PieViewConfigure.swift */,
+				08386C28248E57AF00D0E655 /* PieViews.swift */,
+				08386C2A248E580400D0E655 /* PieViewsConfigure.swift */,
+			);
+			path = PieChart;
+			sourceTree = "<group>";
+		};
+		08386C25248E51F300D0E655 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				08386C26248E521200D0E655 /* Notification+PieSectorView.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		0866FDBE2489FF4E004AF645 /* DisplayLabel */ = {
@@ -180,7 +217,7 @@
 		0876A4E5248CD1290015289B /* DisplayDataMode */ = {
 			isa = PBXGroup;
 			children = (
-				0876A4E6248CD4110015289B /* PercentDisplayMode.swift */,
+				0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */,
 			);
 			path = DisplayDataMode;
 			sourceTree = "<group>";
@@ -335,28 +372,35 @@
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
+				08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
+				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
-				0876A4E7248CD4110015289B /* PercentDisplayMode.swift in Sources */,
+				0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */,
 				08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */,
 				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
+				08386C22248E236A00D0E655 /* PieView.swift in Sources */,
 				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
 				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,
 				080368EE248A849700D1413C /* FunalView.swift in Sources */,
 				08F56E64248B6BF7000998F8 /* FunalChart.swift in Sources */,
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
+				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
+				08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */,
 				08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */,
 				08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */,
 				08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */,
+				08386C24248E238500D0E655 /* PieViewConfigure.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
 				08386C1B248DD97100D0E655 /* ChartError.swift in Sources */,
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
+				08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
