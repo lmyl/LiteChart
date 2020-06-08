@@ -27,6 +27,37 @@ struct FunalChartParameters {
 }
 
 extension FunalChartParameters {
+    
+    func checkInputDatasParameterInvalid() throws {
+        guard self.inputDatas.count < 2 else {
+            let filter = self.inputDatas.filter{
+                $0.0 <= 0
+            }
+            if filter.isEmpty {
+                return
+            } else {
+                throw ChartError.inputDatasMustPositive
+            }
+            
+        }
+        var front = -1
+        for index in 0 ..< self.inputDatas.count {
+            if self.inputDatas[index].0 <= 0 {
+                throw ChartError.inputDatasMustPositive
+            }
+            if front == -1 {
+                front = index
+                continue
+            }else if self.inputDatas[index].0 <= self.inputDatas[front].0 {
+                front = index
+                continue
+            } else {
+                throw ChartError.inputDatasNotTrueSorted
+            }
+        }
+        return
+    }
+    
     func computeTitleConfigure() -> DisplayLabelConfigure? {
         guard let titleString = self.titleString else {
             return nil

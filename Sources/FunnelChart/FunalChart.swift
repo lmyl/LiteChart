@@ -15,7 +15,8 @@ class FunalChart: UIView {
     var funalView: FunalView?
     var legendViews: LegendViews?
     
-    convenience init(parameter: FunalChartParameters) {
+    convenience init(parameter: FunalChartParameters) throws {
+        try parameter.checkInputDatasParameterInvalid()
         let chartTitleConfigure = parameter.computeTitleConfigure()
         let funalViewConfigure = parameter.computeFunalViewComfigure()
         let legendViewsConfigure = parameter.computeLegendViewConfigure()

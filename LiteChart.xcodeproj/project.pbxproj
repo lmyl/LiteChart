@@ -20,6 +20,7 @@
 		0832B53A2489FED000110CBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0832B5382489FED000110CBA /* Main.storyboard */; };
 		0832B53C2489FED100110CBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53B2489FED100110CBA /* Assets.xcassets */; };
 		0832B53F2489FED100110CBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0832B53D2489FED100110CBA /* LaunchScreen.storyboard */; };
+		08386C1B248DD97100D0E655 /* ChartError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C1A248DD97100D0E655 /* ChartError.swift */; };
 		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
@@ -54,6 +55,7 @@
 		0832B53B2489FED100110CBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0832B53E2489FED100110CBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0832B5402489FED100110CBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08386C1A248DD97100D0E655 /* ChartError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartError.swift; sourceTree = "<group>"; };
 		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				08386C19248DD91000D0E655 /* ChartError */,
 				0876A4E5248CD1290015289B /* DisplayDataMode */,
 				080368E2248A630200D1413C /* FunnelChart */,
 				0866FDC02489FF4E004AF645 /* Color */,
@@ -145,6 +148,14 @@
 				08F56E5C248B52D3000998F8 /* Legend */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		08386C19248DD91000D0E655 /* ChartError */ = {
+			isa = PBXGroup;
+			children = (
+				08386C1A248DD97100D0E655 /* ChartError.swift */,
+			);
+			path = ChartError;
 			sourceTree = "<group>";
 		};
 		0866FDBE2489FF4E004AF645 /* DisplayLabel */ = {
@@ -343,6 +354,7 @@
 				08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */,
 				08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
+				08386C1B248DD97100D0E655 /* ChartError.swift in Sources */,
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
 			);
