@@ -34,11 +34,14 @@
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
 		0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E3248CCCE40015289B /* FunalChartParameters.swift */; };
 		0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */; };
-		08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */; };
+		087DEA8D248E736A001A40B9 /* LiteChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA8C248E736A001A40B9 /* LiteChartView.swift */; };
+		087DEA8F248E7571001A40B9 /* LiteChartViewParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA8E248E7571001A40B9 /* LiteChartViewParameters.swift */; };
+		087DEA96248E7D6B001A40B9 /* LiteChartDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA95248E7D6B001A40B9 /* LiteChartDatas.swift */; };
+		087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */; };
+		08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */; };
 		08F56E5E248B52F4000998F8 /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5D248B52F4000998F8 /* Legend.swift */; };
 		08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5F248B532F000998F8 /* SquareLegend.swift */; };
 		08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E61248B534B000998F8 /* LegendConfigure.swift */; };
-		08F56E64248B6BF7000998F8 /* FunalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E63248B6BF7000998F8 /* FunalChart.swift */; };
 		08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E65248B6C7F000998F8 /* LegendView.swift */; };
 		08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */; };
 		08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E69248B77B0000998F8 /* LegendViews.swift */; };
@@ -76,11 +79,14 @@
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
 		0876A4E3248CCCE40015289B /* FunalChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartParameters.swift; sourceTree = "<group>"; };
 		0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDisplayMode.swift; sourceTree = "<group>"; };
-		08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartConfigure.swift; sourceTree = "<group>"; };
+		087DEA8C248E736A001A40B9 /* LiteChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartView.swift; sourceTree = "<group>"; };
+		087DEA8E248E7571001A40B9 /* LiteChartViewParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewParameters.swift; sourceTree = "<group>"; };
+		087DEA95248E7D6B001A40B9 /* LiteChartDatas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartDatas.swift; sourceTree = "<group>"; };
+		087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartParametersProcesser.swift; sourceTree = "<group>"; };
+		08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartTitleDisplayLocation.swift; sourceTree = "<group>"; };
 		08F56E5D248B52F4000998F8 /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 		08F56E5F248B532F000998F8 /* SquareLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareLegend.swift; sourceTree = "<group>"; };
 		08F56E61248B534B000998F8 /* LegendConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendConfigure.swift; sourceTree = "<group>"; };
-		08F56E63248B6BF7000998F8 /* FunalChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChart.swift; sourceTree = "<group>"; };
 		08F56E65248B6C7F000998F8 /* LegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
 		08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViewConfigure.swift; sourceTree = "<group>"; };
 		08F56E69248B77B0000998F8 /* LegendViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViews.swift; sourceTree = "<group>"; };
@@ -111,8 +117,6 @@
 				080368E9248A7C0C00D1413C /* FunalFloorViewConfigure.swift */,
 				080368ED248A849700D1413C /* FunalView.swift */,
 				080368EF248A84C100D1413C /* FunalViewConfigure.swift */,
-				08F56E63248B6BF7000998F8 /* FunalChart.swift */,
-				08AAFA2C248BEA3A004B8CB9 /* FunalChartConfigure.swift */,
 				0876A4E3248CCCE40015289B /* FunalChartParameters.swift */,
 			);
 			path = FunnelChart;
@@ -154,6 +158,7 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				087DEA8B248E7353001A40B9 /* LiteChart */,
 				08386C25248E51F300D0E655 /* Notification */,
 				08386C1C248E109500D0E655 /* PieChart */,
 				08386C19248DD91000D0E655 /* ChartError */,
@@ -217,9 +222,21 @@
 		0876A4E5248CD1290015289B /* DisplayDataMode */ = {
 			isa = PBXGroup;
 			children = (
+				08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */,
 				0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */,
 			);
 			path = DisplayDataMode;
+			sourceTree = "<group>";
+		};
+		087DEA8B248E7353001A40B9 /* LiteChart */ = {
+			isa = PBXGroup;
+			children = (
+				087DEA8C248E736A001A40B9 /* LiteChartView.swift */,
+				087DEA95248E7D6B001A40B9 /* LiteChartDatas.swift */,
+				087DEA8E248E7571001A40B9 /* LiteChartViewParameters.swift */,
+				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
+			);
+			path = LiteChart;
 			sourceTree = "<group>";
 		};
 		08F56E5C248B52D3000998F8 /* Legend */ = {
@@ -369,8 +386,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */,
+				087DEA8D248E736A001A40B9 /* LiteChartView.swift in Sources */,
+				087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
+				087DEA96248E7D6B001A40B9 /* LiteChartDatas.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
@@ -379,18 +399,17 @@
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
 				0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */,
-				08AAFA2D248BEA3A004B8CB9 /* FunalChartConfigure.swift in Sources */,
 				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				08386C22248E236A00D0E655 /* PieView.swift in Sources */,
 				0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */,
 				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,
 				080368EE248A849700D1413C /* FunalView.swift in Sources */,
-				08F56E64248B6BF7000998F8 /* FunalChart.swift in Sources */,
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
+				08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */,
 				08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */,
 				08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */,
 				08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */,
@@ -401,6 +420,7 @@
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
 				08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */,
+				087DEA8F248E7571001A40B9 /* LiteChartViewParameters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

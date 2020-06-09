@@ -15,16 +15,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = PieViewsConfigure(models: [PieViewConfigure(startAngle: 0, endAngle: 30, backgroundColor: .init(lightUIColor: .yellow), displayText: "绿色", displayTextColor: .init(lightUIColor: .black)), PieViewConfigure(startAngle: 30, endAngle: 170, backgroundColor: .init(lightUIColor: .green), displayText: "绿色", displayTextColor: .init(lightUIColor: .black)), PieViewConfigure(startAngle: 170, endAngle: 360, backgroundColor: .init(lightUIColor: .orange), displayText: "绿色", displayTextColor: .init(lightUIColor: .black))])
+        var configure = LiteChartViewParameters()
+        configure.inputDatas = .funal(inputDatas: [(200, .init(lightUIColor: .yellow)), (100, .init(lightUIColor: .green)), (50, .init(lightUIColor: .orange)), (25, .init(lightUIColor: .blue))])
+        configure.inputLegendTitles = ["第一月", "第二月", "第三月", "第四月"]
+        configure.titleString = "月份销售收入"
+        configure.titleDisplayLocation = .bottom
+        configure.textColor = .init(lightUIColor: .cyan)
         
-        let backgroundView = PieViews(configure: configure)
+        let backgroundView = try! LiteChartView(configure: configure)
         self.view.addSubview(backgroundView)
-        backgroundView.backgroundColor = .red
         
         backgroundView.snp.makeConstraints{
             make in
             make.center.equalToSuperview()
-            make.width.equalTo(100)
+            make.width.equalTo(200)
             make.height.equalTo(300)
         }
         

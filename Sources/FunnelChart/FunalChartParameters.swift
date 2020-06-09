@@ -6,27 +6,28 @@
 //  Copyright © 2020 刘洋. All rights reserved.
 //
 
-import Foundation
-import CoreGraphics
+import UIKit
 
 struct FunalChartParameters {
-    var titleString: String?
     
-    var textColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
-    
+    var textColor: LiteChartDarkLightColor
+
     var inputDatas: [(Double, LiteChartDarkLightColor)]
     
     var inputLegendTitles: [String]?
     
-    var displayDataMode: ChartValueDisplayMode = .original
-    
-    init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
+    var displayDataMode: ChartValueDisplayMode
+        
+    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String]?, displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
         self.inputDatas = inputDatas
+        self.inputLegendTitles = inputLegendTitles
+        self.displayDataMode = displayDataMode
+        self.textColor = textColor
     }
     
 }
 
-extension FunalChartParameters {
+extension FunalChartParameters: LiteChartParametersProcesser {
     
     func checkInputDatasParameterInvalid() throws {
         guard self.inputDatas.count < 2 else {
@@ -58,13 +59,6 @@ extension FunalChartParameters {
         return
     }
     
-    func computeTitleConfigure() -> DisplayLabelConfigure? {
-        guard let titleString = self.titleString else {
-            return nil
-        }
-        return DisplayLabelConfigure(contentString: titleString, contentColor: textColor, textAlignment: .center)
-    }
-    
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
         guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == inputLegendTitles.count else {
             return nil
@@ -83,10 +77,11 @@ extension FunalChartParameters {
         
     }
     
-    func computeFunalViewComfigure() -> FunalViewConfigure {
+    func computeContentView() -> UIView {
         
         guard self.inputDatas.count > 0 else {
-            return FunalViewConfigure()
+            let configure = FunalViewConfigure()
+            return FunalView(configure: configure)
         }
         
         let datas = self.inputDatas.map{
@@ -118,14 +113,14 @@ extension FunalChartParameters {
             fatalError("此为框架内部处理数据不当产生的bug，不给予拯救!")
         }
         
-        if !displayString.isEmpty && displayString.count != self.inputDatas.count {
+        if self.displayDataMode != .none && displayString.count != self.inputDatas.count {
             fatalError("此为框架内部处理数据不当产生的bug，不给予拯救!")
         }
         
         for index in 0 ..< self.inputDatas.count {
             let backgroundViewConfigure = FunalFloorBackagroundViewConfigure(color: self.inputDatas[index].1, topPercent: CGFloat(inputPercents[index].0), bottomPercent: CGFloat(inputPercents[index].1))
             
-            if displayString.isEmpty {
+            if self.displayDataMode == .none {
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
@@ -135,7 +130,8 @@ extension FunalChartParameters {
             }
         }
         
-        return FunalViewConfigure(models: funalViewConfigure)
+        let configure = FunalViewConfigure(models: funalViewConfigure)
+        return FunalView(configure: configure)
         
     }
     
