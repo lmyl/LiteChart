@@ -27,6 +27,8 @@ struct LiteChartViewParameters {
         switch self.inputDatas {
         case .funal(let inputDatas):
             return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
+        case .pie(inputDatas: let inputDatas):
+            return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
         }
     }()
     

@@ -47,6 +47,7 @@
 		08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E69248B77B0000998F8 /* LegendViews.swift */; };
 		08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */; };
 		3651576EBA66A2D1A7696981 /* Pods_LiteChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */; };
+		F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFCC87248F88B900FB000C /* PieChartParameters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.debug.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.debug.xcconfig"; sourceTree = "<group>"; };
 		43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.release.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.release.xcconfig"; sourceTree = "<group>"; };
 		931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiteChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5DFCC87248F88B900FB000C /* PieChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartParameters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 				08386C23248E238500D0E655 /* PieViewConfigure.swift */,
 				08386C28248E57AF00D0E655 /* PieViews.swift */,
 				08386C2A248E580400D0E655 /* PieViewsConfigure.swift */,
+				F5DFCC87248F88B900FB000C /* PieChartParameters.swift */,
 			);
 			path = PieChart;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
+				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
 				08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */,
 				08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */,
