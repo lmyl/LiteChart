@@ -28,6 +28,11 @@
 		08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C26248E521200D0E655 /* Notification+PieSectorView.swift */; };
 		08386C29248E57AF00D0E655 /* PieViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C28248E57AF00D0E655 /* PieViews.swift */; };
 		08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C2A248E580400D0E655 /* PieViewsConfigure.swift */; };
+		083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8E4249085BC000B8DDE /* AxisView.swift */; };
+		083BC8E72490865E000B8DDE /* AxisViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8E62490865E000B8DDE /* AxisViewConfigure.swift */; };
+		083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */; };
+		083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */; };
+		083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */; };
 		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
@@ -74,6 +79,11 @@
 		08386C26248E521200D0E655 /* Notification+PieSectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+PieSectorView.swift"; sourceTree = "<group>"; };
 		08386C28248E57AF00D0E655 /* PieViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViews.swift; sourceTree = "<group>"; };
 		08386C2A248E580400D0E655 /* PieViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewsConfigure.swift; sourceTree = "<group>"; };
+		083BC8E4249085BC000B8DDE /* AxisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisView.swift; sourceTree = "<group>"; };
+		083BC8E62490865E000B8DDE /* AxisViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewConfigure.swift; sourceTree = "<group>"; };
+		083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewLineStyle.swift; sourceTree = "<group>"; };
+		083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisDividingLineConfigure.swift; sourceTree = "<group>"; };
+		083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewBorderStyle.swift; sourceTree = "<group>"; };
 		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
@@ -160,6 +170,8 @@
 		0832B5462489FF0A00110CBA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				083BC8E3249085AB000B8DDE /* Axis */,
+				083BC8E224907C83000B8DDE /* BarChart */,
 				087DEA8B248E7353001A40B9 /* LiteChart */,
 				08386C25248E51F300D0E655 /* Notification */,
 				08386C1C248E109500D0E655 /* PieChart */,
@@ -201,6 +213,25 @@
 				08386C26248E521200D0E655 /* Notification+PieSectorView.swift */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		083BC8E224907C83000B8DDE /* BarChart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BarChart;
+			sourceTree = "<group>";
+		};
+		083BC8E3249085AB000B8DDE /* Axis */ = {
+			isa = PBXGroup;
+			children = (
+				083BC8E4249085BC000B8DDE /* AxisView.swift */,
+				083BC8E62490865E000B8DDE /* AxisViewConfigure.swift */,
+				083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */,
+				083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */,
+				083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */,
+			);
+			path = Axis;
 			sourceTree = "<group>";
 		};
 		0866FDBE2489FF4E004AF645 /* DisplayLabel */ = {
@@ -396,11 +427,14 @@
 				087DEA96248E7D6B001A40B9 /* LiteChartDatas.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */,
+				083BC8E72490865E000B8DDE /* AxisViewConfigure.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
 				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
+				083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */,
 				0832B5332489FED000110CBA /* AppDelegate.swift in Sources */,
+				083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */,
 				0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */,
 				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
@@ -411,7 +445,9 @@
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
+				083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */,
 				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,
+				083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */,
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
 				08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */,
 				08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */,

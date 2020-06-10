@@ -15,14 +15,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters()
-        configure.inputDatas = .funal(inputDatas: [(200, .init(lightUIColor: .yellow)), (100, .init(lightUIColor: .green)), (50, .init(lightUIColor: .orange)), (25, .init(lightUIColor: .blue))])
-        configure.inputLegendTitles = ["第一月", "第二月", "第三月", "第四月"]
-        configure.titleString = "月份销售收入"
-        configure.titleDisplayLocation = .bottom
-        configure.textColor = .init(lightUIColor: .cyan)
+        var configure = AxisViewConfigure(originPoint: CGPoint(x: 0.5, y: 0.8), axisColor: .init(lightUIColor: .green), verticalDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .black), location: 0.3), .init(dividingLineStyle: .solid, dividingLineColor: .init(lightUIColor: .black), location: 0.6), .init(dividingLineStyle: .segment, dividingLineColor: .init(lightUIColor: .black), location: 0.1)], horizontalDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .black), location: 0.3), .init(dividingLineStyle: .solid, dividingLineColor: .init(lightUIColor: .black), location: 0.6), .init(dividingLineStyle: .segment, dividingLineColor: .init(lightUIColor: .black), location: 0.1)], borderStyle: [.bottom], borderColor: .init(lightUIColor: .yellow))
         
-        let backgroundView = try! LiteChartView(configure: configure)
+        let backgroundView = AxisView(configure: configure)
         self.view.addSubview(backgroundView)
         
         backgroundView.snp.makeConstraints{
