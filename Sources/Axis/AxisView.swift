@@ -30,14 +30,41 @@ class AxisView: UIView {
         context?.setLineWidth(1)
         context?.setLineCap(.round)
         
+        context?.setLineDash(phase: 0, lengths: [])
+        let originX: CGFloat
+        if self.configure.originPoint.x < 0 {
+            originX = 0
+        } else if self.configure.originPoint.x > 1 {
+            originX = 1
+        } else {
+            originX = self.configure.originPoint.x
+        }
+        let originY: CGFloat
+        if self.configure.originPoint.y < 0 {
+            originY = 1
+        } else if self.configure.originPoint.y > 1 {
+            originY = 0
+        } else {
+            originY = 1 - self.configure.originPoint.y
+        }
+        let originPoint = CGPoint(x: originX, y: originY)
+        let horAxisLineLeftPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height * originPoint.y)
+        let horAxisLineRightPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height * originPoint.y)
+        let verAxisLineTopPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y)
+        let verAxisLineBottomPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y + rect.height)
+        context?.setStrokeColor(self.configure.axisColor.color.cgColor)
+        context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
+        context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
+        context?.drawPath(using: .stroke)
+        
         for verDiv in self.configure.verticalDividingPoints {
             let offset: CGFloat
             if verDiv.location < 0 {
-                offset = 0
-            } else if verDiv.location > 1 {
                 offset = 1
+            } else if verDiv.location > 1 {
+                offset = 0
             } else {
-                offset = verDiv.location
+                offset = 1 - verDiv.location
             }
             let horAxisLineLeftPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height * offset)
             let horAxisLineRightPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height * offset)
@@ -59,32 +86,7 @@ class AxisView: UIView {
             context?.drawPath(using: .stroke)
         }
         
-        context?.setLineDash(phase: 0, lengths: [])
-        let originX: CGFloat
-        if self.configure.originPoint.x < 0 {
-            originX = 0
-        } else if self.configure.originPoint.x > 1 {
-            originX = 1
-        } else {
-            originX = self.configure.originPoint.x
-        }
-        let originY: CGFloat
-        if self.configure.originPoint.y < 0 {
-            originY = 0
-        } else if self.configure.originPoint.y > 1 {
-            originY = 1
-        } else {
-            originY = self.configure.originPoint.y
-        }
-        let originPoint = CGPoint(x: originX, y: originY)
-        let horAxisLineLeftPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height * originPoint.y)
-        let horAxisLineRightPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height * originPoint.y)
-        let verAxisLineTopPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y)
-        let verAxisLineBottomPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y + rect.height)
-        context?.setStrokeColor(self.configure.axisColor.color.cgColor)
-        context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
-        context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
-        context?.drawPath(using: .stroke)
+
     
         for verDiv in self.configure.horizontalDividingPoints {
             let offset: CGFloat

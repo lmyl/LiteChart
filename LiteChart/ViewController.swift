@@ -15,15 +15,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = AxisViewConfigure(originPoint: CGPoint(x: 0.5, y: 0.8), axisColor: .init(lightUIColor: .green), verticalDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .black), location: 0.3), .init(dividingLineStyle: .solid, dividingLineColor: .init(lightUIColor: .black), location: 0.6), .init(dividingLineStyle: .segment, dividingLineColor: .init(lightUIColor: .black), location: 0.1)], horizontalDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .black), location: 0.3), .init(dividingLineStyle: .solid, dividingLineColor: .init(lightUIColor: .black), location: 0.6), .init(dividingLineStyle: .segment, dividingLineColor: .init(lightUIColor: .black), location: 0.1)], borderStyle: [.bottom], borderColor: .init(lightUIColor: .yellow))
+        var configure = BarChartViewConfigure(textColor: .init(lightUIColor: .black), coupleTitle: ["一月", "二月", "三月", "四月"], valueTitle: ["10", "30", "60"], inputDatas: [(.init(lightUIColor: .blue), [("20", 0.2), ("30", 0.3), ("40", 0.4), ("50", 0.5)]), (.init(lightUIColor: .green), [("20", 0.2), ("30", 0.3), ("40", 0.4), ("50", 0.5)])], direction: .leftToRight, borderColor: .init(lightUIColor: .black), borderStyle: .halfSurrounded, xDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.1), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.3), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.6)], yDividingPoints: [])
         
-        let backgroundView = AxisView(configure: configure)
+        let backgroundView = BarChartView(configure: configure)
         self.view.addSubview(backgroundView)
         
         backgroundView.snp.makeConstraints{
             make in
             make.center.equalToSuperview()
-            make.width.equalTo(200)
+            make.width.equalTo(300)
             make.height.equalTo(300)
         }
         

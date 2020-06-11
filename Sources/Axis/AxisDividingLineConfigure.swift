@@ -16,3 +16,11 @@ struct AxisDividingLineConfigure {
     
     let location: CGFloat
 }
+
+extension AxisDividingLineConfigure {
+    init() {
+        self.dividingLineColor = .init(lightUIColor: .black, darkUIColor: .white)
+        self.dividingLineStyle = .dotted
+        self.location = 0
+    }
+}
