@@ -86,6 +86,10 @@ class BarChartView: UIView {
     }
     
     private func insertBarViews() {
+        guard let axis = self.axisView else {
+            return
+        }
+        
         let inputDatas = self.configure.inputDatas
         
         guard !inputDatas.isEmpty else {
@@ -131,7 +135,7 @@ class BarChartView: UIView {
                 }
             }
             let barViews = BarViews(configure: .init(models: barViewsConfigure, direction: self.configure.direction))
-            self.addSubview(barViews)
+            axis.addSubview(barViews)
             self.barView.append(barViews)
         }
     }

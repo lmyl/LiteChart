@@ -23,6 +23,37 @@ class AxisView: UIView {
         self.backgroundColor = .clear
     }
     
+    private func drawBorder(_ rect: CGRect) {
+        let drawShapeLayer = CAShapeLayer()
+        drawShapeLayer.lineCap = .round
+        drawShapeLayer.strokeColor = self.configure.borderColor.color.cgColor
+        drawShapeLayer.lineWidth = 1
+        drawShapeLayer.allowsEdgeAntialiasing = true
+        let path = UIBezierPath()
+        let topLeft = rect.origin
+        let topRight = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y)
+        let bottomLeft = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
+        let bottomRight = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height)
+        for border in self.configure.borderStyle {
+            switch border {
+            case .top:
+                path.move(to: topLeft)
+                path.addLine(to: topRight)
+            case .bottom:
+                path.move(to: bottomLeft)
+                path.addLine(to: bottomRight)
+            case .left:
+                path.move(to: topLeft)
+                path.addLine(to: bottomLeft)
+            case .right:
+                path.move(to: topRight)
+                path.addLine(to: bottomRight)
+            }
+        }
+        drawShapeLayer.path = path.cgPath
+        self.layer.addSublayer(drawShapeLayer)
+    }
+    
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
@@ -117,25 +148,7 @@ class AxisView: UIView {
             context?.drawPath(using: .stroke)
         }
         
-        context?.setLineDash(phase: 0, lengths: [])
-        context?.setStrokeColor(self.configure.borderColor.color.cgColor)
-        let topLeft = rect.origin
-        let topRight = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y)
-        let bottomLeft = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
-        let bottomRight = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height)
-        for border in self.configure.borderStyle {
-            switch border {
-            case .top:
-                context?.addLines(between: [topLeft, topRight])
-            case .bottom:
-                context?.addLines(between: [bottomLeft, bottomRight])
-            case .left:
-                context?.addLines(between: [topLeft, bottomLeft])
-            case .right:
-                context?.addLines(between: [topRight, bottomRight])
-            }
-            context?.drawPath(using: .stroke)
-        }
+        self.drawBorder(rect)
         
     }
 }
