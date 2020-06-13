@@ -27,24 +27,39 @@ struct BarChartParameter {
     
     var displayDataMode: ChartValueDisplayMode
     
-    var dividingLineStyle: AxisViewLlineStyle
+    var dividingValueLineStyle: AxisViewLlineStyle
     
-    var dividingLineColor: LiteChartDarkLightColor
+    var dividingValueLineColor: LiteChartDarkLightColor
     
-    var numOfDividingLine: Int
+    var dividingCoupleLineStyle: AxisViewLlineStyle
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, numOfDividingLine: Int, inputLegendTitles: [String]?) {
+    var dividingCoupleLineColor: LiteChartDarkLightColor
+    
+    var isShowValueDividingLine: Bool
+    
+    var isShowCoupleDividingLine: Bool
+    
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, String, [Double])], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
         self.textColor = textColor
-        self.inputDatas = inputDatas
-        self.coupleTitle = coupleTitle
         self.displayDataMode = displayDataMode
-        self.dividingLineStyle = dividingLineStyle
-        self.dividingLineColor = dividingLineColor
-        self.numOfDividingLine = numOfDividingLine
+        self.dividingValueLineStyle = dividingLineStyle
+        self.dividingValueLineColor = dividingLineColor
+        self.isShowValueDividingLine = isShowValueDividingLine
         self.inputLegendTitles = inputLegendTitles
+        self.isShowCoupleDividingLine = isShowCoupleDividingLine
+        self.dividingCoupleLineColor = dividingCoupleLineColor
+        self.dividingCoupleLineStyle = dividingCoupleLineStyle
+        
+        self.inputDatas = []
+        self.coupleTitle = []
+        for data in inputDatas {
+            self.inputDatas.append((data.0, data.2))
+            self.coupleTitle.append(data.1)
+        }
+        
     }
     
 }
@@ -55,16 +70,16 @@ extension BarChartParameter: LiteChartParametersProcesser {
         if inputDatas.count > 0 {
             let firstDataCount = inputDatas[0].1.count
             if firstDataCount != self.coupleTitle.count {
-                throw ChartError.inputDatasNotMatched
+                throw ChartError.inputDatasNumbersNotMatchedCoupleTitle
             }
             for inputData in inputDatas {
                 if inputData.1.count != firstDataCount {
-                    throw ChartError.inputDatasNotMatched
+                    throw ChartError.inputDatasNumberMustEqualForCouple
                 }
-                let filter = inputData.1.filter{
+                let contains = inputData.1.contains(where: {
                     $0 < 0
-                }
-                if !filter.isEmpty {
+                })
+                if contains {
                     throw ChartError.inputDatasMustPositive
                 }
             }
@@ -74,7 +89,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
     }
     
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == self.inputLegendTitles?.count else {
+        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -103,19 +118,23 @@ extension BarChartParameter: LiteChartParametersProcesser {
         
         var displayString: [[String]] = Array(repeating: [], count: coupleCount)
         switch self.displayDataMode {
-        case .original, .mix, .percent:
+        case .original:
             displayString = self.computeOriginalString(for: coupleDatas)
-        case .none:
+        case .none, .mix, .percent:
             displayString = []
         }
         
+        
+        let valueForAxis = self.maxValueAndDividingPointForAxis(input: coupleDatas)
+        
+        
         var inputDatas: [(LiteChartDarkLightColor, [(String?, CGFloat)])] = []
-        let proportionalValue = self.computeProportionalValue(for: coupleDatas)
+        let proportionalValue = self.computeProportionalValue(for: coupleDatas, maxValue: valueForAxis.maxValue)
         
         for index in 0 ..< self.inputDatas.count {
             var datas: [(String?, CGFloat)] = []
             for innerIndex in 0 ..< self.inputDatas[index].1.count {
-                if self.displayDataMode != .none{
+                if self.displayDataMode == .original {
                     let string = displayString[index][innerIndex]
                     datas.append((string, CGFloat(proportionalValue[index][innerIndex])))
                 } else {
@@ -124,72 +143,175 @@ extension BarChartParameter: LiteChartParametersProcesser {
             }
             inputDatas.append((self.inputDatas[index].0, datas))
         }
-        if inputDatas.count >= 2 {
-            let firstDataCount = inputDatas[0].1.count
-            for inputData in inputDatas {
-                if inputData.1.count != firstDataCount {
-                    fatalError("框架内部数据处理错误，不给予拯救!")
-                }
+        
+        //Todo: 计算value分割线位置
+        let dividingNumber = valueForAxis.dividingPoint
+        let dividingValue = self.computeProportionalValue(for: dividingNumber, maxValue: valueForAxis.maxValue)
+        let valuesString = self.computeValueTitleString(dividingNumber)
+        var valueDividingLineConfigure: [AxisDividingLineConfigure] = []
+        
+        if self.isShowValueDividingLine {
+            for value in dividingValue {
+                let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, location: CGFloat(value))
+                valueDividingLineConfigure.append(configure)
             }
         }
         
-        let lineCount = self.numOfDividingLine
-        var axisDividingLineConfigures: [AxisDividingLineConfigure] = []
-        var valueTitles: [String] = []
-        if lineCount == 0 {
-            
-        }else {
-            var positions: [Double] = Array(repeating: 0.75, count: lineCount)
-            for (index, num) in positions.enumerated() {
-                positions[index] = num / Double(lineCount + 1) * Double(index + 1)
-            }
-            valueTitles = self.computeValueTitleString(positions, coupleDatas)
-            for index in 0 ..< self.numOfDividingLine {
-                let axisDividingLineConfigure = AxisDividingLineConfigure(dividingLineStyle: self.dividingLineStyle, dividingLineColor: self.dividingLineColor, location: CGFloat(positions[index]))
-                axisDividingLineConfigures.append(axisDividingLineConfigure)
+        
+        //Todo: 计算couple分割线位置
+        var coupleDividingLineConfigrue: [AxisDividingLineConfigure] = []
+        let numberCount = self.inputDatas[0].1.count
+        if self.isShowCoupleDividingLine && numberCount >= 2 {
+            let space: CGFloat = 1 / CGFloat(numberCount)
+            for index in 1 ..< numberCount {
+                let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingCoupleLineStyle, dividingLineColor: self.dividingCoupleLineColor, location: space * CGFloat(index))
+                coupleDividingLineConfigrue.append(configure)
             }
         }
         
-        guard valueTitles.count == self.numOfDividingLine else {
-            fatalError("框架内部数据处理错误，不给予拯救!")
-        }
         
         switch self.direction {
         case .bottomToTop:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valueTitles, inputDatas: inputDatas, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: [], yDividingPoints: axisDividingLineConfigures)
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure)
             return BarChartView(configure: barChartViewConfigure)
         case .leftToRight:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valueTitles, inputDatas: inputDatas, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: axisDividingLineConfigures, yDividingPoints: [])
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue)
             return BarChartView(configure: barChartViewConfigure)
         }
         
     }
     
-    private func computeDividingPointValue(_ positions: [Double], _ datas: [[Double]]) -> [Double] {
-        var maxData:Double = 0
-        for coupleDatas in datas {
-            let curMax = coupleDatas.max()
-            maxData = max(maxData, curMax!)
+    private func maxValueAndDividingPointForAxis(input datas: [[Double]]) -> (maxValue: Double, dividingPoint: [Double]) {
+        var maxValue = 0.0
+        for input in datas {
+            let max = input.max()
+            if let m = max {
+                maxValue = m
+            }
         }
-        return positions.map{ $0 * maxData / 0.75}
+        if maxValue == 0 {
+            maxValue = 1
+        }
+        maxValue = maxValue / 0.75
+        return self.caculateMaxValueAndDividingPointForAxis(input: maxValue)
+    }
+    
+    private func caculateMaxValueAndDividingPointForAxis(input maxData: Double) -> (maxValue: Double, dividingPoint: [Double]) {
+       
+        var inputData = maxData
+        if inputData == 0 {
+            inputData = 1
+        }
+
+        var firstNum: Int = 0
+        var strInput = String(inputData)
+        for char in strInput { // 获得首位数
+            if char != "0" && char != "." {
+                guard let num = Int(String(char)) else {
+                    fatalError("内部数据处理错误，不给予拯救")
+                }
+                firstNum = num
+                break
+            }
+        }
+
+        var standard:Double
+        var count:Double = 0
+        if inputData < 1 {
+            strInput.removeFirst(2)
+            for char in strInput {
+                if char == "0" {
+                    count += 1
+                } else { break }
+            }
+            standard = pow(0.1, count+1)
+        } else {
+            for char in strInput {
+                if char != "." {
+                    count += 1
+                } else { break }
+            }
+            standard = pow(10, count-1)
+        }
+        let base: Double = standard * Double(firstNum)
+        let remainder: Double = inputData - base
+        var value: Double
+        
+        if remainder == 0.0 {
+            value =  inputData
+        } else {
+            switch firstNum {
+            case 1:
+                if remainder < standard / 5 {
+                    value =  base + standard / 5
+                } else if remainder < standard / 2 {
+                    value =  base + standard / 2
+                } else if remainder < standard * 4 / 5 {
+                    value =  base + standard * 4 / 5
+                } else {
+                    value =  base + standard
+                }
+            case 2, 3:
+                if remainder < standard / 2 {
+                    value =  base + standard / 2
+                } else {
+                    value =  base + standard
+                }
+            case 4, 5, 6, 7:
+                value =  base + standard
+            case 8,9:
+                value =  standard * 10
+            default:
+                fatalError("内部数据处理错误，不给予拯救")
+            }
+        }
+
+        var tempValue:Double = value
+        while tempValue < 100 {
+            tempValue *= 10
+        }
+        let strValue = String(tempValue).prefix(2)
+        var dividingPart:Int = 0
+        switch strValue {
+        case "20", "40", "80":
+            dividingPart = 4
+        case "15", "25", "50":
+            dividingPart = 5
+        case "30", "60", "12", "18":
+            dividingPart = 6
+        case "35", "70":
+            dividingPart = 7
+        case "90":
+            dividingPart = 9
+        case "10":
+            dividingPart = 10
+        default:
+            fatalError("内部数据处理错误，不给予拯救")
+        }
+        
+        var dividingPoints = [Double]()
+        for index in 1 ..< dividingPart {
+            dividingPoints.append(value / Double(dividingPart * index))
+        }
+        
+        return (value, dividingPoints)
     }
     
     private func computeOriginalValue(for datas: [[Double]]) -> [[Double]] {
-        return self.inputDatas.map{
-            $0.1
+        return datas
+    }
+    
+    private func computeProportionalValue(for datas: [[Double]], maxValue: Double) -> [[Double]] {
+        return datas.map{
+            $0.map{
+                $0 / maxValue
+            }
         }
     }
     
-    private func computeProportionalValue(for datas: [[Double]]) -> [[Double]] {
-        var maxData:Double = 0
-        for coupleDatas in datas {
-            let curMax = coupleDatas.max()
-            maxData = max(maxData, curMax!)
-        }
-        return self.inputDatas.map{
-            $0.1.map{
-                $0 / maxData * 0.75
-            }
+    private func computeProportionalValue(for datas: [Double], maxValue: Double) -> [Double] {
+        return datas.map{
+            $0 / maxValue
         }
     }
     
@@ -201,7 +323,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
     
     private var displayValueTitleFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.positiveFormat = ",###"
+        formatter.positiveFormat = ",###.##"
         return formatter
     }
     
@@ -216,9 +338,9 @@ extension BarChartParameter: LiteChartParametersProcesser {
         }
     }
     
-    private func computeValueTitleString(_ positions: [Double], _ datas: [[Double]]) -> [String] {
+    private func computeValueTitleString(_ datas: [Double]) -> [String] {
         let formatter = self.displayValueTitleFormatter
-        return self.computeDividingPointValue(positions, datas).map {
+        return datas.map {
             let nsNumber = $0 as NSNumber
             return formatter.string(from: nsNumber) ?? "Data Error !"
         }

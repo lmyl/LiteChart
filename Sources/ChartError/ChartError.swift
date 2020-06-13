@@ -12,7 +12,8 @@ import Foundation
 enum ChartError: Error {
     case inputDatasNotTrueSorted
     case inputDatasMustPositive
-    case inputDatasNotMatched
+    case inputDatasNumbersNotMatchedCoupleTitle
+    case inputDatasNumberMustEqualForCouple
 }
 
 
@@ -23,8 +24,10 @@ extension ChartError: CustomStringConvertible {
             return "The data entered is not in the correct order"
         case .inputDatasMustPositive:
             return "The data entered must be positive"
-        case .inputDatasNotMatched:
-            return "The data entered must match in amount"
+        case .inputDatasNumbersNotMatchedCoupleTitle:
+            return "The data entered must match in couple title"
+        case .inputDatasNumberMustEqualForCouple:
+            return "The amount of data in each group must be equal"
         }
     }
 }

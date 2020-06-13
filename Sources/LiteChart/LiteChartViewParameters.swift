@@ -31,11 +31,17 @@ struct LiteChartViewParameters {
     
     var direction: BarChartDirection = .bottomToTop
     
-    var dividingLineStyle: AxisViewLlineStyle = .dotted
+    var dividingValueLineStyle: AxisViewLlineStyle = .dotted
     
-    var dividingColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
+    var dividingValueLineColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
     
-    var numOfDividingLine: Int = 0
+    var dividingCoupleLineStyle: AxisViewLlineStyle = .dotted
+    
+    var dividingCoupleLineColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
+        
+    var isShowValueDividingLine = false
+    
+    var isShowCoupleDividingLine = false
     
     
     private lazy var parametersProcesser: LiteChartParametersProcesser = {
@@ -44,8 +50,8 @@ struct LiteChartViewParameters {
             return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
         case .pie(inputDatas: let inputDatas):
             return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
-        case .bar(inputDates: let inputDatas):
-            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, coupleTitle: self.coupleTitles, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingLineStyle, dividingLineColor: self.dividingColor, numOfDividingLine: self.numOfDividingLine, inputLegendTitles: self.inputLegendTitles)
+        case .bar(inputDatas: let inputDatas):
+            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, inputLegendTitles: self.inputLegendTitles, isShowCoupleDividingLine: self.isShowCoupleDividingLine, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor)
         }
     }()
     
