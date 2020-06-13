@@ -23,12 +23,29 @@ struct LiteChartViewParameters {
     
     var titleDisplayLocation: ChartTitleDisplayLocation = .top
     
+    var coupleTitles: [String] = []
+    
+    var borderStyle: BarChartViewBorderStyle = .halfSurrounded
+    
+    var borderColor: LiteChartDarkLightColor = .init(lightColor: .black)
+    
+    var direction: BarChartDirection = .bottomToTop
+    
+    var dividingLineStyle: AxisViewLlineStyle = .dotted
+    
+    var dividingColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
+    
+    var numOfDividingLine: Int = 0
+    
+    
     private lazy var parametersProcesser: LiteChartParametersProcesser = {
         switch self.inputDatas {
         case .funal(let inputDatas):
             return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
         case .pie(inputDatas: let inputDatas):
             return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
+        case .bar(inputDates: let inputDatas):
+            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, coupleTitle: self.coupleTitles, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingLineStyle, dividingLineColor: self.dividingColor, numOfDividingLine: self.numOfDividingLine, inputLegendTitles: self.inputLegendTitles)
         }
     }()
     
