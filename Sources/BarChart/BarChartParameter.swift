@@ -288,12 +288,10 @@ extension BarChartParameter: LiteChartParametersProcesser {
         default:
             fatalError("内部数据处理错误，不给予拯救")
         }
-        
         var dividingPoints = [Double]()
         for index in 1 ..< dividingPart {
             dividingPoints.append(value / Double(dividingPart) * Double(index))
         }
-        
         return (value, dividingPoints)
     }
     
