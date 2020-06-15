@@ -338,23 +338,34 @@ extension BarChartParameter: LiteChartParametersProcesser {
     
     private func computeValueTitleString(_ datas: [Double]) -> [String] {
         let formatter = self.displayValueTitleFormatter
-        var miniDigits = 0
-        if let firstData = datas.first {
-            if String(firstData).contains(".") && String(firstData).last != "0"{
-                for char in String(firstData).reversed() {
-                    if char != "." && miniDigits < 2{
-                        miniDigits += 1
-                    } else {
-                        break
-                    }
-                }
-            }
-        }
-        formatter.minimumFractionDigits = miniDigits
-        return datas.map {
+        let datasString: [String] = datas.map{
             let nsNumber = $0 as NSNumber
             return formatter.string(from: nsNumber) ?? "Data Error !"
         }
+        var maxDigital = 0
+        for string in datasString {
+            let remain = string.split(separator: ".")
+            guard remain.count == 2 else {
+                continue
+            }
+            maxDigital = max(maxDigital, remain[1].count)
+        }
+        
+        var results: [String] = []
+        for string in datasString {
+            let remain = string.split(separator: ".")
+            if remain.count == 2 && remain[1].count < maxDigital {
+                let zeroString = String.init(repeating: "0", count: maxDigital - remain[1].count)
+                results.append(string + zeroString)
+            } else if remain.count == 1 {
+                let zeroString = String.init(repeating: "0", count: maxDigital)
+                results.append(string + "." + zeroString)
+            } else {
+                results.append(string)
+            }
+            
+        }
+        return results
     }
     
 }
