@@ -13,6 +13,7 @@ class BarChartView: UIView {
     let configure: BarChartViewConfigure
     
     var axisView: AxisView?
+    var unitLabel: DisplayLabel?
     var coupleTitleView: [DisplayLabel] = []
     var valueView: [DisplayLabel] = []
     var barView: [BarViews] = []
@@ -20,6 +21,7 @@ class BarChartView: UIView {
     init(configure: BarChartViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
+        insertUnitLabel()
         insertAxisView()
         insertBarViews()
         insertValueTitleView()
@@ -29,6 +31,7 @@ class BarChartView: UIView {
     required init?(coder: NSCoder) {
         self.configure = BarChartViewConfigure()
         super.init(coder: coder)
+        insertUnitLabel()
         insertAxisView()
         insertBarViews()
         insertValueTitleView()
@@ -37,10 +40,20 @@ class BarChartView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        updateUnitLabelConstraints()
         updateAxisViewConstraints()
         updateBarViewsContraints()
         updateValueViewConstraints()
         updateCoupleTitleViewConstraints()
+    }
+    
+    private func insertUnitLabel() {
+        guard let unit = self.configure.unitString else {
+            return
+        }
+        let unitLabel = DisplayLabel(configure: .init(contentString: unit, contentColor: self.configure.textColor, textAlignment: .left))
+        self.addSubview(unitLabel)
+        self.unitLabel = unitLabel
     }
     
     private func insertCoupleTitleView() {
@@ -163,6 +176,21 @@ class BarChartView: UIView {
         self.bottomViewHeight + self.labelViewSpace
     }
     
+    private func updateUnitLabelConstraints() {
+        guard let unit = self.unitLabel else {
+            return
+        }
+        var height = self.bounds.height / 20
+        height = min(height, 20)
+        unit.snp.updateConstraints{
+            make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(height)
+        }
+    }
+    
     private func updateAxisViewConstraints() {
         guard let axis = self.axisView else {
             return
@@ -170,7 +198,11 @@ class BarChartView: UIView {
         axis.snp.updateConstraints{
             make in
             make.right.equalToSuperview()
-            make.top.equalToSuperview()
+            if let unit = self.unitLabel {
+                make.top.equalTo(unit.snp.bottom)
+            } else {
+                make.top.equalToSuperview()
+            }
             make.left.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }

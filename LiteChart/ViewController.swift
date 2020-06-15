@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         configure.direction = .leftToRight
         configure.inputLegendTitles = ["山东", "湖北"]
         configure.titleString = "水果产量"
+        configure.unitString = "单位:t/h"
         
         do {
             let backgroundView = try LiteChartView(configure: configure)
@@ -29,8 +30,8 @@ class ViewController: UIViewController {
             backgroundView.snp.makeConstraints{
                 make in
                 make.center.equalToSuperview()
-                make.width.equalTo(40)
-                make.height.equalTo(40)
+                make.width.equalTo(400)
+                make.height.equalTo(400)
             }
         } catch(let error) {
             print(error.localizedDescription)

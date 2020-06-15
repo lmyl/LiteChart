@@ -39,7 +39,9 @@ struct BarChartParameter {
     
     var isShowCoupleDividingLine: Bool
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor) {
+    var unitString: String?
+    
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, unitString: String?) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
@@ -55,7 +57,7 @@ struct BarChartParameter {
         
         self.inputDatas = inputDatas
         self.coupleTitle = coupleTitle
-        
+        self.unitString = unitString
     }
     
 }
@@ -172,10 +174,10 @@ extension BarChartParameter: LiteChartParametersProcesser {
         
         switch self.direction {
         case .bottomToTop:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure)
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure, unitString: self.unitString)
             return BarChartView(configure: barChartViewConfigure)
         case .leftToRight:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue)
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: self.coupleTitle, valueTitle: valuesString, inputDatas: inputDatas, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue, unitString: self.unitString)
             return BarChartView(configure: barChartViewConfigure)
         }
         

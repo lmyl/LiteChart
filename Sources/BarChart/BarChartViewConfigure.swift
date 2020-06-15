@@ -28,6 +28,7 @@ struct BarChartViewConfigure {
     
     let yDividingPoints: [AxisDividingLineConfigure]
     
+    let unitString: String?
 }
 
 extension BarChartViewConfigure {
@@ -41,6 +42,7 @@ extension BarChartViewConfigure {
         self.xDividingPoints = []
         self.yDividingPoints = []
         self.borderStyle = .halfSurrounded
+        self.unitString = nil
     }
 }
 
