@@ -41,7 +41,7 @@ class LegendViews: UIView {
     
     private func updateLegendViewsConstraint() {
         var itemHeight = self.bounds.height / CGFloat(self.legendViews.count)
-        itemHeight = min(itemHeight, 20)
+        itemHeight = min(itemHeight, self.bounds.width / 2, 20)
         let spaceHeight = itemHeight / 10
         itemHeight = itemHeight - spaceHeight
         
