@@ -15,18 +15,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = BarChartViewConfigure(textColor: .init(lightUIColor: .black), coupleTitle: ["一月", "二月", "三月", "四月"], valueTitle: ["10", "30", "60"], inputDatas: [(.init(lightUIColor: .blue), [("20", 0.2), ("30", 0.3), ("40", 0.4), ("50", 0.5)]), (.init(lightUIColor: .green), [("20", 0.2), ("30", 0.3), ("40", 0.4), ("50", 0.5)])], direction: .leftToRight, borderColor: .init(lightUIColor: .black), borderStyle: .halfSurrounded, xDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.1), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.3), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .yellow), location: 0.6)], yDividingPoints: [])
+        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(.init(lightColor: .blueViolet), [30, 40, 50, 60])], coupleTitle: ["橘子", "苹果", "香蕉", "李子"]))
+        configure.isShowValueDividingLine = true
+        configure.isShowCoupleDividingLine = true
         
-        let backgroundView = BarChartView(configure: configure)
-        self.view.addSubview(backgroundView)
-        
-        backgroundView.snp.makeConstraints{
-            make in
-            make.center.equalToSuperview()
-            make.width.equalTo(300)
-            make.height.equalTo(300)
+        do {
+            let backgroundView = try LiteChartView(configure: configure)
+            self.view.addSubview(backgroundView)
+            
+            backgroundView.snp.makeConstraints{
+                make in
+                make.center.equalToSuperview()
+                make.width.equalTo(300)
+                make.height.equalTo(300)
+            }
+        } catch(let error) {
+            print(error.localizedDescription)
         }
-        
         
     }
 

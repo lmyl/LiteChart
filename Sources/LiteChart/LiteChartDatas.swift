@@ -11,5 +11,5 @@ import Foundation
 enum LiteChartDatas {
     case funal(inputDatas: [(Double, LiteChartDarkLightColor)])
     case pie(inputDatas: [(Double, LiteChartDarkLightColor)])
-    case bar(inputDatas: [(LiteChartDarkLightColor, String, [Double])])
+    case bar(inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String])
 }

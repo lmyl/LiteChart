@@ -39,7 +39,6 @@
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
-		0869141A24946B2100E259E6 /* BarChartConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0869141924946B2100E259E6 /* BarChartConfigure.swift */; };
 		0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E3248CCCE40015289B /* FunalChartParameters.swift */; };
 		0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */; };
 		087DEA8D248E736A001A40B9 /* LiteChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA8C248E736A001A40B9 /* LiteChartView.swift */; };
@@ -100,7 +99,6 @@
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
-		0869141924946B2100E259E6 /* BarChartConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartConfigure.swift; sourceTree = "<group>"; };
 		0876A4E3248CCCE40015289B /* FunalChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartParameters.swift; sourceTree = "<group>"; };
 		0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDisplayMode.swift; sourceTree = "<group>"; };
 		087DEA8C248E736A001A40B9 /* LiteChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartView.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 				08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */,
 				085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */,
 				08FF1A172492034900AE05F9 /* BarChartParameter.swift */,
-				0869141924946B2100E259E6 /* BarChartConfigure.swift */,
 			);
 			path = BarChart;
 			sourceTree = "<group>";
@@ -480,7 +477,6 @@
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
-				0869141A24946B2100E259E6 /* BarChartConfigure.swift in Sources */,
 				083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */,
 				08FF1A122491E18400AE05F9 /* BarViews.swift in Sources */,
 				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,

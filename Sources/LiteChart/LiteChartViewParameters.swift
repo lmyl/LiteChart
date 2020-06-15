@@ -27,17 +27,17 @@ struct LiteChartViewParameters {
     
     var borderStyle: BarChartViewBorderStyle = .halfSurrounded
     
-    var borderColor: LiteChartDarkLightColor = .init(lightColor: .black)
+    var borderColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
     var direction: BarChartDirection = .bottomToTop
     
     var dividingValueLineStyle: AxisViewLlineStyle = .dotted
     
-    var dividingValueLineColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
+    var dividingValueLineColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
     var dividingCoupleLineStyle: AxisViewLlineStyle = .dotted
     
-    var dividingCoupleLineColor: LiteChartDarkLightColor = .init(lightColor: .yellow)
+    var dividingCoupleLineColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
         
     var isShowValueDividingLine = false
     
@@ -48,10 +48,10 @@ struct LiteChartViewParameters {
         switch self.inputDatas {
         case .funal(let inputDatas):
             return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
-        case .pie(inputDatas: let inputDatas):
+        case .pie(let inputDatas):
             return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
-        case .bar(inputDatas: let inputDatas):
-            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, inputLegendTitles: self.inputLegendTitles, isShowCoupleDividingLine: self.isShowCoupleDividingLine, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor)
+        case .bar(let inputDatas, let coupleTitle):
+            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, coupleTitle: coupleTitle, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, inputLegendTitles: self.inputLegendTitles, isShowCoupleDividingLine: self.isShowCoupleDividingLine, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor)
         }
     }()
     

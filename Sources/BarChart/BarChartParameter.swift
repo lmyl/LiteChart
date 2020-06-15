@@ -39,7 +39,7 @@ struct BarChartParameter {
     
     var isShowCoupleDividingLine: Bool
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, String, [Double])], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
@@ -53,12 +53,8 @@ struct BarChartParameter {
         self.dividingCoupleLineColor = dividingCoupleLineColor
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
         
-        self.inputDatas = []
-        self.coupleTitle = []
-        for data in inputDatas {
-            self.inputDatas.append((data.0, data.2))
-            self.coupleTitle.append(data.1)
-        }
+        self.inputDatas = inputDatas
+        self.coupleTitle = coupleTitle
         
     }
     
@@ -145,12 +141,16 @@ extension BarChartParameter: LiteChartParametersProcesser {
         }
         
         //Todo: 计算value分割线位置
-        let dividingNumber = valueForAxis.dividingPoint
-        let dividingValue = self.computeProportionalValue(for: dividingNumber, maxValue: valueForAxis.maxValue)
-        let valuesString = self.computeValueTitleString(dividingNumber)
+        
+        var valuesString: [String] = []
         var valueDividingLineConfigure: [AxisDividingLineConfigure] = []
         
         if self.isShowValueDividingLine {
+            
+            let dividingNumber = valueForAxis.dividingPoint
+            let dividingValue = self.computeProportionalValue(for: dividingNumber, maxValue: valueForAxis.maxValue)
+            valuesString = self.computeValueTitleString(dividingNumber)
+            
             for value in dividingValue {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, location: CGFloat(value))
                 valueDividingLineConfigure.append(configure)
@@ -291,7 +291,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
         
         var dividingPoints = [Double]()
         for index in 1 ..< dividingPart {
-            dividingPoints.append(value / Double(dividingPart * index))
+            dividingPoints.append(value / Double(dividingPart) * Double(index))
         }
         
         return (value, dividingPoints)
