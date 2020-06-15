@@ -338,6 +338,19 @@ extension BarChartParameter: LiteChartParametersProcesser {
     
     private func computeValueTitleString(_ datas: [Double]) -> [String] {
         let formatter = self.displayValueTitleFormatter
+        var miniDigits = 0
+        if let firstData = datas.first {
+            if String(firstData).contains(".") && String(firstData).last != "0"{
+                for char in String(firstData).reversed() {
+                    if char != "." && miniDigits < 2{
+                        miniDigits += 1
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
+        formatter.minimumFractionDigits = miniDigits
         return datas.map {
             let nsNumber = $0 as NSNumber
             return formatter.string(from: nsNumber) ?? "Data Error !"
