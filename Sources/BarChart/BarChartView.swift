@@ -248,7 +248,7 @@ class BarChartView: UIView {
                 let pointY = axis.bounds.height * (1 - yPoint.location)
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
                 let center = CGPoint(x: self.bounds.origin.x + self.leftViewWidth / 2, y: endPoint.y)
-                var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count)
+                var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count + 1)
                 labelHeight = min(labelHeight, 20)
                 let labelView = self.valueView[index]
                 labelView.snp.updateConstraints{
@@ -267,7 +267,7 @@ class BarChartView: UIView {
                 let pointX = axis.bounds.width * xPoint
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: self.bounds.origin.y + axis.bounds.height)
                 let center = CGPoint(x: endPoint.x, y: self.bounds.origin.y + self.bounds.height - self.bottomViewHeight / 2)
-                var labelWidth = axis.bounds.width / CGFloat(self.configure.valueTitle.count)
+                var labelWidth = axis.bounds.width / CGFloat(self.configure.valueTitle.count + 1)
                 labelWidth = min(labelWidth, 20)
                 let labelView = self.valueView[index]
                 labelView.snp.updateConstraints{
