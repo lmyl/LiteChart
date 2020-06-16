@@ -28,7 +28,16 @@ class DisplayLabel: UIView {
             return
         }
         
-        let adjustFontAndSize = self.computeSuitableFont(for: rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context?.saveGState()
+        
+        var textSizeArea = rect.size
+        if self.configure.textDirection == .vertical {
+            context?.rotate(by: CGFloat(0 - Double.pi / 2))
+            textSizeArea = CGSize(width: textSizeArea.height, height: textSizeArea.width)
+        }
+        
+        let adjustFontAndSize = self.computeSuitableFont(for: textSizeArea)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = self.configure.textAlignment
         var textAttributs: [NSAttributedString.Key : Any] = [:]
@@ -36,10 +45,18 @@ class DisplayLabel: UIView {
         textAttributs[.foregroundColor] = self.configure.contentColor.color
         textAttributs[.paragraphStyle] = paragraphStyle
         
-        let stringRect = CGRect(x: rect.origin.x, y: rect.origin.y + (rect.height - adjustFontAndSize.1.height) / 2, width: rect.width, height: adjustFontAndSize.1.height)
-        
+        var stringRect: CGRect
+        switch self.configure.textDirection {
+        case .horizontal:
+            stringRect = CGRect(x: rect.origin.x, y: rect.origin.y + (rect.height - adjustFontAndSize.1.height) / 2, width: rect.width, height: adjustFontAndSize.1.height)
+        case .vertical:
+            let textSize = adjustFontAndSize.1
+            stringRect = CGRect(x: 0 - rect.height, y: (rect.width - textSize.height) / 2, width: rect.height, height: textSize.height)
+        }
         let nsString = self.configure.contentString as NSString
         nsString.draw(in: stringRect, withAttributes: textAttributs)
+        
+        context?.restoreGState()
         
     }
 }

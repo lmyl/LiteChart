@@ -33,6 +33,7 @@
 		083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */; };
 		083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */; };
 		083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */; };
+		085787632498780300A95D16 /* DisplayLabelTextDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085787622498780300A95D16 /* DisplayLabelTextDirection.swift */; };
 		085CFE7724920C4B008E0E0E /* BarChartDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CFE7624920C4B008E0E0E /* BarChartDirection.swift */; };
 		085CFE7924922D4C008E0E0E /* BarChartViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */; };
 		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
@@ -93,6 +94,7 @@
 		083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewLineStyle.swift; sourceTree = "<group>"; };
 		083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisDividingLineConfigure.swift; sourceTree = "<group>"; };
 		083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewBorderStyle.swift; sourceTree = "<group>"; };
+		085787622498780300A95D16 /* DisplayLabelTextDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelTextDirection.swift; sourceTree = "<group>"; };
 		085CFE7624920C4B008E0E0E /* BarChartDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartDirection.swift; sourceTree = "<group>"; };
 		085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartViewBorderStyle.swift; sourceTree = "<group>"; };
 		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */,
+				085787622498780300A95D16 /* DisplayLabelTextDirection.swift */,
 				080368EB248A7D5E00D1413C /* DisplayLabelConfigure.swift */,
 			);
 			path = DisplayLabel;
@@ -496,6 +499,7 @@
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
 				08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */,
 				087DEA8F248E7571001A40B9 /* LiteChartViewParameters.swift in Sources */,
+				085787632498780300A95D16 /* DisplayLabelTextDirection.swift in Sources */,
 				08FF1A102491D75300AE05F9 /* BarViewConfigure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

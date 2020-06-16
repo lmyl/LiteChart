@@ -18,10 +18,11 @@ class ViewController: UIViewController {
         var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(.init(lightColor: .blueViolet), [1, 1, 2, 2]), (.init(lightColor: .hotPink), [1, 1, 2, 2])], coupleTitle: ["橘子", "苹果", "香蕉", "李子"]))
         configure.isShowValueDividingLine = true
         configure.isShowCoupleDividingLine = true
-        configure.direction = .leftToRight
+        configure.direction = .bottomToTop
         configure.inputLegendTitles = ["山东", "湖北"]
         configure.titleString = "水果产量"
-        configure.unitString = "单位:t/h"
+        configure.valueUnitString = "吨/月"
+        configure.coupleUnitString = "产地"
         
         do {
             let backgroundView = try LiteChartView(configure: configure)
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
             backgroundView.snp.makeConstraints{
                 make in
                 make.center.equalToSuperview()
-                make.width.equalTo(400)
+                make.width.equalTo(self.view.safeAreaLayoutGuide.snp.width)
                 make.height.equalTo(400)
             }
         } catch(let error) {
