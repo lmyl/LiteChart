@@ -8,7 +8,7 @@
 
 import UIKit
 
-class hexagonLegend: UIView { 
+class HexagonLegend: UIView { 
     
     var configure: LegendConfigure
     

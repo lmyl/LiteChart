@@ -47,7 +47,7 @@ class LegendView: UIView {
         case .pentagram:
             legend = PentagramLegend(configure: self.configure.legendConfigure)
         case .hexagon:
-            legend = hexagonLegend(configure: self.configure.legendConfigure)
+            legend = HexagonLegend(configure: self.configure.legendConfigure)
         }
         self.addSubview(legend)
         self.legendLeftView = legend

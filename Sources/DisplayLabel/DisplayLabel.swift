@@ -20,6 +20,7 @@ class DisplayLabel: UIView {
     required init?(coder: NSCoder) {
         self.configure = DisplayLabelConfigure()
         super.init(coder: coder)
+        self.backgroundColor = .clear
     }
     
     override func draw(_ rect: CGRect) {
