@@ -10,4 +10,8 @@ import Foundation
 
 enum Legend {
     case square
+    case triangle
+    case circle
+    case pentagram
+    case hexagon
 }
