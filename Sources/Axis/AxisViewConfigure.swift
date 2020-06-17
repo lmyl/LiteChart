@@ -23,12 +23,18 @@ struct AxisViewConfigure {
     
     let borderStyle: [AxisViewBorderStyle]
     
-    init(originPoint: CGPoint = CGPoint(x: 0, y: 0), axisColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white), verticalDividingPoints : [AxisDividingLineConfigure] = [], horizontalDividingPoints: [AxisDividingLineConfigure] = [], borderStyle: [AxisViewBorderStyle] = [], borderColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white)) {
+    let isShowXAxis: Bool
+    
+    let isShowYAxis: Bool
+    
+    init(originPoint: CGPoint = CGPoint(x: 0, y: 0), axisColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white), verticalDividingPoints : [AxisDividingLineConfigure] = [], horizontalDividingPoints: [AxisDividingLineConfigure] = [], borderStyle: [AxisViewBorderStyle] = [], borderColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white), isShowXAxis: Bool = true, isShowYAxis: Bool = true) {
         self.originPoint = originPoint
         self.axisColor = axisColor
         self.verticalDividingPoints = verticalDividingPoints
         self.horizontalDividingPoints = horizontalDividingPoints
         self.borderColor = borderColor
         self.borderStyle = borderStyle
+        self.isShowXAxis = isShowXAxis
+        self.isShowYAxis = isShowYAxis
     }
 }

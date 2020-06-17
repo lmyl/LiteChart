@@ -15,27 +15,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(.init(lightColor: .blueViolet), [1, 1, 2, 2]), (.init(lightColor: .hotPink), [1, 1, 2, 2])], coupleTitle: ["橘子", "苹果", "香蕉", "李子"]))
-        configure.isShowValueDividingLine = true
-        configure.isShowCoupleDividingLine = true
-        configure.direction = .bottomToTop
-        configure.inputLegendTitles = ["山东", "湖北"]
-        configure.titleString = "水果产量"
-        configure.valueUnitString = "吨/月"
-        configure.coupleUnitString = "产地"
+        let configure = LineChartViewConfigure(textColor: .init(lightUIColor: .black), coupleTitle: ["一月", "二月", "三月", "四月"], valueTitle: ["20", "40", "60", "80"], inputDatas: [(LiteChartDarkLightColor(lightUIColor: .orange), .dotted, .circle, [("20", CGPoint(x: 0.1, y: 0.1)), ("30", CGPoint(x: 0.2, y: 0.15)), ("60", CGPoint(x: 0.3, y: 0.3)), ("80", CGPoint(x: 0.4, y: 0.4))]), (LiteChartDarkLightColor(lightUIColor: .blue), .solid, .pentagram, [("10", CGPoint(x: 0.1, y: 0.05)), ("50", CGPoint(x: 0.2, y: 0.25)), ("20", CGPoint(x: 0.3, y: 0.1)), ("70", CGPoint(x: 0.4, y: 0.35))])], borderColor: .init(lightUIColor: .black), borderStyle: .halfSurrounded, axisOriginal: .zero, axisColor: .init(lightUIColor: .green), xDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.1), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.2), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.3), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.4)], yDividingPoints: [.init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.1), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.2), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.3), .init(dividingLineStyle: .dotted, dividingLineColor: .init(lightUIColor: .systemPink), location: 0.4)], valueUnitString: nil, coupleUnitString: nil)
         
-        do {
-            let backgroundView = try LiteChartView(configure: configure)
-            self.view.addSubview(backgroundView)
-            
-            backgroundView.snp.makeConstraints{
-                make in
-                make.center.equalToSuperview()
-                make.width.equalTo(self.view.safeAreaLayoutGuide.snp.width)
-                make.height.equalTo(400)
-            }
-        } catch(let error) {
-            print(error.localizedDescription)
+        let view = LineChartView(configure: configure)
+        self.view.addSubview(view)
+        view.snp.updateConstraints{
+            make in
+            make.width.equalToSuperview()
+            make.center.equalToSuperview()
+            make.height.equalTo(300)
         }
         
     }

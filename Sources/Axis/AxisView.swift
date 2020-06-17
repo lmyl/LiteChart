@@ -84,8 +84,12 @@ class AxisView: UIView {
         let verAxisLineTopPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y)
         let verAxisLineBottomPoint = CGPoint(x: rect.origin.x + rect.width * originPoint.x, y: rect.origin.y + rect.height)
         context?.setStrokeColor(self.configure.axisColor.color.cgColor)
-        context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
-        context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
+        if self.configure.isShowXAxis {
+            context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
+        }
+        if self.configure.isShowYAxis {
+            context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
+        }
         context?.drawPath(using: .stroke)
         
         for verDiv in self.configure.verticalDividingPoints {

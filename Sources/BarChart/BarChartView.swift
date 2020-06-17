@@ -49,33 +49,33 @@ class BarChartView: UIView {
     }
     
     private func insertUnitLabel() {
-        guard let valueUnit = self.configure.valueUnitString else {
-            return
-        }
         var unitLabel: DisplayLabel
-        switch self.configure.direction {
-        case .leftToRight:
-            unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor))
-            self.xUnitLabel = unitLabel
-        case .bottomToTop:
-            unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
-            self.yUnitLabel = unitLabel
-        }
-        self.addSubview(unitLabel)
         
-        guard let coupleUnit = self.configure.coupleUnitString else {
-            return
+        if let valueUnit = self.configure.valueUnitString {
+            switch self.configure.direction {
+            case .leftToRight:
+                unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor))
+                self.xUnitLabel = unitLabel
+            case .bottomToTop:
+                unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                self.yUnitLabel = unitLabel
+            }
+            self.addSubview(unitLabel)
         }
         
-        switch self.configure.direction {
-        case .leftToRight:
-            unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
-            self.yUnitLabel = unitLabel
-        case .bottomToTop:
-            unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor))
-            self.xUnitLabel = unitLabel
+        if let coupleUnit = self.configure.coupleUnitString {
+            switch self.configure.direction {
+            case .leftToRight:
+                unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                self.yUnitLabel = unitLabel
+            case .bottomToTop:
+                unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor))
+                self.xUnitLabel = unitLabel
+            }
+            self.addSubview(unitLabel)
         }
-        self.addSubview(unitLabel)
+        
+        
     }
     
     private func insertCoupleTitleView() {
@@ -115,7 +115,7 @@ class BarChartView: UIView {
         case .fullySurrounded:
             borderStlye = [.left, .bottom, .right, .top]
         }
-        let axisView = AxisView(configure: .init(originPoint: original, axisColor: self.configure.borderColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor))
+        let axisView = AxisView(configure: .init(originPoint: original, axisColor: self.configure.borderColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: false, isShowYAxis: false))
         self.addSubview(axisView)
         self.axisView = axisView
     }
