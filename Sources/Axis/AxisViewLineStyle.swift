@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AxisViewLlineStyle {
+enum AxisViewLineStyle {
     case solid
     case dotted
     case segment

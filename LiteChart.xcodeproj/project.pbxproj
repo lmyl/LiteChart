@@ -69,6 +69,7 @@
 		08FF1A182492034900AE05F9 /* BarChartParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A172492034900AE05F9 /* BarChartParameter.swift */; };
 		08FF1A1A2492037200AE05F9 /* BarChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */; };
 		3651576EBA66A2D1A7696981 /* Pods_LiteChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */; };
+		F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565C5EE249A5F95009527E0 /* LineChartParameters.swift */; };
 		F56C1939249863BE00A002AE /* TriangleLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C1938249863BE00A002AE /* TriangleLegend.swift */; };
 		F56C193B24986AD800A002AE /* CircleLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C193A24986AD800A002AE /* CircleLegend.swift */; };
 		F56C193D2498713F00A002AE /* PentagramLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C193C2498713F00A002AE /* PentagramLegend.swift */; };
@@ -143,6 +144,7 @@
 		3F4ADBC0C25B32D99135C5E9 /* Pods-LiteChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.debug.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.debug.xcconfig"; sourceTree = "<group>"; };
 		43F7A81B793962FBDD890E0A /* Pods-LiteChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiteChart.release.xcconfig"; path = "Target Support Files/Pods-LiteChart/Pods-LiteChart.release.xcconfig"; sourceTree = "<group>"; };
 		931E2C31F17A820D52C1B523 /* Pods_LiteChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiteChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F565C5EE249A5F95009527E0 /* LineChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartParameters.swift; sourceTree = "<group>"; };
 		F56C1938249863BE00A002AE /* TriangleLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleLegend.swift; sourceTree = "<group>"; };
 		F56C193A24986AD800A002AE /* CircleLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLegend.swift; sourceTree = "<group>"; };
 		F56C193C2498713F00A002AE /* PentagramLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PentagramLegend.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				088A258A249A235700B533D3 /* LineViewsConfigure.swift */,
 				088A258C249A257300B533D3 /* LineChartView.swift */,
 				088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */,
+				F565C5EE249A5F95009527E0 /* LineChartParameters.swift */,
 			);
 			path = LineChart;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 			files = (
 				0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */,
 				087DEA8D248E736A001A40B9 /* LiteChartView.swift in Sources */,
+				F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */,
 				087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,

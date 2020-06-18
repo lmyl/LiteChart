@@ -10,7 +10,7 @@ import Foundation
 import CoreGraphics
 
 struct AxisDividingLineConfigure {
-    let dividingLineStyle: AxisViewLlineStyle
+    let dividingLineStyle: AxisViewLineStyle
     
     let dividingLineColor: LiteChartDarkLightColor
     

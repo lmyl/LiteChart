@@ -27,11 +27,11 @@ struct BarChartParameter {
     
     var displayDataMode: ChartValueDisplayMode
     
-    var dividingValueLineStyle: AxisViewLlineStyle
+    var dividingValueLineStyle: AxisViewLineStyle
     
     var dividingValueLineColor: LiteChartDarkLightColor
     
-    var dividingCoupleLineStyle: AxisViewLlineStyle
+    var dividingCoupleLineStyle: AxisViewLineStyle
     
     var dividingCoupleLineColor: LiteChartDarkLightColor
     
@@ -43,7 +43,7 @@ struct BarChartParameter {
     
     var coupleUnitString: String?
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLlineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLlineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, valueUnitString: String?, coupleUnitString: String?) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, valueUnitString: String?, coupleUnitString: String?) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
@@ -362,7 +362,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
             if remain.count == 2 && remain[1].count < maxDigital {
                 let zeroString = String.init(repeating: "0", count: maxDigital - remain[1].count)
                 results.append(string + zeroString)
-            } else if remain.count == 1 {
+            } else if remain.count == 1 && maxDigital > 0{
                 let zeroString = String.init(repeating: "0", count: maxDigital)
                 results.append(string + "." + zeroString)
             } else {
