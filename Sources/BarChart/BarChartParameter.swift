@@ -164,9 +164,11 @@ extension BarChartParameter: LiteChartParametersProcesser {
         
         
         //Todo: 计算couple分割线位置
+        var coupleTitles: [String] = []
         var coupleDividingLineConfigrue: [AxisDividingLineConfigure] = []
         let numberCount = self.inputDatas[0].1.count
         if self.isShowCoupleDividingLine && numberCount >= 2 {
+            coupleTitles = self.coupleTitle
             let space: CGFloat = 1 / CGFloat(numberCount)
             for index in 1 ..< numberCount {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingCoupleLineStyle, dividingLineColor: self.dividingCoupleLineColor, location: space * CGFloat(index))
