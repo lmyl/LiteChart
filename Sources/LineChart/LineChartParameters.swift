@@ -126,8 +126,8 @@ extension LineChartParameters: LiteChartParametersProcesser {
             fatalError("内部数据处理错误，不给予拯救")
         }
         var proportionX: [Double] = []
-        for index in 1 ... firstValueCount {
-            proportionX.append(1 / Double(firstValueCount + 1) * Double(index))
+        for index in 0 ..< firstValueCount {
+            proportionX.append(1 / Double(firstValueCount + 1) * Double(index + 1))
         }
         for index in 0 ..< self.inputDatas.count {
             var datas: [(String?, CGPoint)] = []
@@ -197,35 +197,63 @@ extension LineChartParameters: LiteChartParametersProcesser {
         return self.caculateValueAndDividingPointForAxis(input: (maxValue, minValue))
     }
     
-    private func computeOriginalValueForAxis(_ input: (Double, Double)) -> CGPoint {
-        if input.0 == 0 && input.1 == 0 {
+    private func computeOriginalValueForAxis(_ input: (maxValue: Double, minValue: Double)) -> CGPoint {
+        if input.minValue > 0 {
             return CGPoint.zero
+        } else if input.maxValue < 0 {
+            return CGPoint(x: 0, y: 1)
+        } else {
+            let sumValue = input.maxValue + abs(input.minValue)
+            let yOffset = abs(input.minValue) / sumValue
+            return CGPoint(x: 0, y: yOffset)
         }
-        let yOffset = input.1 / (input.0 + input.1)
-        return CGPoint(x: 0, y: yOffset)
-        
     }
     
     private func computeOriginalValue(for datas: [[Double]]) -> [[Double]] {
         return datas
     }
     
-    private func computeProportionalValue(for datas: [[Double]], axisValue: (Double, Double)) -> [[Double]] {
-        let sumValue = axisValue.0 + axisValue.1
-        print("sumvalue = \(sumValue)")
-        return datas.map{
-            $0.map{
-                ($0 + axisValue.1) / sumValue
+    private func computeProportionalValue(for datas: [[Double]], axisValue: (maxValue: Double, minValue: Double)) -> [[Double]] {
+        if axisValue.minValue > 0 { // 均为正数
+            let sumValue = axisValue.maxValue
+            return datas.map{
+                $0.map{
+                    $0 / sumValue
+                }
+            }
+        } else if axisValue.maxValue < 0 { // 均为负数
+            let sumValue = abs(axisValue.minValue)
+            return datas.map{
+                $0.map{
+                    (sumValue + $0) / sumValue
+                }
+            }
+        } else { // 有正有负
+            let sumValue = axisValue.maxValue + abs(axisValue.minValue)
+            return datas.map{
+                $0.map{
+                    ($0 + abs(axisValue.minValue)) / sumValue
+                }
             }
         }
     }
     
-    private func computeProportionalValue(for datas: [Double], axisValue: (Double, Double)) -> [Double] {
-        
-        let sumValue = axisValue.0 + axisValue.1
-        print("sumValue2 = \(sumValue)")
-        return datas.map{
-            ($0 + axisValue.1) / sumValue
+    private func computeProportionalValue(for datas: [Double], axisValue: (maxValue: Double, minValue: Double)) -> [Double] {
+        if axisValue.minValue > 0 { // 均为正数
+            let sumValue = axisValue.maxValue
+            return datas.map{
+                $0 / sumValue
+            }
+        } else if axisValue.maxValue < 0 { // 均为负数
+            let sumValue = abs(axisValue.minValue)
+            return datas.map{
+                (sumValue + $0) / sumValue
+            }
+        } else { // 有正有负
+            let sumValue = axisValue.maxValue + abs(axisValue.minValue)
+            return datas.map{
+               ($0 + abs(axisValue.minValue)) / sumValue
+            }
         }
     }
     
@@ -242,10 +270,6 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
         
         let inputData = max(abs(tempData.0), abs(tempData.1))
-        var positiveLarger = false
-        if tempData.0 >= tempData.1 {
-            positiveLarger = true
-        }
         var firstNum: Int = 0
         var strInput = String(inputData)
         for char in strInput { // 获得首位数
@@ -332,7 +356,6 @@ extension LineChartParameters: LiteChartParametersProcesser {
         default:
             fatalError("内部数据处理错误，不给予拯救")
         }
-        var dividingPoints = [Double]()
         let dividingInterval = value / Double(dividingPart)
         
         //Todo:
@@ -354,57 +377,48 @@ extension LineChartParameters: LiteChartParametersProcesser {
             }
             dividingPoint = dividingPoint.reversed()
             let maxAxisValue = 0.0
-            let minAxisValue = value
+            let minAxisValue = -value
             dividingPoint.removeLast()
             dividingPoint.removeFirst()
             return ((maxAxisValue, minAxisValue), dividingPoint)
-        } else if tempData.maxValue >= abs(tempData.minValue) {
-            
-        } else {
-            
+        } else if tempData.maxValue >= abs(tempData.minValue) { // 正数部分较大
+            var dividingPoint: [Double] = []
+            var count = 1
+            while abs(tempData.minValue) > Double(count) * dividingInterval {
+                count += 1
+            }
+            for index in 1 ... count {
+                dividingPoint.append(0 - Double(index) * dividingInterval)
+            }
+            dividingPoint = dividingPoint.reversed()
+            for index in 0 ... dividingPart {
+                dividingPoint.append(Double(index) * dividingInterval)
+            }
+            let maxAxisValue = value
+            let minAxisValue = tempData.minValue
+            dividingPoint.removeLast()
+            dividingPoint.removeFirst()
+            return ((maxAxisValue, minAxisValue), dividingPoint)
+        } else { // 负数部分较大
+            var dividingPoint: [Double] = []
+            for index in 0 ... dividingPart {
+                dividingPoint.append(0 - Double(index) * dividingInterval)
+            }
+            dividingPoint = dividingPoint.reversed()
+            var count = 1
+            while tempData.maxValue > Double(count) * dividingInterval {
+                count += 1
+            }
+            for index in 1 ... count {
+                dividingPoint.append(Double(index) * dividingInterval)
+            }
+            let maxAxisValue = tempData.maxValue
+            let minAxisValue = -value
+            dividingPoint.removeLast()
+            dividingPoint.removeFirst()
+            return ((maxAxisValue, minAxisValue), dividingPoint)
         }
         
-        if positiveLarger {
-            var negativerRemainder = tempData.1
-            var count = 0
-            while negativerRemainder > 0 {
-                negativerRemainder -= dividingInterval
-                count += 1
-            }
-            
-            for index in (0 ... count).reversed() {
-                if index == 0 {
-                    dividingPoints.append(0)
-                } else {
-                    dividingPoints.append(-Double(index) * dividingInterval)
-                }
-            }
-            for index in 1 ... dividingPart {
-                dividingPoints.append(Double(index) * dividingInterval)
-            }
-        } else {
-            var posotiveRemainder = tempData.0
-            var count = 0
-            while posotiveRemainder > 0 {
-                posotiveRemainder -= dividingInterval
-                count += 1
-            }
-            for index in (1 ... dividingPart).reversed() {
-                dividingPoints.append(-Double(index) * dividingInterval)
-            }
-            for index in 0 ... count {
-                dividingPoints.append(Double(index) * dividingInterval)
-            }
-        }
-        var min:Double = 0
-        var max:Double = 0
-        if let minTemp = dividingPoints.first, let maxTemp = dividingPoints.last {
-            min = abs(minTemp)
-            max = maxTemp
-        }
-        dividingPoints.removeLast()
-        dividingPoints.removeFirst()
-        return ((max, min), dividingPoints)
     }
     
     
@@ -436,7 +450,6 @@ extension LineChartParameters: LiteChartParametersProcesser {
             let nsNumber = $0 as NSNumber
             return formatter.string(from: nsNumber) ?? "Data Error !"
         }
-        print(datasString)
         var maxDigital = 0
         for string in datasString {
             let remain = string.split(separator: ".")
