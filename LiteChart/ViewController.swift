@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(.init(lightUIColor: .red), .solid, .square, [-0.1, -0.2, -0.3]), (.init(lightUIColor: .green), .solid, .square, [-0.1, -0.4, -0.6])], coupleTitle: ["1月", "2月", "3月"]))
+        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(.init(lightUIColor: .red), .solid, .square, []), (.init(lightUIColor: .green), .solid, .square, [])], coupleTitle: []))
         configure.isShowCoupleDividingLine = true
         configure.isShowValueDividingLine = true
         configure.inputLegendTitles = ["2018", "2019"]

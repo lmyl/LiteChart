@@ -72,7 +72,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         if inputDatas.count > 0 {
             let firstDataCount = inputDatas[0].3.count
             if firstDataCount != self.coupleTitles.count {
-                throw ChartError.inputDatasNumberMustEqualForCouple
+                throw ChartError.inputDatasNumbersNotMatchedCoupleTitle
             }
             for inputData in inputDatas {
                 if inputData.3.count != firstDataCount {
@@ -169,23 +169,31 @@ extension LineChartParameters: LiteChartParametersProcesser {
     
     
     private func positiveAndNegativeValueForAxis(input datas: [[Double]]) -> (axisValue: (Double, Double), dividingPoints: [Double]) {
-        var maxValue: Double = -1
-        var minValue: Double = 1
-        for data in datas {
-            let maxCur = data.max()
-            let minCur = data.min()
-            if let maximum = maxCur, let minimum = minCur {
-                maxValue = max(maximum, maxValue)
-                minValue = min(minimum, minValue)
+        
+        var maxValue: Double
+        var minValue: Double
+        
+        if datas.isEmpty {
+            fatalError("内部数据处理错误，不给予拯救")
+        } else if !datas.isEmpty && datas[0].isEmpty {
+            maxValue = 0
+            minValue = 0
+        } else {
+            maxValue = datas[0][0]
+            minValue = maxValue
+            for data in datas {
+                let maxCur = data.max()
+                let minCur = data.min()
+                if let maximum = maxCur, let minimum = minCur {
+                    maxValue = max(maximum, maxValue)
+                    minValue = min(minimum, minValue)
+                }
             }
         }
-        if minValue <= 0 {
-            minValue = -minValue // 输出负数表示数据无效
-        } else {
-            minValue = -1
-        }
+        
         maxValue = maxValue / 0.75
         minValue = minValue / 0.75
+        
         return self.caculateValueAndDividingPointForAxis(input: (maxValue, minValue))
     }
     
@@ -221,23 +229,19 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
     }
     
-    private func caculateValueAndDividingPointForAxis(input data: (Double, Double)) -> (axisValue: (Double, Double), dividingPoints: [Double]) {
-        print("input data is \(data)")
+    private func caculateValueAndDividingPointForAxis(input data: (maxValue: Double, minValue: Double)) -> (axisValue: (Double, Double), dividingPoints: [Double]) {
         // 判断0
         var tempData = data
-        if data.0 == 0 {
-            tempData.0 = 1
+        
+        if data.maxValue == 0 {
+            tempData.maxValue = 1
         }
-        if data.1 == 0 {
-            tempData.1 = 1
+        
+        if data.minValue == 0 {
+            tempData.minValue = -1
         }
-        if data.0 < 0 {
-            tempData.0 = 0
-        }
-        if data.1 < 0 {
-            tempData.1 = 0
-        }
-        let inputData = max(tempData.0, tempData.1)
+        
+        let inputData = max(abs(tempData.0), abs(tempData.1))
         var positiveLarger = false
         if tempData.0 >= tempData.1 {
             positiveLarger = true
@@ -330,6 +334,36 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
         var dividingPoints = [Double]()
         let dividingInterval = value / Double(dividingPart)
+        
+        //Todo:
+        
+        if tempData.maxValue >= 0 && tempData.minValue >= 0 {
+            var dividingPoint: [Double] = []
+            for index in 0 ... dividingPart {
+                dividingPoint.append(Double(index) * dividingInterval)
+            }
+            let maxAxisValue = value
+            let minAxisValue = 0.0
+            dividingPoint.removeLast()
+            dividingPoint.removeFirst()
+            return ((maxAxisValue, minAxisValue), dividingPoint)
+        } else if tempData.minValue < 0 && tempData.maxValue < 0 {
+            var dividingPoint: [Double] = []
+            for index in 0 ... dividingPart {
+                dividingPoint.append( 0 - Double(index) * dividingInterval)
+            }
+            dividingPoint = dividingPoint.reversed()
+            let maxAxisValue = 0.0
+            let minAxisValue = value
+            dividingPoint.removeLast()
+            dividingPoint.removeFirst()
+            return ((maxAxisValue, minAxisValue), dividingPoint)
+        } else if tempData.maxValue >= abs(tempData.minValue) {
+            
+        } else {
+            
+        }
+        
         if positiveLarger {
             var negativerRemainder = tempData.1
             var count = 0
