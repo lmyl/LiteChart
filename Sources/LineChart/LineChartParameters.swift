@@ -151,8 +151,10 @@ extension LineChartParameters: LiteChartParametersProcesser {
             }
         }
         
+        var coupleTitleString: [String] = []
         var coupleDividingLineConfigure: [AxisDividingLineConfigure] = []
         if self.isShowCoupleDividingLine && firstValueCount >= 2 {
+            coupleTitleString = self.coupleTitles
             for value in proportionX {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingCoupleLineStyle, dividingLineColor: self.dividingCoupleLineColor, location: CGFloat(value))
                 coupleDividingLineConfigure.append(configure)
@@ -160,7 +162,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(valueForAxis.axisValue)
-        let lineChartViewConfigure = LineChartViewConfigure(textColor: self.textColor, coupleTitle: self.coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+        let lineChartViewConfigure = LineChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
         return LineChartView(configure: lineChartViewConfigure)
     }
     

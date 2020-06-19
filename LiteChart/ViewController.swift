@@ -15,10 +15,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(.init(lightUIColor: .red), .solid, .square, [-1,-2,-3]), (.init(lightUIColor: .green), .solid, .square, [4,5,6])], coupleTitle: ["1", "2", "3"]))
+        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(.init(lightUIColor: .red), .solid, .square, [-1,-2,-3]), (.init(lightUIColor: .red), .solid, .pentagram, [4,5,6])], coupleTitle: ["1", "2", "3"]))
         
-        configure.isShowCoupleDividingLine = true
-        configure.isShowValueDividingLine = true
+        configure.isShowCoupleDividingLine = false
+        configure.isShowValueDividingLine = false
         configure.inputLegendTitles = ["2018", "2019"]
         configure.valueUnitString = "温度差"
         configure.coupleUnitString = "月份"
