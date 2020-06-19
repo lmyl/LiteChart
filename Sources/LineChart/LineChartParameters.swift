@@ -21,9 +21,7 @@ struct LineChartParameters {
     var coupleTitles: [String]
     
     var inputLegendTitles: [String]? // 图例显示
-    
-    var legendType: Legend // 图例显示的类型
-    
+        
     var displayDataMode: ChartValueDisplayMode
     
     var dividingValueLineStyle: AxisViewLineStyle
@@ -44,14 +42,13 @@ struct LineChartParameters {
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])], coupleTitles: [String], inputLegendTitles: [String]?, legendType: Legend, displayDataMode: ChartValueDisplayMode, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])], coupleTitles: [String], inputLegendTitles: [String]?, displayDataMode: ChartValueDisplayMode, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas
         self.textColor = textColor
         self.coupleTitles = coupleTitles
         self.inputLegendTitles = inputLegendTitles
-        self.legendType = legendType
         self.displayDataMode = displayDataMode
         self.dividingValueLineColor = dividingValueLineColor
         self.dividingValueLineStyle = dividingValueLineStyle
@@ -90,7 +87,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
-            let legendType = self.legendType
+            let legendType = self.inputDatas[index].2
             let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
             let legendConfigure = LegendConfigure(color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendType: legendType, legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
@@ -357,9 +354,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
             fatalError("内部数据处理错误，不给予拯救")
         }
         let dividingInterval = value / Double(dividingPart)
-        
-        //Todo:
-        
+                
         if tempData.maxValue >= 0 && tempData.minValue >= 0 {
             var dividingPoint: [Double] = []
             for index in 0 ... dividingPart {
