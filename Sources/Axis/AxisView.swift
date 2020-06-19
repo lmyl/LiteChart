@@ -61,64 +61,6 @@ class AxisView: UIView {
         context?.setLineWidth(1)
         context?.setLineCap(.round)
         
-        for verDiv in self.configure.verticalDividingPoints {
-            let offset: CGFloat
-            if verDiv.location < 0 {
-                offset = 1
-            } else if verDiv.location > 1 {
-                offset = 0
-            } else {
-                offset = 1 - verDiv.location
-            }
-            let horAxisLineLeftPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height * offset)
-            let horAxisLineRightPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height * offset)
-            context?.setStrokeColor(verDiv.dividingLineColor.color.cgColor)
-            switch verDiv.dividingLineStyle {
-            case .solid:
-                context?.setLineDash(phase: 0, lengths: [])
-                context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
-            case .dotted:
-                context?.setLineDash(phase: 1, lengths: [6, 3])
-                context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
-            case .segment:
-                var length = min(rect.width, rect.height) / 20
-                length = min(length, 4)
-                let horSegmentEndPoint = CGPoint(x: rect.origin.x + length, y: rect.origin.y + rect.height * offset)
-                context?.setLineDash(phase: 0, lengths: [])
-                context?.addLines(between: [horAxisLineLeftPoint, horSegmentEndPoint])
-            }
-            context?.drawPath(using: .stroke)
-        }
-    
-        for verDiv in self.configure.horizontalDividingPoints {
-            let offset: CGFloat
-            if verDiv.location < 0 {
-                offset = 0
-            } else if verDiv.location > 1 {
-                offset = 1
-            } else {
-                offset = verDiv.location
-            }
-            let verAxisLineTopPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y)
-            let verAxisLineBottomPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y + rect.height)
-            context?.setStrokeColor(verDiv.dividingLineColor.color.cgColor)
-            switch verDiv.dividingLineStyle {
-            case .solid:
-                context?.setLineDash(phase: 0, lengths: [])
-                context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
-            case .dotted:
-                context?.setLineDash(phase: 1, lengths: [6, 3])
-                context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
-            case .segment:
-                var length = min(rect.width, rect.height) / 20
-                length = min(length, 4)
-                let verSegmentEndPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y + rect.height - length)
-                context?.setLineDash(phase: 0, lengths: [])
-                context?.addLines(between: [verAxisLineBottomPoint, verSegmentEndPoint])
-            }
-            context?.drawPath(using: .stroke)
-        }
-        
         context?.setLineDash(phase: 0, lengths: [])
         let originX: CGFloat
         if self.configure.originPoint.x < 0 {
@@ -149,6 +91,70 @@ class AxisView: UIView {
             context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
         }
         context?.drawPath(using: .stroke)
+        
+        for verDiv in self.configure.verticalDividingPoints {
+            let offset: CGFloat
+            if verDiv.location < 0 {
+                offset = 1
+            } else if verDiv.location > 1 {
+                offset = 0
+            } else {
+                offset = 1 - verDiv.location
+            }
+            let horAxisLineLeftPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height * offset)
+            let horAxisLineRightPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height * offset)
+            if self.configure.isShowXAxis && offset == originPoint.y {
+                continue
+            }
+            context?.setStrokeColor(verDiv.dividingLineColor.color.cgColor)
+            switch verDiv.dividingLineStyle {
+            case .solid:
+                context?.setLineDash(phase: 0, lengths: [])
+                context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
+            case .dotted:
+                context?.setLineDash(phase: 1, lengths: [6, 3])
+                context?.addLines(between: [horAxisLineLeftPoint, horAxisLineRightPoint])
+            case .segment:
+                var length = min(rect.width, rect.height) / 20
+                length = min(length, 4)
+                let horSegmentEndPoint = CGPoint(x: rect.origin.x + length, y: rect.origin.y + rect.height * offset)
+                context?.setLineDash(phase: 0, lengths: [])
+                context?.addLines(between: [horAxisLineLeftPoint, horSegmentEndPoint])
+            }
+            context?.drawPath(using: .stroke)
+        }
+    
+        for verDiv in self.configure.horizontalDividingPoints {
+            let offset: CGFloat
+            if verDiv.location < 0 {
+                offset = 0
+            } else if verDiv.location > 1 {
+                offset = 1
+            } else {
+                offset = verDiv.location
+            }
+            let verAxisLineTopPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y)
+            let verAxisLineBottomPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y + rect.height)
+            if self.configure.isShowYAxis && offset == originPoint.x {
+                continue
+            }
+            context?.setStrokeColor(verDiv.dividingLineColor.color.cgColor)
+            switch verDiv.dividingLineStyle {
+            case .solid:
+                context?.setLineDash(phase: 0, lengths: [])
+                context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
+            case .dotted:
+                context?.setLineDash(phase: 1, lengths: [6, 3])
+                context?.addLines(between: [verAxisLineTopPoint, verAxisLineBottomPoint])
+            case .segment:
+                var length = min(rect.width, rect.height) / 20
+                length = min(length, 4)
+                let verSegmentEndPoint = CGPoint(x: rect.origin.x + rect.width * offset, y: rect.origin.y + rect.height - length)
+                context?.setLineDash(phase: 0, lengths: [])
+                context?.addLines(between: [verAxisLineBottomPoint, verSegmentEndPoint])
+            }
+            context?.drawPath(using: .stroke)
+        }
         
         self.drawBorder(rect)
         
