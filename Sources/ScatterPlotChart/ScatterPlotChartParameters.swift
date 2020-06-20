@@ -221,7 +221,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
     
     private func computeProportionalValue(for datas: [[CGPoint]], xAxisValue: (maxValue: Double, minValue: Double), yAxisValue: (maxValue: Double, minValue: Double)) -> [[CGPoint]] {
         var result = datas
-        if xAxisValue.minValue > 0 { // 均为正数
+        if xAxisValue.minValue >= 0 { // 均为正数
             let sumValue = CGFloat(xAxisValue.maxValue)
             result = result.map{
                 $0.map{
@@ -233,7 +233,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
             }
         } else if xAxisValue.maxValue < 0 { // 均为负数
             let sumValue = CGFloat(abs(xAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -243,7 +243,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
             }
         } else { // 有正有负
             let sumValue = CGFloat(xAxisValue.maxValue + abs(xAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -265,7 +265,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
             }
         } else if yAxisValue.maxValue < 0 { // 均为负数
             let sumValue = CGFloat(abs(yAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -275,7 +275,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
             }
         } else { // 有正有负
             let sumValue = CGFloat(yAxisValue.maxValue + abs(yAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital

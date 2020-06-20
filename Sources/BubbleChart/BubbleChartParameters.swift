@@ -17,7 +17,7 @@ struct BubbleChartParameters {
     
     var textColor: LiteChartDarkLightColor
     
-    var inputDatas: [(LiteChartDarkLightColor, Legend , [(scale: CGFloat, location: CGPoint)])]
+    var inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])]
         
     var inputLegendTitles: [String]? // 图例显示
             
@@ -39,7 +39,7 @@ struct BubbleChartParameters {
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, Legend , [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String]?, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String]?, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas
@@ -68,7 +68,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
         }
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
-            let legendType = self.inputDatas[index].1
+            let legendType = Legend.circle
             let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
             let legendConfigure = LegendConfigure(color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendType: legendType, legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
@@ -87,10 +87,10 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
         var coupleDatas: [[CGPoint]] = Array(repeating: [], count: coupleCount)
         var scaleDatas: [[CGFloat]] = Array(repeating: [], count: coupleCount)
         for index in 0 ..< coupleCount {
-            coupleDatas[index] = self.inputDatas[index].2.map{
+            coupleDatas[index] = self.inputDatas[index].1.map{
                 $0.location
             }
-            scaleDatas[index] = self.inputDatas[index].2.map{
+            scaleDatas[index] = self.inputDatas[index].1.map{
                 input in
                 if input.scale < 1 {
                     return 1
@@ -116,7 +116,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             for ind in 0 ..< points.count {
                 datas.append((scaleDatas[index][ind], opacityDatas[index][ind], points[ind]))
             }
-            inputDatas.append((self.inputDatas[index].0, self.inputDatas[index].1, datas))
+            inputDatas.append((self.inputDatas[index].0, Legend.circle, datas))
         }
         
         var valuesString: [String] = []
@@ -245,7 +245,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             }
         } else if xAxisValue.maxValue < 0 { // 均为负数
             let sumValue = CGFloat(abs(xAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -255,7 +255,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             }
         } else { // 有正有负
             let sumValue = CGFloat(xAxisValue.maxValue + abs(xAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -277,7 +277,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             }
         } else if yAxisValue.maxValue < 0 { // 均为负数
             let sumValue = CGFloat(abs(yAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -287,7 +287,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             }
         } else { // 有正有负
             let sumValue = CGFloat(yAxisValue.maxValue + abs(yAxisValue.minValue))
-            result = datas.map{
+            result = result.map{
                 $0.map{
                     inital in
                     var result = inital
@@ -542,7 +542,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
                 maxValue = max(maxValue, value)
             }
         }
-        maxValue = maxValue * 0.75
+        maxValue = maxValue / 0.75
         var result: [[CGFloat]] = []
         for scale in scales {
             let opacitys = scale.map{
