@@ -15,6 +15,8 @@
 		080368EE248A849700D1413C /* FunalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368ED248A849700D1413C /* FunalView.swift */; };
 		080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080368EF248A84C100D1413C /* FunalViewConfigure.swift */; };
 		08074264249E051E0024D488 /* BubbleChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08074263249E051E0024D488 /* BubbleChartParameters.swift */; };
+		082E7BED24A0C92900FF1F8B /* RadarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */; };
+		082E7BEF24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */; };
 		0832B5332489FED000110CBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5322489FED000110CBA /* AppDelegate.swift */; };
 		0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5342489FED000110CBA /* SceneDelegate.swift */; };
 		0832B5372489FED000110CBA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5362489FED000110CBA /* ViewController.swift */; };
@@ -95,6 +97,8 @@
 		080368ED248A849700D1413C /* FunalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalView.swift; sourceTree = "<group>"; };
 		080368EF248A84C100D1413C /* FunalViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalViewConfigure.swift; sourceTree = "<group>"; };
 		08074263249E051E0024D488 /* BubbleChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleChartParameters.swift; sourceTree = "<group>"; };
+		082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarBackgroundView.swift; sourceTree = "<group>"; };
+		082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarBackgroundViewConfigure.swift; sourceTree = "<group>"; };
 		0832B52F2489FED000110CBA /* LiteChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiteChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0832B5322489FED000110CBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0832B5342489FED000110CBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +200,15 @@
 			path = FunnelChart;
 			sourceTree = "<group>";
 		};
+		082E7BEB24A0C8FF00FF1F8B /* RadarChart */ = {
+			isa = PBXGroup;
+			children = (
+				082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */,
+				082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */,
+			);
+			path = RadarChart;
+			sourceTree = "<group>";
+		};
 		0832B5262489FED000110CBA = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +247,7 @@
 			children = (
 				087DEA8B248E7353001A40B9 /* LiteChart */,
 				083BC8E3249085AB000B8DDE /* Axis */,
+				082E7BEB24A0C8FF00FF1F8B /* RadarChart */,
 				08D6299F249CEF6B0039AF6A /* BubbleChart */,
 				08D6299E249CEEDB0039AF6A /* ScatterPlotChart */,
 				08596E2D2499133900A3FC18 /* LineChart */,
@@ -562,6 +576,7 @@
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
 				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */,
+				082E7BEF24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift in Sources */,
 				088A2589249A233C00B533D3 /* LineViews.swift in Sources */,
 				080368F0248A84C100D1413C /* FunalViewConfigure.swift in Sources */,
 				08074264249E051E0024D488 /* BubbleChartParameters.swift in Sources */,
@@ -573,6 +588,7 @@
 				0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */,
 				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
 				08A756C3249DC2EC00BAEBC1 /* PointConfigure.swift in Sources */,
+				082E7BED24A0C92900FF1F8B /* RadarBackgroundView.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */,
 				08A756C9249DDC9E00BAEBC1 /* PlotChartView.swift in Sources */,
