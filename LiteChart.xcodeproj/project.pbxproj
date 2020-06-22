@@ -17,6 +17,8 @@
 		08074264249E051E0024D488 /* BubbleChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08074263249E051E0024D488 /* BubbleChartParameters.swift */; };
 		082E7BED24A0C92900FF1F8B /* RadarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */; };
 		082E7BEF24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */; };
+		082E7BF124A0D9E100FF1F8B /* RadarDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BF024A0D9E100FF1F8B /* RadarDataView.swift */; };
+		082E7BF324A0D9F000FF1F8B /* RadarDataViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082E7BF224A0D9F000FF1F8B /* RadarDataViewConfigure.swift */; };
 		0832B5332489FED000110CBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5322489FED000110CBA /* AppDelegate.swift */; };
 		0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5342489FED000110CBA /* SceneDelegate.swift */; };
 		0832B5372489FED000110CBA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0832B5362489FED000110CBA /* ViewController.swift */; };
@@ -99,6 +101,8 @@
 		08074263249E051E0024D488 /* BubbleChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleChartParameters.swift; sourceTree = "<group>"; };
 		082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarBackgroundView.swift; sourceTree = "<group>"; };
 		082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarBackgroundViewConfigure.swift; sourceTree = "<group>"; };
+		082E7BF024A0D9E100FF1F8B /* RadarDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarDataView.swift; sourceTree = "<group>"; };
+		082E7BF224A0D9F000FF1F8B /* RadarDataViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarDataViewConfigure.swift; sourceTree = "<group>"; };
 		0832B52F2489FED000110CBA /* LiteChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiteChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0832B5322489FED000110CBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0832B5342489FED000110CBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 			children = (
 				082E7BEC24A0C92900FF1F8B /* RadarBackgroundView.swift */,
 				082E7BEE24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift */,
+				082E7BF024A0D9E100FF1F8B /* RadarDataView.swift */,
+				082E7BF224A0D9F000FF1F8B /* RadarDataViewConfigure.swift */,
 			);
 			path = RadarChart;
 			sourceTree = "<group>";
@@ -624,9 +630,11 @@
 				08386C24248E238500D0E655 /* PieViewConfigure.swift in Sources */,
 				08A756CB249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
+				082E7BF324A0D9F000FF1F8B /* RadarDataViewConfigure.swift in Sources */,
 				08386C1B248DD97100D0E655 /* ChartError.swift in Sources */,
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
+				082E7BF124A0D9E100FF1F8B /* RadarDataView.swift in Sources */,
 				08A756C1249DC25500BAEBC1 /* PointsViewConfigure.swift in Sources */,
 				08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */,
 				087DEA8F248E7571001A40B9 /* LiteChartViewParameters.swift in Sources */,

@@ -15,16 +15,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .bubble(inputDatas: [(LiteChartDarkLightColor(lightUIColor: .red), [(1, CGPoint(x: 1, y: 1))])]))
+        var configure = RadarDataViewConfigure(points: [1, 1, 1, 1, 1], color: .init(lightUIColor: .red))
         
-        configure.isShowCoupleDividingLine = true
-        configure.isShowValueDividingLine = true
-//        configure.inputLegendTitles = ["2018", "2019"]
-        configure.valueUnitString = "温度差"
-        configure.coupleUnitString = "月份"
-        configure.axisColor = .init(lightColor: .orange)
-        
-        let backgroundView = try! LiteChartView(configure: configure)
+        let backgroundView = RadarDataView(configure: configure)
         
         self.view.addSubview(backgroundView)
         backgroundView.snp.updateConstraints{
