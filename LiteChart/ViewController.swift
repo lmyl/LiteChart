@@ -15,9 +15,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: [.init(contentString: "111", contentColor: .init(lightColor: .black)), .init(contentString: "222", contentColor: .init(lightColor: .black)), .init(contentString: "333", contentColor: .init(lightColor: .black))], radarLineColor: .init(lightColor: .Gray), radarLightColor: .init(lightColor: .white), radarUnlightColor: .init(lightColor: .lightGray), radarCount: 5, pointCount: 3)
-        let backgroundView = RadarBackgroundView(configure: configure)
+        var configure = LiteChartViewParameters(inputDatas: .radar(inputDatas: [(.init(lightColor: .red), [100,35,80, 50,80]), (.init(lightColor: .lightBlue), [10,20,90, 40,100])]))
+        configure.coupleTitles = ["0月", "1月", "2月", "3月", "4月"]
+        configure.radarCount = 5
+        configure.inputLegendTitles = ["2018", "2019"]
+        configure.titleString = "年度绩效总结"
+        configure.isShowCoupleTitles = true
         
+        let backgroundView = try! LiteChartView(configure: configure)
         self.view.addSubview(backgroundView)
         backgroundView.snp.updateConstraints{
             make in

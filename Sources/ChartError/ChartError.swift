@@ -14,6 +14,7 @@ enum ChartError: Error {
     case inputDatasMustPositive
     case inputDatasNumbersNotMatchedCoupleTitle
     case inputDatasNumberMustEqualForCouple
+    case inputDatasNumberLessThanLimit
 }
 
 
@@ -28,6 +29,8 @@ extension ChartError: CustomStringConvertible {
             return "The data entered must match in couple title"
         case .inputDatasNumberMustEqualForCouple:
             return "The amount of data in each group must be equal"
+        case .inputDatasNumberLessThanLimit:
+            return "The number of data must large than minimum"
         }
     }
 }

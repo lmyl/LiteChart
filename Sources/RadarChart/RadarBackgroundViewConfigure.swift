@@ -10,6 +10,7 @@ import Foundation
 
 struct RadarBackgroundViewConfigure {
     let coupleTitlesConfigure: [DisplayLabelConfigure]
+    let radarDataViewsConfigure: [RadarDataViewConfigure]
     let radarLineColor: LiteChartDarkLightColor
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
@@ -20,10 +21,11 @@ struct RadarBackgroundViewConfigure {
 extension RadarBackgroundViewConfigure {
     init() {
         self.coupleTitlesConfigure = []
+        self.radarDataViewsConfigure = []
         self.radarLineColor = .init(lightUIColor: .gray, darkUIColor: .white)
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
         self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)
-        self.radarCount = 5 // 层数
-        self.pointCount = 3 // 多边形的顶点个数
+        self.radarCount = 1
+        self.pointCount = 3 
     }
 }
