@@ -14,6 +14,7 @@ struct RadarBackgroundViewConfigure {
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
     let radarCount: Int
+    let pointCount: Int
 }
 
 extension RadarBackgroundViewConfigure {
@@ -21,7 +22,8 @@ extension RadarBackgroundViewConfigure {
         self.coupleTitlesConfigure = []
         self.radarLineColor = .init(lightUIColor: .gray, darkUIColor: .white)
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
-        self.radarUnlightColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.radarCount = 1
+        self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)
+        self.radarCount = 5 // 层数
+        self.pointCount = 3 // 多边形的顶点个数
     }
 }

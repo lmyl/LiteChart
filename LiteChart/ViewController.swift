@@ -15,14 +15,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = RadarDataViewConfigure(points: [1, 1, 1, 1, 1], color: .init(lightUIColor: .red))
-        
-        let backgroundView = RadarDataView(configure: configure)
+        let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: [.init(contentString: "111", contentColor: .init(lightColor: .black)), .init(contentString: "222", contentColor: .init(lightColor: .black)), .init(contentString: "333", contentColor: .init(lightColor: .black))], radarLineColor: .init(lightColor: .Gray), radarLightColor: .init(lightColor: .white), radarUnlightColor: .init(lightColor: .lightGray), radarCount: 5, pointCount: 3)
+        let backgroundView = RadarBackgroundView(configure: configure)
         
         self.view.addSubview(backgroundView)
         backgroundView.snp.updateConstraints{
             make in
-            make.width.equalToSuperview()
+            make.width.equalTo(300)
             make.center.equalToSuperview()
             make.height.equalTo(300)
         }
