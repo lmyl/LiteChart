@@ -17,14 +17,12 @@ class RadarBackgroundView: UIView {
     private var targetPoints: [CGPoint] = [] {
         didSet {
             if targetPoints.count != oldValue.count {
-                print("didset targetPoints is \(targetPoints)")
                 self.updateCoupleTitleConstraints(for: targetPoints)
             }
         }
     }
     
     init(configure: RadarBackgroundViewConfigure) {
-        print("init")
         self.configure = configure
         super.init(frame: CGRect())
         self.backgroundColor = .clear
@@ -38,12 +36,6 @@ class RadarBackgroundView: UIView {
         self.insertCoupleTitle()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        print("layout called")
-//        updateCoupleTitleConstraints(for: [CGPoint(x: 150, y: 30),CGPoint(x: 46, y: 210), CGPoint(x: 254, y: 210)])
-//        updateCoupleTitleConstraints(for: self.targetPoints)
-    }
     private var coupleTitleWidth: CGFloat {
         let width = self.bounds.width / 10
         return min(width, 40)
@@ -66,21 +58,16 @@ class RadarBackgroundView: UIView {
     private func insertCoupleTitle() {
         for label in self.configure.coupleTitlesConfigure {
             let title = DisplayLabel(configure: label)
-            title.backgroundColor = .blue
             self.addSubview(title)
             self.coupleTitles.append(title)
         }
     }
     
     private func updateCoupleTitleConstraints(for endPoints: [CGPoint]) {
-        guard self.coupleTitles.count != 0, self.angleOfPoints.count == endPoints.count else {
-            print("failed, angleOfPoints is \(angleOfPoints.count), endPoints is \(endPoints.count)")
+        guard self.coupleTitles.count >= 3, self.angleOfPoints.count == endPoints.count, endPoints.count == self.coupleTitles.count else {
             return
         }
-        print("update called")
-        if endPoints.count != self.coupleTitles.count {
-            fatalError("内部数据处理错误，不给予拯救")
-        }
+        
         let coupleTitles = self.coupleTitles
         let angleOfPoints = self.angleOfPoints
         for (index, coupleTitleView) in coupleTitles.enumerated() {
@@ -102,18 +89,18 @@ class RadarBackgroundView: UIView {
                 let centerX = endPoints[index].x + coupleTitleWidth / 2
                 center = CGPoint(x: centerX, y: centerY)
             }
-                coupleTitleView.snp.updateConstraints{
-                    make in
-                    make.center.equalTo(center)
-                    make.height.equalTo(coupleTitleHeight)
-                    make.width.equalTo(coupleTitleWidth)
-                    
-                }
+
+            coupleTitleView.snp.updateConstraints{
+                make in
+                make.height.equalTo(coupleTitleHeight)
+                make.width.equalTo(coupleTitleWidth)
+                make.center.equalTo(center)
+            }
+            coupleTitleView.layoutIfNeeded()
         }
     }
     
     override func draw(_ rect: CGRect) { // 需要精简
-        print("draw")
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
         context?.setShouldAntialias(true)
