@@ -57,7 +57,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
                 throw ChartError.inputDatasNumberLessThanLimit
             }
             if self.coupleTitles.count > 0 && self.coupleTitles.count != firstDataCount{
-                throw ChartError.inputDatasNumberMustEqualForCouple
+                throw ChartError.inputDatasNumbersNotMatchedCoupleTitle
             }
             for inputData in inputDatas {
                 if inputData.1.count != firstDataCount {

@@ -30,7 +30,7 @@ extension ChartError: CustomStringConvertible {
         case .inputDatasNumberMustEqualForCouple:
             return "The amount of data in each group must be equal"
         case .inputDatasNumberLessThanLimit:
-            return "The number of data must large than minimum"
+            return "The amount of data in each group must large than minimum"
         }
     }
 }

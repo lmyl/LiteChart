@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         self.view.addSubview(backgroundView)
         backgroundView.snp.updateConstraints{
             make in
-            make.width.equalTo(300)
+            make.width.equalToSuperview()
             make.center.equalToSuperview()
             make.height.equalTo(300)
         }
