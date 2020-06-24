@@ -23,14 +23,12 @@ struct RadarChartParameters {
     var radarLightColor: LiteChartDarkLightColor
     
     var radarUnlightColor: LiteChartDarkLightColor
-    
-    var maxDataValue: Double
-    
+        
     var inputDatas: [(LiteChartDarkLightColor, [Double])]
     
     var radarCount: Int
     
-    init(coupleTitles: [String], isShowingCoupleTitles: Bool, inputLegendTitles: [String]?, textColor: LiteChartDarkLightColor, radarLineColor: LiteChartDarkLightColor, radarLightColor: LiteChartDarkLightColor, radarUnlightColor: LiteChartDarkLightColor, maxDataValue: Double, inputDatas: [(LiteChartDarkLightColor, [Double])], radarCount: Int) {
+    init(coupleTitles: [String], isShowingCoupleTitles: Bool, inputLegendTitles: [String]?, textColor: LiteChartDarkLightColor, radarLineColor: LiteChartDarkLightColor, radarLightColor: LiteChartDarkLightColor, radarUnlightColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], radarCount: Int) {
         self.coupleTitles = coupleTitles
         self.isShowingCoupleTitles = isShowingCoupleTitles
         self.inputLegendTitles = inputLegendTitles
@@ -38,7 +36,6 @@ struct RadarChartParameters {
         self.radarLineColor = radarLineColor
         self.radarLightColor = radarLightColor
         self.radarUnlightColor = radarUnlightColor
-        self.maxDataValue = maxDataValue
         self.inputDatas = inputDatas
         self.radarCount = radarCount
     }
@@ -47,9 +44,6 @@ struct RadarChartParameters {
 
 extension RadarChartParameters: LiteChartParametersProcesser {
     func checkInputDatasParameterInvalid() throws {
-        if self.maxDataValue <= 0 {
-            throw ChartError.inputDatasMustPositive
-        }
         let inputDatas = self.inputDatas
         if inputDatas.count > 0 {
             let firstDataCount = inputDatas[0].1.count
@@ -63,13 +57,15 @@ extension RadarChartParameters: LiteChartParametersProcesser {
                 if inputData.1.count != firstDataCount {
                     throw ChartError.inputDatasNumberMustEqualForCouple
                 }
-                let contains = inputData.1.contains(where: { $0 < 0})
+                var contains = inputData.1.contains(where: { $0 < 0})
                 if contains {
                     throw ChartError.inputDatasMustPositive
                 }
+                contains = inputData.1.contains(where: {$0 > 1})
+                if contains {
+                    throw ChartError.inputDatasMustLessAndEqualThan(number: 1)
+                }
             }
-        } else {
-            return 
         }
     }
     
@@ -99,7 +95,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
             inputDatas.append(inputData.1)
         }
         
-        let proportionValues = computeProportionValue(self.maxDataValue, datas: inputDatas)
+        let proportionValues = convertProportionValue(datas: inputDatas)
         var radarDataViewsConfigure: [RadarDataViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let color = self.inputDatas[index].0
@@ -119,25 +115,21 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         }
         
         if self.isShowingCoupleTitles {
-            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: coupleTitlesConfigure, radarDataViewsConfigure: radarDataViewsConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
-            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure)
+            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: coupleTitlesConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
+            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
             return RadarChartView(configure: radarChartViewConfigure)
         } else {
-            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: [], radarDataViewsConfigure: radarDataViewsConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
-            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure)
+            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: [], radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
+            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
             return RadarChartView(configure: radarChartViewConfigure)
         }
         
     }
     
-    private func computeProportionValue(_ maxDataValue: Double, datas: [[Double]]) -> [[CGFloat]] {
+    private func convertProportionValue(datas: [[Double]]) -> [[CGFloat]] {
         return datas.map{
             $0.map{
-                if CGFloat($0 / maxDataValue) > 1 {
-                    return 1
-                } else {
-                    return CGFloat($0 / maxDataValue)
-                }
+                CGFloat($0)
             }
         }
     }

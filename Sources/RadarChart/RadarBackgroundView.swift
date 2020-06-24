@@ -29,7 +29,6 @@ class RadarBackgroundView: UIView {
         super.init(frame: CGRect())
         self.backgroundColor = .clear
         self.insertCoupleTitle()
-        self.insertRadarDataViews()
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +36,6 @@ class RadarBackgroundView: UIView {
         super.init(coder: coder)
         self.backgroundColor = .clear
         self.insertCoupleTitle()
-        self.insertRadarDataViews()
     }
     
     override func layoutSubviews() {
@@ -58,7 +56,7 @@ class RadarBackgroundView: UIView {
     private var angleOfPoints: [Double] {
         var angles = [Double]()
         for index in 0 ..< self.configure.pointCount {
-            let angle = 360 / Double(self.configure.pointCount) * Double(index)
+            let angle = 360 / Double(self.configure.pointCount) * Double(index) - 90
             angles.append(angle)
         }
         return angles
@@ -72,11 +70,11 @@ class RadarBackgroundView: UIView {
         }
     }
     
-    private func insertRadarDataViews() {
-        guard self.configure.radarDataViewsConfigure.count > 0 else {
+    func insertRadarDataViews(for configures: [RadarDataViewConfigure]) {
+        guard configures.count > 0 else {
             return
         }
-        for configure in self.configure.radarDataViewsConfigure {
+        for configure in configures {
             let radarDataView = RadarDataView(configure: configure)
             self.addSubview(radarDataView)
             self.radarDataViews.append(radarDataView)
@@ -115,15 +113,15 @@ class RadarBackgroundView: UIView {
         let angleOfPoints = self.angleOfPoints
         for (index, coupleTitleView) in coupleTitles.enumerated() {
             var center = CGPoint.zero
-            if angleOfPoints[index] == 0 {
+            if angleOfPoints[index] == -90 {
                 let centerY = endPoints[index].y - coupleTitleHeight / 2
                 let centerX = endPoints[index].x
                 center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] == 180 {
+            } else if angleOfPoints[index] == 90 {
                 let centerY = endPoints[index].y + coupleTitleHeight / 2
                 let centerX = endPoints[index].x
                 center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] > 180 {
+            } else if angleOfPoints[index] > 90 {
                 let centerY = endPoints[index].y
                 let centerX = endPoints[index].x - coupleTitleWidth / 2
                 center = CGPoint(x: centerX, y: centerY)
@@ -161,11 +159,11 @@ class RadarBackgroundView: UIView {
             radius = min(rect.width, rect.height) / 2
         }
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        let topPoint = CGPoint(x: rect.width / 2, y: rect.height / 2 - radius)
-        let vertexs = computeVertexsLocation(for: topPoint, radius: Double(radius), pointCount: self.configure.pointCount, radarCount: self.configure.radarCount)
+        let vertexs = computeVertexsLocation(for: center, radius: Double(radius), pointCount: self.configure.pointCount, radarCount: self.configure.radarCount)
         
         for index in (0 ..< self.configure.radarCount).reversed() {
             context?.addLines(between: vertexs[index])
+            context?.closePath()
             if index % 2 == 0{
                 context?.setFillColor(self.configure.radarLightColor.color.cgColor)
             } else {
@@ -182,28 +180,36 @@ class RadarBackgroundView: UIView {
         convertLocationIntoTarget(locationPoints: vertexs)
     }
     
-    private func computeVertexsLocation(for topPoint: CGPoint, radius: Double, pointCount: Int, radarCount: Int) -> [[CGPoint]] {
-        let angleInterval = 360 / Double(pointCount)
+    private func computeVertexsLocation(for centerPoint: CGPoint, radius: Double, pointCount: Int, radarCount: Int) -> [[CGPoint]] {
+        let angles = self.angleOfPoints
         let radiusInterval = radius / Double(radarCount)
-        let topX = topPoint.x
-        let topY = topPoint.y
+        let centerX = centerPoint.x
+        let centerY = centerPoint.y
         var location: [[CGPoint]] = Array(repeating: [], count: radarCount)
-        for index in 0 ..< radarCount {
-            let curRadius = radiusInterval * Double(index + 1)
-            for ind in 0 ... pointCount {
-                let curAngle = angleInterval * Double(ind)
-                let offsetX = curRadius * sinValue(of: curAngle)
-                let offsetY = curRadius * cosValue(of: curAngle)
-                let curPoint = CGPoint(x: Double(topX) + offsetX, y: Double(topY) + radius - offsetY)
+        for ind in 0 ..< angles.count {
+            let curAngle = angleOfPoints[ind]
+            let sin = sinValue(of: curAngle)
+            let cos = cosValue(of: curAngle)
+            let allRadius = stride(from: radiusInterval, through: radius, by: radiusInterval)
+            let offsetXs = allRadius.map{
+                $0 * cos
+            }
+            let offsetYs = allRadius.map{
+                $0 * sin
+            }
+            for index in 0 ..< radarCount {
+                let curPoint = CGPoint(x: Double(centerX) + offsetXs[index], y: Double(centerY) + offsetYs[index])
                 location[index].append(curPoint)
             }
+            
         }
+        
         return location
     }
     
     private func convertLocationIntoTarget(locationPoints: [[CGPoint]]){
         if let points = locationPoints.last {
-            self.targetPoints = points.dropLast()
+            self.targetPoints = points
         }
     }
     

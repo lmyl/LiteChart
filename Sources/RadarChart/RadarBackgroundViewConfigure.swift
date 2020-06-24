@@ -10,7 +10,6 @@ import Foundation
 
 struct RadarBackgroundViewConfigure {
     let coupleTitlesConfigure: [DisplayLabelConfigure]
-    let radarDataViewsConfigure: [RadarDataViewConfigure]
     let radarLineColor: LiteChartDarkLightColor
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
@@ -21,7 +20,6 @@ struct RadarBackgroundViewConfigure {
 extension RadarBackgroundViewConfigure {
     init() {
         self.coupleTitlesConfigure = []
-        self.radarDataViewsConfigure = []
         self.radarLineColor = .init(lightUIColor: .gray, darkUIColor: .white)
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
         self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)

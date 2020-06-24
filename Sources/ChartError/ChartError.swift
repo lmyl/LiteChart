@@ -15,6 +15,7 @@ enum ChartError: Error {
     case inputDatasNumbersNotMatchedCoupleTitle
     case inputDatasNumberMustEqualForCouple
     case inputDatasNumberLessThanLimit
+    case inputDatasMustLessAndEqualThan(number: Double)
 }
 
 
@@ -31,6 +32,8 @@ extension ChartError: CustomStringConvertible {
             return "The amount of data in each group must be equal"
         case .inputDatasNumberLessThanLimit:
             return "The amount of data in each group must large than minimum"
+        case .inputDatasMustLessAndEqualThan(let number):
+            return "The data entered must less and qeual than \(number)"
         }
     }
 }

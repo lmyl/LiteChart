@@ -72,12 +72,8 @@ class RadarDataView: UIView {
         }
         var result: [CGFloat] = []
         let insideAngle = 360 / Double(vertexNumbers)
-        var initalAngle = -90.0
-        if vertexNumbers % 2 == 0 {
-            initalAngle = initalAngle + insideAngle / 2
-        }
         for index in 0 ..< vertexNumbers {
-            let angle = initalAngle + Double(index) * insideAngle
+            let angle = Double(index) * insideAngle - 90
             result.append(CGFloat(angle))
         }
         

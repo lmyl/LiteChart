@@ -57,8 +57,6 @@ struct LiteChartViewParameters {
     
     var radarUnlightColor: LiteChartDarkLightColor = .init(lightColor: .lightGray)
     
-    var maxDataValue: Double = 100
-    
     var radarCount: Int = 1
     
     private lazy var parametersProcesser: LiteChartParametersProcesser = {
@@ -76,7 +74,7 @@ struct LiteChartViewParameters {
         case .bubble(let inputDatas):
             return BubbleChartParameters(borderStyle: self.borderStyle, borderColor: self.borderColor, textColor: self.textColor, inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, dividingValueLineStyle: self.dividingValueLineStyle, dividingValueLineColor: self.dividingValueLineColor, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor, isShowValueDividingLine: self.isShowValueDividingLine, isShowCoupleDividingLine: self.isShowCoupleDividingLine, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString, axisColor: self.axisColor)
         case .radar(let inputDatas):
-            return RadarChartParameters(coupleTitles: self.coupleTitles, isShowingCoupleTitles: self.isShowCoupleTitles, inputLegendTitles: self.inputLegendTitles, textColor: self.textColor, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, maxDataValue: self.maxDataValue, inputDatas: inputDatas, radarCount: self.radarCount)
+            return RadarChartParameters(coupleTitles: self.coupleTitles, isShowingCoupleTitles: self.isShowCoupleTitles, inputLegendTitles: self.inputLegendTitles, textColor: self.textColor, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, inputDatas: inputDatas, radarCount: self.radarCount)
         }
     }()
     
