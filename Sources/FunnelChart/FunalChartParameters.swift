@@ -14,11 +14,11 @@ struct FunalChartParameters {
 
     var inputDatas: [(Double, LiteChartDarkLightColor)]
     
-    var inputLegendTitles: [String]?
+    var inputLegendTitles: [String]
     
     var displayDataMode: ChartValueDisplayMode
-        
-    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String]?, displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
+    
+    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
         self.inputDatas = inputDatas
         self.inputLegendTitles = inputLegendTitles
         self.displayDataMode = displayDataMode
@@ -30,37 +30,22 @@ struct FunalChartParameters {
 extension FunalChartParameters: LiteChartParametersProcesser {
     
     func checkInputDatasParameterInvalid() throws {
-        guard self.inputDatas.count < 2 else {
-            let filter = self.inputDatas.filter{
-                $0.0 <= 0
-            }
-            if filter.isEmpty {
-                return
-            } else {
-                throw ChartError.inputDatasMustPositive
-            }
-            
-        }
-        var front = -1
         for index in 0 ..< self.inputDatas.count {
             if self.inputDatas[index].0 <= 0 {
                 throw ChartError.inputDatasMustPositive
             }
-            if front == -1 {
-                front = index
+            if index == 0 {
                 continue
-            }else if self.inputDatas[index].0 <= self.inputDatas[front].0 {
-                front = index
+            } else if self.inputDatas[index].0 <= self.inputDatas[index - 1].0 {
                 continue
             } else {
                 throw ChartError.inputDatasNotTrueSorted
             }
         }
-        return
     }
     
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == inputLegendTitles.count else {
+        guard self.inputDatas.count == inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -80,7 +65,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
     func computeContentView() -> UIView {
         
         guard self.inputDatas.count > 0 else {
-            let configure = FunalViewConfigure()
+            let configure = FunalViewConfigure.emptyconfigure
             return FunalView(configure: configure)
         }
         
@@ -121,7 +106,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
             let backgroundViewConfigure = FunalFloorBackagroundViewConfigure(color: self.inputDatas[index].1, topPercent: CGFloat(inputPercents[index].0), bottomPercent: CGFloat(inputPercents[index].1))
             
             if self.displayDataMode == .none {
-                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure)
+                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, contentViewConfigure: .emptyConfigure, isShowLabel: false)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
                 let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, textAlignment: .center)
@@ -136,19 +121,16 @@ extension FunalChartParameters: LiteChartParametersProcesser {
     }
     
     private func computePercentValue(for datas: [Double]) -> [Double] {
-        guard let first = self.inputDatas.first else {
+        guard let first = datas.first else {
             return []
         }
-        let firstData = first.0
-        return self.inputDatas.map{
-            $0.0 / firstData
+        return datas.map{
+            $0 / first
         }
     }
     
     private func computeOriginalValue(for datas: [Double]) -> [Double] {
-        return self.inputDatas.map{
-            $0.0
-        }
+        return datas
     }
     
     private func computeMixValue(for datas: [Double]) -> [(original: Double, percent: Double)] {

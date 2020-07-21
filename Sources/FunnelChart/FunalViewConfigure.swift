@@ -9,13 +9,16 @@
 import Foundation
 
 struct FunalViewConfigure {
+    
+    static let emptyconfigure = FunalViewConfigure()
+    
     let models: [FunalFloorViewConfigure]
     
     init(models: [FunalFloorViewConfigure]) {
         self.models = models
     }
     
-    init() {
+    private init() {
         self.models = []
     }
 }

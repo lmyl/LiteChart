@@ -19,6 +19,8 @@ struct LiteChartViewParameters {
     
     var inputLegendTitles: [String]?
     
+    var isShowLegendTitles = true
+    
     var displayDataMode: ChartValueDisplayMode = .original
     
     var titleDisplayLocation: ChartTitleDisplayLocation = .top
@@ -62,7 +64,7 @@ struct LiteChartViewParameters {
     private lazy var parametersProcesser: LiteChartParametersProcesser = {
         switch self.inputDatas {
         case .funal(let inputDatas):
-            return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
+            return FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles ?? [], displayDataMode: self.displayDataMode, textColor: self.textColor)
         case .pie(let inputDatas):
             return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, textColor: self.textColor)
         case .bar(let inputDatas, let coupleTitle):

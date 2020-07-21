@@ -9,22 +9,24 @@
 import Foundation
 
 struct FunalFloorViewConfigure {
+    
+    static let emptyConfigure = FunalFloorViewConfigure()
+    
     let backgroundViewConfigure: FunalFloorBackagroundViewConfigure
     
-    let contentViewConfigure: DisplayLabelConfigure?
+    let contentViewConfigure: DisplayLabelConfigure
     
-    init(backgroundViewConfigure: FunalFloorBackagroundViewConfigure, contentViewConfigure: DisplayLabelConfigure) {
+    let isShowLabel: Bool
+    
+    init(backgroundViewConfigure: FunalFloorBackagroundViewConfigure, contentViewConfigure: DisplayLabelConfigure, isShowLabel: Bool = true) {
         self.backgroundViewConfigure = backgroundViewConfigure
         self.contentViewConfigure = contentViewConfigure
+        self.isShowLabel = isShowLabel
     }
     
-    init(backgroundViewConfigure: FunalFloorBackagroundViewConfigure) {
-        self.backgroundViewConfigure = backgroundViewConfigure
-        self.contentViewConfigure = nil
-    }
-    
-    init() {
-        self.backgroundViewConfigure = FunalFloorBackagroundViewConfigure()
-        self.contentViewConfigure = nil
+    private init() {
+        self.backgroundViewConfigure = .emptyConfigure
+        self.contentViewConfigure = .emptyConfigure
+        self.isShowLabel = false
     }
 }

@@ -43,3 +43,8 @@ struct DisplayLabelConfigure {
         self.textDirection = .horizontal
     }
 }
+
+
+extension DisplayLabelConfigure {
+    static let emptyConfigure = DisplayLabelConfigure()
+}

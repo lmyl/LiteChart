@@ -11,6 +11,8 @@ import CoreGraphics
 
 struct FunalFloorBackagroundViewConfigure {
     
+    static let emptyConfigure = FunalFloorBackagroundViewConfigure()
+    
     let color: LiteChartDarkLightColor
     let topPercent: CGFloat
     let bottomPercent: CGFloat
@@ -21,8 +23,8 @@ struct FunalFloorBackagroundViewConfigure {
         self.bottomPercent = bottomPercent
     }
     
-    init() {
-        self.color = .init(lightColor: .yellow)
+    private init() {
+        self.color = .init(lightUIColor: .black, darkUIColor: .white)
         self.topPercent = 1
         self.bottomPercent = 1
     }

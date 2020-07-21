@@ -34,9 +34,11 @@ class LiteChartView: UIView {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         updateTitleViewConstraints()
-        updateLegendViewsConstraints()
         updateContentViewConstraints()
+        updateLegendViewsConstraints()
     }
     
     private func insertTitleView() {
@@ -55,7 +57,7 @@ class LiteChartView: UIView {
     }
     
     private func insertLegendViews() {
-        guard let legendConfigure = self.configure.computeLegendViewConfigure() else {
+        guard self.configure.isShowLegendTitles, let legendConfigure = self.configure.computeLegendViewConfigure() else {
             return
         }
         let legendViews = LegendViews(configure: legendConfigure)

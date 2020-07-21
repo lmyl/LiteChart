@@ -11,7 +11,7 @@ import SnapKit
 
 class FunalFloorView: UIView {
     
-    var configure: FunalFloorViewConfigure
+    private var configure: FunalFloorViewConfigure
     private var backgroundView: FunalFloorBackagroundView?
     private var contentView: DisplayLabel?
     
@@ -20,32 +20,45 @@ class FunalFloorView: UIView {
         super.init(frame: CGRect())
         self.insertBackgroundView()
         self.insertContentView()
+        
+        updateBackgroundViewConstraint()
+        updateContentViewWithStaticConstraint()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = FunalFloorViewConfigure()
+        self.configure = .emptyConfigure
         super.init(coder: coder)
         self.insertBackgroundView()
         self.insertContentView()
+        
+        updateBackgroundViewConstraint()
+        updateContentViewWithStaticConstraint()
     }
     
     override func layoutSubviews() {
-        superview?.layoutSubviews()
-        updateBackgroundViewConstraint()
-        updateContentViewConstraint()
+        super.layoutSubviews()
+        updateContentViewWithDynamicConstraint()
     }
     
     private func insertBackgroundView() {
+        if let backgroundView = self.backgroundView {
+            backgroundView.removeFromSuperview()
+            self.backgroundView = nil
+        }
         let backgroundView = FunalFloorBackagroundView(configure: self.configure.backgroundViewConfigure)
         self.addSubview(backgroundView)
         self.backgroundView = backgroundView
     }
     
     private func insertContentView() {
-        guard let contentViewConfigure = self.configure.contentViewConfigure else {
+        if let contentView = self.contentView {
+            contentView.removeFromSuperview()
+            self.contentView = nil
+        }
+        guard self.configure.isShowLabel else {
             return
         }
-        let contentView = DisplayLabel(configure: contentViewConfigure)
+        let contentView = DisplayLabel(configure: self.configure.contentViewConfigure)
         self.addSubview(contentView)
         self.contentView = contentView
     }
@@ -54,25 +67,34 @@ class FunalFloorView: UIView {
         guard let backgroundView = self.backgroundView else {
             return
         }
-        backgroundView.snp.updateConstraints{
+        backgroundView.snp.remakeConstraints{
             make in
             make.size.equalToSuperview()
             make.center.equalToSuperview()
         }
     }
     
-    private func updateContentViewConstraint() {
+    private func updateContentViewWithStaticConstraint() {
         guard let contentView = self.contentView else {
             return
         }
+        contentView.snp.remakeConstraints{
+            make in
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.center.equalToSuperview()
+            make.height.equalTo(0)
+        }
+    }
+    
+    private func updateContentViewWithDynamicConstraint() {
+        guard let contentView = self.contentView else {
+            return
+        }
+        var height = self.bounds.height / 2
+        height = min(height, 20)
         contentView.snp.updateConstraints{
             make in
-            let width = self.bounds.width / 5
-            var height = self.bounds.height / 2
-            height = min(height, 20)
-            make.width.equalTo(width)
             make.height.equalTo(height)
-            make.center.equalToSuperview()
         }
     }
 }

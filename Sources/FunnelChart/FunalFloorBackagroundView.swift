@@ -10,7 +10,7 @@ import UIKit
 
 class FunalFloorBackagroundView: UIView {
     
-    var configure: FunalFloorBackagroundViewConfigure
+    private var configure: FunalFloorBackagroundViewConfigure
     
     init(configure: FunalFloorBackagroundViewConfigure) {
         self.configure = configure
@@ -19,13 +19,14 @@ class FunalFloorBackagroundView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = FunalFloorBackagroundViewConfigure()
+        self.configure = .emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
     
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
+        context?.clear(rect)
         context?.setAllowsAntialiasing(true)
         context?.setShouldAntialias(true)
         let topLeft = rect.width * (1 - self.configure.topPercent) / 2
