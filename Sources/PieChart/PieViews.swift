@@ -9,25 +9,24 @@
 import UIKit
 
 class PieViews: UIView {
-    let configure: PieViewsConfigure
+    private let configure: PieViewsConfigure
     
-    var pieViews: [PieView] = []
+    private var pieViews: [PieView] = []
     
     init(configure: PieViewsConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertPieView()
+        
+        updatePieViewsStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PieViewsConfigure()
+        self.configure = PieViewsConfigure.emptyConfigure
         super.init(coder: coder)
         insertPieView()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.updatePieViewsConstraints()
+        
+        updatePieViewsStaticConstraints()
     }
     
     private func insertPieView() {
@@ -38,9 +37,9 @@ class PieViews: UIView {
         }
     }
     
-    private func updatePieViewsConstraints() {
+    private func updatePieViewsStaticConstraints() {
         for pie in self.pieViews {
-            pie.snp.updateConstraints{
+            pie.snp.remakeConstraints{
                 make in
                 make.center.equalToSuperview()
                 make.width.equalToSuperview()

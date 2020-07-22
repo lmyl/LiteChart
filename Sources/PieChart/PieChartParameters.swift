@@ -13,11 +13,11 @@ struct PieChartParameters {
     
     var inputDatas: [(Double, LiteChartDarkLightColor)]
     
-    var inputLegendTitles: [String]?
+    var inputLegendTitles: [String]
     
     var displayDataMode: ChartValueDisplayMode
     
-    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String]?, displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
+    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
         self.textColor = textColor
         self.inputDatas = inputDatas
         self.inputLegendTitles = inputLegendTitles
@@ -28,18 +28,15 @@ struct PieChartParameters {
 
 extension PieChartParameters: LiteChartParametersProcesser {
     func checkInputDatasParameterInvalid() throws {
-        let filter = self.inputDatas.filter{
+        if self.inputDatas.contains(where: {
             $0.0 <= 0
-        }
-        if filter.isEmpty {
-            return
-        } else {
+        }) {
             throw ChartError.inputDatasMustPositive
         }
     }
 
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == self.inputLegendTitles?.count else {
+        guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -56,7 +53,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
 
     func computeContentView() -> UIView {
         guard self.inputDatas.count > 0 else {
-            let configure = PieViewsConfigure()
+            let configure = PieViewsConfigure.emptyConfigure
             return PieViews(configure: configure)
         }
         
@@ -92,10 +89,11 @@ extension PieChartParameters: LiteChartParametersProcesser {
         
         for index in 0 ..< self.inputDatas.count {
             if self.displayDataMode == .none {
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1)
+                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: false)
                 pieViewsConfigure.append(pieViewConfigure)
             } else {
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, displayText: displayString[index], displayTextColor: textColor)
+                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor)
+                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure)
                 pieViewsConfigure.append(pieViewConfigure)
             }
         }
@@ -106,15 +104,13 @@ extension PieChartParameters: LiteChartParametersProcesser {
     
     private func computePercentValue(for datas: [Double]) -> [Double] {
         let total = datas.reduce(0, +)
-        return self.inputDatas.map{
-            $0.0 / total
+        return datas.map{
+            $0 / total
         }
     }
     
     private func computeOriginalValue(for datas: [Double]) -> [Double] {
-        return self.inputDatas.map{
-            $0.0
-        }
+        return datas
     }
     
     private func computeMixValue(for datas: [Double]) -> [(original: Double, percent: Double)] {

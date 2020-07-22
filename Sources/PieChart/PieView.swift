@@ -9,30 +9,35 @@
 import UIKit
 
 class PieView: UIView {
-    let configure: PieViewConfigure
+    private let configure: PieViewConfigure
     
-    var sectorView: PieSectorView?
-    var textView: DisplayLabel?
+    private var sectorView: PieSectorView?
+    private var textView: DisplayLabel?
     
-    var notificationToken: NSObjectProtocol?
+    private var notificationToken: NSObjectProtocol?
     
     init(configure: PieViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertSectorView()
         insertTextView()
+        
+        updateSectorViewStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PieViewConfigure()
+        self.configure = PieViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertSectorView()
         insertTextView()
+        
+        updateSectorViewStaticConstraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateSectorViewConstraints()
+        
+        updateSectorViewDynamicConstraints()
     }
     
     deinit {
@@ -54,38 +59,58 @@ class PieView: UIView {
             guard let info = notification.userInfo, let lineEndPoint = info[sectorView.notificationInfoKey] as? CGPoint else {
                 return
             }
-            strongSelf.updateTextViewConstraints(for: lineEndPoint)
+            strongSelf.updateTextViewDynamicConstraints(for: lineEndPoint)
         }
     }
     
     private func insertTextView() {
-        guard let displayTextConfigure = self.configure.displayTextConfigure else {
+        guard self.configure.isShowLabel else {
             return
         }
-        let displayTextView = DisplayLabel(configure: displayTextConfigure)
+        let displayTextView = DisplayLabel(configure: self.configure.displayTextConfigure)
         self.addSubview(displayTextView)
         self.textView = displayTextView
     }
     
-    private func updateSectorViewConstraints() {
+    private var labelWidth: CGFloat {
+        var labelLength = self.bounds.width / 10
+        labelLength = min(labelLength, 50)
+        return labelLength
+    }
+    
+    private var labelHeight: CGFloat {
+        var labelHeight = min(self.bounds.width - 2 * labelWidth, self.bounds.height) / 16
+        labelHeight = min(labelHeight, 20)
+        return labelHeight
+    }
+    
+    private func updateSectorViewStaticConstraints() {
+        guard let sectorView = self.sectorView else {
+            return
+        }
+        sectorView.snp.remakeConstraints{
+            make in
+            make.center.equalToSuperview()
+            make.width.equalTo(0)
+            make.height.equalToSuperview()
+        }
+    }
+    
+    private func updateSectorViewDynamicConstraints() {
         guard let sectorView = self.sectorView else {
             return
         }
         sectorView.snp.updateConstraints{
             make in
-            make.center.equalToSuperview()
             if self.configure.isShowLabel {
-                var labelLength = self.bounds.width / 10
-                labelLength = min(labelLength, 50)
-                make.width.equalTo(self.bounds.width - 2 * labelLength)
+                make.width.equalTo(self.bounds.width - 2 * self.labelWidth)
             } else {
                 make.width.equalToSuperview()
             }
-            make.height.equalToSuperview()
         }
     }
     
-    private func updateTextViewConstraints(for endPoint: CGPoint) {
+    private func updateTextViewDynamicConstraints(for endPoint: CGPoint) {
         guard let textView = self.textView else {
             return
         }
@@ -94,9 +119,8 @@ class PieView: UIView {
         }
         
         let newPoint = sectorView.convert(endPoint, to: self)
-        let labelLength = (self.bounds.width - sectorView.bounds.width) / 2
-        var labelHeight = min(sectorView.bounds.width, sectorView.bounds.height) / 16
-        labelHeight = min(labelHeight, 20)
+        let labelLength = self.labelWidth
+        let labelHeight = self.labelHeight
         let centerY = newPoint.y
         let centerX: CGFloat
         if self.configure.isLeftSector {
@@ -111,5 +135,7 @@ class PieView: UIView {
             make.height.equalTo(labelHeight)
             make.width.equalTo(labelLength)
         }
+        textView.layoutIfNeeded()
+        textView.setNeedsDisplay()
     }
 }

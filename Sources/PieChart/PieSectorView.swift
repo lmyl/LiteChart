@@ -9,7 +9,7 @@
 import UIKit
 
 class PieSectorView: UIView {
-    let configure: PieSectorViewConfigure
+    private let configure: PieSectorViewConfigure
     
     let notificationInfoKey = "lineEndPoint"
     
@@ -28,7 +28,7 @@ class PieSectorView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PieSectorViewConfigure()
+        self.configure = PieSectorViewConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
@@ -37,9 +37,10 @@ class PieSectorView: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
         context?.setShouldAntialias(true)
+        context?.clear(rect)
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
         let radius: CGFloat
-        if self.configure.lineColor != nil {
+        if self.configure.isShowLine {
             let tempRadius = min(rect.width, rect.height) / 2
             let polylineSegmentLength = min(tempRadius / 8, 20)
             radius = tempRadius - polylineSegmentLength
@@ -51,10 +52,10 @@ class PieSectorView: UIView {
         context?.closePath()
         context?.setFillColor(self.configure.backgroundColor.color.cgColor)
         context?.drawPath(using: .fill)
-        if let lineColor = self.configure.lineColor {
+        if self.configure.isShowLine {
             context?.setLineWidth(1)
             context?.setLineCap(.round)
-            context?.setStrokeColor(lineColor.color.cgColor)
+            context?.setStrokeColor(self.configure.lineColor.color.cgColor)
             let lineAngle = self.configure.averageAngle
             let startPoint = computePointInCircle(for: center, radius: radius, angle: lineAngle)
             context?.move(to: startPoint)

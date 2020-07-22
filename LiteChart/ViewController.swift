@@ -15,10 +15,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .funal(inputDatas: [(100, .init(lightColor: .yellow, darkColor: .blue)), (50, .init(lightColor: .pink, darkColor: .blue))]))
+        var configure = LiteChartViewParameters(inputDatas: .pie(inputDatas: [(20, .init(lightUIColor: .yellow)), (40, .init(lightUIColor: .systemPink))]))
         configure.coupleTitles = ["0月", "1月", "2月", "3月", "4月", "5月"]
         configure.radarCount = 5
-        configure.inputLegendTitles = ["2018"]
+        configure.inputLegendTitles = ["2018", "2019"]
         configure.titleString = "年度绩效总结"
         configure.isShowCoupleTitles = true
         configure.isShowLegendTitles = false

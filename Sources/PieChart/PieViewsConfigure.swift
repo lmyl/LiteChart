@@ -15,7 +15,11 @@ struct PieViewsConfigure {
         self.models = models
     }
     
-    init() {
+    private init() {
         self.models = []
     }
+}
+
+extension PieViewsConfigure {
+    static let emptyConfigure = PieViewsConfigure()
 }

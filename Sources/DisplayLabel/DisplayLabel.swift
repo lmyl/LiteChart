@@ -25,10 +25,6 @@ class DisplayLabel: UIView {
     
     override func draw(_ rect: CGRect) {
         
-        guard rect.size != .zero else {
-            return
-        }
-        
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
         
