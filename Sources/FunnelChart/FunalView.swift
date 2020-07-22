@@ -54,7 +54,7 @@ class FunalView: UIView {
         let floorViewHeight = fatherRect.height / CGFloat(self.funalFloorViews.count)
         for (index, floorView) in self.funalFloorViews.enumerated() {
             let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
-            let centerY = originY + fatherRect.height / 2
+            let centerY = originY + floorViewHeight / 2
             floorView.snp.updateConstraints{
                 make in
                 make.centerY.equalTo(centerY)
