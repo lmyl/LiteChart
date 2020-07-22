@@ -11,24 +11,28 @@ import SnapKit
 
 class LegendViews: UIView {
     
-    let configure: LegendViewsConfigure
-    var legendViews: [LegendView] = []
+    private let configure: LegendViewsConfigure
+    private var legendViews: [LegendView] = []
     
     init(configure: LegendViewsConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertLegendViews()
+        
+        updateLegendViewsStaticConstraint()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendViewsConfigure()
+        self.configure = LegendViewsConfigure.emptyConfigure
         super.init(coder: coder)
         insertLegendViews()
+        
+        updateLegendViewsStaticConstraint()
     }
     
     override func layoutSubviews() {
         superview?.layoutSubviews()
-        self.updateLegendViewsConstraint()
+        self.updateLegendViewsDynamicConstraint()
     }
     
     private func insertLegendViews() {
@@ -39,7 +43,33 @@ class LegendViews: UIView {
         }
     }
     
-    private func updateLegendViewsConstraint() {
+    private func updateLegendViewsStaticConstraint() {
+        var frontView: LegendView?
+        for lengendView in self.legendViews {
+            guard let front = frontView else {
+                frontView = lengendView
+                lengendView.snp.remakeConstraints{
+                    make in
+                    make.top.equalToSuperview()
+                    make.width.equalToSuperview()
+                    make.height.equalTo(0)
+                    make.left.equalToSuperview()
+                }
+                continue
+            }
+            
+            lengendView.snp.remakeConstraints{
+                make in
+                make.top.equalTo(front.snp.bottom)
+                make.width.equalToSuperview()
+                make.height.equalTo(0)
+                make.left.equalToSuperview()
+            }
+            frontView = lengendView
+        }
+    }
+    
+    private func updateLegendViewsDynamicConstraint() {
         var itemHeight = self.bounds.height / CGFloat(self.legendViews.count)
         itemHeight = min(itemHeight, self.bounds.width / 2, 20)
         let spaceHeight = itemHeight / 10
@@ -51,10 +81,7 @@ class LegendViews: UIView {
                 frontView = lengendView
                 lengendView.snp.updateConstraints{
                     make in
-                    make.top.equalToSuperview()
-                    make.width.equalToSuperview()
                     make.height.equalTo(itemHeight)
-                    make.left.equalToSuperview()
                 }
                 continue
             }
@@ -62,9 +89,7 @@ class LegendViews: UIView {
             lengendView.snp.updateConstraints{
                 make in
                 make.top.equalTo(front.snp.bottom).offset(spaceHeight)
-                make.width.equalToSuperview()
                 make.height.equalTo(itemHeight)
-                make.left.equalToSuperview()
             }
             frontView = lengendView
         }

@@ -10,7 +10,7 @@ import UIKit
 
 class SquareLegend: UIView {
     
-    var configure: LegendConfigure
+    private var configure: LegendConfigure
     
     init(configure: LegendConfigure) {
         self.configure = configure
@@ -19,7 +19,7 @@ class SquareLegend: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure()
+        self.configure = LegendConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
@@ -32,6 +32,7 @@ class SquareLegend: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setShouldAntialias(true)
         context?.setAllowsAntialiasing(true)
+        context?.clear(rect)
         let topLeftX = rect.origin.x + (rect.width - squareWidth) / 2
         let topLeftY = rect.origin.y + (rect.height - squareWidth) / 2
         let originPoint = CGPoint(x: topLeftX, y: topLeftY)

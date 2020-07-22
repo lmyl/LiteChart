@@ -15,7 +15,11 @@ struct LegendViewsConfigure {
         self.models = models
     }
     
-    init() {
+    private init() {
         self.models = []
     }
+}
+
+extension LegendViewsConfigure {
+    static let emptyConfigure = LegendViewsConfigure()
 }

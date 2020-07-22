@@ -10,7 +10,7 @@ import UIKit
 
 class CircleLegend: UIView {
     
-    var configure: LegendConfigure
+    private var configure: LegendConfigure
     
     init(configure: LegendConfigure) {
         self.configure = configure
@@ -19,7 +19,7 @@ class CircleLegend: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure()
+        self.configure = LegendConfigure.emptyConfigure
         super.init(coder:coder)
         self.backgroundColor = .clear
     }
@@ -28,6 +28,7 @@ class CircleLegend: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setShouldAntialias(true)
         context?.setAllowsAntialiasing(true)
+        context?.clear(rect)
         let width = rect.width
         let height = rect.height
         let radius = min(width, height) / 2

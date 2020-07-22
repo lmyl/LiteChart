@@ -16,7 +16,11 @@ struct LegendConfigure {
         self.color = color
     }
     
-    init() {
-        self.color = .init(lightColor: .yellow)
+    private init() {
+        self.color = .init(lightUIColor: .yellow, darkUIColor: .blue)
     }
+}
+
+extension LegendConfigure {
+    static let emptyConfigure = LegendConfigure()
 }

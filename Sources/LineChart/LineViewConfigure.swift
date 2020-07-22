@@ -22,7 +22,7 @@ extension LineViewConfigure {
     init() {
         self.points = []
         self.legendType = .circle
-        self.legendConfigure = .init()
+        self.legendConfigure = .emptyConfigure
         self.lineColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.lineStyle = .dotted
         self.labelConfigure = nil

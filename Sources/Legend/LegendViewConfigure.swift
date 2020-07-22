@@ -20,9 +20,13 @@ struct LegendViewConfigure {
         self.contentConfigure = contentConfigure
     }
     
-    init() {
+    private init() {
         self.legendType = .square
-        self.legendConfigure = LegendConfigure()
+        self.legendConfigure = LegendConfigure.emptyConfigure
         self.contentConfigure = DisplayLabelConfigure.emptyConfigure
     }
+}
+
+extension LegendViewConfigure {
+    static let emptyConfigure = LegendViewConfigure()
 }

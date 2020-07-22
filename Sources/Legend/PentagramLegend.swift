@@ -10,7 +10,7 @@ import UIKit
 
 class PentagramLegend: UIView { 
     
-    var configure: LegendConfigure
+    private var configure: LegendConfigure
     
     init(configure: LegendConfigure) {
         self.configure = configure
@@ -19,7 +19,7 @@ class PentagramLegend: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure()
+        self.configure = LegendConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
@@ -28,7 +28,7 @@ class PentagramLegend: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
         context?.setAllowsAntialiasing(true)
-        
+        context?.clear(rect)
         let width = rect.width
         let height = rect.height
         let radius = min(width, height) / 2

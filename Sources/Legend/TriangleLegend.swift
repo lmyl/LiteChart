@@ -10,7 +10,7 @@ import UIKit
 
 class TriangleLegend: UIView {
     
-    var configure: LegendConfigure
+    private var configure: LegendConfigure
     
     init(configure: LegendConfigure) {
         self.configure = configure
@@ -19,7 +19,7 @@ class TriangleLegend: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure()
+        self.configure = LegendConfigure.emptyConfigure
         super.init(coder:coder)
         self.backgroundColor = .clear
     }
@@ -28,6 +28,7 @@ class TriangleLegend: UIView {
         let context = UIGraphicsGetCurrentContext()
         context?.setShouldAntialias(true)
         context?.setAllowsAntialiasing(true)
+        context?.clear(rect)
         let width = rect.width
         let height = rect.height
         let baseLength = min(width, height)

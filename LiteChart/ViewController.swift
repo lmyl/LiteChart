@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         configure.inputLegendTitles = ["2018", "2019"]
         configure.titleString = "年度绩效总结"
         configure.isShowCoupleTitles = true
-        configure.isShowLegendTitles = false
+        configure.isShowLegendTitles = true
         
         let backgroundView = try! LiteChartView(configure: configure)
         self.view.addSubview(backgroundView)
