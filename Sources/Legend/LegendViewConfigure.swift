@@ -23,6 +23,6 @@ struct LegendViewConfigure {
     init() {
         self.legendType = .square
         self.legendConfigure = LegendConfigure()
-        self.contentConfigure = DisplayLabelConfigure()
+        self.contentConfigure = DisplayLabelConfigure.emptyConfigure
     }
 }

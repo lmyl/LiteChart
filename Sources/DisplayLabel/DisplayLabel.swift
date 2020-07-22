@@ -9,7 +9,7 @@ import UIKit
 
 class DisplayLabel: UIView {
     
-    let configure: DisplayLabelConfigure
+    private let configure: DisplayLabelConfigure
         
     init(configure: DisplayLabelConfigure) {
         self.configure = configure
@@ -18,7 +18,7 @@ class DisplayLabel: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = DisplayLabelConfigure()
+        self.configure = DisplayLabelConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
@@ -27,7 +27,7 @@ class DisplayLabel: UIView {
         
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
-        
+        context?.clear(rect)
         var textSizeArea = rect.size
         if self.configure.textDirection == .vertical {
             context?.rotate(by: CGFloat(0 - Double.pi / 2))
@@ -59,7 +59,7 @@ class DisplayLabel: UIView {
 }
 
 extension DisplayLabel {
-    func computeSuitableFont(for size: CGSize) -> (UIFont, CGSize) {
+    private func computeSuitableFont(for size: CGSize) -> (UIFont, CGSize) {
         var newFont = UIFont.systemFont(ofSize: 17)
         var fontSize = newFont.pointSize
         let nsstring = self.configure.contentString as NSString

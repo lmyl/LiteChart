@@ -15,29 +15,15 @@ struct DisplayLabelConfigure {
     let textAlignment: NSTextAlignment
     let textDirection: DisplayLabelTextDirection
     
-    init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment, textDirection: DisplayLabelTextDirection) {
+    init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment = .center, textDirection: DisplayLabelTextDirection = .horizontal) {
         self.contentColor = contentColor
         self.contentString = contentString
         self.textAlignment = textAlignment
         self.textDirection = textDirection
     }
     
-    init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment) {
-        self.contentColor = contentColor
-        self.contentString = contentString
-        self.textAlignment = textAlignment
-        self.textDirection = .horizontal
-    }
-    
-    init(contentString: String, contentColor: LiteChartDarkLightColor) {
-        self.contentColor = contentColor
-        self.contentString = contentString
-        self.textAlignment = .center
-        self.textDirection = .horizontal
-    }
-    
-    init() {
-        self.contentColor = .init(lightColor: .black)
+    private init() {
+        self.contentColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.contentString = ""
         self.textAlignment = .center
         self.textDirection = .horizontal
