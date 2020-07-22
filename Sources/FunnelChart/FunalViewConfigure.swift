@@ -10,8 +10,6 @@ import Foundation
 
 struct FunalViewConfigure {
     
-    static let emptyconfigure = FunalViewConfigure()
-    
     let models: [FunalFloorViewConfigure]
     
     init(models: [FunalFloorViewConfigure]) {
@@ -21,4 +19,8 @@ struct FunalViewConfigure {
     private init() {
         self.models = []
     }
+}
+
+extension FunalViewConfigure {
+    static let emptyconfigure = FunalViewConfigure()
 }

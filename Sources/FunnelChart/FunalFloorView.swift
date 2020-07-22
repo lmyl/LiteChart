@@ -21,7 +21,7 @@ class FunalFloorView: UIView {
         self.insertBackgroundView()
         self.insertContentView()
         
-        updateBackgroundViewConstraint()
+        updateBackgroundViewStaticConstraint()
         updateContentViewWithStaticConstraint()
     }
     
@@ -31,7 +31,7 @@ class FunalFloorView: UIView {
         self.insertBackgroundView()
         self.insertContentView()
         
-        updateBackgroundViewConstraint()
+        updateBackgroundViewStaticConstraint()
         updateContentViewWithStaticConstraint()
     }
     
@@ -63,7 +63,7 @@ class FunalFloorView: UIView {
         self.contentView = contentView
     }
     
-    private func updateBackgroundViewConstraint() {
+    private func updateBackgroundViewStaticConstraint() {
         guard let backgroundView = self.backgroundView else {
             return
         }

@@ -106,11 +106,11 @@ extension FunalChartParameters: LiteChartParametersProcesser {
             let backgroundViewConfigure = FunalFloorBackagroundViewConfigure(color: self.inputDatas[index].1, topPercent: CGFloat(inputPercents[index].0), bottomPercent: CGFloat(inputPercents[index].1))
             
             if self.displayDataMode == .none {
-                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, contentViewConfigure: .emptyConfigure, isShowLabel: false)
+                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: false)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
                 let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, textAlignment: .center)
-                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, contentViewConfigure: contentViewConfigure)
+                let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: true, contentViewConfigure: contentViewConfigure)
                 funalViewConfigure.append(funalFloorConfigure)
             }
         }

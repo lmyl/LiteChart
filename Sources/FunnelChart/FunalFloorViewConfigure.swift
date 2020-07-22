@@ -10,15 +10,13 @@ import Foundation
 
 struct FunalFloorViewConfigure {
     
-    static let emptyConfigure = FunalFloorViewConfigure()
-    
     let backgroundViewConfigure: FunalFloorBackagroundViewConfigure
     
     let contentViewConfigure: DisplayLabelConfigure
     
     let isShowLabel: Bool
     
-    init(backgroundViewConfigure: FunalFloorBackagroundViewConfigure, contentViewConfigure: DisplayLabelConfigure, isShowLabel: Bool = true) {
+    init(backgroundViewConfigure: FunalFloorBackagroundViewConfigure, isShowLabel: Bool, contentViewConfigure: DisplayLabelConfigure = .emptyConfigure) {
         self.backgroundViewConfigure = backgroundViewConfigure
         self.contentViewConfigure = contentViewConfigure
         self.isShowLabel = isShowLabel
@@ -29,4 +27,8 @@ struct FunalFloorViewConfigure {
         self.contentViewConfigure = .emptyConfigure
         self.isShowLabel = false
     }
+}
+
+extension FunalFloorViewConfigure {
+    static let emptyConfigure = FunalFloorViewConfigure()
 }

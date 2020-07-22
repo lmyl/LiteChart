@@ -57,7 +57,7 @@ class FunalView: UIView {
     
     
     private func updateFunalFloorViewDynamicConstraint(with rect: CGRect, funalFloorView: FunalFloorView) {
-        funalFloorView.snp.remakeConstraints{
+        funalFloorView.snp.updateConstraints{
             make in
             make.width.equalTo(rect.width)
             make.height.equalTo(rect.height)
