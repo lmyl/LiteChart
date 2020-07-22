@@ -105,7 +105,7 @@ class PieView: UIView {
             if self.configure.isShowLabel {
                 make.width.equalTo(self.bounds.width - 2 * self.labelWidth)
             } else {
-                make.width.equalToSuperview()
+                make.width.equalTo(self.bounds.width)
             }
         }
     }
