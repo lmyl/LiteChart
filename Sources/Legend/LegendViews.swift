@@ -70,6 +70,10 @@ class LegendViews: UIView {
     }
     
     private func updateLegendViewsDynamicConstraint() {
+        guard !self.legendViews.isEmpty else {
+            return
+        }
+        
         var itemHeight = self.bounds.height / CGFloat(self.legendViews.count)
         itemHeight = min(itemHeight, self.bounds.width / 2, 20)
         let spaceHeight = itemHeight / 10

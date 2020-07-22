@@ -16,17 +16,22 @@ class FunalView: UIView {
         self.configure = configure
         super.init(frame: CGRect())
         self.insertFunalFloorViews()
+        
+        updateFunalFloorViewStaticConstraint()
     }
     
     required init?(coder: NSCoder) {
         self.configure = .emptyconfigure
         super.init(coder: coder)
         self.insertFunalFloorViews()
+        
+        updateFunalFloorViewStaticConstraint()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateFunalFloorViewsConstraint()
+        
+        updateFunalFloorViewDynamicConstraint()
     }
     
     private func insertFunalFloorViews() {
@@ -41,30 +46,32 @@ class FunalView: UIView {
         }
     }
     
-    private func updateFunalFloorViewsConstraint() {
+    private func updateFunalFloorViewDynamicConstraint() {
         guard !self.funalFloorViews.isEmpty else {
             return
         }
         let fatherRect = self.bounds
         let floorViewHeight = fatherRect.height / CGFloat(self.funalFloorViews.count)
         for (index, floorView) in self.funalFloorViews.enumerated() {
-            let originX = fatherRect.origin.x
             let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
-            let floorViewRect = CGRect(x: originX, y: originY, width: fatherRect.width, height: floorViewHeight)
-            self.updateFunalFloorViewDynamicConstraint(with: floorViewRect, funalFloorView: floorView)
+            let centerY = originY + fatherRect.height / 2
+            floorView.snp.updateConstraints{
+                make in
+                make.centerY.equalTo(centerY)
+                make.height.equalTo(floorViewHeight)
+            }
         }
     }
     
-    
-    private func updateFunalFloorViewDynamicConstraint(with rect: CGRect, funalFloorView: FunalFloorView) {
-        funalFloorView.snp.updateConstraints{
-            make in
-            make.width.equalTo(rect.width)
-            make.height.equalTo(rect.height)
-            let centerX = rect.origin.x + rect.width / 2
-            let centerY = rect.origin.y + rect.height / 2
-            let center = CGPoint(x: centerX, y: centerY)
-            make.center.equalTo(center)
+    private func updateFunalFloorViewStaticConstraint() {
+        for floorView in self.funalFloorViews {
+            floorView.snp.remakeConstraints{
+                make in
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+                make.height.equalTo(0)
+                make.centerY.equalTo(0)
+            }
         }
     }
 }
