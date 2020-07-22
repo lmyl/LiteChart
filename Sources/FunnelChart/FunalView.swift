@@ -42,50 +42,29 @@ class FunalView: UIView {
     }
     
     private func updateFunalFloorViewsConstraint() {
-        guard !self.funalFloorViews.isEmpty, self.bounds.size != .zero else {
+        guard !self.funalFloorViews.isEmpty else {
             return
         }
         let fatherRect = self.bounds
         let floorViewHeight = fatherRect.height / CGFloat(self.funalFloorViews.count)
-        var firstRect: CGRect? = nil
         for (index, floorView) in self.funalFloorViews.enumerated() {
             let originX = fatherRect.origin.x
             let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
             let floorViewRect = CGRect(x: originX, y: originY, width: fatherRect.width, height: floorViewHeight)
-            if let first = firstRect {
-                self.updateFunalFloorViewConstraint(with: floorViewRect, from: first, funalFloorView: floorView)
-            } else {
-                self.updateFunalFloorViewConstraint(with: floorViewRect, from: floorViewRect, funalFloorView: floorView)
-                firstRect = floorViewRect
-            }
-            
+            self.updateFunalFloorViewDynamicConstraint(with: floorViewRect, funalFloorView: floorView)
         }
     }
     
-    private func updateFunalFloorViewConstraint(with rect: CGRect, from: CGRect, funalFloorView: FunalFloorView) {
+    
+    private func updateFunalFloorViewDynamicConstraint(with rect: CGRect, funalFloorView: FunalFloorView) {
         funalFloorView.snp.remakeConstraints{
             make in
-            make.width.equalTo(from.width)
-            make.height.equalTo(from.height)
-            let centerX = from.origin.x + from.width / 2
-            let centerY = from.origin.y + from.height / 2
+            make.width.equalTo(rect.width)
+            make.height.equalTo(rect.height)
+            let centerX = rect.origin.x + rect.width / 2
+            let centerY = rect.origin.y + rect.height / 2
             let center = CGPoint(x: centerX, y: centerY)
             make.center.equalTo(center)
         }
-        
-        UIView.animate(withDuration: 3, animations: {
-            funalFloorView.snp.updateConstraints{
-                make in
-                let centerX = rect.origin.x + rect.width / 2
-                let centerY = rect.origin.y + rect.height / 2
-                let center = CGPoint(x: centerX, y: centerY)
-                make.center.equalTo(center)
-            }
-            funalFloorView.layoutIfNeeded()
-        }, completion: {
-            print("Over\($0)")
-        })
-        
-        print(funalFloorView.frame)
     }
 }
