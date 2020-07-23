@@ -48,10 +48,13 @@ class PieSectorView: UIView {
             radius = min(rect.width, rect.height) / 2
         }
         context?.move(to: center)
+        context?.addArc(center: center, radius: radius / 2, startAngle: computeRadian(for: self.configure.startAngle), endAngle: computeRadian(for: self.configure.endAngle), clockwise: false)
+        context?.closePath()
+        context?.move(to: center)
         context?.addArc(center: center, radius: radius, startAngle: computeRadian(for: self.configure.startAngle), endAngle: computeRadian(for: self.configure.endAngle), clockwise: false)
         context?.closePath()
         context?.setFillColor(self.configure.backgroundColor.color.cgColor)
-        context?.drawPath(using: .fill)
+        context?.drawPath(using: .eoFill)
         if self.configure.isShowLine {
             context?.setLineWidth(1)
             context?.setLineCap(.round)
