@@ -18,14 +18,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .pie(inputDatas: [(80, .init(lightUIColor: .yellow)), (40, .init(lightUIColor: .systemPink))]))
-        configure.coupleTitles = ["0月", "1月", "2月", "3月", "4月", "5月"]
-        configure.radarCount = 5
-        configure.inputLegendTitles = ["2018", "2019"]
+        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), [20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .yellow), [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), [5.7, 67.89, 99.99, 155.55, 60.66])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"]))
+        configure.inputLegendTitles = ["2018", "2019", "2020"]
         configure.titleString = "年度绩效总结"
-        configure.isShowCoupleTitles = true
         configure.isShowLegendTitles = true
-        configure.displayDataMode = .percent
+        configure.displayDataMode = .original
+        configure.isShowValueDividingLine = true
+        configure.isShowCoupleDividingLine = true
         
         let backgroundView = try! LiteChartView(configure: configure)
         self.view.addSubview(backgroundView)

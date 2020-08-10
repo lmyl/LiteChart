@@ -45,11 +45,15 @@ struct LiteChartViewParameters {
     
     var isShowCoupleDividingLine = false
     
+    var isShowValueUnitString = false
+    
+    var isShowCoupleUnitString = false
+    
     var isShowCoupleTitles = false
     
-    var valueUnitString: String?
+    var valueUnitString = ""
     
-    var coupleUnitString: String?
+    var coupleUnitString = ""
         
     var axisColor: LiteChartDarkLightColor = .init(lightColor: .black)
     
@@ -68,7 +72,7 @@ struct LiteChartViewParameters {
         case .pie(let inputDatas):
             return PieChartParameters(inputDatas: inputDatas, inputLegendTitles: self.inputLegendTitles ?? [], displayDataMode: self.displayDataMode, textColor: self.textColor)
         case .bar(let inputDatas, let coupleTitle):
-            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, coupleTitle: coupleTitle, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, inputLegendTitles: self.inputLegendTitles, isShowCoupleDividingLine: self.isShowCoupleDividingLine, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+            return BarChartParameter(borderStyle: self.borderStyle, borderColor: self.borderColor, direction: self.direction, textColor: self.textColor, inputDatas: inputDatas, coupleTitle: coupleTitle, displayDataMode: self.displayDataMode, dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, inputLegendTitles: self.inputLegendTitles ?? [], isShowCoupleDividingLine: self.isShowCoupleDividingLine, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingCoupleLineColor, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
         case .line(let inputDatas, let coupleTitle):
             return LineChartParameters(borderStyle: self.borderStyle, borderColor: self.borderColor, textColor: self.textColor, inputDatas: inputDatas, coupleTitles: coupleTitle, inputLegendTitles: self.inputLegendTitles, displayDataMode: self.displayDataMode, dividingValueLineStyle: self.dividingValueLineStyle, dividingValueLineColor: self.dividingValueLineColor, dividingCoupleLineStyle: self.dividingCoupleLineStyle, dividingCoupleLineColor: self.dividingValueLineColor, isShowValueDividingLine: self.isShowValueDividingLine, isShowCoupleDividingLine: self.isShowCoupleDividingLine, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString, axisColor: self.axisColor)
         case .scatter(let inputDatas):

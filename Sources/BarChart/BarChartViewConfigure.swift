@@ -16,7 +16,9 @@ struct BarChartViewConfigure {
     
     let valueTitle: [String]
     
-    let inputDatas: [(LiteChartDarkLightColor ,[(String?, CGFloat)])]
+    let inputDatas: [(LiteChartDarkLightColor ,[(String, CGFloat)])]
+    
+    let isShowLabel: Bool
     
     let direction: BarChartDirection
     
@@ -28,9 +30,13 @@ struct BarChartViewConfigure {
     
     let yDividingPoints: [AxisDividingLineConfigure]
     
-    let valueUnitString: String?
+    let isShowValueUnitString: Bool
     
-    let coupleUnitString: String?
+    let isShowCoupleUnitString: Bool
+    
+    let valueUnitString: String
+    
+    let coupleUnitString: String
 }
 
 extension BarChartViewConfigure {
@@ -44,8 +50,11 @@ extension BarChartViewConfigure {
         self.xDividingPoints = []
         self.yDividingPoints = []
         self.borderStyle = .halfSurrounded
-        self.valueUnitString = nil
-        self.coupleUnitString = nil
+        self.isShowValueUnitString = false
+        self.isShowCoupleUnitString = false
+        self.valueUnitString = ""
+        self.coupleUnitString = ""
+        self.isShowLabel = false
     }
 }
 

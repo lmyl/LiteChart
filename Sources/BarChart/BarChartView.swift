@@ -27,6 +27,10 @@ class BarChartView: UIView {
         insertBarViews()
         insertValueTitleView()
         insertCoupleTitleView()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updateBarViewsStaticContraints()
     }
     
     required init?(coder: NSCoder) {
@@ -37,39 +41,43 @@ class BarChartView: UIView {
         insertBarViews()
         insertValueTitleView()
         insertCoupleTitleView()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updateBarViewsStaticContraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateAxisViewConstraints()
-        updateUnitLabelConstraints()
-        updateBarViewsContraints()
-        updateValueViewConstraints()
-        updateCoupleTitleViewConstraints()
+        updateAxisViewDynamicConstraints()
+        updateUnitLabelDynamicConstraints()
+        updateBarViewsDynamicContraints()
+        updateValueViewDynamicConstraints()
+        updateCoupleTitleViewDynamicConstraints()
     }
     
     private func insertUnitLabel() {
         var unitLabel: DisplayLabel
         
-        if let valueUnit = self.configure.valueUnitString {
+        if self.configure.isShowValueUnitString {
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor))
                 self.xUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
                 self.yUnitLabel = unitLabel
             }
             self.addSubview(unitLabel)
         }
         
-        if let coupleUnit = self.configure.coupleUnitString {
+        if self.configure.isShowCoupleUnitString {
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
                 self.yUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor))
                 self.xUnitLabel = unitLabel
             }
             self.addSubview(unitLabel)
@@ -140,7 +148,7 @@ class BarChartView: UIView {
             }
         }
         let coupleCount = inputDatas[0].1.count
-        var coupleBarsInputDatas: [[(LiteChartDarkLightColor, CGFloat, String?)]] = Array(repeating: [], count: coupleCount)
+        var coupleBarsInputDatas: [[(LiteChartDarkLightColor, CGFloat, String)]] = Array(repeating: [], count: coupleCount)
         
         for inputData in inputDatas {
             for index in 0 ..< coupleCount {
@@ -161,11 +169,11 @@ class BarChartView: UIView {
         for coupleBars in coupleBarsInputDatas {
             var barViewsConfigure: [BarViewConfigure] = []
             for input in coupleBars {
-                if let labelString = input.2 {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, label: DisplayLabelConfigure(contentString: labelString, contentColor: self.configure.textColor, textAlignment: textAlignment), direction: self.configure.direction)
+                if self.configure.isShowLabel {
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: self.configure.textColor, textAlignment: textAlignment), direction: self.configure.direction)
                     barViewsConfigure.append(barViewConfigure)
                 } else {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, direction: self.configure.direction)
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: false, direction: self.configure.direction)
                     barViewsConfigure.append(barViewConfigure)
                 }
             }
@@ -214,7 +222,7 @@ class BarChartView: UIView {
         return self.bottomViewHeight + self.labelViewSpace
     }
     
-    private func updateUnitLabelConstraints() {
+    private func updateUnitLabelStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -238,10 +246,26 @@ class BarChartView: UIView {
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
         }
-        
     }
     
-    private func updateAxisViewConstraints() {
+    private func updateUnitLabelDynamicConstraints() {
+        
+        if let unit = self.yUnitLabel {
+            unit.snp.updateConstraints{
+                make in
+                make.width.equalTo(self.leftUnitViewWidth)
+            }
+        }
+        
+        if let xUnit = self.xUnitLabel {
+            xUnit.snp.updateConstraints{
+                make in
+                make.height.equalTo(self.bottomUnitViewHeight)
+            }
+        }
+    }
+    
+    private func updateAxisViewStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -249,12 +273,23 @@ class BarChartView: UIView {
             make in
             make.right.equalToSuperview()
             make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func updateAxisViewDynamicConstraints() {
+        guard let axis = self.axisView else {
+            return
+        }
+        axis.snp.updateConstraints{
+            make in
             make.left.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
     
-    private func updateBarViewsContraints() {
+    private func updateBarViewsStaticContraints() {
         let itemCount = self.barView.count
         guard let axis = self.axisView, itemCount > 0 else {
             return
@@ -264,13 +299,12 @@ class BarChartView: UIView {
         
         switch self.configure.direction {
         case .bottomToTop:
-            let itemWidth = axis.bounds.width / CGFloat(itemCount)
             for barView in self.barView {
                 guard let front = frontView else {
                     barView.snp.updateConstraints{
                         make in
                         make.left.equalTo(axis.snp.left)
-                        make.width.equalTo(itemWidth)
+                        make.width.equalTo(0)
                         make.bottom.equalTo(axis.snp.bottom)
                         make.top.equalTo(axis.snp.top)
                     }
@@ -280,20 +314,19 @@ class BarChartView: UIView {
                 barView.snp.updateConstraints{
                     make in
                     make.left.equalTo(front.snp.right)
-                    make.width.equalTo(itemWidth)
+                    make.width.equalTo(front.snp.width)
                     make.bottom.equalTo(axis.snp.bottom)
                     make.top.equalTo(axis.snp.top)
                 }
                 frontView = barView
             }
         case .leftToRight:
-            let itemHeight = axis.bounds.height / CGFloat(itemCount)
             for barView in self.barView {
                 guard let front = frontView else {
                     barView.snp.updateConstraints{
                         make in
                         make.left.equalTo(axis.snp.left)
-                        make.height.equalTo(itemHeight)
+                        make.height.equalTo(0)
                         make.bottom.equalTo(axis.snp.bottom)
                         make.right.equalTo(axis.snp.right)
                     }
@@ -303,7 +336,7 @@ class BarChartView: UIView {
                 barView.snp.updateConstraints{
                     make in
                     make.left.equalTo(axis.snp.left)
-                    make.height.equalTo(itemHeight)
+                    make.height.equalTo(front.snp.height)
                     make.bottom.equalTo(front.snp.top)
                     make.right.equalTo(axis.snp.right)
                 }
@@ -312,7 +345,31 @@ class BarChartView: UIView {
         }
     }
     
-    private func updateValueViewConstraints() {
+    private func updateBarViewsDynamicContraints() {
+        let itemCount = self.barView.count
+        guard let axis = self.axisView, itemCount > 0 else {
+            return
+        }
+        guard let first = self.barView.first else {
+            return
+        }
+        switch self.configure.direction {
+        case .bottomToTop:
+            let itemWidth = axis.bounds.width / CGFloat(itemCount)
+            first.snp.updateConstraints{
+                make in
+                make.width.equalTo(itemWidth)
+            }
+        case .leftToRight:
+            let itemHeight = axis.bounds.height / CGFloat(itemCount)
+            first.snp.updateConstraints{
+                make in
+                make.height.equalTo(itemHeight)
+            }
+        }
+    }
+    
+    private func updateValueViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -358,7 +415,7 @@ class BarChartView: UIView {
         }
     }
     
-    private func updateCoupleTitleViewConstraints() {
+    private func updateCoupleTitleViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }

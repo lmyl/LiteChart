@@ -23,7 +23,7 @@ struct BarChartParameter {
     
     var coupleTitle: [String]
     
-    var inputLegendTitles: [String]?
+    var inputLegendTitles: [String]
     
     var displayDataMode: ChartValueDisplayMode
     
@@ -39,11 +39,15 @@ struct BarChartParameter {
     
     var isShowCoupleDividingLine: Bool
     
-    var valueUnitString: String?
+    var isShowValueUnitString: Bool
     
-    var coupleUnitString: String?
+    var isShowCoupleUnitString: Bool
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String]?, isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, valueUnitString: String?, coupleUnitString: String?) {
+    var valueUnitString: String
+    
+    var coupleUnitString: String
+    
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String], isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
@@ -59,6 +63,9 @@ struct BarChartParameter {
         
         self.inputDatas = inputDatas
         self.coupleTitle = coupleTitle
+        
+        self.isShowValueUnitString = isShowValueUnitString
+        self.isShowCoupleUnitString = isShowCoupleUnitString
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
     }
@@ -84,13 +91,11 @@ extension BarChartParameter: LiteChartParametersProcesser {
                     throw ChartError.inputDatasMustPositive
                 }
             }
-        } else {
-            return
         }
     }
     
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == inputLegendTitles.count else {
+        guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -129,18 +134,14 @@ extension BarChartParameter: LiteChartParametersProcesser {
         let valueForAxis = self.maxValueAndDividingPointForAxis(input: coupleDatas)
         
         
-        var inputDatas: [(LiteChartDarkLightColor, [(String?, CGFloat)])] = []
+        var inputDatas: [(LiteChartDarkLightColor, [(String, CGFloat)])] = []
         let proportionalValue = self.computeProportionalValue(for: coupleDatas, maxValue: valueForAxis.maxValue)
         
         for index in 0 ..< self.inputDatas.count {
-            var datas: [(String?, CGFloat)] = []
+            var datas: [(String, CGFloat)] = []
             for innerIndex in 0 ..< self.inputDatas[index].1.count {
-                if self.displayDataMode == .original {
-                    let string = displayString[index][innerIndex]
-                    datas.append((string, CGFloat(proportionalValue[index][innerIndex])))
-                } else {
-                    datas.append((nil, CGFloat(proportionalValue[index][innerIndex])))
-                }
+                let string = displayString[index][innerIndex]
+                datas.append((string, CGFloat(proportionalValue[index][innerIndex])))
             }
             inputDatas.append((self.inputDatas[index].0, datas))
         }
@@ -164,11 +165,10 @@ extension BarChartParameter: LiteChartParametersProcesser {
         
         
         //Todo: 计算couple分割线位置
-        var coupleTitles: [String] = []
+        let coupleTitles = self.coupleTitle
         var coupleDividingLineConfigrue: [AxisDividingLineConfigure] = []
         let numberCount = self.inputDatas[0].1.count
         if self.isShowCoupleDividingLine && numberCount >= 2 {
-            coupleTitles = self.coupleTitle
             let space: CGFloat = 1 / CGFloat(numberCount)
             for index in 1 ..< numberCount {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingCoupleLineStyle, dividingLineColor: self.dividingCoupleLineColor, location: space * CGFloat(index))
@@ -176,13 +176,13 @@ extension BarChartParameter: LiteChartParametersProcesser {
             }
         }
         
-        
+        let isShowLabel = self.displayDataMode == .original
         switch self.direction {
         case .bottomToTop:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
             return BarChartView(configure: barChartViewConfigure)
         case .leftToRight:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue,isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
             return BarChartView(configure: barChartViewConfigure)
         }
         
