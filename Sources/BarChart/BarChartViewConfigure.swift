@@ -40,7 +40,7 @@ struct BarChartViewConfigure {
 }
 
 extension BarChartViewConfigure {
-    init() {
+    private init() {
         self.textColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.coupleTitle = []
         self.valueTitle = []
@@ -56,5 +56,7 @@ extension BarChartViewConfigure {
         self.coupleUnitString = ""
         self.isShowLabel = false
     }
+    
+    static let emptyConfigure = BarChartViewConfigure()
 }
 

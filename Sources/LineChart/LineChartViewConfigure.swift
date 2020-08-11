@@ -16,7 +16,9 @@ struct LineChartViewConfigure {
     
     let valueTitle: [String]
     
-    let inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend ,[(String?, CGPoint)])]
+    let inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend ,[(String, CGPoint)])]
+    
+    let isShowLabel: Bool
         
     let borderColor: LiteChartDarkLightColor
     
@@ -30,14 +32,18 @@ struct LineChartViewConfigure {
     
     let yDividingPoints: [AxisDividingLineConfigure]
     
-    let valueUnitString: String?
+    let isShowValueUnitString: Bool
     
-    let coupleUnitString: String?
+    let valueUnitString: String
+    
+    let isShowCoupleUnitString: Bool
+    
+    let coupleUnitString: String
     
 }
 
 extension LineChartViewConfigure {
-    init() {
+    private init() {
         self.textColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.coupleTitle = []
         self.valueTitle = []
@@ -46,9 +52,14 @@ extension LineChartViewConfigure {
         self.xDividingPoints = []
         self.yDividingPoints = []
         self.borderStyle = .halfSurrounded
-        self.valueUnitString = nil
-        self.coupleUnitString = nil
+        self.valueUnitString = ""
+        self.coupleUnitString = ""
+        self.isShowLabel = false
+        self.isShowValueUnitString = false
+        self.isShowCoupleUnitString = false
         self.axisOriginal = .zero
         self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
     }
+    
+    static let emptyConfigure = LineChartViewConfigure()
 }

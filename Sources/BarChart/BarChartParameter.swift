@@ -112,7 +112,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
     func computeContentView() -> UIView {
         
         guard self.inputDatas.count > 0 else {
-            let configure = BarChartViewConfigure()
+            let configure = BarChartViewConfigure.emptyConfigure
             return BarChartView(configure: configure)
         }
         
@@ -140,8 +140,13 @@ extension BarChartParameter: LiteChartParametersProcesser {
         for index in 0 ..< self.inputDatas.count {
             var datas: [(String, CGFloat)] = []
             for innerIndex in 0 ..< self.inputDatas[index].1.count {
-                let string = displayString[index][innerIndex]
-                datas.append((string, CGFloat(proportionalValue[index][innerIndex])))
+                if self.displayDataMode == .original {
+                    let string = displayString[index][innerIndex]
+                    datas.append((string, CGFloat(proportionalValue[index][innerIndex])))
+                } else {
+                    datas.append(("", CGFloat(proportionalValue[index][innerIndex])))
+                }
+                
             }
             inputDatas.append((self.inputDatas[index].0, datas))
         }
@@ -152,11 +157,9 @@ extension BarChartParameter: LiteChartParametersProcesser {
         var valueDividingLineConfigure: [AxisDividingLineConfigure] = []
         
         if self.isShowValueDividingLine {
-            
             let dividingNumber = valueForAxis.dividingPoint
-            let dividingValue = self.computeProportionalValue(for: dividingNumber, maxValue: valueForAxis.maxValue)
             valuesString = self.computeValueTitleString(dividingNumber)
-            
+            let dividingValue = self.computeProportionalValue(for: dividingNumber, maxValue: valueForAxis.maxValue)
             for value in dividingValue {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, location: CGFloat(value))
                 valueDividingLineConfigure.append(configure)

@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 
 class LineView: UIView {
-    let configure: LineViewConfigure
+    private let configure: LineViewConfigure
     
-    var labels: [DisplayLabel] = []
-    var legend: [UIView] = []
+    private var labels: [DisplayLabel] = []
+    private var legend: [UIView] = []
     
     init(configure: LineViewConfigure) {
         self.configure = configure
@@ -24,7 +24,7 @@ class LineView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LineViewConfigure()
+        self.configure = LineViewConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
         insertLabel()
@@ -33,18 +33,18 @@ class LineView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateLabelsConstraints()
-        updateLegendsConstraints()
+        updateLabelsDynamicConstraints()
+        updateLegendsDynamicConstraints()
     }
     
     private func insertLabel() {
-        guard let configure = self.configure.labelConfigure else {
+        guard self.configure.isShowLabel else {
             return
         }
-        guard configure.count == self.configure.points.count else {
+        guard self.configure.labelConfigure.count == self.configure.points.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }
-        for con in  configure {
+        for con in self.configure.labelConfigure {
             let label = DisplayLabel(configure: con)
             self.labels.append(label)
             self.addSubview(label)
@@ -71,7 +71,7 @@ class LineView: UIView {
         }
     }
     
-    private func updateLabelsConstraints() {
+    private func updateLabelsDynamicConstraints() {
         var labelWidth = self.bounds.width / CGFloat(self.labels.count * 4)
         var labelHeight = self.bounds.height / 20
         var space = labelHeight
@@ -80,7 +80,7 @@ class LineView: UIView {
         space = min(space, 8)
         
         for (index, label) in self.labels.enumerated() {
-            let realPoint = self.convertScalePointToRealPoint(for: self.configure.points[index])
+            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index])
             let center = CGPoint(x: realPoint.x, y: realPoint.y - space - labelHeight / 2)
             label.snp.updateConstraints{
                 make in
@@ -91,14 +91,14 @@ class LineView: UIView {
         }
     }
     
-    private func updateLegendsConstraints() {
+    private func updateLegendsDynamicConstraints() {
         var legendWidth = self.bounds.width / 20
         var legendHeight = self.bounds.height / 20
         legendWidth = min(legendWidth, 8)
         legendHeight = min(legendHeight, 8)
         let legendLength = min(legendHeight, legendWidth)
         for (index, legend) in self.legend.enumerated() {
-            let realPoint = self.convertScalePointToRealPoint(for: self.configure.points[index])
+            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index])
             legend.snp.updateConstraints{
                 make in
                 make.center.equalTo(realPoint)
@@ -119,30 +119,22 @@ class LineView: UIView {
         context?.setLineWidth(1)
         
         switch self.configure.lineStyle {
-        case .dotted:
+        case .dottedPolyline:
             context?.setLineDash(phase: 1, lengths: [6, 3])
-        case .solid:
+            drawPolyline(for: self.configure.points, context: context)
+        case .solidPolyline:
             context?.setLineDash(phase: 0, lengths: [])
+            drawPolyline(for: self.configure.points, context: context)
+        case .dottedCubicBezierCurve:
+            context?.setLineDash(phase: 1, lengths: [6, 3])
+            drawCubicBezierCurve(for: self.configure.points, context: context)
+        case .solidCubicBezierCurve:
+            context?.setLineDash(phase: 0, lengths: [])
+            drawCubicBezierCurve(for: self.configure.points, context: context)
         }
-        
-        var frontPoint: CGPoint?
-        for point in self.configure.points {
-            let realPoint = self.convertScalePointToRealPoint(for: point)
-            guard let _ = frontPoint else {
-                context?.move(to: realPoint)
-                frontPoint = realPoint
-                continue
-            }
-            context?.addLine(to: realPoint)
-            context?.move(to: realPoint)
-            frontPoint = realPoint
-        }
-        
-        context?.drawPath(using: .stroke)
-        
     }
     
-    private func convertScalePointToRealPoint(for point: CGPoint) -> CGPoint {
+    private func convertScalePointToRealPointWtihLimit(for point: CGPoint) -> CGPoint {
         var realPoint = point
         if realPoint.x < 0 {
             realPoint.x = 0
@@ -158,4 +150,94 @@ class LineView: UIView {
         realPoint = CGPoint(x: self.bounds.width * realPoint.x + self.bounds.origin.x, y: self.bounds.origin.y + self.bounds.height * (1 - realPoint.y))
         return realPoint
     }
+    
+    private func convertScalePointToRealPointWtihoutLimit(for point: CGPoint) -> CGPoint {
+        var realPoint = point
+        realPoint = CGPoint(x: self.bounds.width * realPoint.x + self.bounds.origin.x, y: self.bounds.origin.y + self.bounds.height * (1 - realPoint.y))
+        return realPoint
+    }
+    
+    private func computeControlPointsFrom(firstPoint: CGPoint, secondPoint: CGPoint, thirdPoint: CGPoint, fourthPoint: CGPoint) -> (firstControl: CGPoint, secondControl: CGPoint) {
+        let smoothValue: CGFloat = 0.6
+        let firstControlX = (firstPoint.x + secondPoint.x) / 2
+        let firstControlY = (firstPoint.y + secondPoint.y) / 2
+        let secondControlX = (secondPoint.x + thirdPoint.x) / 2
+        let secondControlY = (secondPoint.y + thirdPoint.y) / 2
+        let thirdControlX = (thirdPoint.x + fourthPoint.x) / 2
+        let thirdControlY = (thirdPoint.y + fourthPoint.y) / 2
+        var distanceFirstToSecond = (firstPoint.x - secondPoint.x) * (firstPoint.x - secondPoint.x) + (firstPoint.y - secondPoint.y) * (firstPoint.y - secondPoint.y)
+        distanceFirstToSecond = pow(distanceFirstToSecond, 0.5)
+        var distanceSecondToThird = (secondPoint.x - thirdPoint.x) * (secondPoint.x - thirdPoint.x) + (secondPoint.y - thirdPoint.y) * (secondPoint.y - thirdPoint.y)
+        distanceSecondToThird = pow(distanceSecondToThird, 0.5)
+        var distanceThirdToFourth = (thirdPoint.x - fourthPoint.x) * (thirdPoint.x - fourthPoint.x) + (thirdPoint.y - fourthPoint.y) * (thirdPoint.y - fourthPoint.y)
+        distanceThirdToFourth = pow(distanceThirdToFourth, 0.5)
+        let slopeFirst = distanceFirstToSecond / (distanceFirstToSecond + distanceSecondToThird)
+        let slopeSecond = distanceSecondToThird / (distanceSecondToThird + distanceThirdToFourth)
+        let middleFirstX = firstControlX + (secondControlX - firstControlX) * slopeFirst
+        let middleFirstY = firstControlY + (secondControlY - firstControlY) * slopeFirst
+        let middleSecondX = secondControlX + (thirdControlX - secondControlX) * slopeSecond
+        let middleSecondY = secondControlY + (thirdControlY - secondControlY) * slopeSecond
+        let finalControlFirstX = (secondControlX - middleFirstX) * smoothValue + secondPoint.x
+        let finalControlFirstY = (secondControlY - middleFirstY) * smoothValue + secondPoint.y
+        let finalControlSecondX = (secondControlX - middleSecondX) * smoothValue + thirdPoint.x
+        let finalControlSecondY = (secondControlY - middleSecondY) * smoothValue + thirdPoint.y
+        let finalControlFirst = CGPoint(x: finalControlFirstX, y: finalControlFirstY)
+        let finalControlSecond = CGPoint(x: finalControlSecondX, y: finalControlSecondY)
+        return (finalControlFirst, finalControlSecond)
+    }
+    
+    private func computeControlPointsFrom(points: [CGPoint]) -> [(firstControl: CGPoint, secondControl: CGPoint)] {
+        guard points.count >= 2 else {
+            return []
+        }
+        let leftPaddingPoint = CGPoint(x: 0, y: 0.5)
+        let rightPaddingPoint = CGPoint(x: 1, y: 0.5)
+        let allPoints = [leftPaddingPoint] + points + [rightPaddingPoint]
+        var result: [(CGPoint, CGPoint)] = []
+        for index in 0 ... allPoints.count - 4 {
+            let temp = computeControlPointsFrom(firstPoint: allPoints[index], secondPoint: allPoints[index + 1], thirdPoint: allPoints[index + 2], fourthPoint: allPoints[index + 3])
+            result.append(temp)
+        }
+        return result
+    }
+    
+    private func drawPolyline(for points: [CGPoint], context: CGContext?) {
+        guard points.count >= 2 else {
+            return
+        }
+        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: points[0])
+        context?.move(to: firstPoint)
+        var remain = points
+        remain.removeFirst()
+        for point in remain {
+            let next = self.convertScalePointToRealPointWtihLimit(for: point)
+            context?.addLine(to: next)
+        }
+        context?.drawPath(using: .stroke)
+    }
+    
+    private func drawCubicBezierCurve(for points: [CGPoint], context: CGContext?) {
+        guard points.count >= 2 else {
+            return
+        }
+        let allControlPoints = computeControlPointsFrom(points: points)
+        guard !allControlPoints.isEmpty else {
+            return
+        }
+        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: points[0])
+        context?.move(to: firstPoint)
+        var remain = points
+        remain.removeFirst()
+        guard remain.count == allControlPoints.count else {
+            fatalError("框架内部数据处理错误，不给予拯救!")
+        }
+        for index in 0 ..< remain.count {
+            let nextPoint = self.convertScalePointToRealPointWtihLimit(for: remain[index])
+            let nextControlPointFirst = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].firstControl)
+            let nextControlPointSecond = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].secondControl)
+            context?.addCurve(to: nextPoint, control1: nextControlPointFirst, control2: nextControlPointSecond)
+        }
+        context?.drawPath(using: .stroke)
+    }
+    
 }

@@ -20,7 +20,7 @@ struct LineChartParameters {
     
     var coupleTitles: [String]
     
-    var inputLegendTitles: [String]? // 图例显示
+    var inputLegendTitles: [String] // 图例显示
         
     var displayDataMode: ChartValueDisplayMode
     
@@ -36,13 +36,17 @@ struct LineChartParameters {
     
     var isShowCoupleDividingLine: Bool
     
-    var valueUnitString: String?
+    var isShowValueUnitString: Bool
     
-    var coupleUnitString: String?
+    var isShowCoupleUnitString: Bool
+    
+    var valueUnitString: String
+    
+    var coupleUnitString: String
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])], coupleTitles: [String], inputLegendTitles: [String]?, displayDataMode: ChartValueDisplayMode, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])], coupleTitles: [String], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas
@@ -56,6 +60,8 @@ struct LineChartParameters {
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
         self.isShowValueDividingLine = isShowValueDividingLine
         self.isShowCoupleDividingLine = isShowCoupleDividingLine
+        self.isShowCoupleUnitString = isShowCoupleUnitString
+        self.isShowValueUnitString = isShowValueUnitString
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
         self.axisColor = axisColor
@@ -82,7 +88,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
     }
 
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, inputLegendTitles.count == self.inputDatas.count else {
+        guard self.inputLegendTitles.count == self.inputDatas.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -99,7 +105,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
 
     func computeContentView() -> UIView {
         guard self.inputDatas.count > 0 else {
-            let configure = LineChartViewConfigure()
+            let configure = LineChartViewConfigure.emptyConfigure
             return LineChartView(configure: configure)
         }
         let coupleCount = self.inputDatas.count
@@ -115,7 +121,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
             displayString = []
         }
         
-        var inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [(String?, CGPoint)])] = []
+        var inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [(String, CGPoint)])] = []
         let valueForAxis = self.positiveAndNegativeValueForAxis(input: coupleDatas)
         
         let proportionY = self.computeProportionalValue(for: coupleDatas, axisValue: valueForAxis.axisValue)
@@ -127,13 +133,13 @@ extension LineChartParameters: LiteChartParametersProcesser {
             proportionX.append(1 / Double(firstValueCount + 1) * Double(index + 1))
         }
         for index in 0 ..< self.inputDatas.count {
-            var datas: [(String?, CGPoint)] = []
+            var datas: [(String, CGPoint)] = []
             for innerIndex in 0 ..< firstValueCount {
                 if self.displayDataMode == .original {
                     let string = displayString[index][innerIndex]
                     datas.append((string, CGPoint(x: proportionX[innerIndex], y: proportionY[index][innerIndex])))
                 } else {
-                    datas.append((nil, CGPoint(x: proportionX[innerIndex], y: proportionY[index][innerIndex])))
+                    datas.append(("", CGPoint(x: proportionX[innerIndex], y: proportionY[index][innerIndex])))
                 }
             }
             inputDatas.append((self.inputDatas[index].0, self.inputDatas[index].1, self.inputDatas[index].2, datas))
@@ -141,10 +147,11 @@ extension LineChartParameters: LiteChartParametersProcesser {
         
         var valuesString: [String] = []
         var valueDividingLineConfigure: [AxisDividingLineConfigure] = []
+        
         if self.isShowValueDividingLine {
             let dividingPoints = valueForAxis.dividingPoints
-            let dividingValue = self.computeProportionalValue(for: dividingPoints, axisValue: valueForAxis.axisValue)
             valuesString = self.computeValueTitleString(dividingPoints)
+            let dividingValue = self.computeProportionalValue(for: dividingPoints, axisValue: valueForAxis.axisValue)
             for value in dividingValue {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingValueLineStyle, dividingLineColor: self.dividingValueLineColor, location: CGFloat(value))
                 valueDividingLineConfigure.append(configure)
@@ -162,7 +169,9 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(valueForAxis.axisValue)
-        let lineChartViewConfigure = LineChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+        let isShowLabel = self.displayDataMode == .original
+        
+        let lineChartViewConfigure = LineChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
         return LineChartView(configure: lineChartViewConfigure)
     }
     

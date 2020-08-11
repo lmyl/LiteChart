@@ -9,14 +9,14 @@
 import UIKit
 
 class LineChartView: UIView {
-    let configure: LineChartViewConfigure
+    private let configure: LineChartViewConfigure
     
-    var axisView: AxisView?
-    var yUnitLabel: DisplayLabel?
-    var xUnitLabel: DisplayLabel?
-    var coupleTitleView: [DisplayLabel] = []
-    var valueView: [DisplayLabel] = []
-    var lineViews: LineViews?
+    private var axisView: AxisView?
+    private var yUnitLabel: DisplayLabel?
+    private var xUnitLabel: DisplayLabel?
+    private var coupleTitleView: [DisplayLabel] = []
+    private var valueView: [DisplayLabel] = []
+    private var lineViews: LineViews?
     
     init(configure: LineChartViewConfigure) {
         self.configure = configure
@@ -26,39 +26,46 @@ class LineChartView: UIView {
         insertValueTitleView()
         insertCoupleTitleView()
         insertLineViews()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updateLineViewsStaticContraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LineChartViewConfigure()
+        self.configure = LineChartViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertUnitLabel()
         insertAxisView()
         insertValueTitleView()
         insertCoupleTitleView()
         insertLineViews()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updateLineViewsStaticContraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateAxisViewConstraints()
-        updateUnitLabelConstraints()
-        updateLineViewsContraints()
-        updateValueViewConstraints()
-        updateCoupleTitleViewConstraints()
+        updateAxisViewDynamicConstraints()
+        updateUnitLabelDynamicConstraints()
+        updateValueViewDynamicConstraints()
+        updateCoupleTitleViewDynamicConstraints()
     }
     
     private func insertUnitLabel() {
         var unitLabel: DisplayLabel
         
-        if let valueUnit = self.configure.valueUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+        if self.configure.isShowValueUnitString  {
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
             self.yUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
         
         
-        if let coupleUnit = self.configure.coupleUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor))
+        if self.configure.isShowCoupleUnitString {
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor))
             self.xUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
@@ -116,15 +123,13 @@ class LineChartView: UIView {
         
         var configures: [LineViewConfigure] = []
         for inputData in inputDatas {
-            let titleStringConfigure = inputData.3.compactMap{
-                $0.0
-            }.map{
-                DisplayLabelConfigure(contentString: $0, contentColor: inputData.0)
+            let titleStringConfigure = inputData.3.map{
+                DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0)
             }
             let points = inputData.3.map{
                 $0.1
             }
-            let lineConfigure = LineViewConfigure(points: points, legendType: inputData.2, legendConfigure: .init(color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure)
+            let lineConfigure = LineViewConfigure(points: points, legendType: inputData.2, legendConfigure: .init(color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: self.configure.isShowLabel)
             configures.append(lineConfigure)
         }
         let lineViews = LineViews(configure: .init(models: configures))
@@ -171,7 +176,7 @@ class LineChartView: UIView {
         return self.bottomViewHeight + self.labelViewSpace
     }
     
-    private func updateUnitLabelConstraints() {
+    private func updateUnitLabelStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -198,7 +203,24 @@ class LineChartView: UIView {
         
     }
     
-    private func updateAxisViewConstraints() {
+    private func updateUnitLabelDynamicConstraints() {
+        
+        if let unit = self.yUnitLabel {
+            unit.snp.updateConstraints{
+                make in
+                make.width.equalTo(self.leftUnitViewWidth)
+            }
+        }
+        
+        if let xUnit = self.xUnitLabel {
+            xUnit.snp.updateConstraints{
+                make in
+                make.height.equalTo(self.bottomUnitViewHeight)
+            }
+        }
+    }
+    
+    private func updateAxisViewStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -211,7 +233,18 @@ class LineChartView: UIView {
         }
     }
     
-    private func updateLineViewsContraints() {
+    private func updateAxisViewDynamicConstraints() {
+        guard let axis = self.axisView else {
+            return
+        }
+        axis.snp.updateConstraints{
+            make in
+            make.left.equalToSuperview().offset(self.leftSpace)
+            make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
+        }
+    }
+    
+    private func updateLineViewsStaticContraints() {
         guard let lineViews = self.lineViews else {
             return
         }
@@ -223,7 +256,7 @@ class LineChartView: UIView {
         }
     }
     
-    private func updateValueViewConstraints() {
+    private func updateValueViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -247,7 +280,7 @@ class LineChartView: UIView {
         }
     }
     
-    private func updateCoupleTitleViewConstraints() {
+    private func updateCoupleTitleViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }

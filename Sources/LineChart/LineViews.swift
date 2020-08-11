@@ -10,25 +10,24 @@ import UIKit
 import SnapKit
 
 class LineViews: UIView {
-    let configure: LineViewsConfigure
+    private let configure: LineViewsConfigure
     
-    var lineViews: [LineView] = []
+    private var lineViews: [LineView] = []
     
     init(configure: LineViewsConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         self.insertLineViews()
+        
+        updateLineViewsStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LineViewsConfigure()
+        self.configure = LineViewsConfigure.emptyConfigure
         super.init(coder: coder)
         self.insertLineViews()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.updateLineViewsConstraints()
+        
+        updateLineViewsStaticConstraints()
     }
     
     private func insertLineViews() {
@@ -39,7 +38,7 @@ class LineViews: UIView {
         }
     }
     
-    private func updateLineViewsConstraints() {
+    private func updateLineViewsStaticConstraints() {
         for line in self.lineViews {
             line.snp.updateConstraints{
                 make in

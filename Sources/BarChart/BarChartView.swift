@@ -34,7 +34,7 @@ class BarChartView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = BarChartViewConfigure()
+        self.configure = BarChartViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertUnitLabel()
         insertAxisView()

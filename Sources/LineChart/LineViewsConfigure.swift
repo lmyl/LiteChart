@@ -13,7 +13,9 @@ struct LineViewsConfigure {
 }
 
 extension LineViewsConfigure {
-    init() {
+    private init() {
         self.models = []
     }
+    
+    static let emptyConfigure = LineViewsConfigure()
 }

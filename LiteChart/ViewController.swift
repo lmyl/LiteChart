@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), [20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .yellow), [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), [5.7, 67.89, 99.99, 155.55, 60.66])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"]))
+        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.hexagon, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [5.7, 67.89, 99.99, 155.55, 60.66])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"]))
         configure.inputLegendTitles = ["2018", "2019", "2020"]
         configure.titleString = "年度绩效总结"
         configure.isShowLegendTitles = true

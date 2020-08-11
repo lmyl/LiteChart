@@ -9,6 +9,8 @@
 import Foundation
 
 enum LineStyle {
-    case solid
-    case dotted
+    case solidPolyline
+    case dottedPolyline
+    case solidCubicBezierCurve
+    case dottedCubicBezierCurve
 }

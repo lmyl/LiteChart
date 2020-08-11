@@ -15,16 +15,20 @@ struct LineViewConfigure {
     let legendConfigure: LegendConfigure
     let lineStyle: LineStyle
     let lineColor: LiteChartDarkLightColor
-    let labelConfigure: [DisplayLabelConfigure]?
+    let labelConfigure: [DisplayLabelConfigure]
+    let isShowLabel: Bool
 }
 
 extension LineViewConfigure {
-    init() {
+    private init() {
         self.points = []
         self.legendType = .circle
         self.legendConfigure = .emptyConfigure
         self.lineColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.lineStyle = .dotted
-        self.labelConfigure = nil
+        self.lineStyle = .dottedPolyline
+        self.labelConfigure = []
+        self.isShowLabel = false
     }
+    
+    static let emptyConfigure = LineViewConfigure()
 }
