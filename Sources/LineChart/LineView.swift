@@ -190,8 +190,27 @@ class LineView: UIView {
         guard points.count >= 2 else {
             return []
         }
-        let leftPaddingPoint = CGPoint(x: 0, y: 0.5)
-        let rightPaddingPoint = CGPoint(x: 1, y: 0.5)
+        let firstCount = 0
+        let finalCount = points.count - 1
+        let firstGapX = points[firstCount].x - points[firstCount + 1].x
+        let firstGapY = points[firstCount].y - points[firstCount + 1].y
+        var leftPaddingY = points[firstCount].y
+        if firstGapX != 0 {
+            let slopeFirst = firstGapY / firstGapX
+            let remainFirst = points[firstCount + 1].y - slopeFirst * points[firstCount + 1].x
+            leftPaddingY = remainFirst
+        }
+        let finalGapX = points[finalCount].x - points[finalCount - 1].x
+        let finalGapY = points[finalCount].y - points[finalCount - 1].y
+        var rightPaddingY = points[finalCount].y
+        if finalGapX != 0 {
+            let slopeFinal = finalGapY / finalGapX
+            let remainFinal = points[finalCount - 1].y - slopeFinal * points[finalCount - 1].x
+            rightPaddingY = slopeFinal + remainFinal
+        }
+        let leftPaddingPoint = CGPoint(x: 0, y: leftPaddingY)
+        let rightPaddingPoint = CGPoint(x: 1, y: rightPaddingY)
+        
         let allPoints = [leftPaddingPoint] + points + [rightPaddingPoint]
         var result: [(CGPoint, CGPoint)] = []
         for index in 0 ... allPoints.count - 4 {
