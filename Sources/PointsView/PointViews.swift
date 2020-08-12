@@ -10,25 +10,24 @@ import UIKit
 import SnapKit
 
 class PointViews: UIView {
-    let configure: PointViewsConfigure
+    private let configure: PointViewsConfigure
     
-    var pointsView: [PointsView] = []
+    private var pointsView: [PointsView] = []
     
     init(configure: PointViewsConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertPointsView()
+        
+        updatePointsViewStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PointViewsConfigure()
+        self.configure = PointViewsConfigure.emptyConfigure
         super.init(coder: coder)
         insertPointsView()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updatePointsViewConstraints()
+        
+        updatePointsViewStaticConstraints()
     }
     
     private func insertPointsView() {
@@ -39,7 +38,7 @@ class PointViews: UIView {
         }
     }
     
-    private func updatePointsViewConstraints() {
+    private func updatePointsViewStaticConstraints() {
         for view in self.pointsView {
             view.snp.updateConstraints{
                 make in

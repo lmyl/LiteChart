@@ -129,7 +129,7 @@ class LineChartView: UIView {
             let points = inputData.3.map{
                 $0.1
             }
-            let lineConfigure = LineViewConfigure(points: points, legendType: inputData.2, legendConfigure: .init(color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: self.configure.isShowLabel)
+            let lineConfigure = LineViewConfigure(points: points, legendConfigure: .init(type: inputData.2, color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: self.configure.isShowLabel)
             configures.append(lineConfigure)
         }
         let lineViews = LineViews(configure: .init(models: configures))

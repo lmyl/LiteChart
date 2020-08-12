@@ -10,16 +10,16 @@ import UIKit
 
 class SquareLegend: UIView {
     
-    private var configure: LegendConfigure
+    private var color: LiteChartDarkLightColor
     
-    init(configure: LegendConfigure) {
-        self.configure = configure
+    init(color: LiteChartDarkLightColor) {
+        self.color = color
         super.init(frame: CGRect())
         self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure.emptyConfigure
+        self.color = .init(lightUIColor: .yellow, darkUIColor: .blue)
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
@@ -39,7 +39,7 @@ class SquareLegend: UIView {
         let squareSize = CGSize(width: squareWidth, height: squareWidth)
         let square = CGRect(origin: originPoint, size: squareSize)
         context?.addRect(square)
-        context?.setFillColor(self.configure.color.color.cgColor)
+        context?.setFillColor(self.color.color.cgColor)
         context?.drawPath(using: .fill)
     }
     

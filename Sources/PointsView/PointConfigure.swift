@@ -11,8 +11,7 @@ import CoreGraphics
 
 struct PointConfigure {
     let location: CGPoint
-    let legend: Legend
-    let color: LiteChartDarkLightColor
+    let legendConfigure: LegendConfigure
     let size: CGFloat
     let opacity: CGFloat
 }

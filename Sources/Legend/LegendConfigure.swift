@@ -10,13 +10,16 @@ import CoreGraphics
 
 struct LegendConfigure {
     
+    let type: Legend
     let color: LiteChartDarkLightColor
     
-    init(color: LiteChartDarkLightColor) {
+    init(type: Legend, color: LiteChartDarkLightColor) {
+        self.type = type
         self.color = color
     }
     
     private init() {
+        self.type = .square
         self.color = .init(lightUIColor: .yellow, darkUIColor: .blue)
     }
 }

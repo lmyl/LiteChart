@@ -10,16 +10,16 @@ import UIKit
 
 class TriangleLegend: UIView {
     
-    private var configure: LegendConfigure
+    private var color: LiteChartDarkLightColor
     
-    init(configure: LegendConfigure) {
-        self.configure = configure
+    init(color: LiteChartDarkLightColor) {
+        self.color = color
         super.init(frame: CGRect())
         self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure.emptyConfigure
+        self.color = .init(lightUIColor: .yellow, darkUIColor: .blue)
         super.init(coder:coder)
         self.backgroundColor = .clear
     }
@@ -41,7 +41,7 @@ class TriangleLegend: UIView {
         let leftPoint = CGPoint(x: leftX, y: bottomY)
         let rightPoint = CGPoint(x: rightX, y: bottomY)
         context?.addLines(between: [topPoint, leftPoint, rightPoint])
-        context?.setFillColor(self.configure.color.color.cgColor)
+        context?.setFillColor(self.color.color.cgColor)
         context?.drawPath(using: .fill)
         
     }

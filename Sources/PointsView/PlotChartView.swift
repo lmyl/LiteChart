@@ -10,14 +10,14 @@ import UIKit
 import SnapKit
 
 class PlotChartView: UIView {
-    let configure: PlotChartViewConfigure
+    private let configure: PlotChartViewConfigure
     
-    var axisView: AxisView?
-    var yUnitLabel: DisplayLabel?
-    var xUnitLabel: DisplayLabel?
-    var coupleTitleView: [DisplayLabel] = []
-    var valueView: [DisplayLabel] = []
-    var pointViews: PointViews?
+    private var axisView: AxisView?
+    private var yUnitLabel: DisplayLabel?
+    private var xUnitLabel: DisplayLabel?
+    private var coupleTitleView: [DisplayLabel] = []
+    private var valueView: [DisplayLabel] = []
+    private var pointViews: PointViews?
     
     init(configure: PlotChartViewConfigure) {
         self.configure = configure
@@ -27,39 +27,46 @@ class PlotChartView: UIView {
         insertValueTitleView()
         insertCoupleTitleView()
         insertPointViews()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updatePointViewsStaticContraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PlotChartViewConfigure()
+        self.configure = PlotChartViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertUnitLabel()
         insertAxisView()
         insertValueTitleView()
         insertCoupleTitleView()
         insertPointViews()
+        
+        updateAxisViewStaticConstraints()
+        updateUnitLabelStaticConstraints()
+        updatePointViewsStaticContraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateAxisViewConstraints()
-        updateUnitLabelConstraints()
-        updatePointViewsContraints()
-        updateValueViewConstraints()
-        updateCoupleTitleViewConstraints()
+        updateAxisViewDynamicConstraints()
+        updateUnitLabelDynamicConstraints()
+        updateValueViewDynamicConstraints()
+        updateCoupleTitleViewDynamicConstraints()
     }
     
     private func insertUnitLabel() {
         var unitLabel: DisplayLabel
         
-        if let valueUnit = self.configure.valueUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: valueUnit, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+        if self.configure.isShowValueUnitString {
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
             self.yUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
         
         
-        if let coupleUnit = self.configure.coupleUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: coupleUnit, contentColor: self.configure.textColor))
+        if self.configure.isShowCoupleUnitString {
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor))
             self.xUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
@@ -110,7 +117,7 @@ class PlotChartView: UIView {
         for inputData in inputDatas {
             var pointConfigure: [PointConfigure] = []
             for point in inputData.2 {
-                let configure = PointConfigure(location: point.2, legend: inputData.1, color: inputData.0, size: point.0, opacity: point.1)
+                let configure = PointConfigure(location: point.2, legendConfigure: .init(type: inputData.1, color: inputData.0), size: point.0, opacity: point.1)
                 pointConfigure.append(configure)
             }
             let con = PointsViewConfigure(points: pointConfigure)
@@ -160,7 +167,7 @@ class PlotChartView: UIView {
         return self.bottomViewHeight + self.labelViewSpace
     }
     
-    private func updateUnitLabelConstraints() {
+    private func updateUnitLabelStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -187,7 +194,24 @@ class PlotChartView: UIView {
         
     }
     
-    private func updateAxisViewConstraints() {
+    private func updateUnitLabelDynamicConstraints() {
+        
+        if let unit = self.yUnitLabel {
+            unit.snp.updateConstraints{
+                make in
+                make.width.equalTo(self.leftUnitViewWidth)
+            }
+        }
+        
+        if let xUnit = self.xUnitLabel {
+            xUnit.snp.updateConstraints{
+                make in
+                make.height.equalTo(self.bottomUnitViewHeight)
+            }
+        }
+    }
+    
+    private func updateAxisViewStaticConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -200,7 +224,18 @@ class PlotChartView: UIView {
         }
     }
     
-    private func updatePointViewsContraints() {
+    private func updateAxisViewDynamicConstraints() {
+        guard let axis = self.axisView else {
+            return
+        }
+        axis.snp.updateConstraints{
+            make in
+            make.left.equalToSuperview().offset(self.leftSpace)
+            make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
+        }
+    }
+    
+    private func updatePointViewsStaticContraints() {
         guard let pointViews = self.pointViews else {
             return
         }
@@ -212,7 +247,7 @@ class PlotChartView: UIView {
         }
     }
     
-    private func updateValueViewConstraints() {
+    private func updateValueViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }
@@ -236,7 +271,7 @@ class PlotChartView: UIView {
         }
     }
     
-    private func updateCoupleTitleViewConstraints() {
+    private func updateCoupleTitleViewDynamicConstraints() {
         guard let axis = self.axisView else {
             return
         }

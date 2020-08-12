@@ -10,18 +10,15 @@ import Foundation
 
 struct LegendViewConfigure {
     
-    let legendType: Legend
     let legendConfigure: LegendConfigure
     let contentConfigure: DisplayLabelConfigure
     
-    init(legendType: Legend, legendConfigure: LegendConfigure, contentConfigure: DisplayLabelConfigure) {
-        self.legendType = legendType
+    init(legendConfigure: LegendConfigure, contentConfigure: DisplayLabelConfigure) {
         self.legendConfigure = legendConfigure
         self.contentConfigure = contentConfigure
     }
     
     private init() {
-        self.legendType = .square
         self.legendConfigure = LegendConfigure.emptyConfigure
         self.contentConfigure = DisplayLabelConfigure.emptyConfigure
     }

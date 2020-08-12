@@ -43,9 +43,9 @@ extension PieChartParameters: LiteChartParametersProcesser {
         
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let legendConfigure = LegendConfigure(color: self.inputDatas[index].1)
+            let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
             let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
-            let legendViewConfigure = LegendViewConfigure(legendType: legendType, legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
+            let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
         }
         return LegendViewsConfigure(models: legendViewConfigures)

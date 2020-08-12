@@ -53,19 +53,7 @@ class LineView: UIView {
     
     private func insertLegend() {
         for _ in self.configure.points {
-            let legend: UIView
-            switch self.configure.legendType {
-            case .square:
-                legend = SquareLegend(configure: self.configure.legendConfigure)
-            case .triangle:
-                legend = TriangleLegend(configure: self.configure.legendConfigure)
-            case .circle:
-                legend = CircleLegend(configure: self.configure.legendConfigure)
-            case .pentagram:
-                legend = PentagramLegend(configure: self.configure.legendConfigure)
-            case .hexagon:
-                legend = HexagonLegend(configure: self.configure.legendConfigure)
-            }
+            let legend = LegendFactory.shared.makeNewLegend(from: self.configure.legendConfigure)
             self.legend.append(legend)
             self.addSubview(legend)
         }

@@ -30,13 +30,17 @@ struct PlotChartViewConfigure {
     
     let yDividingPoints: [AxisDividingLineConfigure]
     
-    let valueUnitString: String?
+    let isShowValueUnitString: Bool
     
-    let coupleUnitString: String?
+    let valueUnitString: String
+    
+    let isShowCoupleUnitString: Bool
+    
+    let coupleUnitString: String
 }
 
 extension PlotChartViewConfigure {
-    init() {
+    private init() {
         self.textColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.coupleTitle = []
         self.valueTitle = []
@@ -45,9 +49,13 @@ extension PlotChartViewConfigure {
         self.xDividingPoints = []
         self.yDividingPoints = []
         self.borderStyle = .halfSurrounded
-        self.valueUnitString = nil
-        self.coupleUnitString = nil
+        self.valueUnitString = ""
+        self.coupleUnitString = ""
+        self.isShowValueUnitString = false
+        self.isShowCoupleUnitString = false
         self.axisOriginal = .zero
         self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
     }
+    
+    static let emptyConfigure = PlotChartViewConfigure()
 }

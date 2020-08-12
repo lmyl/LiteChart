@@ -13,7 +13,9 @@ struct PointViewsConfigure {
 }
 
 extension PointViewsConfigure {
-    init() {
+    private init() {
         self.models = []
     }
+    
+    static let emptyConfigure = PointViewsConfigure()
 }

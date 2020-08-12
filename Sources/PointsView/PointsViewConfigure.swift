@@ -13,7 +13,9 @@ struct PointsViewConfigure {
 }
 
 extension PointsViewConfigure {
-    init() {
+    private init() {
         self.points = []
     }
+    
+    static let emptyConfigure = PointsViewConfigure()
 }

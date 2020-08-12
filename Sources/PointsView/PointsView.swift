@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 class PointsView: UIView {
-    let configure: PointsViewConfigure
-    var points: [UIView] = []
+    private let configure: PointsViewConfigure
+    private var points: [UIView] = []
     
     init(configure: PointsViewConfigure) {
         self.configure = configure
@@ -20,32 +20,19 @@ class PointsView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = PointsViewConfigure()
+        self.configure = PointsViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertPoints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updatePointsConstrints()
+        updatePointsDynmaicConstrints()
     }
     
     private func insertPoints() {
         for point in self.configure.points {
-            let uiview: UIView
-            let legendConfigure = LegendConfigure(color: point.color)
-            switch point.legend {
-            case .circle:
-                uiview = CircleLegend(configure: legendConfigure)
-            case .hexagon:
-                uiview = HexagonLegend(configure: legendConfigure)
-            case .pentagram:
-                uiview = PentagramLegend(configure: legendConfigure)
-            case .square:
-                uiview = SquareLegend(configure: legendConfigure)
-            case .triangle:
-                uiview = TriangleLegend(configure: legendConfigure)
-            }
+            let uiview = LegendFactory.shared.makeNewLegend(from: point.legendConfigure)
             var opacity = point.opacity
             if opacity > 1 {
                 opacity = 1
@@ -59,7 +46,7 @@ class PointsView: UIView {
         }
     }
     
-    private func updatePointsConstrints() {
+    private func updatePointsDynmaicConstrints() {
         guard self.points.count == self.configure.points.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }

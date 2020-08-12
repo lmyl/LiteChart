@@ -10,16 +10,16 @@ import UIKit
 
 class CircleLegend: UIView {
     
-    private var configure: LegendConfigure
+    private var color: LiteChartDarkLightColor
     
-    init(configure: LegendConfigure) {
-        self.configure = configure
+    init(color: LiteChartDarkLightColor) {
+        self.color = color
         super.init(frame: CGRect())
         self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LegendConfigure.emptyConfigure
+        self.color = .init(lightUIColor: .yellow, darkUIColor: .blue)
         super.init(coder:coder)
         self.backgroundColor = .clear
     }
@@ -36,7 +36,7 @@ class CircleLegend: UIView {
         let centerY = rect.origin.y + radius + (rect.height - 2 * radius) / 2 
         let centerPoint = CGPoint(x: centerX, y: centerY)
         context?.addArc(center: centerPoint, radius: radius, startAngle: 0, endAngle: 360, clockwise: false)
-        context?.setFillColor(self.configure.color.color.cgColor)
+        context?.setFillColor(self.color.color.cgColor)
         context?.drawPath(using: .fill)
     }
 }

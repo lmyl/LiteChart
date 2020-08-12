@@ -19,7 +19,7 @@ struct ScatterPlotChartParameters {
     
     var inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]
         
-    var inputLegendTitles: [String]? // 图例显示
+    var inputLegendTitles: [String] // 图例显示
             
     var dividingValueLineStyle: AxisViewLineStyle
     
@@ -33,13 +33,17 @@ struct ScatterPlotChartParameters {
     
     var isShowCoupleDividingLine: Bool
     
-    var valueUnitString: String?
+    var isShowValueUnitString: Bool
     
-    var coupleUnitString: String?
+    var isShowCoupleUnitString: Bool
+    
+    var valueUnitString: String
+    
+    var coupleUnitString: String
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])], inputLegendTitles: [String]?, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, valueUnitString: String?, coupleUnitString: String?, axisColor: LiteChartDarkLightColor) {
+    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas
@@ -51,6 +55,8 @@ struct ScatterPlotChartParameters {
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
         self.isShowValueDividingLine = isShowValueDividingLine
         self.isShowCoupleDividingLine = isShowCoupleDividingLine
+        self.isShowCoupleUnitString = isShowCoupleUnitString
+        self.isShowValueUnitString = isShowValueUnitString
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
         self.axisColor = axisColor
@@ -63,15 +69,15 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
     }
 
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, inputLegendTitles.count == self.inputDatas.count else {
+        guard self.inputLegendTitles.count == self.inputDatas.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = self.inputDatas[index].1
             let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
-            let legendConfigure = LegendConfigure(color: self.inputDatas[index].0)
-            let legendViewConfigure = LegendViewConfigure(legendType: legendType, legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
+            let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
+            let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
             
         }
@@ -80,7 +86,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
 
     func computeContentView() -> UIView {
         guard self.inputDatas.count > 0 else {
-            let configure = PlotChartViewConfigure()
+            let configure = PlotChartViewConfigure.emptyConfigure
             return PlotChartView(configure: configure)
         }
         let coupleCount = self.inputDatas.count
@@ -132,7 +138,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(xAxisValue: valueForAxis.xAxisValue, yAxisValue: valueForAxis.yAxisValue)
-        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
         return PlotChartView(configure: plotChartViewConfigure)
     }
     

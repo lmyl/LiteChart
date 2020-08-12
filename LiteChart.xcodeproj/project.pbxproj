@@ -38,6 +38,7 @@
 		083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */; };
 		083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */; };
 		083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */; };
+		08433EB424E394BC0089FB6D /* LegendFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08433EB324E394BB0089FB6D /* LegendFactory.swift */; };
 		085787632498780300A95D16 /* DisplayLabelTextDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085787622498780300A95D16 /* DisplayLabelTextDirection.swift */; };
 		08596E2F2499145400A3FC18 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E2E2499145400A3FC18 /* LineView.swift */; };
 		08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E302499145F00A3FC18 /* LineViewConfigure.swift */; };
@@ -127,6 +128,7 @@
 		083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewLineStyle.swift; sourceTree = "<group>"; };
 		083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisDividingLineConfigure.swift; sourceTree = "<group>"; };
 		083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewBorderStyle.swift; sourceTree = "<group>"; };
+		08433EB324E394BB0089FB6D /* LegendFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendFactory.swift; sourceTree = "<group>"; };
 		085787622498780300A95D16 /* DisplayLabelTextDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelTextDirection.swift; sourceTree = "<group>"; };
 		08596E2E2499145400A3FC18 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		08596E302499145F00A3FC18 /* LineViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewConfigure.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 				08F56E67248B6C8C000998F8 /* LegendViewConfigure.swift */,
 				08F56E69248B77B0000998F8 /* LegendViews.swift */,
 				08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */,
+				08433EB324E394BB0089FB6D /* LegendFactory.swift */,
 			);
 			path = Legend;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
+				08433EB424E394BC0089FB6D /* LegendFactory.swift in Sources */,
 				083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */,
 				08FF1A122491E18400AE05F9 /* BarViews.swift in Sources */,
 				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,
