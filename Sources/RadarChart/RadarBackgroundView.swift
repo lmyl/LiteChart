@@ -76,6 +76,17 @@ class RadarBackgroundView: UIView {
             let radarDataView = RadarDataView(configure: configure)
             self.addSubview(radarDataView)
             self.radarDataViews.append(radarDataView)
+            
+            self.updataRadarDataViewStaticConstraints(for: radarDataView)
+        }
+    }
+    
+    private func updataRadarDataViewStaticConstraints(for radarDataView: UIView) {
+        radarDataView.snp.remakeConstraints{
+            make in
+            make.center.equalToSuperview()
+            make.width.equalTo(0)
+            make.height.equalTo(0)
         }
     }
     
@@ -93,7 +104,6 @@ class RadarBackgroundView: UIView {
         for radarDataView in radarDataViews {
             radarDataView.snp.updateConstraints{
                 make in
-                make.center.equalToSuperview()
                 make.width.equalTo(width)
                 make.height.equalTo(height)
             }
