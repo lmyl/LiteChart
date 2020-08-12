@@ -17,8 +17,11 @@ struct RadarChartViewConfigure {
         self.backgroundConfigure = backgroundConfigure
         self.radarDataViewsConfigure = radarDataViewsConfigure
     }
-    init() {
-        self.backgroundConfigure = RadarBackgroundViewConfigure()
+    
+    private init() {
+        self.backgroundConfigure = RadarBackgroundViewConfigure.emptyConfigure
         self.radarDataViewsConfigure = []
     }
+    
+    static let emptyConfigure = RadarChartViewConfigure()
 }

@@ -42,9 +42,7 @@ class PointViews: UIView {
         for view in self.pointsView {
             view.snp.updateConstraints{
                 make in
-                make.center.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalToSuperview()
+                make.leading.trailing.top.bottom.equalToSuperview()
             }
         }
     }

@@ -69,8 +69,7 @@ class FunalFloorView: UIView {
         }
         backgroundView.snp.remakeConstraints{
             make in
-            make.size.equalToSuperview()
-            make.center.equalToSuperview()
+            make.leading.trailing.top.bottom.equalToSuperview()
         }
     }
     

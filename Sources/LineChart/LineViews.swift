@@ -42,9 +42,7 @@ class LineViews: UIView {
         for line in self.lineViews {
             line.snp.updateConstraints{
                 make in
-                make.center.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalToSuperview()
+                make.trailing.leading.bottom.top.equalToSuperview()
             }
         }
     }

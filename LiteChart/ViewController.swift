@@ -19,8 +19,9 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
 //        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.hexagon, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [5.7, 67.89, 99.99, 155.55, 60.66])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"]))
-        let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))])]
-        var configure = LiteChartViewParameters(inputDatas: .bubble(inputDatas: datas))
+//        let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))])]
+//        var configure = LiteChartViewParameters(inputDatas: .bubble(inputDatas: datas))
+        var configure = LiteChartViewParameters(inputDatas: .radar(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.30, 0.40 ,0.50])]))
         configure.inputLegendTitles = ["2018"]
         configure.titleString = "年度绩效总结"
         configure.isShowLegendTitles = true
@@ -28,6 +29,9 @@ class ViewController: UIViewController {
         configure.isShowValueDividingLine = true
         configure.isShowCoupleDividingLine = true
         configure.axisColor = .init(lightUIColor: .red)
+        configure.radarLayerCount = 5
+        configure.radarCoupleTitles = ["电", "水", "煤气", "天然气"]
+        configure.isShowRadarCoupleTitles = true
         
         let backgroundView = try! LiteChartView(configure: configure)
         self.view.addSubview(backgroundView)
@@ -61,11 +65,11 @@ class ViewController: UIViewController {
             self.showType = 1
             configure = LiteChartViewParameters(inputDatas: .pie(inputDatas: [(80, .init(lightUIColor: .yellow)), (40, .init(lightUIColor: .systemPink))]))
         }
-        configure.coupleTitles = ["0月", "1月", "2月", "3月", "4月", "5月"]
-        configure.radarCount = 5
+        configure.radarCoupleTitles = ["0月", "1月", "2月", "3月", "4月", "5月"]
+        configure.radarLayerCount = 5
         configure.inputLegendTitles = ["2018", "2019"]
         configure.titleString = "年度绩效总结"
-        configure.isShowCoupleTitles = true
+        configure.isShowRadarCoupleTitles = true
         configure.isShowLegendTitles = true
         configure.displayDataMode = .percent
         

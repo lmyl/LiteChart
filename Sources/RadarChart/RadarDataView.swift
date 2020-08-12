@@ -9,7 +9,7 @@
 import UIKit
 
 class RadarDataView: UIView {
-    let configure: RadarDataViewConfigure
+    private let configure: RadarDataViewConfigure
     
     init(configure: RadarDataViewConfigure) {
         self.configure = configure
@@ -18,7 +18,7 @@ class RadarDataView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = RadarDataViewConfigure()
+        self.configure = RadarDataViewConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }

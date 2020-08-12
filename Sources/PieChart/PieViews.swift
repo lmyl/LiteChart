@@ -41,9 +41,7 @@ class PieViews: UIView {
         for pie in self.pieViews {
             pie.snp.remakeConstraints{
                 make in
-                make.center.equalToSuperview()
-                make.width.equalToSuperview()
-                make.height.equalToSuperview()
+                make.trailing.leading.top.bottom.equalToSuperview()
             }
         }
     }

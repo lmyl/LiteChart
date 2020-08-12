@@ -15,8 +15,10 @@ struct RadarDataViewConfigure {
 }
 
 extension RadarDataViewConfigure {
-    init() {
+    private init() {
         self.points = []
         self.color = .init(lightUIColor: .black, darkUIColor: .white)
     }
+    
+    static let emptyConfigure = RadarDataViewConfigure()
 }

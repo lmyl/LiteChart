@@ -14,7 +14,7 @@ struct RadarChartParameters {
     
     var isShowingCoupleTitles: Bool
     
-    var inputLegendTitles: [String]?
+    var inputLegendTitles: [String]
     
     var textColor: LiteChartDarkLightColor
     
@@ -28,7 +28,7 @@ struct RadarChartParameters {
     
     var radarCount: Int
     
-    init(coupleTitles: [String], isShowingCoupleTitles: Bool, inputLegendTitles: [String]?, textColor: LiteChartDarkLightColor, radarLineColor: LiteChartDarkLightColor, radarLightColor: LiteChartDarkLightColor, radarUnlightColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], radarCount: Int) {
+    init(coupleTitles: [String], isShowingCoupleTitles: Bool, inputLegendTitles: [String], textColor: LiteChartDarkLightColor, radarLineColor: LiteChartDarkLightColor, radarLightColor: LiteChartDarkLightColor, radarUnlightColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], radarCount: Int) {
         self.coupleTitles = coupleTitles
         self.isShowingCoupleTitles = isShowingCoupleTitles
         self.inputLegendTitles = inputLegendTitles
@@ -50,7 +50,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
             if firstDataCount < 3 {
                 throw ChartError.inputDatasNumberLessThanLimit
             }
-            if self.coupleTitles.count > 0 && self.coupleTitles.count != firstDataCount{
+            if self.isShowingCoupleTitles && self.coupleTitles.count != firstDataCount {
                 throw ChartError.inputDatasNumbersNotMatchedCoupleTitle
             }
             for inputData in inputDatas {
@@ -70,7 +70,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
     }
     
     func computeLegendViewConfigure() -> LegendViewsConfigure? {
-        guard let inputLegendTitles = self.inputLegendTitles, self.inputDatas.count == inputLegendTitles.count else {
+        guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
@@ -86,7 +86,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
     
     func computeContentView() -> UIView {
         guard self.inputDatas.count > 0 else {
-            let configure = RadarChartViewConfigure()
+            let configure = RadarChartViewConfigure.emptyConfigure
             return RadarChartView(configure: configure)
         }
         let pointCount = self.inputDatas[0].1.count
@@ -104,25 +104,14 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         }
         
         var coupleTitlesConfigure: [DisplayLabelConfigure] = []
-        if self.coupleTitles.count > 0 {
-            for coupleTitle in self.coupleTitles {
-                let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: textColor)
-                coupleTitlesConfigure.append(coupleTitleConfigure)
-            }
-            if coupleTitlesConfigure.count != pointCount {
-                fatalError("框架内部数据处理错误，不给予拯救")
-            }
+        for coupleTitle in self.coupleTitles {
+            let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: textColor)
+            coupleTitlesConfigure.append(coupleTitleConfigure)
         }
         
-        if self.isShowingCoupleTitles {
-            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: coupleTitlesConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
-            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
-            return RadarChartView(configure: radarChartViewConfigure)
-        } else {
-            let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: [], radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarCount: self.radarCount, pointCount: pointCount)
-            let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
-            return RadarChartView(configure: radarChartViewConfigure)
-        }
+        let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: coupleTitlesConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, vertexCount: pointCount, isShowCoupleTitles: self.isShowingCoupleTitles)
+        let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
+        return RadarChartView(configure: radarChartViewConfigure)
         
     }
     

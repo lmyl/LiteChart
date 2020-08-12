@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class RadarChartView: UIView {
-    var configure: RadarChartViewConfigure
+    private var configure: RadarChartViewConfigure
     
     private var backgroundView: RadarBackgroundView?
     
@@ -19,18 +19,17 @@ class RadarChartView: UIView {
         super.init(frame: CGRect())
         insertRadarBackgroundView()
         insertRadarDateView()
+        
+        updateRadarBackgroundViewStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = RadarChartViewConfigure()
+        self.configure = RadarChartViewConfigure.emptyConfigure
         super.init(coder: coder)
         insertRadarBackgroundView()
         insertRadarDateView()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateRadarBackgroundViewConstraints()
+        
+        updateRadarBackgroundViewStaticConstraints()
     }
     
     private func insertRadarDateView() {
@@ -47,17 +46,16 @@ class RadarChartView: UIView {
         self.backgroundView = radarBackgroundView
     }
     
-    private func updateRadarBackgroundViewConstraints() {
-        let width = self.bounds.width
-        let height = self.bounds.height
+    private func updateRadarBackgroundViewStaticConstraints() {
         guard let background = self.backgroundView else {
             return
         }
         background.snp.updateConstraints{
             make in
-            make.center.equalToSuperview()
-            make.width.equalTo(width)
-            make.height.equalTo(height)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 }

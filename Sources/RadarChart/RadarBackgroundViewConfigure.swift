@@ -13,17 +13,21 @@ struct RadarBackgroundViewConfigure {
     let radarLineColor: LiteChartDarkLightColor
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
-    let radarCount: Int
-    let pointCount: Int
+    let radarLayerCount: Int
+    let vertexCount: Int
+    let isShowCoupleTitles: Bool
 }
 
 extension RadarBackgroundViewConfigure {
-    init() {
+    private init() {
         self.coupleTitlesConfigure = []
         self.radarLineColor = .init(lightUIColor: .gray, darkUIColor: .white)
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
         self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)
-        self.radarCount = 1
-        self.pointCount = 3 
+        self.radarLayerCount = 1
+        self.vertexCount = 3
+        self.isShowCoupleTitles = false
     }
+    
+    static let emptyConfigure = RadarBackgroundViewConfigure()
 }

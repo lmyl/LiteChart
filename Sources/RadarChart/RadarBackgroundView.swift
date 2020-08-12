@@ -10,16 +10,16 @@ import UIKit
 import SnapKit
 
 class RadarBackgroundView: UIView {
-    let configure: RadarBackgroundViewConfigure
+    private let configure: RadarBackgroundViewConfigure
     
-    var coupleTitles: [DisplayLabel] = []
+    private var coupleTitles: [DisplayLabel] = []
     
-    var radarDataViews: [RadarDataView] = []
+    private var radarDataViews: [RadarDataView] = []
     
     private var targetPoints: [CGPoint] = [] {
         didSet {
-            if targetPoints.count != oldValue.count {
-                self.updateCoupleTitleConstraints(for: targetPoints)
+            if targetPoints != oldValue {
+                self.updateCoupleTitleDynamicConstraints(for: targetPoints)
             }
         }
     }
@@ -32,15 +32,16 @@ class RadarBackgroundView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = RadarBackgroundViewConfigure()
+        self.configure = RadarBackgroundViewConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
         self.insertCoupleTitle()
+        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updataRadarDataViewConstraints()
+        updataRadarDataViewDynamicConstraints()
     }
     
     private var coupleTitleWidth: CGFloat {
@@ -55,8 +56,8 @@ class RadarBackgroundView: UIView {
     
     private var angleOfPoints: [Double] {
         var angles = [Double]()
-        for index in 0 ..< self.configure.pointCount {
-            let angle = 360 / Double(self.configure.pointCount) * Double(index) - 90
+        for index in 0 ..< self.configure.vertexCount {
+            let angle = 360 / Double(self.configure.vertexCount) * Double(index) - 90
             angles.append(angle)
         }
         return angles
@@ -71,9 +72,6 @@ class RadarBackgroundView: UIView {
     }
     
     func insertRadarDataViews(for configures: [RadarDataViewConfigure]) {
-        guard configures.count > 0 else {
-            return
-        }
         for configure in configures {
             let radarDataView = RadarDataView(configure: configure)
             self.addSubview(radarDataView)
@@ -81,15 +79,15 @@ class RadarBackgroundView: UIView {
         }
     }
     
-    private func updataRadarDataViewConstraints() {
+    private func updataRadarDataViewDynamicConstraints() {
         var width: CGFloat
         var height: CGFloat
-        if self.configure.coupleTitlesConfigure.count == 0 {
-             width = self.bounds.width
-             height = self.bounds.height
+        if self.configure.isShowCoupleTitles {
+            width = self.bounds.width - 2 * coupleTitleWidth
+            height = self.bounds.height - 2 * coupleTitleHeight
         } else {
-             width = self.bounds.width - 2 * coupleTitleWidth
-             height = self.bounds.height - 2 * coupleTitleHeight
+            width = self.bounds.width
+            height = self.bounds.height
         }
         
         for radarDataView in radarDataViews {
@@ -102,12 +100,12 @@ class RadarBackgroundView: UIView {
         }
     }
     
-    private func updateCoupleTitleConstraints(for endPoints: [CGPoint]) {
-        guard self.coupleTitles.count >= 3, self.angleOfPoints.count == endPoints.count, endPoints.count == self.coupleTitles.count else {
+    private func updateCoupleTitleDynamicConstraints(for endPoints: [CGPoint]) {
+        guard self.configure.isShowCoupleTitles else {
             return
         }
-        if endPoints.count != self.coupleTitles.count {
-            fatalError("内部数据处理错误，不给予拯救")
+        guard self.coupleTitles.count >= 3, self.angleOfPoints.count == endPoints.count, endPoints.count == self.coupleTitles.count else {
+            return
         }
         let coupleTitles = self.coupleTitles
         let angleOfPoints = self.angleOfPoints
@@ -151,7 +149,7 @@ class RadarBackgroundView: UIView {
         context?.setLineWidth(1)
         
         let radius: CGFloat
-        if self.configure.coupleTitlesConfigure.count != 0 {
+        if self.configure.isShowCoupleTitles {
             let tempWidth = rect.width - 2 * coupleTitleWidth
             let tempHeight = rect.height - 2 * coupleTitleHeight
             radius = min(tempWidth, tempHeight) / 2
@@ -159,9 +157,9 @@ class RadarBackgroundView: UIView {
             radius = min(rect.width, rect.height) / 2
         }
         let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        let vertexs = computeVertexsLocation(for: center, radius: Double(radius), pointCount: self.configure.pointCount, radarCount: self.configure.radarCount)
+        let vertexs = computeVertexsLocation(for: center, radius: Double(radius), radarLayerCount: self.configure.radarLayerCount)
         
-        for index in (0 ..< self.configure.radarCount).reversed() {
+        for index in (0 ..< self.configure.radarLayerCount).reversed() {
             context?.addLines(between: vertexs[index])
             context?.closePath()
             if index % 2 == 0{
@@ -180,14 +178,14 @@ class RadarBackgroundView: UIView {
         convertLocationIntoTarget(locationPoints: vertexs)
     }
     
-    private func computeVertexsLocation(for centerPoint: CGPoint, radius: Double, pointCount: Int, radarCount: Int) -> [[CGPoint]] {
+    private func computeVertexsLocation(for centerPoint: CGPoint, radius: Double, radarLayerCount: Int) -> [[CGPoint]] {
         let angles = self.angleOfPoints
-        let radiusInterval = radius / Double(radarCount)
+        let radiusInterval = radius / Double(radarLayerCount)
         let centerX = centerPoint.x
         let centerY = centerPoint.y
-        var location: [[CGPoint]] = Array(repeating: [], count: radarCount)
+        var location: [[CGPoint]] = Array(repeating: [], count: radarLayerCount)
         for ind in 0 ..< angles.count {
-            let curAngle = angleOfPoints[ind]
+            let curAngle = angles[ind]
             let sin = sinValue(of: curAngle)
             let cos = cosValue(of: curAngle)
             let allRadius = stride(from: radiusInterval, through: radius, by: radiusInterval)
@@ -197,7 +195,7 @@ class RadarBackgroundView: UIView {
             let offsetYs = allRadius.map{
                 $0 * sin
             }
-            for index in 0 ..< radarCount {
+            for index in 0 ..< radarLayerCount {
                 let curPoint = CGPoint(x: Double(centerX) + offsetXs[index], y: Double(centerY) + offsetYs[index])
                 location[index].append(curPoint)
             }

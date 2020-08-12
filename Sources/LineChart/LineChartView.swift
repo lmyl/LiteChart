@@ -250,9 +250,7 @@ class LineChartView: UIView {
         }
         lineViews.snp.updateConstraints{
             make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
+            make.leading.trailing.top.bottom.equalToSuperview()
         }
     }
     
