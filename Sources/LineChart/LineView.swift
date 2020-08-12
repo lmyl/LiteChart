@@ -239,19 +239,22 @@ class LineView: UIView {
         guard points.count >= 2 else {
             return
         }
-        let allControlPoints = computeControlPointsFrom(points: points)
+        let limitPoints = points.map{
+            self.convertScalePointToRealPointWtihLimit(for: $0)
+        }
+        let allControlPoints = computeControlPointsFrom(points: limitPoints)
         guard !allControlPoints.isEmpty else {
             return
         }
-        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: points[0])
+        let firstPoint = limitPoints[0]
         context?.move(to: firstPoint)
-        var remain = points
+        var remain = limitPoints
         remain.removeFirst()
         guard remain.count == allControlPoints.count else {
             fatalError("框架内部数据处理错误，不给予拯救!")
         }
         for index in 0 ..< remain.count {
-            let nextPoint = self.convertScalePointToRealPointWtihLimit(for: remain[index])
+            let nextPoint = remain[index]
             let nextControlPointFirst = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].firstControl)
             let nextControlPointSecond = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].secondControl)
             context?.addCurve(to: nextPoint, control1: nextControlPointFirst, control2: nextControlPointSecond)
