@@ -139,12 +139,6 @@ class LineView: UIView {
         return realPoint
     }
     
-    private func convertScalePointToRealPointWtihoutLimit(for point: CGPoint) -> CGPoint {
-        var realPoint = point
-        realPoint = CGPoint(x: self.bounds.width * realPoint.x + self.bounds.origin.x, y: self.bounds.origin.y + self.bounds.height * (1 - realPoint.y))
-        return realPoint
-    }
-    
     private func computeControlPointsFrom(firstPoint: CGPoint, secondPoint: CGPoint, thirdPoint: CGPoint, fourthPoint: CGPoint) -> (firstControl: CGPoint, secondControl: CGPoint) {
         let smoothValue: CGFloat = 0.6
         let firstControlX = (firstPoint.x + secondPoint.x) / 2
@@ -243,8 +237,8 @@ class LineView: UIView {
         }
         for index in 0 ..< remain.count {
             let nextPoint = remain[index]
-            let nextControlPointFirst = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].firstControl)
-            let nextControlPointSecond = self.convertScalePointToRealPointWtihoutLimit(for: allControlPoints[index].secondControl)
+            let nextControlPointFirst = allControlPoints[index].firstControl
+            let nextControlPointSecond = allControlPoints[index].secondControl
             context?.addCurve(to: nextPoint, control1: nextControlPointFirst, control2: nextControlPointSecond)
         }
         context?.drawPath(using: .stroke)
