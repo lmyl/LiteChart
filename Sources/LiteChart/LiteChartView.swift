@@ -10,11 +10,11 @@ import UIKit
 
 class LiteChartView: UIView {
     
-    var configure: LiteChartViewParameters
+    private var configure: LiteChartViewParameters
     
-    var contentView: UIView?
-    var titleView: DisplayLabel?
-    var legendViews: LegendViews?
+    private var contentView: UIView?
+    private var titleView: DisplayLabel?
+    private var legendViews: LegendViews?
     
     init(configure: LiteChartViewParameters) throws {
         self.configure = configure
@@ -23,22 +23,30 @@ class LiteChartView: UIView {
         insertTitleView()
         insertContentView()
         insertLegendViews()
+        
+        updateTitleViewStaticConstraints()
+        updateContentViewStaticConstraints()
+        updateLegendViewsStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LiteChartViewParameters()
+        self.configure = LiteChartViewParameters.emptyConfigure
         super.init(coder: coder)
         insertTitleView()
         insertContentView()
         insertLegendViews()
+        
+        updateTitleViewStaticConstraints()
+        updateContentViewStaticConstraints()
+        updateLegendViewsStaticConstraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        updateTitleViewConstraints()
-        updateContentViewConstraints()
-        updateLegendViewsConstraints()
+        updateTitleViewDynamicConstraints()
+        updateContentViewDynamicConstraints()
+        updateLegendViewsDynamicConstraints()
     }
     
     private func insertTitleView() {
@@ -57,7 +65,7 @@ class LiteChartView: UIView {
     }
     
     private func insertLegendViews() {
-        guard self.configure.isShowLegendTitles, let legendConfigure = self.configure.computeLegendViewConfigure() else {
+        guard let legendConfigure = self.configure.computeLegendViewConfigure() else {
             return
         }
         let legendViews = LegendViews(configure: legendConfigure)
@@ -66,12 +74,10 @@ class LiteChartView: UIView {
     }
     
     
-    private func updateTitleViewConstraints() {
+    private func updateTitleViewStaticConstraints() {
         guard let titleView = self.titleView else {
             return
         }
-        var titleHeight = self.bounds.height / 10
-        titleHeight = min(titleHeight, 20)
         titleView.snp.updateConstraints{
             make in
             switch self.configure.titleDisplayLocation {
@@ -82,26 +88,36 @@ class LiteChartView: UIView {
             }
             make.left.equalToSuperview()
             make.right.equalToSuperview()
+            make.height.equalTo(0)
+        }
+    }
+    
+    private func updateTitleViewDynamicConstraints() {
+        guard let titleView = self.titleView else {
+            return
+        }
+        var titleHeight = self.bounds.height / 10
+        titleHeight = min(titleHeight, 20)
+        titleView.snp.updateConstraints{
+            make in
             make.height.equalTo(titleHeight)
         }
     }
     
-    private func updateContentViewConstraints() {
+    private func updateContentViewStaticConstraints() {
         guard let contentView = self.contentView else {
             return
         }
-        var spaceHeight = self.bounds.height / 20
-        spaceHeight = min(spaceHeight, 4)
         contentView.snp.updateConstraints{
             make in
             if let titleView = self.titleView {
                 switch self.configure.titleDisplayLocation {
                 case .top:
-                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight)
+                    make.top.equalTo(titleView.snp.bottom)
                     make.bottom.equalToSuperview()
                 case .bottom:
                     make.top.equalToSuperview()
-                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight)
+                    make.bottom.equalTo(titleView.snp.top)
                 }
             } else {
                 make.top.equalToSuperview()
@@ -118,7 +134,45 @@ class LiteChartView: UIView {
         }
     }
     
-    private func updateLegendViewsConstraints() {
+    private func updateContentViewDynamicConstraints() {
+        guard let contentView = self.contentView else {
+            return
+        }
+        var spaceHeight = self.bounds.height / 20
+        spaceHeight = min(spaceHeight, 4)
+        contentView.snp.updateConstraints{
+            make in
+            if let titleView = self.titleView {
+                switch self.configure.titleDisplayLocation {
+                case .top:
+                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight)
+                case .bottom:
+                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight)
+                }
+            }
+        }
+    }
+    
+    private func updateLegendViewsStaticConstraints() {
+        guard let legendViews = self.legendViews else {
+            return
+        }
+        guard let contentView = self.contentView else {
+            return
+        }
+        legendViews.snp.updateConstraints{
+            make in
+            make.width.equalTo(0)
+            make.left.equalTo(contentView.snp.right)
+            
+            make.top.equalTo(contentView.snp.top)
+            
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func updateLegendViewsDynamicConstraints() {
         guard let legendViews = self.legendViews else {
             return
         }
@@ -133,11 +187,6 @@ class LiteChartView: UIView {
             make in
             make.width.equalTo(legendViewsWidth)
             make.left.equalTo(contentView.snp.right).offset(spaceWidth)
-            
-            make.top.equalTo(contentView.snp.top)
-            
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
     }
 }
