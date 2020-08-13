@@ -42,6 +42,8 @@ class RadarBackgroundView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         updataRadarDataViewDynamicConstraints()
+        
+        setNeedsDisplay()
     }
     
     private var coupleTitleWidth: CGFloat {

@@ -24,8 +24,18 @@ class AxisView: UIView {
         self.backgroundColor = .clear
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setNeedsDisplay()
+    }
+    
     override func draw(_ layer: CALayer, in ctx: CGContext) {
         super.draw(layer, in: ctx)
+        if let existLayer = self.borderLayer {
+            existLayer.removeFromSuperlayer()
+            self.borderLayer = nil
+        }
         let drawShapeLayer = CAShapeLayer()
         drawShapeLayer.lineCap = .round
         drawShapeLayer.strokeColor = self.configure.borderColor.color.cgColor

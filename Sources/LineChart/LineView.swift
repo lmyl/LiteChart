@@ -35,6 +35,8 @@ class LineView: UIView {
         super.layoutSubviews()
         updateLabelsDynamicConstraints()
         updateLegendsDynamicConstraints()
+        
+        setNeedsDisplay()
     }
     
     private func insertLabel() {

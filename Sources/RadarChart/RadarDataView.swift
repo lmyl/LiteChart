@@ -23,6 +23,12 @@ class RadarDataView: UIView {
         self.backgroundColor = .clear
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setNeedsDisplay()
+    }
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         let edeges = self.configure.points.count

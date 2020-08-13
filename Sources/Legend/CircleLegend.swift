@@ -24,6 +24,12 @@ class CircleLegend: UIView {
         self.backgroundColor = .clear
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setNeedsDisplay()
+    }
+    
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         context?.setShouldAntialias(true)
