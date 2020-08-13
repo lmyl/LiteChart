@@ -27,7 +27,7 @@ struct AxisViewConfigure {
     
     let isShowYAxis: Bool
     
-    init(originPoint: CGPoint = CGPoint(x: 0, y: 0), axisColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white), verticalDividingPoints : [AxisDividingLineConfigure] = [], horizontalDividingPoints: [AxisDividingLineConfigure] = [], borderStyle: [AxisViewBorderStyle] = [], borderColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white), isShowXAxis: Bool = true, isShowYAxis: Bool = true) {
+    init(originPoint: CGPoint, axisColor: LiteChartDarkLightColor, verticalDividingPoints : [AxisDividingLineConfigure], horizontalDividingPoints: [AxisDividingLineConfigure], borderStyle: [AxisViewBorderStyle], borderColor: LiteChartDarkLightColor, isShowXAxis: Bool, isShowYAxis: Bool) {
         self.originPoint = originPoint
         self.axisColor = axisColor
         self.verticalDividingPoints = verticalDividingPoints
@@ -37,4 +37,19 @@ struct AxisViewConfigure {
         self.isShowXAxis = isShowXAxis
         self.isShowYAxis = isShowYAxis
     }
+}
+
+extension AxisViewConfigure {
+    private init() {
+        self.originPoint = .zero
+        self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
+        self.verticalDividingPoints = []
+        self.horizontalDividingPoints = []
+        self.borderColor = .init(lightUIColor: .black, darkUIColor: .white)
+        self.borderStyle = []
+        self.isShowXAxis = true
+        self.isShowYAxis = true
+    }
+    
+    static let emptyConfigure = AxisViewConfigure()
 }

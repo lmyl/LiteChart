@@ -9,8 +9,9 @@
 import UIKit
 
 class AxisView: UIView {
-    let configure: AxisViewConfigure
-    
+    private let configure: AxisViewConfigure
+    private var borderLayer: CAShapeLayer?
+        
     init(configure: AxisViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
@@ -18,18 +19,20 @@ class AxisView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = AxisViewConfigure()
+        self.configure = AxisViewConfigure.emptyConfigure
         super.init(coder: coder)
         self.backgroundColor = .clear
     }
     
-    private func drawBorder(_ rect: CGRect) {
+    override func draw(_ layer: CALayer, in ctx: CGContext) {
+        super.draw(layer, in: ctx)
         let drawShapeLayer = CAShapeLayer()
         drawShapeLayer.lineCap = .round
         drawShapeLayer.strokeColor = self.configure.borderColor.color.cgColor
         drawShapeLayer.lineWidth = 1
         drawShapeLayer.allowsEdgeAntialiasing = true
         let path = UIBezierPath()
+        let rect = layer.bounds
         let topLeft = rect.origin
         let topRight = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y)
         let bottomLeft = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
@@ -50,8 +53,10 @@ class AxisView: UIView {
                 path.addLine(to: bottomRight)
             }
         }
+        drawShapeLayer.frame = layer.bounds
         drawShapeLayer.path = path.cgPath
-        self.layer.addSublayer(drawShapeLayer)
+        layer.addSublayer(drawShapeLayer)
+        self.borderLayer = drawShapeLayer
     }
     
     override func draw(_ rect: CGRect) {
@@ -155,8 +160,6 @@ class AxisView: UIView {
             }
             context?.drawPath(using: .stroke)
         }
-        
-        self.drawBorder(rect)
         
     }
 }

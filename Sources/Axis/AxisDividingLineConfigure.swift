@@ -18,9 +18,11 @@ struct AxisDividingLineConfigure {
 }
 
 extension AxisDividingLineConfigure {
-    init() {
+    private init() {
         self.dividingLineColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.dividingLineStyle = .dotted
         self.location = 0
     }
+    
+    static let emptyConfigure = AxisDividingLineConfigure()
 }
