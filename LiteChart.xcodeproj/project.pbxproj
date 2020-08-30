@@ -33,6 +33,7 @@
 		08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C26248E521200D0E655 /* Notification+PieSectorView.swift */; };
 		08386C29248E57AF00D0E655 /* PieViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C28248E57AF00D0E655 /* PieViews.swift */; };
 		08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08386C2A248E580400D0E655 /* PieViewsConfigure.swift */; };
+		0839B64324FBC1C700E59F6B /* LiteChartDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0839B64224FBC1C700E59F6B /* LiteChartDispatchQueue.swift */; };
 		083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8E4249085BC000B8DDE /* AxisView.swift */; };
 		083BC8E72490865E000B8DDE /* AxisViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8E62490865E000B8DDE /* AxisViewConfigure.swift */; };
 		083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */; };
@@ -123,6 +124,7 @@
 		08386C26248E521200D0E655 /* Notification+PieSectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+PieSectorView.swift"; sourceTree = "<group>"; };
 		08386C28248E57AF00D0E655 /* PieViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViews.swift; sourceTree = "<group>"; };
 		08386C2A248E580400D0E655 /* PieViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewsConfigure.swift; sourceTree = "<group>"; };
+		0839B64224FBC1C700E59F6B /* LiteChartDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartDispatchQueue.swift; sourceTree = "<group>"; };
 		083BC8E4249085BC000B8DDE /* AxisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisView.swift; sourceTree = "<group>"; };
 		083BC8E62490865E000B8DDE /* AxisViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewConfigure.swift; sourceTree = "<group>"; };
 		083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewLineStyle.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
 				08F56E5C248B52D3000998F8 /* Legend */,
+				0839B64124FBC19800E59F6B /* Tool */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -310,6 +313,14 @@
 				08386C26248E521200D0E655 /* Notification+PieSectorView.swift */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		0839B64124FBC19800E59F6B /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				0839B64224FBC1C700E59F6B /* LiteChartDispatchQueue.swift */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 		083BC8E224907C83000B8DDE /* BarChart */ = {
@@ -592,6 +603,7 @@
 				08FF1A182492034900AE05F9 /* BarChartParameter.swift in Sources */,
 				085CFE7724920C4B008E0E0E /* BarChartDirection.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
+				0839B64324FBC1C700E59F6B /* LiteChartDispatchQueue.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
 				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */,
