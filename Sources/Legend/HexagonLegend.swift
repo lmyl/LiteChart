@@ -30,6 +30,7 @@ class HexagonLegend: UIView {
     
     override func display(_ layer: CALayer) {
         LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
             let rect = layer.bounds
             let context = UIGraphicsGetCurrentContext()

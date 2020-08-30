@@ -30,6 +30,7 @@ class SquareLegend: UIView {
 
     override func display(_ layer: CALayer) {
         LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
             let context = UIGraphicsGetCurrentContext()
             let rect = layer.bounds
