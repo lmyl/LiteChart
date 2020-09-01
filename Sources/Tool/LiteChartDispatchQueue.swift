@@ -9,7 +9,7 @@
 import Foundation
 
 enum LiteChartDispatchQueue {
-    static let asyncDrawQueue = DispatchQueue(label: "library.liteChart", qos: .userInitiated, attributes: .concurrent)
+    static let asyncDrawQueue = DispatchQueue(label: "library.asyncDraw.liteChart", qos: .userInitiated, attributes: .concurrent)
     
     static let asyncDrawDoneQueue = DispatchQueue.main
 }

@@ -14,12 +14,14 @@ struct DisplayLabelConfigure {
     let contentColor: LiteChartDarkLightColor
     let textAlignment: NSTextAlignment
     let textDirection: DisplayLabelTextDirection
+    let syncIdentifier: DisplayLabelSyncIdentifier
     
-    init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment = .center, textDirection: DisplayLabelTextDirection = .horizontal) {
+    init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment = .center, textDirection: DisplayLabelTextDirection = .horizontal, syncIdentifier: DisplayLabelSyncIdentifier = .none) {
         self.contentColor = contentColor
         self.contentString = contentString
         self.textAlignment = textAlignment
         self.textDirection = textDirection
+        self.syncIdentifier = syncIdentifier
     }
     
     private init() {
@@ -27,6 +29,7 @@ struct DisplayLabelConfigure {
         self.contentString = ""
         self.textAlignment = .center
         self.textDirection = .horizontal
+        self.syncIdentifier = .none
     }
 }
 

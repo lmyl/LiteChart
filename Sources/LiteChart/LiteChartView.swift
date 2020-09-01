@@ -20,6 +20,9 @@ class LiteChartView: UIView {
         self.configure = configure
         try self.configure.checkInputDatasParameterInvalid()
         super.init(frame: CGRect())
+        
+        let _ = DisplayLabelSyncCenter.shared
+        
         insertTitleView()
         insertContentView()
         insertLegendViews()
@@ -32,6 +35,8 @@ class LiteChartView: UIView {
     required init?(coder: NSCoder) {
         self.configure = LiteChartViewParameters.emptyConfigure
         super.init(coder: coder)
+        
+        let _ = DisplayLabelSyncCenter.shared
         insertTitleView()
         insertContentView()
         insertLegendViews()

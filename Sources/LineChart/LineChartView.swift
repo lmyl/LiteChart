@@ -74,7 +74,7 @@ class LineChartView: UIView {
     
     private func insertCoupleTitleView() {
         for title in self.configure.coupleTitle {
-            let titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor))
+            let titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, syncIdentifier: .coupleTitleLabel))
             self.addSubview(titleView)
             self.coupleTitleView.append(titleView)
         }
