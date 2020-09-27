@@ -90,7 +90,7 @@ class LegendView: UIView {
         }
         rightView.snp.updateConstraints{
             make in
-            make.left.equalTo(leftView.snp.right)
+            make.left.equalTo(leftView.snp.right).priority(.init(750))
             make.right.equalToSuperview()
             make.height.equalToSuperview()
             make.centerY.equalToSuperview()
@@ -108,7 +108,7 @@ class LegendView: UIView {
         let offset = min(remain /  10, 4)
         rightView.snp.updateConstraints{
             make in
-            make.left.equalTo(leftView.snp.right).offset(offset)
+            make.left.equalTo(leftView.snp.right).offset(offset).priority(.init(750))
         }
     }
 }
