@@ -16,7 +16,9 @@ class PieSectorView: UIView {
     private var polylineLineEndPoint: CGPoint? {
         didSet {
             if oldValue != polylineLineEndPoint, let point = polylineLineEndPoint {
-                NotificationCenter.default.post(name: .didComputeLabelLocation, object: self, userInfo: [self.notificationInfoKey: point])
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .didComputeLabelLocation, object: self, userInfo: [self.notificationInfoKey: point])
+                }
             }
         }
     }
@@ -24,66 +26,76 @@ class PieSectorView: UIView {
     init(configure: PieSectorViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         self.configure = PieSectorViewConfigure.emptyConfigure
         super.init(coder: coder)
-        self.backgroundColor = .clear
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        setNeedsDisplay()
+        layer.setNeedsDisplay()
     }
     
-    override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-        context?.setAllowsAntialiasing(true)
-        context?.setShouldAntialias(true)
-        context?.clear(rect)
-        let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        let radius: CGFloat
-        if self.configure.isShowLine {
-            let tempRadius = min(rect.width, rect.height) / 2
-            let polylineSegmentLength = min(tempRadius / 8, 20)
-            radius = tempRadius - polylineSegmentLength
-        } else {
-            radius = min(rect.width, rect.height) / 2
-        }
-        context?.move(to: center)
-        context?.addArc(center: center, radius: radius / 2, startAngle: computeRadian(for: self.configure.startAngle), endAngle: computeRadian(for: self.configure.endAngle), clockwise: false)
-        context?.closePath()
-        context?.move(to: center)
-        context?.addArc(center: center, radius: radius, startAngle: computeRadian(for: self.configure.startAngle), endAngle: computeRadian(for: self.configure.endAngle), clockwise: false)
-        context?.closePath()
-        context?.setFillColor(self.configure.backgroundColor.color.cgColor)
-        context?.drawPath(using: .eoFill)
-        if self.configure.isShowLine {
-            context?.setLineWidth(1)
-            context?.setLineCap(.round)
-            context?.setStrokeColor(self.configure.lineColor.color.cgColor)
-            let lineAngle = self.configure.averageAngle
-            let startPoint = computePointInCircle(for: center, radius: radius, angle: lineAngle)
-            context?.move(to: startPoint)
-            let polylineLength = min(rect.width, rect.height) / 2 - radius
-            let firstSegmentLineLength = polylineLength / 2
-            let secondSegmentLineLength = polylineLength - firstSegmentLineLength
-            let secondPoint = computePointInCircle(for: startPoint, radius: firstSegmentLineLength, angle: lineAngle)
-            let endPointX: CGFloat
-            if self.configure.isLeftSector {
-                endPointX = secondPoint.x - secondSegmentLineLength
+    override func display(_ layer: CALayer) {
+        LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
+            let rect = layer.bounds
+            let context = UIGraphicsGetCurrentContext()
+            context?.setAllowsAntialiasing(true)
+            context?.setShouldAntialias(true)
+            context?.clear(rect)
+            let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
+            let radius: CGFloat
+            if self.configure.isShowLine {
+                let tempRadius = min(rect.width, rect.height) / 2
+                let polylineSegmentLength = min(tempRadius / 8, 20)
+                radius = tempRadius - polylineSegmentLength
             } else {
-                endPointX = secondPoint.x + secondSegmentLineLength
+                radius = min(rect.width, rect.height) / 2
             }
-            let endPoint = CGPoint(x: endPointX, y: secondPoint.y)
-            context?.addLines(between: [startPoint, secondPoint, endPoint])
-            context?.drawPath(using: .stroke)
-            self.polylineLineEndPoint = endPoint
+            context?.move(to: center)
+            context?.addArc(center: center, radius: radius / 2, startAngle: self.computeRadian(for: self.configure.startAngle), endAngle: self.computeRadian(for: self.configure.endAngle), clockwise: false)
+            context?.closePath()
+            context?.move(to: center)
+            context?.addArc(center: center, radius: radius, startAngle: self.computeRadian(for: self.configure.startAngle), endAngle: self.computeRadian(for: self.configure.endAngle), clockwise: false)
+            context?.closePath()
+            context?.setFillColor(self.configure.backgroundColor.color.cgColor)
+            context?.drawPath(using: .eoFill)
+            if self.configure.isShowLine {
+                context?.setLineWidth(1)
+                context?.setLineCap(.round)
+                context?.setStrokeColor(self.configure.lineColor.color.cgColor)
+                let lineAngle = self.configure.averageAngle
+                let startPoint = self.computePointInCircle(for: center, radius: radius, angle: lineAngle)
+                context?.move(to: startPoint)
+                let polylineLength = min(rect.width, rect.height) / 2 - radius
+                let firstSegmentLineLength = polylineLength / 2
+                let secondSegmentLineLength = polylineLength - firstSegmentLineLength
+                let secondPoint = self.computePointInCircle(for: startPoint, radius: firstSegmentLineLength, angle: lineAngle)
+                let endPointX: CGFloat
+                if self.configure.isLeftSector {
+                    endPointX = secondPoint.x - secondSegmentLineLength
+                } else {
+                    endPointX = secondPoint.x + secondSegmentLineLength
+                }
+                let endPoint = CGPoint(x: endPointX, y: secondPoint.y)
+                context?.addLines(between: [startPoint, secondPoint, endPoint])
+                context?.drawPath(using: .stroke)
+                self.polylineLineEndPoint = endPoint
+            }
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            context?.restoreGState()
+            UIGraphicsEndImageContext()
+            LiteChartDispatchQueue.asyncDrawDoneQueue.async {
+                layer.contents = image?.cgImage
+            }
         }
     }
+    
     
     private func computeRadian(for angle: CGFloat) -> CGFloat {
         angle * CGFloat(Double.pi) / 180
@@ -97,6 +109,4 @@ class PieSectorView: UIView {
         let newPointY = center.y + pointY
         return CGPoint(x: newPointX, y: newPointY)
     }
-    
-    
 }

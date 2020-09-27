@@ -31,15 +31,15 @@ class LegendView: UIView {
         insertLegendLeftView()
         insertLegendRightView()
         
-        updateLegendLeftViewStaticConstraint()
         updateLegendRightViewStaticConstraint()
+        updateLegendLeftViewStaticConstraint()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        updateLegendLeftViewDynamicConstraint()
         updateLegendRightViewDynamicConstraint()
+        updateLegendLeftViewDynamicConstraint()
     }
     
     private func insertLegendLeftView() {

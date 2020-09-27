@@ -13,6 +13,7 @@ enum DisplayLabelSyncIdentifier {
     case coupleTitleLabel
     case legendTitleLabel
     case funalTitleLabel
+    case pieTitleLabel
 }
 
 
@@ -29,6 +30,8 @@ extension DisplayLabelSyncIdentifier {
             return .init("updateLegendTitleLabelFont")
         case .funalTitleLabel:
             return .init("updateFunalTitleLabelFont")
+        case .pieTitleLabel:
+            return .init("updatePieTitleLabelFont")
         case .none:
             return .init(" ")
         }
