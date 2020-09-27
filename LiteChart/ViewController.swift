@@ -24,7 +24,7 @@ class ViewController: UIViewController {
 //        var configure = LiteChartViewParameters(inputDatas: .bubble(inputDatas: datas))
 //        var configure = LiteChartViewParameters(inputDatas: .radar(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.30, 0.40 ,0.50])]))
         var configure = LiteChartViewParameters(inputDatas: .funal(inputDatas: [(100, .init(lightUIColor: .red)), (50, .init(lightUIColor: .purple))]))
-        configure.inputLegendTitles = ["2018", "2019", "2020"]
+        configure.inputLegendTitles = ["2018", "2019"]
         configure.titleString = "年度绩效总结"
         configure.isShowLegendTitles = true
         configure.displayDataMode = .original

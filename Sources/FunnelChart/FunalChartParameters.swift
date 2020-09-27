@@ -52,7 +52,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .legendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -109,7 +109,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: false)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
-                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, textAlignment: .center)
+                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, textAlignment: .center, syncIdentifier: .funalTitleLabel)
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: true, contentViewConfigure: contentViewConfigure)
                 funalViewConfigure.append(funalFloorConfigure)
             }

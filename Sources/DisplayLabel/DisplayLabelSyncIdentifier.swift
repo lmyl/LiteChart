@@ -11,6 +11,8 @@ import Foundation
 enum DisplayLabelSyncIdentifier {
     case none
     case coupleTitleLabel
+    case legendTitleLabel
+    case funalTitleLabel
 }
 
 
@@ -23,6 +25,10 @@ extension DisplayLabelSyncIdentifier {
         switch self {
         case .coupleTitleLabel:
             return .init("updateCoupleTitleLabelFont")
+        case .legendTitleLabel:
+            return .init("updateLegendTitleLabelFont")
+        case .funalTitleLabel:
+            return .init("updateFunalTitleLabelFont")
         case .none:
             return .init(" ")
         }
