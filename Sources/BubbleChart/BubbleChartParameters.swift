@@ -43,7 +43,9 @@ struct BubbleChartParameters {
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor) {
+    var isShowAxis: Bool
+    
+    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor, isShowAxis: Bool) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas
@@ -60,6 +62,7 @@ struct BubbleChartParameters {
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
         self.axisColor = axisColor
+        self.isShowAxis = isShowAxis
     }
 }
 
@@ -75,7 +78,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.circle
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .bubbleLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -150,7 +153,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(xAxisValue: valueForAxis.xAxisValue, yAxisValue: valueForAxis.yAxisValue)
-        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, isShowAxis: true, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
+        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, isShowAxis: self.isShowAxis, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
         return PlotChartView(configure: plotChartViewConfigure)
     }
     
@@ -462,7 +465,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
                 dividingPoint.append(Double(index) * dividingInterval)
             }
             let maxAxisValue = value
-            let minAxisValue = tempData.minValue
+            let minAxisValue = 0 - Double(count) * dividingInterval
             dividingPoint.removeLast()
             dividingPoint.removeFirst()
             return ((maxAxisValue, minAxisValue), dividingPoint)
@@ -479,7 +482,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
             for index in 1 ... count {
                 dividingPoint.append(Double(index) * dividingInterval)
             }
-            let maxAxisValue = tempData.maxValue
+            let maxAxisValue = Double(count) * dividingInterval
             let minAxisValue = -value
             dividingPoint.removeLast()
             dividingPoint.removeFirst()

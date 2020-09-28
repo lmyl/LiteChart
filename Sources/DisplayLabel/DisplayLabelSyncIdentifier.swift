@@ -28,6 +28,7 @@ enum DisplayLabelSyncIdentifier {
     case scatterLegendTitleLabel
     case pointsValueTitleLabel
     case pointsUnitTitleLabel
+    case bubbleLegendTitleLabel
 }
 
 
@@ -74,6 +75,8 @@ extension DisplayLabelSyncIdentifier {
             return .init("updatePointsValueTitleLabelFont")
         case .pointsUnitTitleLabel:
             return .init("updatePointsUnitTitleLabelFont")
+        case .bubbleLegendTitleLabel:
+            return .init("updateBubbleLegendTitleLabelFont")
         case .none:
             return .init(" ")
         }
