@@ -24,6 +24,10 @@ enum DisplayLabelSyncIdentifier {
     case lineTitleLabel
     case lineValueTitleLabel
     case lineUnitTitleLabel
+    case pointsCoupleTitleLabel
+    case scatterLegendTitleLabel
+    case pointsValueTitleLabel
+    case pointsUnitTitleLabel
 }
 
 
@@ -62,6 +66,14 @@ extension DisplayLabelSyncIdentifier {
             return .init("updateLineValueTitleLabelFont")
         case .lineUnitTitleLabel:
             return .init("updateLineUnitTitleLabelFont")
+        case .pointsCoupleTitleLabel:
+            return .init("updatePointsCoupleTitleLabelFont")
+        case .scatterLegendTitleLabel:
+            return .init("updateScatterLegendTitleLabelFont")
+        case .pointsValueTitleLabel:
+            return .init("updatePointsValueTitleLabelFont")
+        case .pointsUnitTitleLabel:
+            return .init("updatePointsUnitTitleLabelFont")
         case .none:
             return .init(" ")
         }

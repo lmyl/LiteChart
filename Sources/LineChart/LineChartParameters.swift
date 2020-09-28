@@ -160,7 +160,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         
         var coupleTitleString: [String] = []
         var coupleDividingLineConfigure: [AxisDividingLineConfigure] = []
-        if self.isShowCoupleDividingLine && firstValueCount >= 2 {
+        if self.isShowCoupleDividingLine {
             coupleTitleString = self.coupleTitles
             for value in proportionX {
                 let configure = AxisDividingLineConfigure(dividingLineStyle: self.dividingCoupleLineStyle, dividingLineColor: self.dividingCoupleLineColor, location: CGFloat(value))
@@ -401,7 +401,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
                 dividingPoint.append(Double(index) * dividingInterval)
             }
             let maxAxisValue = value
-            let minAxisValue = tempData.minValue
+            let minAxisValue = 0 - Double(count) * dividingInterval
             dividingPoint.removeLast()
             dividingPoint.removeFirst()
             return ((maxAxisValue, minAxisValue), dividingPoint)
@@ -418,7 +418,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
             for index in 1 ... count {
                 dividingPoint.append(Double(index) * dividingInterval)
             }
-            let maxAxisValue = tempData.maxValue
+            let maxAxisValue = Double(count) * dividingInterval
             let minAxisValue = -value
             dividingPoint.removeLast()
             dividingPoint.removeFirst()

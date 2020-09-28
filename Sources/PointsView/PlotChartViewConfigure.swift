@@ -26,6 +26,8 @@ struct PlotChartViewConfigure {
     
     let axisColor: LiteChartDarkLightColor
     
+    let isShowAxis: Bool
+    
     let xDividingPoints: [AxisDividingLineConfigure]
     
     let yDividingPoints: [AxisDividingLineConfigure]
@@ -55,6 +57,7 @@ extension PlotChartViewConfigure {
         self.isShowCoupleUnitString = false
         self.axisOriginal = .zero
         self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
+        self.isShowAxis = true
     }
     
     static let emptyConfigure = PlotChartViewConfigure()

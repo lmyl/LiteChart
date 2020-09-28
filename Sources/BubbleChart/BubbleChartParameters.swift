@@ -150,7 +150,7 @@ extension BubbleChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(xAxisValue: valueForAxis.xAxisValue, yAxisValue: valueForAxis.yAxisValue)
-        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
+        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, isShowAxis: true, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
         return PlotChartView(configure: plotChartViewConfigure)
     }
     

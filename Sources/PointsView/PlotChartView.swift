@@ -59,14 +59,14 @@ class PlotChartView: UIView {
         var unitLabel: DisplayLabel
         
         if self.configure.isShowValueUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .pointsUnitTitleLabel))
             self.yUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
         
         
         if self.configure.isShowCoupleUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor))
+            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, syncIdentifier: .pointsUnitTitleLabel))
             self.xUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
@@ -75,7 +75,7 @@ class PlotChartView: UIView {
     
     private func insertCoupleTitleView() {
         for title in self.configure.coupleTitle {
-            let titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor))
+            let titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, syncIdentifier: .pointsCoupleTitleLabel))
             self.addSubview(titleView)
             self.coupleTitleView.append(titleView)
         }
@@ -83,7 +83,7 @@ class PlotChartView: UIView {
     
     private func insertValueTitleView() {
         for value in self.configure.valueTitle {
-            let valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right))
+            let valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .pointsValueTitleLabel))
             self.addSubview(valueView)
             self.valueView.append(valueView)
         }
@@ -97,7 +97,7 @@ class PlotChartView: UIView {
         case .fullySurrounded:
             borderStlye = [.left, .bottom, .right, .top]
         }
-        let axisView = AxisView(configure: .init(originPoint: self.configure.axisOriginal, axisColor: self.configure.axisColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: true, isShowYAxis: true))
+        let axisView = AxisView(configure: .init(originPoint: self.configure.axisOriginal, axisColor: self.configure.axisColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: self.configure.isShowAxis, isShowYAxis: self.configure.isShowAxis))
         self.addSubview(axisView)
         self.axisView = axisView
     }
@@ -148,23 +148,46 @@ class PlotChartView: UIView {
         return min(bottomSpace, 20)
     }
     
-    private var labelViewSpace: CGFloat {
+    private var labelViewHeightSpace: CGFloat {
         let space = self.bounds.height / 10
         return min(space, 4)
     }
     
+    private var labelViewWidthSpace: CGFloat {
+        let space = self.bounds.width / 10
+        return min(space, 4)
+    }
+    
     private var leftSpace: CGFloat {
+        var space: CGFloat = 0
         if self.yUnitLabel != nil {
-            return self.leftViewWidth + self.labelViewSpace * 2 + self.leftUnitViewWidth
+            space += self.labelViewWidthSpace + self.leftUnitViewWidth
         }
-        return self.leftViewWidth + self.labelViewSpace
+        if !self.coupleTitleView.isEmpty {
+            space += self.labelViewWidthSpace + self.leftViewWidth
+            return space
+        }
+        if !self.valueView.isEmpty {
+            space += self.labelViewWidthSpace + self.leftViewWidth
+            return space
+        }
+        return space
     }
     
     private var bottomSpace: CGFloat {
+        var space: CGFloat = 0
         if self.xUnitLabel != nil {
-            return self.bottomViewHeight + self.labelViewSpace * 2 + self.bottomUnitViewHeight
+            space += self.labelViewHeightSpace + self.bottomUnitViewHeight
         }
-        return self.bottomViewHeight + self.labelViewSpace
+        if !self.coupleTitleView.isEmpty {
+            space += self.labelViewHeightSpace + self.bottomViewHeight
+            return space
+        }
+        if !self.valueView.isEmpty {
+            space += self.labelViewHeightSpace + self.bottomViewHeight
+            return space
+        }
+        return space
     }
     
     private func updateUnitLabelStaticConstraints() {
@@ -256,7 +279,7 @@ class PlotChartView: UIView {
             let yPoint = self.configure.yDividingPoints[index]
             let pointY = axis.bounds.height * (1 - yPoint.location)
             let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
-            let center = CGPoint(x: endPoint.x - self.labelViewSpace - self.leftViewWidth / 2, y: endPoint.y)
+            let center = CGPoint(x: endPoint.x - self.labelViewWidthSpace - self.leftViewWidth / 2, y: endPoint.y)
             var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count + 1)
             labelHeight = min(labelHeight, 20)
             let labelView = self.valueView[index]
@@ -284,7 +307,7 @@ class PlotChartView: UIView {
             let xPoint = self.configure.xDividingPoints[index]
             let pointX = axis.bounds.width * xPoint.location
             let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: self.bounds.origin.y + axis.bounds.height)
-            let center = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: endPoint.y + self.labelViewSpace + self.bottomViewHeight / 2)
+            let center = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: endPoint.y + self.labelViewHeightSpace + self.bottomViewHeight / 2)
             let couple = self.coupleTitleView[index]
             couple.snp.updateConstraints{
                 make in
