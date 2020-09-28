@@ -45,6 +45,7 @@ class PieSectorView: UIView {
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
             let rect = layer.bounds
             let context = UIGraphicsGetCurrentContext()
+            context?.saveGState()
             context?.setAllowsAntialiasing(true)
             context?.setShouldAntialias(true)
             context?.clear(rect)

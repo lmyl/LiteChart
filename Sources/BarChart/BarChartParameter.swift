@@ -11,7 +11,7 @@ import UIKit
 
 struct BarChartParameter {
     
-    var borderStyle: BarChartViewBorderStyle
+    var borderStyle: LiteChartViewBorderStyle
     
     var borderColor: LiteChartDarkLightColor
     
@@ -47,7 +47,7 @@ struct BarChartParameter {
     
     var coupleUnitString: String
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String], isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String) {
+    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String], isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction

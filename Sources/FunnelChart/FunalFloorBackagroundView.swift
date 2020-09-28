@@ -33,6 +33,7 @@ class FunalFloorBackagroundView: UIView {
             layer.contentsScale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
             let context = UIGraphicsGetCurrentContext()
+            context?.saveGState()
             let rect = layer.bounds
             context?.clear(rect)
             context?.setAllowsAntialiasing(true)

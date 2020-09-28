@@ -36,7 +36,7 @@ class LineView: UIView {
         updateLabelsDynamicConstraints()
         updateLegendsDynamicConstraints()
         
-        setNeedsDisplay()
+        layer.setNeedsDisplay()
     }
     
     private func insertLabel() {
@@ -70,7 +70,7 @@ class LineView: UIView {
         space = min(space, 8)
         
         for (index, label) in self.labels.enumerated() {
-            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index])
+            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index], rect: self.bounds)
             let center = CGPoint(x: realPoint.x, y: realPoint.y - space - labelHeight / 2)
             label.snp.updateConstraints{
                 make in
@@ -88,7 +88,7 @@ class LineView: UIView {
         legendHeight = min(legendHeight, 8)
         let legendLength = min(legendHeight, legendWidth)
         for (index, legend) in self.legend.enumerated() {
-            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index])
+            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index], rect: self.bounds)
             legend.snp.updateConstraints{
                 make in
                 make.center.equalTo(realPoint)
@@ -99,32 +99,45 @@ class LineView: UIView {
         
     }
     
-    override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-        context?.setAllowsAntialiasing(true)
-        context?.setShouldAntialias(true)
-        context?.setStrokeColor(self.configure.lineColor.color.cgColor)
-        context?.setLineJoin(.round)
-        context?.setLineCap(.round)
-        context?.setLineWidth(1)
-        
-        switch self.configure.lineStyle {
-        case .dottedPolyline:
-            context?.setLineDash(phase: 1, lengths: [6, 3])
-            drawPolyline(for: self.configure.points, context: context)
-        case .solidPolyline:
-            context?.setLineDash(phase: 0, lengths: [])
-            drawPolyline(for: self.configure.points, context: context)
-        case .dottedCubicBezierCurve:
-            context?.setLineDash(phase: 1, lengths: [6, 3])
-            drawCubicBezierCurve(for: self.configure.points, context: context)
-        case .solidCubicBezierCurve:
-            context?.setLineDash(phase: 0, lengths: [])
-            drawCubicBezierCurve(for: self.configure.points, context: context)
+    override func display(_ layer: CALayer) {
+        LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
+            let context = UIGraphicsGetCurrentContext()
+            let rect = layer.bounds
+            context?.saveGState()
+            context?.setAllowsAntialiasing(true)
+            context?.setShouldAntialias(true)
+            context?.setStrokeColor(self.configure.lineColor.color.cgColor)
+            context?.setLineJoin(.round)
+            context?.setLineCap(.round)
+            context?.setLineWidth(1)
+            
+            switch self.configure.lineStyle {
+            case .dottedPolyline:
+                context?.setLineDash(phase: 1, lengths: [6, 3])
+                self.drawPolyline(for: self.configure.points, context: context, in: rect)
+            case .solidPolyline:
+                context?.setLineDash(phase: 0, lengths: [])
+                self.drawPolyline(for: self.configure.points, context: context, in: rect)
+            case .dottedCubicBezierCurve:
+                context?.setLineDash(phase: 1, lengths: [6, 3])
+                self.drawCubicBezierCurve(for: self.configure.points, context: context, in: rect)
+            case .solidCubicBezierCurve:
+                context?.setLineDash(phase: 0, lengths: [])
+                self.drawCubicBezierCurve(for: self.configure.points, context: context, in: rect)
+            }
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            context?.restoreGState()
+            UIGraphicsEndImageContext()
+            LiteChartDispatchQueue.asyncDrawDoneQueue.async {
+                layer.contents = image?.cgImage
+            }
         }
     }
     
-    private func convertScalePointToRealPointWtihLimit(for point: CGPoint) -> CGPoint {
+    private func convertScalePointToRealPointWtihLimit(for point: CGPoint, rect: CGRect) -> CGPoint {
         var realPoint = point
         if realPoint.x < 0 {
             realPoint.x = 0
@@ -137,7 +150,7 @@ class LineView: UIView {
         } else if realPoint.y > 1 {
             realPoint.y = 1
         }
-        realPoint = CGPoint(x: self.bounds.width * realPoint.x + self.bounds.origin.x, y: self.bounds.origin.y + self.bounds.height * (1 - realPoint.y))
+        realPoint = CGPoint(x: rect.width * realPoint.x + rect.origin.x, y: rect.origin.y + rect.height * (1 - realPoint.y))
         return realPoint
     }
     
@@ -204,27 +217,27 @@ class LineView: UIView {
         return result
     }
     
-    private func drawPolyline(for points: [CGPoint], context: CGContext?) {
+    private func drawPolyline(for points: [CGPoint], context: CGContext?, in rect: CGRect) {
         guard points.count >= 2 else {
             return
         }
-        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: points[0])
+        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: points[0], rect: rect)
         context?.move(to: firstPoint)
         var remain = points
         remain.removeFirst()
         for point in remain {
-            let next = self.convertScalePointToRealPointWtihLimit(for: point)
+            let next = self.convertScalePointToRealPointWtihLimit(for: point, rect: rect)
             context?.addLine(to: next)
         }
         context?.drawPath(using: .stroke)
     }
     
-    private func drawCubicBezierCurve(for points: [CGPoint], context: CGContext?) {
+    private func drawCubicBezierCurve(for points: [CGPoint], context: CGContext?, in rect: CGRect) {
         guard points.count >= 2 else {
             return
         }
         let limitPoints = points.map{
-            self.convertScalePointToRealPointWtihLimit(for: $0)
+            self.convertScalePointToRealPointWtihLimit(for: $0, rect: rect)
         }
         let allControlPoints = computeControlPointsFrom(points: limitPoints)
         guard !allControlPoints.isEmpty else {

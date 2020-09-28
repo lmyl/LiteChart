@@ -1,5 +1,5 @@
 //
-//  BarChartViewBorderStyle.swift
+//  LiteChartViewBorderStyle.swift
 //  LiteChart
 //
 //  Created by 刘洋 on 2020/6/11.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum BarChartViewBorderStyle {
+enum LiteChartViewBorderStyle {
     case halfSurrounded
     case fullySurrounded
 }

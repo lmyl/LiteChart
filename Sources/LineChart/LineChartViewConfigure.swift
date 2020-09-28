@@ -22,7 +22,7 @@ struct LineChartViewConfigure {
         
     let borderColor: LiteChartDarkLightColor
     
-    let borderStyle: BarChartViewBorderStyle
+    let borderStyle: LiteChartViewBorderStyle
     
     let axisOriginal: CGPoint
     

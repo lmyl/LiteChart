@@ -24,7 +24,7 @@ struct BarChartViewConfigure {
     
     let borderColor: LiteChartDarkLightColor
     
-    let borderStyle: BarChartViewBorderStyle
+    let borderStyle: LiteChartViewBorderStyle
     
     let xDividingPoints: [AxisDividingLineConfigure]
     

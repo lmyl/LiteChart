@@ -11,7 +11,7 @@ import CoreGraphics
 import UIKit
 
 struct BubbleChartParameters {
-    var borderStyle: BarChartViewBorderStyle
+    var borderStyle: LiteChartViewBorderStyle
     
     var borderColor: LiteChartDarkLightColor
     
@@ -43,7 +43,7 @@ struct BubbleChartParameters {
     
     var axisColor: LiteChartDarkLightColor
     
-    init(borderStyle: BarChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor) {
+    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [(scale: CGFloat, location: CGPoint)])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.inputDatas = inputDatas

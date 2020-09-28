@@ -45,7 +45,7 @@
 		08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E302499145F00A3FC18 /* LineViewConfigure.swift */; };
 		08596E332499156200A3FC18 /* LineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E322499156200A3FC18 /* LineStyle.swift */; };
 		085CFE7724920C4B008E0E0E /* BarChartDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CFE7624920C4B008E0E0E /* BarChartDirection.swift */; };
-		085CFE7924922D4C008E0E0E /* BarChartViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */; };
+		085CFE7924922D4C008E0E0E /* LiteChartViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CFE7824922D4C008E0E0E /* LiteChartViewBorderStyle.swift */; };
 		0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */; };
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
@@ -140,7 +140,7 @@
 		08596E302499145F00A3FC18 /* LineViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewConfigure.swift; sourceTree = "<group>"; };
 		08596E322499156200A3FC18 /* LineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStyle.swift; sourceTree = "<group>"; };
 		085CFE7624920C4B008E0E0E /* BarChartDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartDirection.swift; sourceTree = "<group>"; };
-		085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartViewBorderStyle.swift; sourceTree = "<group>"; };
+		085CFE7824922D4C008E0E0E /* LiteChartViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewBorderStyle.swift; sourceTree = "<group>"; };
 		0866FDBF2489FF4E004AF645 /* DisplayLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLabel.swift; sourceTree = "<group>"; };
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
@@ -342,7 +342,6 @@
 				085CFE7624920C4B008E0E0E /* BarChartDirection.swift */,
 				08FF1A152492030F00AE05F9 /* BarChartView.swift */,
 				08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */,
-				085CFE7824922D4C008E0E0E /* BarChartViewBorderStyle.swift */,
 				08FF1A172492034900AE05F9 /* BarChartParameter.swift */,
 			);
 			path = BarChart;
@@ -414,6 +413,7 @@
 				087DEA95248E7D6B001A40B9 /* LiteChartDatas.swift */,
 				087DEA8E248E7571001A40B9 /* LiteChartViewParameters.swift */,
 				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
+				085CFE7824922D4C008E0E0E /* LiteChartViewBorderStyle.swift */,
 			);
 			path = LiteChart;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 				0876ADBB24FE18110089A34D /* Notification+SyncLabel.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
-				085CFE7924922D4C008E0E0E /* BarChartViewBorderStyle.swift in Sources */,
+				085CFE7924922D4C008E0E0E /* LiteChartViewBorderStyle.swift in Sources */,
 				087DEA96248E7D6B001A40B9 /* LiteChartDatas.swift in Sources */,
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */,

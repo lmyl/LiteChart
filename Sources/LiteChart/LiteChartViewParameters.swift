@@ -29,7 +29,7 @@ struct LiteChartViewParameters {
     
     var radarCoupleTitles: [String] = []
     
-    var borderStyle: BarChartViewBorderStyle = .halfSurrounded
+    var borderStyle: LiteChartViewBorderStyle = .halfSurrounded
     
     var borderColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
