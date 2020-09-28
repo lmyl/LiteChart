@@ -62,10 +62,10 @@ class BarChartView: UIView {
         if self.configure.isShowValueUnitString {
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, syncIdentifier: .barUnitTitleLabel))
                 self.xUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .barUnitTitleLabel))
                 self.yUnitLabel = unitLabel
             }
             self.addSubview(unitLabel)
@@ -74,10 +74,10 @@ class BarChartView: UIView {
         if self.configure.isShowCoupleUnitString {
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .barUnitTitleLabel))
                 self.yUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor))
+                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, syncIdentifier: .barUnitTitleLabel))
                 self.xUnitLabel = unitLabel
             }
             self.addSubview(unitLabel)
@@ -91,9 +91,9 @@ class BarChartView: UIView {
             let titleView: DisplayLabel
             switch self.configure.direction {
             case .bottomToTop:
-                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor))
+                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, syncIdentifier: .barCoupleTitleLabel))
             case .leftToRight:
-                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, textAlignment: .right))
+                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .barCoupleTitleLabel))
             }
             self.addSubview(titleView)
             self.coupleTitleView.append(titleView)
@@ -105,9 +105,9 @@ class BarChartView: UIView {
             let valueView: DisplayLabel
             switch self.configure.direction {
             case .bottomToTop:
-                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right))
+                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .barValueTitleLabel))
             case .leftToRight:
-                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor))
+                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, syncIdentifier: .barValueTitleLabel))
             }
             self.addSubview(valueView)
             self.valueView.append(valueView)
@@ -170,7 +170,7 @@ class BarChartView: UIView {
             var barViewsConfigure: [BarViewConfigure] = []
             for input in coupleBars {
                 if self.configure.isShowLabel {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: self.configure.textColor, textAlignment: textAlignment), direction: self.configure.direction)
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: self.configure.textColor, textAlignment: textAlignment, syncIdentifier: .barTitleLabel), direction: self.configure.direction)
                     barViewsConfigure.append(barViewConfigure)
                 } else {
                     let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: false, direction: self.configure.direction)
@@ -203,23 +203,46 @@ class BarChartView: UIView {
         return min(bottomSpace, 20)
     }
     
-    private var labelViewSpace: CGFloat {
+    private var labelViewHeightSpace: CGFloat {
         let space = self.bounds.height / 10
         return min(space, 4)
     }
     
+    private var labelViewWidthSpace: CGFloat {
+        let space = self.bounds.width / 10
+        return min(space, 4)
+    }
+    
     private var leftSpace: CGFloat {
+        var space: CGFloat = 0
         if self.yUnitLabel != nil {
-            return self.leftViewWidth + self.labelViewSpace * 2 + self.leftUnitViewWidth
+            space += self.labelViewWidthSpace + self.leftUnitViewWidth
         }
-        return self.leftViewWidth + self.labelViewSpace
+        if !self.coupleTitleView.isEmpty && self.configure.direction == .leftToRight {
+            space += self.labelViewWidthSpace + self.leftViewWidth
+            return space
+        }
+        if !self.valueView.isEmpty && self.configure.direction == .bottomToTop {
+            space += self.labelViewWidthSpace + self.leftViewWidth
+            return space
+        }
+        return space
     }
     
     private var bottomSpace: CGFloat {
+        var space: CGFloat = 0
         if self.xUnitLabel != nil {
-            return self.bottomViewHeight + self.labelViewSpace * 2 + self.bottomUnitViewHeight
+            space += self.labelViewHeightSpace + self.bottomUnitViewHeight
         }
-        return self.bottomViewHeight + self.labelViewSpace
+        if !self.coupleTitleView.isEmpty && self.configure.direction == .bottomToTop {
+            space += self.labelViewHeightSpace + self.bottomViewHeight
+            return space
+        }
+        if !self.valueView.isEmpty && self.configure.direction == .leftToRight {
+            space += self.labelViewHeightSpace + self.bottomViewHeight
+            return space
+        }
+        return space
     }
     
     private func updateUnitLabelStaticConstraints() {
@@ -382,7 +405,7 @@ class BarChartView: UIView {
                 let yPoint = self.configure.yDividingPoints[index]
                 let pointY = axis.bounds.height * (1 - yPoint.location)
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
-                let center = CGPoint(x: endPoint.x - self.labelViewSpace - self.leftViewWidth / 2, y: endPoint.y)
+                let center = CGPoint(x: endPoint.x - self.labelViewWidthSpace - self.leftViewWidth / 2, y: endPoint.y)
                 var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count + 1)
                 labelHeight = min(labelHeight, 20)
                 let labelView = self.valueView[index]
@@ -401,7 +424,7 @@ class BarChartView: UIView {
                 let xPoint = self.configure.xDividingPoints[index].location
                 let pointX = axis.bounds.width * xPoint
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: self.bounds.origin.y + axis.bounds.height)
-                let center = CGPoint(x: endPoint.x, y: endPoint.y + self.labelViewSpace + self.bottomViewHeight / 2)
+                let center = CGPoint(x: endPoint.x, y: endPoint.y + self.labelViewHeightSpace + self.bottomViewHeight / 2)
                 var labelWidth = axis.bounds.width / CGFloat(self.configure.valueTitle.count + 1)
                 labelWidth = min(labelWidth, 20)
                 let labelView = self.valueView[index]
@@ -434,7 +457,7 @@ class BarChartView: UIView {
                     labelView.snp.updateConstraints{
                         make in
                         make.left.equalTo(axis.snp.left).offset(labelSpace / 2)
-                        make.top.equalTo(axis.snp.bottom).offset(self.labelViewSpace)
+                        make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
                         make.height.equalTo(self.bottomViewHeight)
                         make.width.equalTo(labelWidth - labelSpace)
                     }
@@ -444,7 +467,7 @@ class BarChartView: UIView {
                 labelView.snp.updateConstraints{
                     make in
                     make.left.equalTo(front.snp.right).offset(labelSpace)
-                    make.top.equalTo(axis.snp.bottom).offset(self.labelViewSpace)
+                    make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
                     make.height.equalTo(self.bottomViewHeight)
                     make.width.equalTo(labelWidth - labelSpace)
                 }
@@ -462,7 +485,7 @@ class BarChartView: UIView {
                 guard let front = frontView else {
                     labelView.snp.updateConstraints{
                         make in
-                        make.right.equalTo(axis.snp.left).offset(0 - self.labelViewSpace)
+                        make.right.equalTo(axis.snp.left).offset(0 - self.labelViewWidthSpace)
                         make.bottom.equalTo(axis.snp.bottom).offset(0 - labelSpace / 2)
                         make.height.equalTo(labelHeight - labelSpace)
                         make.width.equalTo(self.leftViewWidth)
@@ -472,7 +495,7 @@ class BarChartView: UIView {
                 }
                 labelView.snp.updateConstraints{
                     make in
-                    make.right.equalTo(axis.snp.left).offset(0 - self.labelViewSpace)
+                    make.right.equalTo(axis.snp.left).offset(0 - self.labelViewWidthSpace)
                     make.bottom.equalTo(front.snp.top).offset(0 - labelSpace)
                     make.height.equalTo(labelHeight - labelSpace)
                     make.width.equalTo(self.leftViewWidth)
