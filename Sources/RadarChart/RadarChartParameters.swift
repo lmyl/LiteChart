@@ -76,7 +76,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .radarLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -105,12 +105,12 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         
         var coupleTitlesConfigure: [DisplayLabelConfigure] = []
         for coupleTitle in self.coupleTitles {
-            let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: textColor)
+            let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: textColor, syncIdentifier: .radarCoupleTitleLabel)
             coupleTitlesConfigure.append(coupleTitleConfigure)
         }
         
-        let configure = RadarBackgroundViewConfigure(coupleTitlesConfigure: coupleTitlesConfigure, radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, vertexCount: pointCount, isShowCoupleTitles: self.isShowingCoupleTitles)
-        let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure)
+        let configure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, vertexCount: pointCount)
+        let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure, isShowCoupleTitles: self.isShowingCoupleTitles, coupleTitlesConfigure: coupleTitlesConfigure)
         return RadarChartView(configure: radarChartViewConfigure)
         
     }

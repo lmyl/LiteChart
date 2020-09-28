@@ -64,6 +64,7 @@
 		088A258B249A235700B533D3 /* LineViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258A249A235700B533D3 /* LineViewsConfigure.swift */; };
 		088A258D249A257300B533D3 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258C249A257300B533D3 /* LineChartView.swift */; };
 		088A258F249A25F600B533D3 /* LineChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */; };
+		08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5449525221C3700772F65 /* Notification+RadarView.swift */; };
 		08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756BE249DC23600BAEBC1 /* PointsView.swift */; };
 		08A756C1249DC25500BAEBC1 /* PointsViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */; };
 		08A756C3249DC2EC00BAEBC1 /* PointConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756C2249DC2EC00BAEBC1 /* PointConfigure.swift */; };
@@ -159,6 +160,7 @@
 		088A258A249A235700B533D3 /* LineViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewsConfigure.swift; sourceTree = "<group>"; };
 		088A258C249A257300B533D3 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewConfigure.swift; sourceTree = "<group>"; };
+		08A5449525221C3700772F65 /* Notification+RadarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+RadarView.swift"; sourceTree = "<group>"; };
 		08A756BE249DC23600BAEBC1 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewConfigure.swift; sourceTree = "<group>"; };
 		08A756C2249DC2EC00BAEBC1 /* PointConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointConfigure.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				08386C26248E521200D0E655 /* Notification+PieSectorView.swift */,
 				0876ADBA24FE18110089A34D /* Notification+SyncLabel.swift */,
+				08A5449525221C3700772F65 /* Notification+RadarView.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */,
 				087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */,
 				0876ADBB24FE18110089A34D /* Notification+SyncLabel.swift in Sources */,
+				08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
 				085CFE7924922D4C008E0E0E /* LiteChartViewBorderStyle.swift in Sources */,

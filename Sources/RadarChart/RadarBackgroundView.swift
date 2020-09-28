@@ -12,14 +12,12 @@ import SnapKit
 class RadarBackgroundView: UIView {
     private let configure: RadarBackgroundViewConfigure
     
-    private var coupleTitles: [DisplayLabel] = []
-    
-    private var radarDataViews: [RadarDataView] = []
+    let notificationInfoKey = "radarEndPoint"
     
     private var targetPoints: [CGPoint] = [] {
         didSet {
             if targetPoints != oldValue {
-                self.updateCoupleTitleDynamicConstraints(for: targetPoints)
+                NotificationCenter.default.post(name: .didComputeLabelLocationForRadar, object: self, userInfo: [notificationInfoKey: targetPoints])
             }
         }
     }
@@ -27,167 +25,65 @@ class RadarBackgroundView: UIView {
     init(configure: RadarBackgroundViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        self.backgroundColor = .clear
-        self.insertCoupleTitle()
     }
     
     required init?(coder: NSCoder) {
         self.configure = RadarBackgroundViewConfigure.emptyConfigure
         super.init(coder: coder)
-        self.backgroundColor = .clear
-        self.insertCoupleTitle()
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updataRadarDataViewDynamicConstraints()
         
-        setNeedsDisplay()
-    }
-    
-    private var coupleTitleWidth: CGFloat {
-        let width = self.bounds.width / 10
-        return min(width, 40)
-    }
-    
-    private var coupleTitleHeight: CGFloat {
-        let height = self.bounds.height / 20
-        return min(height, 20)
+        layer.setNeedsDisplay()
     }
     
     private var angleOfPoints: [Double] {
-        var angles = [Double]()
-        for index in 0 ..< self.configure.vertexCount {
-            let angle = 360 / Double(self.configure.vertexCount) * Double(index) - 90
-            angles.append(angle)
-        }
-        return angles
+        self.configure.angleOfPoints
     }
     
-    private func insertCoupleTitle() {
-        for label in self.configure.coupleTitlesConfigure {
-            let title = DisplayLabel(configure: label)
-            self.addSubview(title)
-            self.coupleTitles.append(title)
-        }
-    }
-    
-    func insertRadarDataViews(for configures: [RadarDataViewConfigure]) {
-        for configure in configures {
-            let radarDataView = RadarDataView(configure: configure)
-            self.addSubview(radarDataView)
-            self.radarDataViews.append(radarDataView)
+    override func display(_ layer: CALayer) {
+        LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
+            let rect = layer.bounds
+            let context = UIGraphicsGetCurrentContext()
+            context?.saveGState()
+            context?.setAllowsAntialiasing(true)
+            context?.setShouldAntialias(true)
+            context?.setStrokeColor(self.configure.radarLineColor.color.cgColor)
+            context?.setLineCap(.round)
+            context?.setLineJoin(.round)
+            context?.setLineWidth(1)
             
-            self.updataRadarDataViewStaticConstraints(for: radarDataView)
-        }
-    }
-    
-    private func updataRadarDataViewStaticConstraints(for radarDataView: UIView) {
-        radarDataView.snp.remakeConstraints{
-            make in
-            make.center.equalToSuperview()
-            make.width.equalTo(0)
-            make.height.equalTo(0)
-        }
-    }
-    
-    private func updataRadarDataViewDynamicConstraints() {
-        var width: CGFloat
-        var height: CGFloat
-        if self.configure.isShowCoupleTitles {
-            width = self.bounds.width - 2 * coupleTitleWidth
-            height = self.bounds.height - 2 * coupleTitleHeight
-        } else {
-            width = self.bounds.width
-            height = self.bounds.height
-        }
-        
-        for radarDataView in radarDataViews {
-            radarDataView.snp.updateConstraints{
-                make in
-                make.width.equalTo(width)
-                make.height.equalTo(height)
+            let radius = min(rect.width, rect.height) / 2
+            let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
+            let vertexs = self.computeVertexsLocation(for: center, radius: Double(radius), radarLayerCount: self.configure.radarLayerCount)
+            
+            for index in (0 ..< self.configure.radarLayerCount).reversed() {
+                context?.addLines(between: vertexs[index])
+                context?.closePath()
+                if index % 2 == 0 {
+                    context?.setFillColor(self.configure.radarLightColor.color.cgColor)
+                } else {
+                    context?.setFillColor(self.configure.radarUnlightColor.color.cgColor)
+                }
+                context?.drawPath(using: .fillStroke)
+            }
+            if let lastVertexs = vertexs.last {
+                for index in 0 ..< lastVertexs.count {
+                    context?.addLines(between: [center, lastVertexs[index]])
+                }
+                context?.drawPath(using: .stroke)
+            }
+            self.convertLocationIntoTarget(locationPoints: vertexs)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            context?.restoreGState()
+            UIGraphicsEndImageContext()
+            LiteChartDispatchQueue.asyncDrawDoneQueue.async {
+                layer.contents = image?.cgImage
             }
         }
-    }
-    
-    private func updateCoupleTitleDynamicConstraints(for endPoints: [CGPoint]) {
-        guard self.configure.isShowCoupleTitles else {
-            return
-        }
-        guard self.coupleTitles.count >= 3, self.angleOfPoints.count == endPoints.count, endPoints.count == self.coupleTitles.count else {
-            return
-        }
-        let coupleTitles = self.coupleTitles
-        let angleOfPoints = self.angleOfPoints
-        for (index, coupleTitleView) in coupleTitles.enumerated() {
-            var center = CGPoint.zero
-            if angleOfPoints[index] == -90 {
-                let centerY = endPoints[index].y - coupleTitleHeight / 2
-                let centerX = endPoints[index].x
-                center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] == 90 {
-                let centerY = endPoints[index].y + coupleTitleHeight / 2
-                let centerX = endPoints[index].x
-                center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] > 90 {
-                let centerY = endPoints[index].y
-                let centerX = endPoints[index].x - coupleTitleWidth / 2
-                center = CGPoint(x: centerX, y: centerY)
-            } else {
-                let centerY = endPoints[index].y
-                let centerX = endPoints[index].x + coupleTitleWidth / 2
-                center = CGPoint(x: centerX, y: centerY)
-            }
-
-            coupleTitleView.snp.updateConstraints{
-                make in
-                make.height.equalTo(coupleTitleHeight)
-                make.width.equalTo(coupleTitleWidth)
-                make.center.equalTo(center)
-            }
-            coupleTitleView.layoutIfNeeded()
-        }
-    }
-    
-    override func draw(_ rect: CGRect) { // 需要精简
-        let context = UIGraphicsGetCurrentContext()
-        context?.setAllowsAntialiasing(true)
-        context?.setShouldAntialias(true)
-        context?.setStrokeColor(self.configure.radarLineColor.color.cgColor)
-        context?.setLineCap(.round)
-        context?.setLineJoin(.round)
-        context?.setLineWidth(1)
-        
-        let radius: CGFloat
-        if self.configure.isShowCoupleTitles {
-            let tempWidth = rect.width - 2 * coupleTitleWidth
-            let tempHeight = rect.height - 2 * coupleTitleHeight
-            radius = min(tempWidth, tempHeight) / 2
-        } else {
-            radius = min(rect.width, rect.height) / 2
-        }
-        let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
-        let vertexs = computeVertexsLocation(for: center, radius: Double(radius), radarLayerCount: self.configure.radarLayerCount)
-        
-        for index in (0 ..< self.configure.radarLayerCount).reversed() {
-            context?.addLines(between: vertexs[index])
-            context?.closePath()
-            if index % 2 == 0{
-                context?.setFillColor(self.configure.radarLightColor.color.cgColor)
-            } else {
-                context?.setFillColor(self.configure.radarUnlightColor.color.cgColor)
-            }
-            context?.drawPath(using: .fillStroke)
-        }
-        if let lastVertexs = vertexs.last {
-            for index in 0 ..< lastVertexs.count {
-                context?.addLines(between: [center, lastVertexs[index]])
-            }
-            context?.drawPath(using: .stroke)
-        }
-        convertLocationIntoTarget(locationPoints: vertexs)
     }
     
     private func computeVertexsLocation(for centerPoint: CGPoint, radius: Double, radarLayerCount: Int) -> [[CGPoint]] {

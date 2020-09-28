@@ -51,7 +51,7 @@ class PieView: UIView {
         let sectorView = PieSectorView(configure: self.configure.pieSectorViewConfigure)
         self.sectorView = sectorView
         self.addSubview(sectorView)
-        self.notificationToken = NotificationCenter.default.addObserver(forName: .didComputeLabelLocation, object: self.sectorView, queue: nil){
+        self.notificationToken = NotificationCenter.default.addObserver(forName: .didComputeLabelLocationForPie, object: self.sectorView, queue: .main){
             [weak self] notification in
             guard let strongSelf = self else {
                 return

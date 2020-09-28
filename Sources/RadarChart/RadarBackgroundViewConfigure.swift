@@ -9,24 +9,29 @@
 import Foundation
 
 struct RadarBackgroundViewConfigure {
-    let coupleTitlesConfigure: [DisplayLabelConfigure]
     let radarLineColor: LiteChartDarkLightColor
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
     let radarLayerCount: Int
     let vertexCount: Int
-    let isShowCoupleTitles: Bool
+    
+    var angleOfPoints: [Double] {
+        var angles = [Double]()
+        for index in 0 ..< self.vertexCount {
+            let angle = 360 / Double(self.vertexCount) * Double(index) - 90
+            angles.append(angle)
+        }
+        return angles
+    }
 }
 
 extension RadarBackgroundViewConfigure {
     private init() {
-        self.coupleTitlesConfigure = []
         self.radarLineColor = .init(lightUIColor: .gray, darkUIColor: .white)
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
         self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)
         self.radarLayerCount = 1
         self.vertexCount = 3
-        self.isShowCoupleTitles = false
     }
     
     static let emptyConfigure = RadarBackgroundViewConfigure()

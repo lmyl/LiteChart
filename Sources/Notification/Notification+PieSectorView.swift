@@ -9,5 +9,5 @@
 import Foundation
 
 extension NSNotification.Name {
-    static let didComputeLabelLocation = NSNotification.Name.init("LiteChartDidComputeLabelLocationForPie")
+    static let didComputeLabelLocationForPie = NSNotification.Name.init("LiteChartDidComputeLabelLocationForPie")
 }

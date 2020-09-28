@@ -16,9 +16,7 @@ class PieSectorView: UIView {
     private var polylineLineEndPoint: CGPoint? {
         didSet {
             if oldValue != polylineLineEndPoint, let point = polylineLineEndPoint {
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: .didComputeLabelLocation, object: self, userInfo: [self.notificationInfoKey: point])
-                }
+                NotificationCenter.default.post(name: .didComputeLabelLocationForPie, object: self, userInfo: [self.notificationInfoKey: point])
             }
         }
     }

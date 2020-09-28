@@ -14,49 +14,59 @@ class RadarDataView: UIView {
     init(configure: RadarDataViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         self.configure = RadarDataViewConfigure.emptyConfigure
         super.init(coder: coder)
-        self.backgroundColor = .clear
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        setNeedsDisplay()
+        layer.setNeedsDisplay()
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        let edeges = self.configure.points.count
-        guard edeges >= 3 else {
-            return
+    override func display(_ layer: CALayer) {
+        LiteChartDispatchQueue.asyncDrawQueue.async {
+            layer.contentsScale = UIScreen.main.scale
+            UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
+            let edeges = self.configure.points.count
+            guard edeges >= 3 else {
+                return
+            }
+            let rect = layer.bounds
+            let context = UIGraphicsGetCurrentContext()
+            context?.saveGState()
+            context?.setAllowsAntialiasing(true)
+            context?.setShouldAntialias(true)
+            
+            context?.setLineCap(.round)
+            context?.setLineJoin(.round)
+            context?.setLineWidth(1)
+            context?.setStrokeColor(self.configure.color.color.cgColor)
+            
+            let radius = min(rect.width, rect.height) / 2
+            let centerX = rect.origin.x + rect.width / 2
+            let centerY = rect.origin.y + rect.height / 2
+            let center = CGPoint(x: centerX, y: centerY)
+            let points = self.computeVertexLocation(for: center, radius: radius, points: self.configure.points)
+            
+            context?.addLines(between: points)
+            context?.closePath()
+            let color = self.configure.color.color.withAlphaComponent(0.5)
+            context?.setFillColor(color.cgColor)
+            
+            context?.drawPath(using: .fillStroke)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            context?.restoreGState()
+            UIGraphicsEndImageContext()
+            
+            LiteChartDispatchQueue.asyncDrawDoneQueue.async {
+                layer.contents = image?.cgImage
+            }
         }
-        
-        let context = UIGraphicsGetCurrentContext()
-        context?.setAllowsAntialiasing(true)
-        context?.setShouldAntialias(true)
-        
-        context?.setLineCap(.round)
-        context?.setLineJoin(.round)
-        context?.setLineWidth(1)
-        context?.setStrokeColor(self.configure.color.color.cgColor)
-        
-        let radius = min(self.bounds.width, self.bounds.height) / 2
-        let centerX = self.bounds.origin.x + self.bounds.width / 2
-        let centerY = self.bounds.origin.y + self.bounds.height / 2
-        let center = CGPoint(x: centerX, y: centerY)
-        let points = self.computeVertexLocation(for: center, radius: radius, points: self.configure.points)
-        
-        context?.addLines(between: points)
-        context?.closePath()
-        let color = self.configure.color.color.withAlphaComponent(0.5)
-        context?.setFillColor(color.cgColor)
-        
-        context?.drawPath(using: .fillStroke)
     }
     
     private func computeRadian(for angle: CGFloat) -> CGFloat {

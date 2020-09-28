@@ -18,7 +18,6 @@ class LineView: UIView {
     init(configure: LineViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        self.backgroundColor = .clear
         insertLabel()
         insertLegend()
     }
@@ -26,7 +25,6 @@ class LineView: UIView {
     required init?(coder: NSCoder) {
         self.configure = LineViewConfigure.emptyConfigure
         super.init(coder: coder)
-        self.backgroundColor = .clear
         insertLabel()
         insertLegend()
     }
