@@ -28,6 +28,8 @@ struct LineChartViewConfigure {
     
     let axisColor: LiteChartDarkLightColor
     
+    let isShowAxis: Bool
+    
     let xDividingPoints: [AxisDividingLineConfigure]
     
     let yDividingPoints: [AxisDividingLineConfigure]
@@ -59,6 +61,7 @@ extension LineChartViewConfigure {
         self.isShowCoupleUnitString = false
         self.axisOriginal = .zero
         self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
+        self.isShowAxis = false
     }
     
     static let emptyConfigure = LineChartViewConfigure()

@@ -60,8 +60,8 @@ class LineView: UIView {
     }
     
     private func updateLabelsDynamicConstraints() {
-        var labelWidth = self.bounds.width / CGFloat(self.labels.count * 4)
-        var labelHeight = self.bounds.height / 20
+        var labelWidth = self.bounds.width / CGFloat(self.labels.count + 1)
+        var labelHeight = self.bounds.height / 10
         var space = labelHeight
         labelWidth = min(labelWidth, 40)
         labelHeight = min(labelHeight, 20)

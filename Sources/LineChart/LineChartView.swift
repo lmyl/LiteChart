@@ -96,7 +96,7 @@ class LineChartView: UIView {
         case .fullySurrounded:
             borderStlye = [.left, .bottom, .right, .top]
         }
-        let axisView = AxisView(configure: .init(originPoint: self.configure.axisOriginal, axisColor: self.configure.axisColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: true, isShowYAxis: false))
+        let axisView = AxisView(configure: .init(originPoint: self.configure.axisOriginal, axisColor: self.configure.axisColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: self.configure.isShowAxis, isShowYAxis: false))
         self.addSubview(axisView)
         self.axisView = axisView
     }
