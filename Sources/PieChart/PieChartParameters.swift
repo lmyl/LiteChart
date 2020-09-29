@@ -93,7 +93,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
                 pieViewsConfigure.append(pieViewConfigure)
             } else {
                 let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, syncIdentifier: .pieTitleLabel)
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure)
+                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure, lineColor: textColor)
                 pieViewsConfigure.append(pieViewConfigure)
             }
         }
