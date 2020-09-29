@@ -18,8 +18,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var configure = LiteChartViewParameters(inputDatas: .pie(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))]))
-//        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["Water", "Electoric", "Gas", "Apple"]))
+//        var configure = LiteChartViewParameters(inputDatas: .pie(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))]))
+        var configure = LiteChartViewParameters(inputDatas: .bar(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["Water", "Electoric", "Gas", "Apple"]))
 //        var configure = LiteChartViewParameters(inputDatas: .line(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"]))
 //        let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: .yellow), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
 //        let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         configure.displayDataMode = .original
         configure.isShowValueDividingLine = true
         configure.isShowCoupleDividingLine = true
-        configure.borderStyle = .fullySurrounded
+        configure.borderStyle = .halfSurrounded
         configure.barDirection = .bottomToTop
         configure.displayDataMode = .original
         configure.axisColor = .init(lightUIColor: .yellow)

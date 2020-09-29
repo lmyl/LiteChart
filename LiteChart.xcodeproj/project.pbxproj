@@ -74,7 +74,8 @@
 		08A756CB249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756CA249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift */; };
 		08A756CD249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756CC249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift */; };
 		08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */; };
-		08F2ACCD25230CF0009D9D55 /* AxisViewBorderLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2ACCC25230CF0009D9D55 /* AxisViewBorderLayerDelegate.swift */; };
+		08F2ACCD25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2ACCC25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift */; };
+		08F2ACD0252319F4009D9D55 /* AxisViewContentLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2ACCF252319F3009D9D55 /* AxisViewContentLayerDelegate.swift */; };
 		08F56E5E248B52F4000998F8 /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5D248B52F4000998F8 /* Legend.swift */; };
 		08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E5F248B532F000998F8 /* SquareLegend.swift */; };
 		08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E61248B534B000998F8 /* LegendConfigure.swift */; };
@@ -171,7 +172,8 @@
 		08A756CA249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotChartViewConfigure.swift; sourceTree = "<group>"; };
 		08A756CC249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScatterPlotChartParameters.swift; sourceTree = "<group>"; };
 		08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartTitleDisplayLocation.swift; sourceTree = "<group>"; };
-		08F2ACCC25230CF0009D9D55 /* AxisViewBorderLayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisViewBorderLayerDelegate.swift; sourceTree = "<group>"; };
+		08F2ACCC25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisViewBorderMaskLayerDelegate.swift; sourceTree = "<group>"; };
+		08F2ACCF252319F3009D9D55 /* AxisViewContentLayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewContentLayerDelegate.swift; sourceTree = "<group>"; };
 		08F56E5D248B52F4000998F8 /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 		08F56E5F248B532F000998F8 /* SquareLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareLegend.swift; sourceTree = "<group>"; };
 		08F56E61248B534B000998F8 /* LegendConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendConfigure.swift; sourceTree = "<group>"; };
@@ -360,7 +362,8 @@
 				083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */,
 				083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */,
 				083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */,
-				08F2ACCC25230CF0009D9D55 /* AxisViewBorderLayerDelegate.swift */,
+				08F2ACCC25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift */,
+				08F2ACCF252319F3009D9D55 /* AxisViewContentLayerDelegate.swift */,
 			);
 			path = Axis;
 			sourceTree = "<group>";
@@ -611,7 +614,7 @@
 				F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */,
 				087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */,
 				0876ADBB24FE18110089A34D /* Notification+SyncLabel.swift in Sources */,
-				08F2ACCD25230CF0009D9D55 /* AxisViewBorderLayerDelegate.swift in Sources */,
+				08F2ACCD25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift in Sources */,
 				08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
@@ -646,6 +649,7 @@
 				08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */,
 				08A756C9249DDC9E00BAEBC1 /* PlotChartView.swift in Sources */,
 				08FF1A0E2491D67300AE05F9 /* BarView.swift in Sources */,
+				08F2ACD0252319F4009D9D55 /* AxisViewContentLayerDelegate.swift in Sources */,
 				F501A68E24A235BB007FD6DF /* RadarChartParameters.swift in Sources */,
 				08386C22248E236A00D0E655 /* PieView.swift in Sources */,
 				088A258F249A25F600B533D3 /* LineChartViewConfigure.swift in Sources */,

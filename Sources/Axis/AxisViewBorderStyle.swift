@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AxisViewBorderStyle {
+enum AxisViewBorderStyle: CaseIterable {
     case top
     case left
     case right
