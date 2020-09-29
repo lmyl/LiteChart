@@ -33,6 +33,7 @@ class AxisViewContentLayerDelegate: NSObject, CALayerDelegate {
     }
     
     func display(_ layer: CALayer) {
+        layer.contents = nil
         LiteChartDispatchQueue.asyncDrawQueue.async {
             layer.contentsScale = UIScreen.main.scale
             if let superlayer = layer.superlayer {
