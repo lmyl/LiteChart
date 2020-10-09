@@ -16,19 +16,16 @@ struct PieViewConfigure {
     
     let pieSectorViewConfigure: PieSectorViewConfigure
     
-    var isShowLabel: Bool
+    let isShowLabel: Bool
     
     var isLeftSector: Bool {
         self.pieSectorViewConfigure.isLeftSector
     }
     
-    init(startAngle: CGFloat, endAngle: CGFloat, backgroundColor: LiteChartDarkLightColor, isShowLable: Bool, textConfigure: DisplayLabelConfigure = .emptyConfigure, lineColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white)) {
-        self.pieSectorViewConfigure = PieSectorViewConfigure(startAngle: startAngle, endAngle: endAngle, backgroundColor: backgroundColor, isShowLine: isShowLable, lineColor: lineColor)
-        let alignment: NSTextAlignment = self.pieSectorViewConfigure.isLeftSector ? .right : .left
-        var text = textConfigure
-        text.textAlignment = alignment
-        self.displayTextConfigure = text
-        self.isShowLabel = isShowLable
+    init(isShowLabel: Bool, pieSectorViewConfigure: PieSectorViewConfigure, displayTextConfigure: DisplayLabelConfigure = .emptyConfigure) {
+        self.isShowLabel = isShowLabel
+        self.displayTextConfigure = displayTextConfigure
+        self.pieSectorViewConfigure = pieSectorViewConfigure
     }
     
     private init() {

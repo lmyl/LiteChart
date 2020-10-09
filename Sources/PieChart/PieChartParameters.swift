@@ -87,11 +87,14 @@ extension PieChartParameters: LiteChartParametersProcesser {
         
         for index in 0 ..< self.inputDatas.count {
             if self.displayDataMode == .none {
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: false)
+                let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: false, lineColor: self.inputDatas[index].1)
+                let pieViewConfigure = PieViewConfigure(isShowLabel: false, pieSectorViewConfigure: pieSectorViewConfigure)
                 pieViewsConfigure.append(pieViewConfigure)
             } else {
-                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, syncIdentifier: .pieTitleLabel)
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure, lineColor: self.inputDatas[index].1)
+                let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: true, lineColor: self.inputDatas[index].1)
+                let alignment: NSTextAlignment = pieSectorViewConfigure.isLeftSector ? .right : .left
+                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, textAlignment: alignment, syncIdentifier: .pieTitleLabel)
+                let pieViewConfigure = PieViewConfigure(isShowLabel: true, pieSectorViewConfigure: pieSectorViewConfigure, displayTextConfigure: labelConfigure)
                 pieViewsConfigure.append(pieViewConfigure)
             }
         }
