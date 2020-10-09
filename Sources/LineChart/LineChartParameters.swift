@@ -14,27 +14,29 @@ struct LineChartParameters {
     
     var borderColor: LiteChartDarkLightColor
     
-    var textColor: LiteChartDarkLightColor
+    var displayDataMode: ChartValueDisplayMode
+    
+    var inputLegendTitles: [String] // 图例显示
     
     var inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])]
     
+    var valueTextColor: LiteChartDarkLightColor
+    
     var coupleTitles: [String]
     
-    var inputLegendTitles: [String] // 图例显示
+    var coupleTextColor: LiteChartDarkLightColor
         
-    var displayDataMode: ChartValueDisplayMode
+    var isShowValueDividingLine: Bool
     
     var dividingValueLineStyle: AxisViewLineStyle
     
     var dividingValueLineColor: LiteChartDarkLightColor
     
+    var isShowCoupleDividingLine: Bool
+    
     var dividingCoupleLineStyle: AxisViewLineStyle
     
     var dividingCoupleLineColor: LiteChartDarkLightColor
-    
-    var isShowValueDividingLine: Bool
-    
-    var isShowCoupleDividingLine: Bool
     
     var isShowValueUnitString: Bool
     
@@ -44,31 +46,58 @@ struct LineChartParameters {
     
     var coupleUnitString: String
     
+    var valueUnitTextColor: LiteChartDarkLightColor
+    
+    var coupleUnitTextColor: LiteChartDarkLightColor
+    
     var axisColor: LiteChartDarkLightColor
     
     var isShowAxis: Bool
     
-    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])], coupleTitles: [String], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor, isShowAxis: Bool) {
+    init(borderStyle: LiteChartViewBorderStyle,
+         borderColor: LiteChartDarkLightColor,
+         displayDataMode: ChartValueDisplayMode,
+         inputLegendTitles: [String],
+         inputDatas: [(LiteChartDarkLightColor, LineStyle, Legend , [Double])],
+         valueTextColor: LiteChartDarkLightColor,
+         coupleTitles: [String],
+         coupleTextColor: LiteChartDarkLightColor,
+         isShowValueDividingLine: Bool,
+         dividingValueLineStyle: AxisViewLineStyle,
+         dividingValueLineColor: LiteChartDarkLightColor,
+         isShowCoupleDividingLine: Bool,
+         dividingCoupleLineStyle: AxisViewLineStyle,
+         dividingCoupleLineColor: LiteChartDarkLightColor,
+         isShowValueUnitString: Bool,
+         valueUnitString: String,
+         valueUnitTextColor: LiteChartDarkLightColor,
+         isShowCoupleUnitString: Bool,
+         coupleUnitString: String,
+         coupleUnitTextColor: LiteChartDarkLightColor,
+         axisColor: LiteChartDarkLightColor,
+         isShowAxis: Bool) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
-        self.inputDatas = inputDatas
-        self.textColor = textColor
-        self.coupleTitles = coupleTitles
-        self.inputLegendTitles = inputLegendTitles
         self.displayDataMode = displayDataMode
+        self.inputLegendTitles = inputLegendTitles
+        self.inputDatas = inputDatas
+        self.valueTextColor = valueTextColor
+        self.coupleTitles = coupleTitles
+        self.coupleTextColor = coupleTextColor
+        self.isShowValueDividingLine = isShowValueDividingLine
         self.dividingValueLineColor = dividingValueLineColor
         self.dividingValueLineStyle = dividingValueLineStyle
+        self.isShowCoupleDividingLine = isShowCoupleDividingLine
         self.dividingCoupleLineColor = dividingCoupleLineColor
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
-        self.isShowValueDividingLine = isShowValueDividingLine
-        self.isShowCoupleDividingLine = isShowCoupleDividingLine
         self.isShowCoupleUnitString = isShowCoupleUnitString
-        self.isShowValueUnitString = isShowValueUnitString
         self.valueUnitString = valueUnitString
+        self.valueUnitTextColor = valueUnitTextColor
+        self.isShowValueUnitString = isShowValueUnitString
         self.coupleUnitString = coupleUnitString
+        self.coupleUnitTextColor = coupleUnitTextColor
         self.axisColor = axisColor
         self.isShowAxis = isShowAxis
-        
     }
 }
 
@@ -97,7 +126,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = self.inputDatas[index].2
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .lineLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .lineLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -174,8 +203,38 @@ extension LineChartParameters: LiteChartParametersProcesser {
         let axisOriginal = self.computeOriginalValueForAxis(valueForAxis.axisValue)
         let isShowLabel = self.displayDataMode == .original
         
-        let lineChartViewConfigure = LineChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, isShowAxis: self.isShowAxis, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
-        return LineChartView(configure: lineChartViewConfigure)
+        let valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .lineUnitTitleLabel)
+        let coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, textAlignment: .center, textDirection: .horizontal, syncIdentifier: .lineUnitTitleLabel)
+        
+        var coupleTitleConfigures: [DisplayLabelConfigure] = []
+        for title in coupleTitleString {
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: .lineCoupleTitleLabel)
+            coupleTitleConfigures.append(configure)
+        }
+        
+        var valueTitleConfigures: [DisplayLabelConfigure] = []
+        for title in valuesString {
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: .lineValueTitleLabel)
+            valueTitleConfigures.append(configure)
+        }
+        
+        let borderStlye = self.borderStyle.convertToAxisBorderStyle()
+        let axisConfigure = AxisViewConfigure(originPoint: axisOriginal, axisColor: self.axisColor, verticalDividingPoints: valueDividingLineConfigure, horizontalDividingPoints: coupleDividingLineConfigure, borderStyle: borderStlye, borderColor: self.borderColor, isShowXAxis: self.isShowAxis, isShowYAxis: false)
+        
+        var lineConfigures: [LineViewConfigure] = []
+        for inputData in inputDatas {
+            let titleStringConfigure = inputData.3.map{
+                DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0, syncIdentifier: .lineTitleLabel)
+            }
+            let points = inputData.3.map{
+                $0.1
+            }
+            let lineConfigure = LineViewConfigure(points: points, legendConfigure: .init(type: inputData.2, color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: isShowLabel)
+            lineConfigures.append(lineConfigure)
+        }
+        let lineViewsConfigure = LineViewsConfigure(models: lineConfigures)
+        let lineChartConfigure = LineChartViewConfigure(isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, axisConfigure: axisConfigure, valueUnitStringConfigure: valueUnitStringConfigure, coupleUnitStringConfigure: coupleUnitStringConfigure, coupleTitleConfigure: coupleTitleConfigures, valueTitleConfigure: valueTitleConfigures, lineViewsConfigure: lineViewsConfigure)
+        return LineChartView(configure: lineChartConfigure)
     }
     
     

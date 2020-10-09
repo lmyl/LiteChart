@@ -80,6 +80,7 @@
 		08A756C9249DDC9E00BAEBC1 /* PlotChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756C8249DDC9E00BAEBC1 /* PlotChartView.swift */; };
 		08A756CB249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756CA249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift */; };
 		08A756CD249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756CC249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift */; };
+		08C99DE42530A22700B56F1B /* LiteChartLineChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C99DE32530A22700B56F1B /* LiteChartLineChartInterface.swift */; };
 		08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */; };
 		08F2ACCD25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2ACCC25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift */; };
 		08F2ACD0252319F4009D9D55 /* AxisViewContentLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2ACCF252319F3009D9D55 /* AxisViewContentLayerDelegate.swift */; };
@@ -185,6 +186,7 @@
 		08A756C8249DDC9E00BAEBC1 /* PlotChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotChartView.swift; sourceTree = "<group>"; };
 		08A756CA249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotChartViewConfigure.swift; sourceTree = "<group>"; };
 		08A756CC249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScatterPlotChartParameters.swift; sourceTree = "<group>"; };
+		08C99DE32530A22700B56F1B /* LiteChartLineChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartLineChartInterface.swift; sourceTree = "<group>"; };
 		08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartTitleDisplayLocation.swift; sourceTree = "<group>"; };
 		08F2ACCC25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisViewBorderMaskLayerDelegate.swift; sourceTree = "<group>"; };
 		08F2ACCF252319F3009D9D55 /* AxisViewContentLayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewContentLayerDelegate.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				089804D225300FBC001CCC19 /* LiteChartInterface.swift */,
 				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
 				089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */,
+				08C99DE32530A22700B56F1B /* LiteChartLineChartInterface.swift */,
 				089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */,
 				089804E225303993001CCC19 /* LiteChartPieChartInterface.swift */,
 				089804E525304763001CCC19 /* LiteChartFunnelChartInterface.swift */,
@@ -654,6 +657,7 @@
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				0839B64324FBC1C700E59F6B /* LiteChartDispatchQueue.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
+				08C99DE42530A22700B56F1B /* LiteChartLineChartInterface.swift in Sources */,
 				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */,
 				082E7BEF24A0C93B00FF1F8B /* RadarBackgroundViewConfigure.swift in Sources */,

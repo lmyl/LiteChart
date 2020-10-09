@@ -41,7 +41,7 @@ class ViewController: UIViewController {
 //        configure.radarCoupleTitles = ["电", "水", "煤气", "天然气", "Apple"]
 //        configure.isShowRadarCoupleTitles = true
 //        configure.isShowAxis = false
-       
+       /*
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["Water", "Electoric", "Gas", "Apple"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
@@ -51,16 +51,29 @@ class ViewController: UIViewController {
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .leftToRight
- 
-        /*
+ */
+        
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
         pieInterface.displayDataMode = .original
- */
+ 
         /*
         var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (50, .init(lightUIColor: .purple)), (20, .init(lightUIColor: .blue))])
         funnelInterface.inputLegendTitles = ["2019", "2020", "2021"]*/
-        var interface = LiteChartViewInterface(contentInterface: barInterface)
+        /*var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
+        lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
+        lineInterface.underlayerColor = .init(lightColor: .blue)
+        lineInterface.unitTextColor = .init(lightColor: .gold)
+        lineInterface.valueUnitString = "kg/L"
+        lineInterface.coupleUnitString = "月/年"
+        lineInterface.isShowValueUnitString = true
+        lineInterface.isShowCoupleUnitString = true
+        lineInterface.isShowValueDividingLine = true
+        lineInterface.isShowCoupleDividingLine = true
+        lineInterface.dividingValueLineStyle = .segment
+        lineInterface.dividingCoupleLineStyle = .segment*/
+        
+        var interface = LiteChartViewInterface(contentInterface: pieInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"

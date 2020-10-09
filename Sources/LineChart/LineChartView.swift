@@ -58,14 +58,14 @@ class LineChartView: UIView {
         var unitLabel: DisplayLabel
         
         if self.configure.isShowValueUnitString  {
-            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .lineUnitTitleLabel))
+            unitLabel = DisplayLabel(configure: self.configure.valueUnitStringConfigure)
             self.yUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
         
         
         if self.configure.isShowCoupleUnitString {
-            unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, syncIdentifier: .lineUnitTitleLabel))
+            unitLabel = DisplayLabel(configure: self.configure.coupleUnitStringConfigure)
             self.xUnitLabel = unitLabel
             self.addSubview(unitLabel)
         }
@@ -73,30 +73,23 @@ class LineChartView: UIView {
     }
     
     private func insertCoupleTitleView() {
-        for title in self.configure.coupleTitle {
-            let titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, syncIdentifier: .lineCoupleTitleLabel))
+        for configure in self.configure.coupleTitleConfigure {
+            let titleView = DisplayLabel(configure: configure)
             self.addSubview(titleView)
             self.coupleTitleView.append(titleView)
         }
     }
     
     private func insertValueTitleView() {
-        for value in self.configure.valueTitle {
-            let valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .lineValueTitleLabel))
+        for configure in self.configure.valueTitleConfigure {
+            let valueView = DisplayLabel(configure: configure)
             self.addSubview(valueView)
             self.valueView.append(valueView)
         }
     }
     
     private func insertAxisView() {
-        let borderStlye: [AxisViewBorderStyle]
-        switch self.configure.borderStyle {
-        case .halfSurrounded:
-            borderStlye = [.left, .bottom]
-        case .fullySurrounded:
-            borderStlye = [.left, .bottom, .right, .top]
-        }
-        let axisView = AxisView(configure: .init(originPoint: self.configure.axisOriginal, axisColor: self.configure.axisColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: self.configure.isShowAxis, isShowYAxis: false))
+        let axisView = AxisView(configure: self.configure.axisConfigure)
         self.addSubview(axisView)
         self.axisView = axisView
     }
@@ -105,34 +98,7 @@ class LineChartView: UIView {
         guard let axis = self.axisView else {
             return
         }
-        
-        let inputDatas = self.configure.inputDatas
-        
-        guard !inputDatas.isEmpty else {
-            return
-        }
-        
-        if inputDatas.count >= 2 {
-            let firstDatasCount = inputDatas[0].3.count
-            for inputData in inputDatas {
-                if inputData.3.count != firstDatasCount {
-                    fatalError("框架内部数据处理错误，不给予拯救!")
-                }
-            }
-        }
-        
-        var configures: [LineViewConfigure] = []
-        for inputData in inputDatas {
-            let titleStringConfigure = inputData.3.map{
-                DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0, syncIdentifier: .lineTitleLabel)
-            }
-            let points = inputData.3.map{
-                $0.1
-            }
-            let lineConfigure = LineViewConfigure(points: points, legendConfigure: .init(type: inputData.2, color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: self.configure.isShowLabel)
-            configures.append(lineConfigure)
-        }
-        let lineViews = LineViews(configure: .init(models: configures))
+        let lineViews = LineViews(configure: self.configure.lineViewsConfigure)
         axis.addSubview(lineViews)
         self.lineViews = lineViews
     }
@@ -251,7 +217,7 @@ class LineChartView: UIView {
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
@@ -262,7 +228,7 @@ class LineChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
@@ -281,15 +247,15 @@ class LineChartView: UIView {
         guard let axis = self.axisView else {
             return
         }
-        guard self.configure.yDividingPoints.count == self.configure.valueTitle.count,  self.configure.valueTitle.count == self.valueView.count else {
+        guard self.configure.yDividingPoints.count == self.configure.valueTitleConfigure.count,  self.configure.valueTitleConfigure.count == self.valueView.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }
-        for index in 0 ..< self.configure.valueTitle.count {
+        for index in 0 ..< self.configure.valueTitleConfigure.count {
             let yPoint = self.configure.yDividingPoints[index]
-            let pointY = axis.bounds.height * (1 - yPoint.location)
+            let pointY = axis.bounds.height * (1 - yPoint)
             let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
             let center = CGPoint(x: endPoint.x - self.labelViewWidthSpace - self.leftViewWidth / 2, y: endPoint.y)
-            var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count + 1)
+            var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitleConfigure.count + 1)
             labelHeight = min(labelHeight, 20)
             let labelView = self.valueView[index]
             labelView.snp.updateConstraints{
@@ -306,15 +272,15 @@ class LineChartView: UIView {
             return
         }
         
-        guard self.configure.coupleTitle.count == self.configure.xDividingPoints.count, self.configure.coupleTitle.count == self.coupleTitleView.count else {
+        guard self.configure.coupleTitleConfigure.count == self.configure.xDividingPoints.count, self.configure.coupleTitleConfigure.count == self.coupleTitleView.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }
-        var labelWidth = axis.bounds.width / CGFloat(self.configure.coupleTitle.count + 1)
+        var labelWidth = axis.bounds.width / CGFloat(self.configure.coupleTitleConfigure.count + 1)
         labelWidth = min(labelWidth, 20)
         
-        for index in 0 ..< self.configure.coupleTitle.count {
+        for index in 0 ..< self.configure.coupleTitleConfigure.count {
             let xPoint = self.configure.xDividingPoints[index]
-            let pointX = axis.bounds.width * xPoint.location
+            let pointX = axis.bounds.width * xPoint
             let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: self.bounds.origin.y + axis.bounds.height)
             let center = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: endPoint.y + self.labelViewHeightSpace + self.bottomViewHeight / 2)
             let couple = self.coupleTitleView[index]
