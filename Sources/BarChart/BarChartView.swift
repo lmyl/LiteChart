@@ -227,7 +227,7 @@ class BarChartView: UIView {
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().priority(.init(750))
             make.bottom.equalToSuperview()
         }
     }
@@ -238,7 +238,7 @@ class BarChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }

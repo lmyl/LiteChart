@@ -41,7 +41,7 @@ class ViewController: UIViewController {
 //        configure.radarCoupleTitles = ["电", "水", "煤气", "天然气", "Apple"]
 //        configure.isShowRadarCoupleTitles = true
 //        configure.isShowAxis = false
-        /*
+       
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["Water", "Electoric", "Gas", "Apple"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
@@ -51,15 +51,16 @@ class ViewController: UIViewController {
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .leftToRight
- */
+ 
         /*
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
         pieInterface.displayDataMode = .original
  */
+        /*
         var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (50, .init(lightUIColor: .purple)), (20, .init(lightUIColor: .blue))])
-        funnelInterface.inputLegendTitles = ["2019", "2020", "2021"]
-        var interface = LiteChartViewInterface(contentInterface: funnelInterface)
+        funnelInterface.inputLegendTitles = ["2019", "2020", "2021"]*/
+        var interface = LiteChartViewInterface(contentInterface: barInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
