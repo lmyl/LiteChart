@@ -9,7 +9,6 @@
 import UIKit
 
 struct PieChartParameters {
-    var textColor: LiteChartDarkLightColor
     
     var inputDatas: [(Double, LiteChartDarkLightColor)]
     
@@ -17,8 +16,7 @@ struct PieChartParameters {
     
     var displayDataMode: ChartValueDisplayMode
     
-    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
-        self.textColor = textColor
+    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode) {
         self.inputDatas = inputDatas
         self.inputLegendTitles = inputLegendTitles
         self.displayDataMode = displayDataMode
@@ -44,7 +42,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .pieLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: .pieLegendTitleLabel)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
         }
@@ -92,8 +90,8 @@ extension PieChartParameters: LiteChartParametersProcesser {
                 let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: false)
                 pieViewsConfigure.append(pieViewConfigure)
             } else {
-                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, syncIdentifier: .pieTitleLabel)
-                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure, lineColor: textColor)
+                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, syncIdentifier: .pieTitleLabel)
+                let pieViewConfigure = PieViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLable: true, textConfigure: labelConfigure, lineColor: self.inputDatas[index].1)
                 pieViewsConfigure.append(pieViewConfigure)
             }
         }

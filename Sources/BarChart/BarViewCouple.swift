@@ -9,12 +9,12 @@
 import UIKit
 import SnapKit
 
-class BarViews: UIView {
-    private let configure: BarViewsConfigure
+class BarViewCouple: UIView {
+    private let configure: BarViewCoupleConfigure
     
     private var barViews: [BarView] = []
     
-    init(configure: BarViewsConfigure) {
+    init(configure: BarViewCoupleConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertBars()
@@ -23,7 +23,7 @@ class BarViews: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = BarViewsConfigure.emptyConfigure
+        self.configure = BarViewCoupleConfigure.emptyConfigure
         super.init(coder: coder)
         insertBars()
         
@@ -51,7 +51,7 @@ class BarViews: UIView {
                 guard let front = frontBar else {
                     bar.snp.updateConstraints{
                         make in
-                        make.left.equalToSuperview()
+                        make.leading.equalToSuperview()
                         make.width.equalTo(0)
                         make.top.equalToSuperview()
                         make.bottom.equalToSuperview()
@@ -61,7 +61,7 @@ class BarViews: UIView {
                 }
                 bar.snp.updateConstraints{
                     make in
-                    make.left.equalTo(front.snp.right)
+                    make.leading.equalTo(front.snp.trailing)
                     make.bottom.equalToSuperview()
                     make.top.equalToSuperview()
                     make.width.equalTo(0)
@@ -74,8 +74,8 @@ class BarViews: UIView {
                 guard let front = frontBar else {
                     bar.snp.updateConstraints{
                         make in
-                        make.left.equalToSuperview()
-                        make.right.equalToSuperview()
+                        make.leading.equalToSuperview()
+                        make.trailing.equalToSuperview()
                         make.top.equalToSuperview()
                         make.height.equalTo(0)
                     }
@@ -84,8 +84,8 @@ class BarViews: UIView {
                 }
                 bar.snp.updateConstraints{
                     make in
-                    make.left.equalToSuperview()
-                    make.right.equalToSuperview()
+                    make.leading.equalToSuperview()
+                    make.trailing.equalToSuperview()
                     make.top.equalTo(front.snp.bottom)
                     make.height.equalTo(0)
                 }
@@ -104,7 +104,7 @@ class BarViews: UIView {
                 guard let _ = frontBar else {
                     bar.snp.updateConstraints{
                         make in
-                        make.left.equalToSuperview().offset(leftSpace)
+                        make.leading.equalToSuperview().offset(leftSpace)
                         make.width.equalTo(itemWidth)
                     }
                     frontBar = bar

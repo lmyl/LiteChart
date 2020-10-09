@@ -95,6 +95,8 @@ class DisplayLabel: UIView {
             let rect = layer.bounds
             context?.saveGState()
             context?.clear(rect)
+            context?.setShouldAntialias(true)
+            context?.setAllowsAntialiasing(true)
             var textSizeArea = rect.size
             if self.configure.textDirection == .vertical {
                 context?.rotate(by: CGFloat(0 - Double.pi / 2))

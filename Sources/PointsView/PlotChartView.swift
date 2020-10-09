@@ -198,7 +198,7 @@ class PlotChartView: UIView {
         if let unit = self.yUnitLabel {
             unit.snp.updateConstraints{
                 make in
-                make.left.equalToSuperview()
+                make.leading.equalToSuperview()
                 make.width.equalTo(self.leftUnitViewWidth)
                 make.top.equalToSuperview()
                 make.bottom.equalTo(axis.snp.bottom)
@@ -208,8 +208,8 @@ class PlotChartView: UIView {
         if let xUnit = self.xUnitLabel {
             xUnit.snp.updateConstraints{
                 make in
-                make.left.equalTo(axis.snp.left)
-                make.right.equalToSuperview()
+                make.leading.equalTo(axis.snp.leading)
+                make.trailing.equalToSuperview()
                 make.bottom.equalToSuperview()
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
@@ -240,9 +240,9 @@ class PlotChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.right.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
@@ -253,7 +253,7 @@ class PlotChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.left.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }

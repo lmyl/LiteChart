@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import CoreGraphics
 
-struct BarViewsConfigure {
+struct BarViewCoupleConfigure {
     let models: [BarViewConfigure]
     let direction: BarChartDirection
     
@@ -24,6 +23,6 @@ struct BarViewsConfigure {
     }
 }
 
-extension BarViewsConfigure {
-    static let emptyConfigure = BarViewsConfigure()
+extension BarViewCoupleConfigure {
+    static let emptyConfigure = BarViewCoupleConfigure()
 }

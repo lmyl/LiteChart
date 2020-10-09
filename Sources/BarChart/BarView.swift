@@ -90,15 +90,15 @@ class BarView: UIView {
             bar.snp.updateConstraints{
                 make in
                 make.bottom.equalToSuperview()
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
                 make.height.equalTo(0)
             }
         case .leftToRight:
             bar.snp.updateConstraints{
                 make in
                 make.bottom.equalToSuperview()
-                make.left.equalToSuperview()
+                make.leading.equalToSuperview()
                 make.width.equalTo(0)
                 make.top.equalToSuperview()
             }
@@ -117,15 +117,15 @@ class BarView: UIView {
             label.snp.updateConstraints{
                 make in
                 make.bottom.equalTo(bar.snp.top)
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
                 make.height.equalTo(0)
             }
         case .leftToRight:
             label.snp.updateConstraints{
                 make in
                 make.bottom.equalToSuperview()
-                make.left.equalTo(bar.snp.right)
+                make.leading.equalTo(bar.snp.trailing)
                 make.width.equalTo(0)
                 make.height.equalToSuperview()
             }
@@ -157,7 +157,7 @@ class BarView: UIView {
             length = min(length, 20)
             label.snp.updateConstraints{
                 make in
-                make.left.equalTo(bar.snp.right).offset(space)
+                make.leading.equalTo(bar.snp.trailing).offset(space)
                 make.width.equalTo(length)
             }
         }

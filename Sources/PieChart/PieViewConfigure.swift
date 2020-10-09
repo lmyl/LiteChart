@@ -25,7 +25,9 @@ struct PieViewConfigure {
     init(startAngle: CGFloat, endAngle: CGFloat, backgroundColor: LiteChartDarkLightColor, isShowLable: Bool, textConfigure: DisplayLabelConfigure = .emptyConfigure, lineColor: LiteChartDarkLightColor = .init(lightUIColor: .black, darkUIColor: .white)) {
         self.pieSectorViewConfigure = PieSectorViewConfigure(startAngle: startAngle, endAngle: endAngle, backgroundColor: backgroundColor, isShowLine: isShowLable, lineColor: lineColor)
         let alignment: NSTextAlignment = self.pieSectorViewConfigure.isLeftSector ? .right : .left
-        self.displayTextConfigure = DisplayLabelConfigure(contentString: textConfigure.contentString, contentColor: textConfigure.contentColor, textAlignment: alignment)
+        var text = textConfigure
+        text.textAlignment = alignment
+        self.displayTextConfigure = text
         self.isShowLabel = isShowLable
     }
     

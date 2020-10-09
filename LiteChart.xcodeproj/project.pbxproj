@@ -40,6 +40,8 @@
 		083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */; };
 		083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */; };
 		08433EB424E394BC0089FB6D /* LegendFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08433EB324E394BB0089FB6D /* LegendFactory.swift */; };
+		08512BAC2524687300510730 /* BarViewCoupleCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08512BAB2524687300510730 /* BarViewCoupleCollection.swift */; };
+		08512BAF2524688E00510730 /* BarViewCoupleCollectionConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08512BAE2524688E00510730 /* BarViewCoupleCollectionConfigure.swift */; };
 		085787632498780300A95D16 /* DisplayLabelTextDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085787622498780300A95D16 /* DisplayLabelTextDirection.swift */; };
 		08596E2F2499145400A3FC18 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E2E2499145400A3FC18 /* LineView.swift */; };
 		08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08596E302499145F00A3FC18 /* LineViewConfigure.swift */; };
@@ -64,6 +66,9 @@
 		088A258B249A235700B533D3 /* LineViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258A249A235700B533D3 /* LineViewsConfigure.swift */; };
 		088A258D249A257300B533D3 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258C249A257300B533D3 /* LineChartView.swift */; };
 		088A258F249A25F600B533D3 /* LineChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */; };
+		089804D325300FBC001CCC19 /* LiteChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804D225300FBC001CCC19 /* LiteChartInterface.swift */; };
+		089804DB2530121C001CCC19 /* LiteChartBarChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */; };
+		089804DE253015B3001CCC19 /* LiteChartViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */; };
 		08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5449525221C3700772F65 /* Notification+RadarView.swift */; };
 		08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756BE249DC23600BAEBC1 /* PointsView.swift */; };
 		08A756C1249DC25500BAEBC1 /* PointsViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */; };
@@ -85,8 +90,8 @@
 		08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */; };
 		08FF1A0E2491D67300AE05F9 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A0D2491D67300AE05F9 /* BarView.swift */; };
 		08FF1A102491D75300AE05F9 /* BarViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A0F2491D75300AE05F9 /* BarViewConfigure.swift */; };
-		08FF1A122491E18400AE05F9 /* BarViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A112491E18400AE05F9 /* BarViews.swift */; };
-		08FF1A142491E29900AE05F9 /* BarViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A132491E29900AE05F9 /* BarViewsConfigure.swift */; };
+		08FF1A122491E18400AE05F9 /* BarViewCouple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A112491E18400AE05F9 /* BarViewCouple.swift */; };
+		08FF1A142491E29900AE05F9 /* BarViewCoupleConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A132491E29900AE05F9 /* BarViewCoupleConfigure.swift */; };
 		08FF1A162492030F00AE05F9 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A152492030F00AE05F9 /* BarChartView.swift */; };
 		08FF1A182492034900AE05F9 /* BarChartParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A172492034900AE05F9 /* BarChartParameter.swift */; };
 		08FF1A1A2492037200AE05F9 /* BarChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */; };
@@ -138,6 +143,8 @@
 		083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisDividingLineConfigure.swift; sourceTree = "<group>"; };
 		083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewBorderStyle.swift; sourceTree = "<group>"; };
 		08433EB324E394BB0089FB6D /* LegendFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendFactory.swift; sourceTree = "<group>"; };
+		08512BAB2524687300510730 /* BarViewCoupleCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCoupleCollection.swift; sourceTree = "<group>"; };
+		08512BAE2524688E00510730 /* BarViewCoupleCollectionConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCoupleCollectionConfigure.swift; sourceTree = "<group>"; };
 		085787622498780300A95D16 /* DisplayLabelTextDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelTextDirection.swift; sourceTree = "<group>"; };
 		08596E2E2499145400A3FC18 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		08596E302499145F00A3FC18 /* LineViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewConfigure.swift; sourceTree = "<group>"; };
@@ -162,6 +169,9 @@
 		088A258A249A235700B533D3 /* LineViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewsConfigure.swift; sourceTree = "<group>"; };
 		088A258C249A257300B533D3 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewConfigure.swift; sourceTree = "<group>"; };
+		089804D225300FBC001CCC19 /* LiteChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartInterface.swift; sourceTree = "<group>"; };
+		089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBarChartInterface.swift; sourceTree = "<group>"; };
+		089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewInterface.swift; sourceTree = "<group>"; };
 		08A5449525221C3700772F65 /* Notification+RadarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+RadarView.swift"; sourceTree = "<group>"; };
 		08A756BE249DC23600BAEBC1 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewConfigure.swift; sourceTree = "<group>"; };
@@ -183,8 +193,8 @@
 		08F56E6B248B77CF000998F8 /* LegendViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendViewsConfigure.swift; sourceTree = "<group>"; };
 		08FF1A0D2491D67300AE05F9 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
 		08FF1A0F2491D75300AE05F9 /* BarViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewConfigure.swift; sourceTree = "<group>"; };
-		08FF1A112491E18400AE05F9 /* BarViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViews.swift; sourceTree = "<group>"; };
-		08FF1A132491E29900AE05F9 /* BarViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewsConfigure.swift; sourceTree = "<group>"; };
+		08FF1A112491E18400AE05F9 /* BarViewCouple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCouple.swift; sourceTree = "<group>"; };
+		08FF1A132491E29900AE05F9 /* BarViewCoupleConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCoupleConfigure.swift; sourceTree = "<group>"; };
 		08FF1A152492030F00AE05F9 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		08FF1A172492034900AE05F9 /* BarChartParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartParameter.swift; sourceTree = "<group>"; };
 		08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartViewConfigure.swift; sourceTree = "<group>"; };
@@ -344,11 +354,13 @@
 			children = (
 				08FF1A0D2491D67300AE05F9 /* BarView.swift */,
 				08FF1A0F2491D75300AE05F9 /* BarViewConfigure.swift */,
-				08FF1A112491E18400AE05F9 /* BarViews.swift */,
-				08FF1A132491E29900AE05F9 /* BarViewsConfigure.swift */,
-				085CFE7624920C4B008E0E0E /* BarChartDirection.swift */,
+				08FF1A112491E18400AE05F9 /* BarViewCouple.swift */,
+				08FF1A132491E29900AE05F9 /* BarViewCoupleConfigure.swift */,
+				08512BAB2524687300510730 /* BarViewCoupleCollection.swift */,
+				08512BAE2524688E00510730 /* BarViewCoupleCollectionConfigure.swift */,
 				08FF1A152492030F00AE05F9 /* BarChartView.swift */,
 				08FF1A192492037200AE05F9 /* BarChartViewConfigure.swift */,
+				085CFE7624920C4B008E0E0E /* BarChartDirection.swift */,
 				08FF1A172492034900AE05F9 /* BarChartParameter.swift */,
 			);
 			path = BarChart;
@@ -421,8 +433,11 @@
 				087DEA8C248E736A001A40B9 /* LiteChartView.swift */,
 				087DEA95248E7D6B001A40B9 /* LiteChartDatas.swift */,
 				087DEA8E248E7571001A40B9 /* LiteChartViewParameters.swift */,
-				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
 				085CFE7824922D4C008E0E0E /* LiteChartViewBorderStyle.swift */,
+				089804D225300FBC001CCC19 /* LiteChartInterface.swift */,
+				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
+				089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */,
+				089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */,
 			);
 			path = LiteChart;
 			sourceTree = "<group>";
@@ -613,9 +628,11 @@
 				F501A68C24A1EACA007FD6DF /* RadarChartViewConfigure.swift in Sources */,
 				F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */,
 				087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */,
+				089804DB2530121C001CCC19 /* LiteChartBarChartInterface.swift in Sources */,
 				0876ADBB24FE18110089A34D /* Notification+SyncLabel.swift in Sources */,
 				08F2ACCD25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift in Sources */,
 				08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */,
+				08512BAF2524688E00510730 /* BarViewCoupleCollectionConfigure.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
 				085CFE7924922D4C008E0E0E /* LiteChartViewBorderStyle.swift in Sources */,
@@ -625,6 +642,7 @@
 				083BC8E72490865E000B8DDE /* AxisViewConfigure.swift in Sources */,
 				F56C193D2498713F00A002AE /* PentagramLegend.swift in Sources */,
 				08FF1A182492034900AE05F9 /* BarChartParameter.swift in Sources */,
+				089804D325300FBC001CCC19 /* LiteChartInterface.swift in Sources */,
 				085CFE7724920C4B008E0E0E /* BarChartDirection.swift in Sources */,
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				0839B64324FBC1C700E59F6B /* LiteChartDispatchQueue.swift in Sources */,
@@ -658,12 +676,14 @@
 				08A756CD249DEA4200BAEBC1 /* ScatterPlotChartParameters.swift in Sources */,
 				080368E8248A7BE300D1413C /* FunalFloorView.swift in Sources */,
 				080368EE248A849700D1413C /* FunalView.swift in Sources */,
+				089804DE253015B3001CCC19 /* LiteChartViewInterface.swift in Sources */,
 				080368EA248A7C0C00D1413C /* FunalFloorViewConfigure.swift in Sources */,
 				0832B5352489FED000110CBA /* SceneDelegate.swift in Sources */,
 				08386C29248E57AF00D0E655 /* PieViews.swift in Sources */,
 				08433EB424E394BC0089FB6D /* LegendFactory.swift in Sources */,
 				083BC8E5249085BC000B8DDE /* AxisView.swift in Sources */,
-				08FF1A122491E18400AE05F9 /* BarViews.swift in Sources */,
+				08FF1A122491E18400AE05F9 /* BarViewCouple.swift in Sources */,
+				08512BAC2524687300510730 /* BarViewCoupleCollection.swift in Sources */,
 				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,
 				083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */,
 				08596E332499156200A3FC18 /* LineStyle.swift in Sources */,
@@ -676,7 +696,7 @@
 				0876ADB924FDD47C0089A34D /* WeakObjectPackage.swift in Sources */,
 				08F56E6C248B77CF000998F8 /* LegendViewsConfigure.swift in Sources */,
 				08FF1A1A2492037200AE05F9 /* BarChartViewConfigure.swift in Sources */,
-				08FF1A142491E29900AE05F9 /* BarViewsConfigure.swift in Sources */,
+				08FF1A142491E29900AE05F9 /* BarViewCoupleConfigure.swift in Sources */,
 				088A258B249A235700B533D3 /* LineViewsConfigure.swift in Sources */,
 				08F56E62248B534B000998F8 /* LegendConfigure.swift in Sources */,
 				08F56E68248B6C8C000998F8 /* LegendViewConfigure.swift in Sources */,

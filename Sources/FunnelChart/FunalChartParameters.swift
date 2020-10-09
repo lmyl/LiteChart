@@ -10,19 +10,19 @@ import UIKit
 
 struct FunalChartParameters {
     
-    var textColor: LiteChartDarkLightColor
-
+    var valueTextColor: LiteChartDarkLightColor
+    
     var inputDatas: [(Double, LiteChartDarkLightColor)]
     
     var inputLegendTitles: [String]
     
     var displayDataMode: ChartValueDisplayMode
     
-    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, textColor: LiteChartDarkLightColor) {
+    init(inputDatas: [(Double, LiteChartDarkLightColor)], inputLegendTitles: [String], displayDataMode: ChartValueDisplayMode, valueTextColor: LiteChartDarkLightColor) {
         self.inputDatas = inputDatas
         self.inputLegendTitles = inputLegendTitles
         self.displayDataMode = displayDataMode
-        self.textColor = textColor
+        self.valueTextColor = valueTextColor
     }
     
 }
@@ -52,7 +52,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .funalLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: .funalLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -109,7 +109,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: false)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
-                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: textColor, textAlignment: .center, syncIdentifier: .funalTitleLabel)
+                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: valueTextColor, textAlignment: .center, syncIdentifier: .funalTitleLabel)
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: true, contentViewConfigure: contentViewConfigure)
                 funalViewConfigure.append(funalFloorConfigure)
             }

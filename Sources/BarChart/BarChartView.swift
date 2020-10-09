@@ -17,20 +17,20 @@ class BarChartView: UIView {
     var xUnitLabel: DisplayLabel?
     var coupleTitleView: [DisplayLabel] = []
     var valueView: [DisplayLabel] = []
-    var barView: [BarViews] = []
+    var barViewCollection: BarViewCoupleCollection?
     
     init(configure: BarChartViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
         insertUnitLabel()
         insertAxisView()
-        insertBarViews()
+        insertBarViewCollection()
         insertValueTitleView()
         insertCoupleTitleView()
         
         updateAxisViewStaticConstraints()
         updateUnitLabelStaticConstraints()
-        updateBarViewsStaticContraints()
+        updateBarViewCoupleCollectionStaticContraints()
     }
     
     required init?(coder: NSCoder) {
@@ -38,20 +38,19 @@ class BarChartView: UIView {
         super.init(coder: coder)
         insertUnitLabel()
         insertAxisView()
-        insertBarViews()
+        insertBarViewCollection()
         insertValueTitleView()
         insertCoupleTitleView()
         
         updateAxisViewStaticConstraints()
         updateUnitLabelStaticConstraints()
-        updateBarViewsStaticContraints()
+        updateBarViewCoupleCollectionStaticContraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         updateAxisViewDynamicConstraints()
         updateUnitLabelDynamicConstraints()
-        updateBarViewsDynamicContraints()
         updateValueViewDynamicConstraints()
         updateCoupleTitleViewDynamicConstraints()
     }
@@ -60,127 +59,59 @@ class BarChartView: UIView {
         var unitLabel: DisplayLabel
         
         if self.configure.isShowValueUnitString {
+            unitLabel = DisplayLabel(configure: self.configure.valueUnitStringConfigure)
+            self.addSubview(unitLabel)
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, syncIdentifier: .barUnitTitleLabel))
                 self.xUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.valueUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .barUnitTitleLabel))
                 self.yUnitLabel = unitLabel
             }
-            self.addSubview(unitLabel)
         }
         
         if self.configure.isShowCoupleUnitString {
+            unitLabel = DisplayLabel(configure: self.configure.coupleUnitStringConfigure)
+            self.addSubview(unitLabel)
             switch self.configure.direction {
             case .leftToRight:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .barUnitTitleLabel))
                 self.yUnitLabel = unitLabel
             case .bottomToTop:
-                unitLabel = DisplayLabel(configure: .init(contentString: self.configure.coupleUnitString, contentColor: self.configure.textColor, syncIdentifier: .barUnitTitleLabel))
                 self.xUnitLabel = unitLabel
             }
-            self.addSubview(unitLabel)
         }
-        
         
     }
     
     private func insertCoupleTitleView() {
-        for title in self.configure.coupleTitle {
-            let titleView: DisplayLabel
-            switch self.configure.direction {
-            case .bottomToTop:
-                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, syncIdentifier: .barCoupleTitleLabel))
-            case .leftToRight:
-                titleView = DisplayLabel(configure: .init(contentString: title, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .barCoupleTitleLabel))
-            }
+        for coupleTitleConfigure in self.configure.coupleTitleConfigure {
+            let titleView = DisplayLabel(configure: coupleTitleConfigure)
             self.addSubview(titleView)
             self.coupleTitleView.append(titleView)
         }
     }
     
     private func insertValueTitleView() {
-        for value in self.configure.valueTitle {
-            let valueView: DisplayLabel
-            switch self.configure.direction {
-            case .bottomToTop:
-                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, textAlignment: .right, syncIdentifier: .barValueTitleLabel))
-            case .leftToRight:
-                valueView = DisplayLabel(configure: .init(contentString: value, contentColor: self.configure.textColor, syncIdentifier: .barValueTitleLabel))
-            }
+        for valueTitleConfigure in self.configure.valueTitleConfigure {
+            let valueView = DisplayLabel(configure: valueTitleConfigure)
             self.addSubview(valueView)
             self.valueView.append(valueView)
         }
     }
     
     private func insertAxisView() {
-        let original = CGPoint(x: 0, y: 0)
-        let borderStlye: [AxisViewBorderStyle]
-        switch self.configure.borderStyle {
-        case .halfSurrounded:
-            borderStlye = [.left, .bottom]
-        case .fullySurrounded:
-            borderStlye = [.left, .bottom, .right, .top]
-        }
-        let axisView = AxisView(configure: .init(originPoint: original, axisColor: self.configure.borderColor, verticalDividingPoints: self.configure.yDividingPoints, horizontalDividingPoints: self.configure.xDividingPoints, borderStyle: borderStlye, borderColor: self.configure.borderColor, isShowXAxis: false, isShowYAxis: false))
+        let axisView = AxisView(configure: self.configure.axisConfigure)
         self.addSubview(axisView)
         self.axisView = axisView
     }
     
-    private func insertBarViews() {
+    private func insertBarViewCollection() {
         guard let axis = self.axisView else {
             return
         }
         
-        let inputDatas = self.configure.inputDatas
-        
-        guard !inputDatas.isEmpty else {
-            return
-        }
-        
-        if inputDatas.count >= 2 {
-            let firstDatasCount = inputDatas[0].1.count
-            for inputData in inputDatas {
-                if inputData.1.count != firstDatasCount {
-                    fatalError("框架内部数据处理错误，不给予拯救!")
-                }
-            }
-        }
-        let coupleCount = inputDatas[0].1.count
-        var coupleBarsInputDatas: [[(LiteChartDarkLightColor, CGFloat, String)]] = Array(repeating: [], count: coupleCount)
-        
-        for inputData in inputDatas {
-            for index in 0 ..< coupleCount {
-                var coupleBars = coupleBarsInputDatas[index]
-                coupleBars.append((inputData.0, inputData.1[index].1, inputData.1[index].0))
-                coupleBarsInputDatas[index] = coupleBars
-            }
-        }
-        
-        let textAlignment: NSTextAlignment
-        switch self.configure.direction {
-        case .bottomToTop:
-            textAlignment = .center
-        case .leftToRight:
-            textAlignment = .left
-        }
-        
-        for coupleBars in coupleBarsInputDatas {
-            var barViewsConfigure: [BarViewConfigure] = []
-            for input in coupleBars {
-                if self.configure.isShowLabel {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: self.configure.textColor, textAlignment: textAlignment, syncIdentifier: .barTitleLabel), direction: self.configure.direction)
-                    barViewsConfigure.append(barViewConfigure)
-                } else {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: false, direction: self.configure.direction)
-                    barViewsConfigure.append(barViewConfigure)
-                }
-            }
-            let barViews = BarViews(configure: .init(models: barViewsConfigure, direction: self.configure.direction))
-            axis.addSubview(barViews)
-            self.barView.append(barViews)
-        }
+        let barViews = BarViewCoupleCollection(configure: self.configure.barViewCoupleCollectionConfigure)
+        axis.addSubview(barViews)
+        self.barViewCollection = barViews
     }
     
     private var leftUnitViewWidth: CGFloat {
@@ -253,7 +184,7 @@ class BarChartView: UIView {
         if let unit = self.yUnitLabel {
             unit.snp.updateConstraints{
                 make in
-                make.left.equalToSuperview()
+                make.leading.equalToSuperview()
                 make.width.equalTo(self.leftUnitViewWidth)
                 make.top.equalToSuperview()
                 make.bottom.equalTo(axis.snp.bottom)
@@ -263,8 +194,8 @@ class BarChartView: UIView {
         if let xUnit = self.xUnitLabel {
             xUnit.snp.updateConstraints{
                 make in
-                make.left.equalTo(axis.snp.left)
-                make.right.equalToSuperview()
+                make.leading.equalTo(axis.snp.leading)
+                make.trailing.equalToSuperview()
                 make.bottom.equalToSuperview()
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
@@ -294,9 +225,9 @@ class BarChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.right.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
@@ -307,88 +238,18 @@ class BarChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.left.equalToSuperview().offset(self.leftSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
     
-    private func updateBarViewsStaticContraints() {
-        let itemCount = self.barView.count
-        guard let axis = self.axisView, itemCount > 0 else {
+    private func updateBarViewCoupleCollectionStaticContraints() {
+        guard let collection = self.barViewCollection else {
             return
         }
-        
-        var frontView: BarViews?
-        
-        switch self.configure.direction {
-        case .bottomToTop:
-            for barView in self.barView {
-                guard let front = frontView else {
-                    barView.snp.updateConstraints{
-                        make in
-                        make.left.equalTo(axis.snp.left)
-                        make.width.equalTo(0)
-                        make.bottom.equalTo(axis.snp.bottom)
-                        make.top.equalTo(axis.snp.top)
-                    }
-                    frontView = barView
-                    continue
-                }
-                barView.snp.updateConstraints{
-                    make in
-                    make.left.equalTo(front.snp.right)
-                    make.width.equalTo(front.snp.width)
-                    make.bottom.equalTo(axis.snp.bottom)
-                    make.top.equalTo(axis.snp.top)
-                }
-                frontView = barView
-            }
-        case .leftToRight:
-            for barView in self.barView {
-                guard let front = frontView else {
-                    barView.snp.updateConstraints{
-                        make in
-                        make.left.equalTo(axis.snp.left)
-                        make.height.equalTo(0)
-                        make.bottom.equalTo(axis.snp.bottom)
-                        make.right.equalTo(axis.snp.right)
-                    }
-                    frontView = barView
-                    continue
-                }
-                barView.snp.updateConstraints{
-                    make in
-                    make.left.equalTo(axis.snp.left)
-                    make.height.equalTo(front.snp.height)
-                    make.bottom.equalTo(front.snp.top)
-                    make.right.equalTo(axis.snp.right)
-                }
-                frontView = barView
-            }
-        }
-    }
-    
-    private func updateBarViewsDynamicContraints() {
-        let itemCount = self.barView.count
-        guard let axis = self.axisView, itemCount > 0 else {
-            return
-        }
-        guard let first = self.barView.first else {
-            return
-        }
-        switch self.configure.direction {
-        case .bottomToTop:
-            let itemWidth = axis.bounds.width / CGFloat(itemCount)
-            first.snp.updateConstraints{
-                make in
-                make.width.equalTo(itemWidth)
-            }
-        case .leftToRight:
-            let itemHeight = axis.bounds.height / CGFloat(itemCount)
-            first.snp.updateConstraints{
-                make in
-                make.height.equalTo(itemHeight)
-            }
+        collection.snp.remakeConstraints{
+            make in
+            make.bottom.top.trailing.leading.equalToSuperview()
         }
     }
     
@@ -398,15 +259,15 @@ class BarChartView: UIView {
         }
         switch self.configure.direction {
         case .bottomToTop:
-            guard self.configure.yDividingPoints.count == self.configure.valueTitle.count,  self.configure.valueTitle.count == self.valueView.count else {
+            guard self.configure.yDividingPoints.count == self.configure.valueTitleConfigure.count,  self.configure.valueTitleConfigure.count == self.valueView.count else {
                 fatalError("框架内部数据处理错误，不给予拯救")
             }
-            for index in 0 ..< self.configure.valueTitle.count {
+            for index in 0 ..< self.configure.valueTitleConfigure.count {
                 let yPoint = self.configure.yDividingPoints[index]
-                let pointY = axis.bounds.height * (1 - yPoint.location)
+                let pointY = axis.bounds.height * (1 - yPoint)
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
                 let center = CGPoint(x: endPoint.x - self.labelViewWidthSpace - self.leftViewWidth / 2, y: endPoint.y)
-                var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitle.count + 1)
+                var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitleConfigure.count + 1)
                 labelHeight = min(labelHeight, 20)
                 let labelView = self.valueView[index]
                 labelView.snp.updateConstraints{
@@ -417,15 +278,15 @@ class BarChartView: UIView {
                 }
             }
         case .leftToRight:
-            guard self.configure.xDividingPoints.count == self.configure.valueTitle.count, self.configure.valueTitle.count == self.valueView.count else {
+            guard self.configure.xDividingPoints.count == self.configure.valueTitleConfigure.count, self.configure.valueTitleConfigure.count == self.valueView.count else {
                 fatalError("框架内部数据处理错误，不给予拯救")
             }
-            for index in 0 ..< self.configure.valueTitle.count {
-                let xPoint = self.configure.xDividingPoints[index].location
+            for index in 0 ..< self.configure.valueTitleConfigure.count {
+                let xPoint = self.configure.xDividingPoints[index]
                 let pointX = axis.bounds.width * xPoint
                 let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace + pointX, y: self.bounds.origin.y + axis.bounds.height)
                 let center = CGPoint(x: endPoint.x, y: endPoint.y + self.labelViewHeightSpace + self.bottomViewHeight / 2)
-                var labelWidth = axis.bounds.width / CGFloat(self.configure.valueTitle.count + 1)
+                var labelWidth = axis.bounds.width / CGFloat(self.configure.valueTitleConfigure.count + 1)
                 labelWidth = min(labelWidth, 20)
                 let labelView = self.valueView[index]
                 labelView.snp.updateConstraints{
@@ -442,13 +303,16 @@ class BarChartView: UIView {
         guard let axis = self.axisView else {
             return
         }
+        guard self.configure.barViewCoupleNumber > 0 else {
+            return
+        }
         
         switch self.configure.direction {
         case .bottomToTop:
-            guard self.configure.coupleTitle.count == self.barView.count else {
+            guard self.configure.coupleTitleConfigure.count == self.configure.barViewCoupleNumber else {
                 fatalError("框架内部数据处理错误，不给予拯救")
             }
-            let labelWidth = axis.bounds.width / CGFloat(self.configure.coupleTitle.count)
+            let labelWidth = axis.bounds.width / CGFloat(self.configure.barViewCoupleNumber)
             var labelSpace = labelWidth / 10
             labelSpace = min(labelSpace, 4)
             var frontView: DisplayLabel?
@@ -456,7 +320,7 @@ class BarChartView: UIView {
                 guard let front = frontView else {
                     labelView.snp.updateConstraints{
                         make in
-                        make.left.equalTo(axis.snp.left).offset(labelSpace / 2)
+                        make.leading.equalTo(axis.snp.leading).offset(labelSpace / 2)
                         make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
                         make.height.equalTo(self.bottomViewHeight)
                         make.width.equalTo(labelWidth - labelSpace)
@@ -466,7 +330,7 @@ class BarChartView: UIView {
                 }
                 labelView.snp.updateConstraints{
                     make in
-                    make.left.equalTo(front.snp.right).offset(labelSpace)
+                    make.leading.equalTo(front.snp.trailing).offset(labelSpace)
                     make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
                     make.height.equalTo(self.bottomViewHeight)
                     make.width.equalTo(labelWidth - labelSpace)
@@ -474,10 +338,10 @@ class BarChartView: UIView {
                 frontView = labelView
             }
         case .leftToRight:
-            guard self.configure.coupleTitle.count == self.barView.count else {
+            guard self.configure.coupleTitleConfigure.count == self.configure.barViewCoupleNumber else {
                 fatalError("框架内部数据处理错误，不给予拯救")
             }
-            let labelHeight = axis.bounds.height / CGFloat(self.configure.coupleTitle.count)
+            let labelHeight = axis.bounds.height / CGFloat(self.configure.barViewCoupleNumber)
             var labelSpace = labelHeight / 10
             labelSpace = min(labelSpace, 4)
             var frontView: DisplayLabel?
@@ -485,7 +349,7 @@ class BarChartView: UIView {
                 guard let front = frontView else {
                     labelView.snp.updateConstraints{
                         make in
-                        make.right.equalTo(axis.snp.left).offset(0 - self.labelViewWidthSpace)
+                        make.trailing.equalTo(axis.snp.leading).offset(0 - self.labelViewWidthSpace)
                         make.bottom.equalTo(axis.snp.bottom).offset(0 - labelSpace / 2)
                         make.height.equalTo(labelHeight - labelSpace)
                         make.width.equalTo(self.leftViewWidth)
@@ -495,7 +359,7 @@ class BarChartView: UIView {
                 }
                 labelView.snp.updateConstraints{
                     make in
-                    make.right.equalTo(axis.snp.left).offset(0 - self.labelViewWidthSpace)
+                    make.trailing.equalTo(axis.snp.leading).offset(0 - self.labelViewWidthSpace)
                     make.bottom.equalTo(front.snp.top).offset(0 - labelSpace)
                     make.height.equalTo(labelHeight - labelSpace)
                     make.width.equalTo(self.leftViewWidth)

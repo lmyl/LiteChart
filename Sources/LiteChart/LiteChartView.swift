@@ -10,15 +10,15 @@ import UIKit
 
 class LiteChartView: UIView {
     
-    private var configure: LiteChartViewParameters
+    private var configure: LiteChartViewInterface
     
     private var contentView: UIView?
     private var titleView: DisplayLabel?
     private var legendViews: LegendViews?
     
-    init(configure: LiteChartViewParameters) throws {
-        self.configure = configure
-        try self.configure.checkInputDatasParameterInvalid()
+    init(interface: LiteChartViewInterface) throws {
+        self.configure = interface
+        try self.configure.contentInterface.parametersProcesser.checkInputDatasParameterInvalid()
         super.init(frame: CGRect())
         
         let _ = DisplayLabelSyncCenter.shared
@@ -33,7 +33,7 @@ class LiteChartView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        self.configure = LiteChartViewParameters.emptyConfigure
+        self.configure = LiteChartViewInterface.emptyInterface
         super.init(coder: coder)
         
         let _ = DisplayLabelSyncCenter.shared
@@ -85,14 +85,14 @@ class LiteChartView: UIView {
         }
         titleView.snp.updateConstraints{
             make in
-            switch self.configure.titleDisplayLocation {
+            switch self.configure.chartTitleDisplayLocation {
             case .top:
                 make.top.equalToSuperview()
             case .bottom:
                 make.bottom.equalToSuperview()
             }
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.height.equalTo(0)
         }
     }
@@ -116,7 +116,7 @@ class LiteChartView: UIView {
         contentView.snp.updateConstraints{
             make in
             if let titleView = self.titleView {
-                switch self.configure.titleDisplayLocation {
+                switch self.configure.chartTitleDisplayLocation {
                 case .top:
                     make.top.equalTo(titleView.snp.bottom)
                     make.bottom.equalToSuperview()
@@ -132,10 +132,10 @@ class LiteChartView: UIView {
             if let _ = self.legendViews {
 
             } else {
-                make.right.equalToSuperview()
+                make.trailing.equalToSuperview()
             }
             
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
         }
     }
     
@@ -148,7 +148,7 @@ class LiteChartView: UIView {
         contentView.snp.updateConstraints{
             make in
             if let titleView = self.titleView {
-                switch self.configure.titleDisplayLocation {
+                switch self.configure.chartTitleDisplayLocation {
                 case .top:
                     make.top.equalTo(titleView.snp.bottom).offset(spaceHeight)
                 case .bottom:
@@ -168,11 +168,11 @@ class LiteChartView: UIView {
         legendViews.snp.updateConstraints{
             make in
             make.width.equalTo(0)
-            make.left.equalTo(contentView.snp.right)
+            make.leading.equalTo(contentView.snp.trailing)
             
             make.top.equalTo(contentView.snp.top)
             
-            make.right.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
@@ -191,7 +191,7 @@ class LiteChartView: UIView {
         legendViews.snp.updateConstraints{
             make in
             make.width.equalTo(legendViewsWidth)
-            make.left.equalTo(contentView.snp.right).offset(spaceWidth)
+            make.leading.equalTo(contentView.snp.trailing).offset(spaceWidth)
         }
     }
 }

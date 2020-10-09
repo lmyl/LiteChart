@@ -10,11 +10,11 @@ import UIKit
 
 struct DisplayLabelConfigure {
     
-    let contentString: String
-    let contentColor: LiteChartDarkLightColor
-    let textAlignment: NSTextAlignment
-    let textDirection: DisplayLabelTextDirection
-    let syncIdentifier: DisplayLabelSyncIdentifier
+    var contentString: String
+    var contentColor: LiteChartDarkLightColor
+    var textAlignment: NSTextAlignment
+    var textDirection: DisplayLabelTextDirection
+    var syncIdentifier: DisplayLabelSyncIdentifier
     
     init(contentString: String, contentColor: LiteChartDarkLightColor, textAlignment: NSTextAlignment = .center, textDirection: DisplayLabelTextDirection = .horizontal, syncIdentifier: DisplayLabelSyncIdentifier = .none) {
         self.contentColor = contentColor

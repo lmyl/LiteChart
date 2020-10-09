@@ -17,57 +17,87 @@ struct BarChartParameter {
     
     var direction: BarChartDirection
     
-    var textColor: LiteChartDarkLightColor
-    
-    var inputDatas: [(LiteChartDarkLightColor, [Double])]
-    
-    var coupleTitle: [String]
+    var displayDataMode: ChartValueDisplayMode
     
     var inputLegendTitles: [String]
     
-    var displayDataMode: ChartValueDisplayMode
+    var inputDatas: [(LiteChartDarkLightColor, [Double])]
+    
+    var valueTextColor: LiteChartDarkLightColor
+    
+    var coupleTitle: [String]
+    
+    var coupleTextColor: LiteChartDarkLightColor
+    
+    var isShowValueDividingLine: Bool
     
     var dividingValueLineStyle: AxisViewLineStyle
     
     var dividingValueLineColor: LiteChartDarkLightColor
     
+    var isShowCoupleDividingLine: Bool
+    
     var dividingCoupleLineStyle: AxisViewLineStyle
     
     var dividingCoupleLineColor: LiteChartDarkLightColor
-    
-    var isShowValueDividingLine: Bool
-    
-    var isShowCoupleDividingLine: Bool
-    
+
     var isShowValueUnitString: Bool
     
     var isShowCoupleUnitString: Bool
+    
+    var valueUnitTextColor: LiteChartDarkLightColor
+    
+    var coupleUnitTextColor: LiteChartDarkLightColor
     
     var valueUnitString: String
     
     var coupleUnitString: String
     
-    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, direction: BarChartDirection, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String], displayDataMode: ChartValueDisplayMode, dividingLineStyle: AxisViewLineStyle, dividingLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, inputLegendTitles: [String], isShowCoupleDividingLine: Bool, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String) {
+    init(borderStyle: LiteChartViewBorderStyle,
+         borderColor: LiteChartDarkLightColor,
+         direction: BarChartDirection,
+         displayDataMode: ChartValueDisplayMode,
+         inputLegendTitles: [String],
+         inputDatas: [(LiteChartDarkLightColor, [Double])],
+         valueTextColor: LiteChartDarkLightColor,
+         coupleTitle: [String],
+         coupleTextColor: LiteChartDarkLightColor,
+         isShowValueDividingLine: Bool,
+         dividingValueLineStyle: AxisViewLineStyle,
+         dividingValueLineColor: LiteChartDarkLightColor,
+         isShowCoupleDividingLine: Bool,
+         dividingCoupleLineStyle: AxisViewLineStyle,
+         dividingCoupleLineColor: LiteChartDarkLightColor,
+         isShowValueUnitString: Bool,
+         isShowCoupleUnitString: Bool,
+         valueUnitString: String,
+         coupleUnitString: String,
+         valueUnitTextColor: LiteChartDarkLightColor,
+         coupleUnitTextColor: LiteChartDarkLightColor) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
         self.direction = direction
-        self.textColor = textColor
         self.displayDataMode = displayDataMode
-        self.dividingValueLineStyle = dividingLineStyle
-        self.dividingValueLineColor = dividingLineColor
-        self.isShowValueDividingLine = isShowValueDividingLine
         self.inputLegendTitles = inputLegendTitles
+        self.inputDatas = inputDatas
+        
+        self.valueTextColor = borderColor
+        self.coupleTitle = coupleTitle
+        self.coupleTextColor = borderColor
+        
+        self.isShowValueDividingLine = isShowValueDividingLine
+        self.dividingValueLineStyle = dividingValueLineStyle
+        self.dividingValueLineColor = dividingValueLineColor
         self.isShowCoupleDividingLine = isShowCoupleDividingLine
         self.dividingCoupleLineColor = dividingCoupleLineColor
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
-        
-        self.inputDatas = inputDatas
-        self.coupleTitle = coupleTitle
         
         self.isShowValueUnitString = isShowValueUnitString
         self.isShowCoupleUnitString = isShowCoupleUnitString
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
+        self.valueUnitTextColor = valueUnitTextColor
+        self.coupleUnitTextColor = coupleUnitTextColor
     }
     
 }
@@ -101,7 +131,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .barLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .barLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -116,13 +146,13 @@ extension BarChartParameter: LiteChartParametersProcesser {
             return BarChartView(configure: configure)
         }
         
-        let coupleCount = self.inputDatas.count
-        var coupleDatas: [[Double]] = Array(repeating: [], count: coupleCount)
-        for index in 0 ..< coupleCount { 
+        let coupleItemCount = self.inputDatas.count
+        var coupleDatas: [[Double]] = Array(repeating: [], count: coupleItemCount)
+        for index in 0 ..< coupleItemCount {
             coupleDatas[index] = self.inputDatas[index].1
         }
         
-        var displayString: [[String]] = Array(repeating: [], count: coupleCount)
+        var displayString: [[String]] = Array(repeating: [], count: coupleItemCount)
         switch self.displayDataMode {
         case .original:
             displayString = self.computeOriginalString(for: coupleDatas)
@@ -150,9 +180,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
             }
             inputDatas.append((self.inputDatas[index].0, datas))
         }
-        
-        //Todo: 计算value分割线位置
-        
+                
         var valuesString: [String] = []
         var valueDividingLineConfigure: [AxisDividingLineConfigure] = []
         
@@ -166,8 +194,6 @@ extension BarChartParameter: LiteChartParametersProcesser {
             }
         }
         
-        
-        //Todo: 计算couple分割线位置
         let coupleTitles = self.coupleTitle
         var coupleDividingLineConfigrue: [AxisDividingLineConfigure] = []
         let numberCount = self.inputDatas[0].1.count
@@ -180,12 +206,88 @@ extension BarChartParameter: LiteChartParametersProcesser {
         }
         
         let isShowLabel = self.displayDataMode == .original
+        
+        var barViewCoupleConfigures: [BarViewCoupleConfigure] = []
+        let coupleCount = inputDatas[0].1.count
+        var coupleBarsInputDatas: [[(LiteChartDarkLightColor, CGFloat, String)]] = Array(repeating: [], count: coupleCount)
+        
+        for inputData in inputDatas {
+            for index in 0 ..< coupleCount {
+                var coupleBars = coupleBarsInputDatas[index]
+                coupleBars.append((inputData.0, inputData.1[index].1, inputData.1[index].0))
+                coupleBarsInputDatas[index] = coupleBars
+            }
+        }
+        
+        let textAlignment: NSTextAlignment
         switch self.direction {
         case .bottomToTop:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, direction: .bottomToTop, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: coupleDividingLineConfigrue, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+            textAlignment = .center
+        case .leftToRight:
+            textAlignment = .left
+        }
+        
+        for coupleBars in coupleBarsInputDatas {
+            var barViewsConfigure: [BarViewConfigure] = []
+            for input in coupleBars {
+                if isShowLabel {
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: input.0, textAlignment: textAlignment, syncIdentifier: .barTitleLabel), direction: self.direction)
+                    barViewsConfigure.append(barViewConfigure)
+                } else {
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: false, direction: self.direction)
+                    barViewsConfigure.append(barViewConfigure)
+                }
+            }
+            let barViewCoupleConfigure = BarViewCoupleConfigure(models: barViewsConfigure, direction: self.direction)
+            barViewCoupleConfigures.append(barViewCoupleConfigure)
+        }
+        
+        var valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, syncIdentifier: .barUnitTitleLabel)
+        var coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, syncIdentifier: .barUnitTitleLabel)
+        
+        switch self.direction {
+        case .bottomToTop:
+            let axisConfigure = AxisViewConfigure(originPoint: .zero, axisColor: self.borderColor, verticalDividingPoints: valueDividingLineConfigure, horizontalDividingPoints: coupleDividingLineConfigrue, borderStyle: self.borderStyle.convertToAxisBorderStyle(), borderColor: self.borderColor, isShowXAxis: false, isShowYAxis: false)
+            
+            valueUnitStringConfigure.textDirection = .vertical
+            coupleUnitStringConfigure.textDirection = .horizontal
+            
+            var coupleTitleConfigures: [DisplayLabelConfigure] = []
+            for title in coupleTitles {
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: .barCoupleTitleLabel)
+                coupleTitleConfigures.append(config)
+            }
+            
+            var valueTitleConfigures: [DisplayLabelConfigure] = []
+            for title in valuesString {
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: .barValueTitleLabel)
+                valueTitleConfigures.append(config)
+            }
+            
+            let barViewCoupleCollectionConfigure = BarViewCoupleCollectionConfigure(models: barViewCoupleConfigures, direction: self.direction)
+            let barChartViewConfigure = BarChartViewConfigure(direction: self.direction, isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, axisConfigure: axisConfigure, valueUnitStringConfigure: valueUnitStringConfigure, coupleUnitStringConfigure: coupleUnitStringConfigure, coupleTitleConfigure: coupleTitleConfigures, valueTitleConfigure: valueTitleConfigures, barViewCoupleCollectionConfigure: barViewCoupleCollectionConfigure)
             return BarChartView(configure: barChartViewConfigure)
         case .leftToRight:
-            let barChartViewConfigure = BarChartViewConfigure(textColor: textColor, coupleTitle: coupleTitles, valueTitle: valuesString, inputDatas: inputDatas, isShowLabel: isShowLabel, direction: .leftToRight, borderColor: self.borderColor, borderStyle: self.borderStyle, xDividingPoints: valueDividingLineConfigure, yDividingPoints: coupleDividingLineConfigrue,isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, valueUnitString: self.valueUnitString, coupleUnitString: self.coupleUnitString)
+            let axisConfigure = AxisViewConfigure(originPoint: .zero, axisColor: self.borderColor, verticalDividingPoints: coupleDividingLineConfigrue, horizontalDividingPoints: valueDividingLineConfigure, borderStyle: self.borderStyle.convertToAxisBorderStyle(), borderColor: self.borderColor, isShowXAxis: false, isShowYAxis: false)
+            
+            valueUnitStringConfigure.textDirection = .horizontal
+            coupleUnitStringConfigure.textDirection = .vertical
+            
+            var coupleTitleConfigures: [DisplayLabelConfigure] = []
+            for title in coupleTitles {
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, textAlignment: .right, syncIdentifier: .barCoupleTitleLabel)
+                coupleTitleConfigures.append(config)
+            }
+            
+            var valueTitleConfigures: [DisplayLabelConfigure] = []
+            for title in valuesString {
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, syncIdentifier: .barValueTitleLabel)
+                valueTitleConfigures.append(config)
+            }
+            
+            let barViewCoupleCollectionConfigure = BarViewCoupleCollectionConfigure(models: barViewCoupleConfigures, direction: self.direction)
+            
+            let barChartViewConfigure = BarChartViewConfigure(direction: self.direction, isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, axisConfigure: axisConfigure, valueUnitStringConfigure: valueUnitStringConfigure, coupleUnitStringConfigure: coupleUnitStringConfigure, coupleTitleConfigure: coupleTitleConfigures, valueTitleConfigure: valueTitleConfigures, barViewCoupleCollectionConfigure: barViewCoupleCollectionConfigure)
             return BarChartView(configure: barChartViewConfigure)
         }
         

@@ -53,7 +53,7 @@ class LegendViews: UIView {
                     make.top.equalToSuperview()
                     make.width.equalToSuperview()
                     make.height.equalTo(0)
-                    make.left.equalToSuperview()
+                    make.leading.equalToSuperview()
                 }
                 continue
             }
@@ -63,7 +63,7 @@ class LegendViews: UIView {
                 make.top.equalTo(front.snp.bottom)
                 make.width.equalToSuperview()
                 make.height.equalTo(0)
-                make.left.equalToSuperview()
+                make.leading.equalToSuperview()
             }
             frontView = lengendView
         }
