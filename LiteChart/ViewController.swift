@@ -52,10 +52,14 @@ class ViewController: UIViewController {
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .leftToRight
  */
+        /*
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
         pieInterface.displayDataMode = .original
-        var interface = LiteChartViewInterface(contentInterface: pieInterface)
+ */
+        var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (50, .init(lightUIColor: .purple)), (20, .init(lightUIColor: .blue))])
+        funnelInterface.inputLegendTitles = ["2019", "2020", "2021"]
+        var interface = LiteChartViewInterface(contentInterface: funnelInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"

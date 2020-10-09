@@ -70,6 +70,7 @@
 		089804DB2530121C001CCC19 /* LiteChartBarChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */; };
 		089804DE253015B3001CCC19 /* LiteChartViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */; };
 		089804E325303993001CCC19 /* LiteChartPieChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804E225303993001CCC19 /* LiteChartPieChartInterface.swift */; };
+		089804E625304763001CCC19 /* LiteChartFunnelChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804E525304763001CCC19 /* LiteChartFunnelChartInterface.swift */; };
 		08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5449525221C3700772F65 /* Notification+RadarView.swift */; };
 		08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756BE249DC23600BAEBC1 /* PointsView.swift */; };
 		08A756C1249DC25500BAEBC1 /* PointsViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */; };
@@ -174,6 +175,7 @@
 		089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBarChartInterface.swift; sourceTree = "<group>"; };
 		089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewInterface.swift; sourceTree = "<group>"; };
 		089804E225303993001CCC19 /* LiteChartPieChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartPieChartInterface.swift; sourceTree = "<group>"; };
+		089804E525304763001CCC19 /* LiteChartFunnelChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartFunnelChartInterface.swift; sourceTree = "<group>"; };
 		08A5449525221C3700772F65 /* Notification+RadarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+RadarView.swift"; sourceTree = "<group>"; };
 		08A756BE249DC23600BAEBC1 /* PointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsView.swift; sourceTree = "<group>"; };
 		08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsViewConfigure.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */,
 				089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */,
 				089804E225303993001CCC19 /* LiteChartPieChartInterface.swift */,
+				089804E525304763001CCC19 /* LiteChartFunnelChartInterface.swift */,
 			);
 			path = LiteChart;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				08A756C5249DDB2B00BAEBC1 /* PointViews.swift in Sources */,
 				F56C193B24986AD800A002AE /* CircleLegend.swift in Sources */,
 				08386C24248E238500D0E655 /* PieViewConfigure.swift in Sources */,
+				089804E625304763001CCC19 /* LiteChartFunnelChartInterface.swift in Sources */,
 				08A756CB249DDCFC00BAEBC1 /* PlotChartViewConfigure.swift in Sources */,
 				0866FDC42489FF4E004AF645 /* DisplayLabel.swift in Sources */,
 				082E7BF324A0D9F000FF1F8B /* RadarDataViewConfigure.swift in Sources */,
