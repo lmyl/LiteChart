@@ -68,6 +68,7 @@
 		088A258F249A25F600B533D3 /* LineChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */; };
 		089467BF2531538000BB5A15 /* LiteChartScatterChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089467BE2531538000BB5A15 /* LiteChartScatterChartInterface.swift */; };
 		089467C225315AE500BB5A15 /* LiteChartBubbleChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089467C125315AE500BB5A15 /* LiteChartBubbleChartInterface.swift */; };
+		089467C5253163B900BB5A15 /* RadarChartLabelLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089467C4253163B900BB5A15 /* RadarChartLabelLocation.swift */; };
 		089804D325300FBC001CCC19 /* LiteChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804D225300FBC001CCC19 /* LiteChartInterface.swift */; };
 		089804DB2530121C001CCC19 /* LiteChartBarChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */; };
 		089804DE253015B3001CCC19 /* LiteChartViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */; };
@@ -176,6 +177,7 @@
 		088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewConfigure.swift; sourceTree = "<group>"; };
 		089467BE2531538000BB5A15 /* LiteChartScatterChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartScatterChartInterface.swift; sourceTree = "<group>"; };
 		089467C125315AE500BB5A15 /* LiteChartBubbleChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBubbleChartInterface.swift; sourceTree = "<group>"; };
+		089467C4253163B900BB5A15 /* RadarChartLabelLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartLabelLocation.swift; sourceTree = "<group>"; };
 		089804D225300FBC001CCC19 /* LiteChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartInterface.swift; sourceTree = "<group>"; };
 		089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBarChartInterface.swift; sourceTree = "<group>"; };
 		089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewInterface.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				082E7BF024A0D9E100FF1F8B /* RadarDataView.swift */,
 				082E7BF224A0D9F000FF1F8B /* RadarDataViewConfigure.swift */,
 				F501A68924A1EAB6007FD6DF /* RadarChartView.swift */,
+				089467C4253163B900BB5A15 /* RadarChartLabelLocation.swift */,
 				F501A68B24A1EACA007FD6DF /* RadarChartViewConfigure.swift */,
 				F501A68D24A235BB007FD6DF /* RadarChartParameters.swift */,
 			);
@@ -679,6 +682,7 @@
 				0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */,
 				F501A68A24A1EAB6007FD6DF /* RadarChartView.swift in Sources */,
 				0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */,
+				089467C5253163B900BB5A15 /* RadarChartLabelLocation.swift in Sources */,
 				08A756C3249DC2EC00BAEBC1 /* PointConfigure.swift in Sources */,
 				082E7BED24A0C92900FF1F8B /* RadarBackgroundView.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,

@@ -82,22 +82,8 @@ class RadarDataView: UIView {
         return CGPoint(x: newPointX, y: newPointY)
     }
     
-    private func computeRegularPolygonVertexAngle(for vertexNumbers: Int) -> [CGFloat] {
-        guard vertexNumbers >= 1 else {
-            return []
-        }
-        var result: [CGFloat] = []
-        let insideAngle = 360 / Double(vertexNumbers)
-        for index in 0 ..< vertexNumbers {
-            let angle = Double(index) * insideAngle - 90
-            result.append(CGFloat(angle))
-        }
-        
-        return result
-    }
-    
     private func computeVertexLocation(for center: CGPoint, radius: CGFloat, points: [CGFloat]) -> [CGPoint] {
-        let angles = self.computeRegularPolygonVertexAngle(for: points.count)
+        let angles = self.configure.angleOfPoints
         guard angles.count == points.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }
@@ -111,7 +97,7 @@ class RadarDataView: UIView {
                 length = 0
             }
             let realRadius = radius * length
-            let realPoint = self.computePointInCircle(for: center, radius: realRadius, angle: angles[index])
+            let realPoint = self.computePointInCircle(for: center, radius: realRadius, angle: CGFloat(angles[index]))
             result.append(realPoint)
         }
         return result

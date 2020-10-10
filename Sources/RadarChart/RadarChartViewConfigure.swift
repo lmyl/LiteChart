@@ -15,8 +15,18 @@ struct RadarChartViewConfigure {
     let coupleTitlesConfigure: [DisplayLabelConfigure]
     let isShowCoupleTitles: Bool
     
-    var angleOfPoints: [Double] {
-        self.backgroundConfigure.angleOfPoints
+    var locationOfPoints: [RadarChartLabelLocation] {
+        self.backgroundConfigure.angleOfPoints.map({
+            if $0 == 90 {
+                return .bottom
+            } else if $0 == -90 {
+                return .top
+            } else if $0 > 90 {
+                return .left
+            } else {
+                return .right
+            }
+        })
     }
     
     init(backgroundConfigure: RadarBackgroundViewConfigure, radarDataViewsConfigure: [RadarDataViewConfigure], isShowCoupleTitles: Bool, coupleTitlesConfigure: [DisplayLabelConfigure]) {

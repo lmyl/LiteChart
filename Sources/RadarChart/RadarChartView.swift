@@ -146,8 +146,8 @@ class RadarChartView: UIView {
         guard let backgroundView = self.backgroundView else {
             return
         }
-        let angleOfPoints = self.configure.angleOfPoints
-        guard self.coupleTitles.count >= 3, angleOfPoints.count == points.count, points.count == self.coupleTitles.count else {
+        let locationOfPoints = self.configure.locationOfPoints
+        guard self.coupleTitles.count >= 3, locationOfPoints.count == points.count, points.count == self.coupleTitles.count else {
             return
         }
         let endPoints = points.map({
@@ -156,21 +156,22 @@ class RadarChartView: UIView {
         let coupleTitles = self.coupleTitles
         for (index, coupleTitleView) in coupleTitles.enumerated() {
             var center = CGPoint.zero
-            if angleOfPoints[index] == -90 {
-                let centerY = endPoints[index].y - coupleTitleHeight / 2
-                let centerX = endPoints[index].x
-                center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] == 90 {
-                let centerY = endPoints[index].y + coupleTitleHeight / 2
-                let centerX = endPoints[index].x
-                center = CGPoint(x: centerX, y: centerY)
-            } else if angleOfPoints[index] > 90 {
+            switch locationOfPoints[index] {
+            case .left:
                 let centerY = endPoints[index].y
                 let centerX = endPoints[index].x - coupleTitleWidth / 2
                 center = CGPoint(x: centerX, y: centerY)
-            } else {
+            case .right:
                 let centerY = endPoints[index].y
                 let centerX = endPoints[index].x + coupleTitleWidth / 2
+                center = CGPoint(x: centerX, y: centerY)
+            case .top:
+                let centerY = endPoints[index].y - coupleTitleHeight / 2
+                let centerX = endPoints[index].x
+                center = CGPoint(x: centerX, y: centerY)
+            case .bottom:
+                let centerY = endPoints[index].y + coupleTitleHeight / 2
+                let centerX = endPoints[index].x
                 center = CGPoint(x: centerX, y: centerY)
             }
 

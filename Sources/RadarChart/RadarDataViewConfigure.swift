@@ -11,12 +11,14 @@ import CoreGraphics
 
 struct RadarDataViewConfigure {
     let points: [CGFloat]
+    let angleOfPoints: [Double]
     let color: LiteChartDarkLightColor
 }
 
 extension RadarDataViewConfigure {
     private init() {
-        self.points = []
+        self.points = [0, 0, 0]
+        self.angleOfPoints = [-90, 30, 150]
         self.color = .init(lightUIColor: .black, darkUIColor: .white)
     }
     

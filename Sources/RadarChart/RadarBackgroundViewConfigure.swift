@@ -13,16 +13,7 @@ struct RadarBackgroundViewConfigure {
     let radarLightColor: LiteChartDarkLightColor
     let radarUnlightColor: LiteChartDarkLightColor
     let radarLayerCount: Int
-    let vertexCount: Int
-    
-    var angleOfPoints: [Double] {
-        var angles = [Double]()
-        for index in 0 ..< self.vertexCount {
-            let angle = 360 / Double(self.vertexCount) * Double(index) - 90
-            angles.append(angle)
-        }
-        return angles
-    }
+    let angleOfPoints: [Double]
 }
 
 extension RadarBackgroundViewConfigure {
@@ -31,7 +22,7 @@ extension RadarBackgroundViewConfigure {
         self.radarLightColor = .init(lightUIColor: .white, darkUIColor: .black)
         self.radarUnlightColor = .init(lightUIColor: .lightGray, darkUIColor: .white)
         self.radarLayerCount = 1
-        self.vertexCount = 3
+        self.angleOfPoints = [-90, 30, 150]
     }
     
     static let emptyConfigure = RadarBackgroundViewConfigure()

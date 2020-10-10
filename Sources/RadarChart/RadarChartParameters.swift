@@ -94,12 +94,17 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         for inputData in self.inputDatas {
             inputDatas.append(inputData.1)
         }
+        var angles = [Double]()
+        for index in 0 ..< pointCount {
+            let angle = 360 / Double(pointCount) * Double(index) - 90
+            angles.append(angle)
+        }
         
         let proportionValues = convertProportionValue(datas: inputDatas)
         var radarDataViewsConfigure: [RadarDataViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let color = self.inputDatas[index].0
-            let radarDataViewConfigure =  RadarDataViewConfigure(points: proportionValues[index], color: color)
+            let radarDataViewConfigure =  RadarDataViewConfigure(points: proportionValues[index], angleOfPoints: angles, color: color)
             radarDataViewsConfigure.append(radarDataViewConfigure)
         }
         
@@ -109,7 +114,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
             coupleTitlesConfigure.append(coupleTitleConfigure)
         }
         
-        let configure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, vertexCount: pointCount)
+        let configure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, angleOfPoints: angles)
         let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure, isShowCoupleTitles: self.isShowingCoupleTitles, coupleTitlesConfigure: coupleTitlesConfigure)
         return RadarChartView(configure: radarChartViewConfigure)
         
