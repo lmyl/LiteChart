@@ -15,23 +15,25 @@ struct ScatterPlotChartParameters {
     
     var borderColor: LiteChartDarkLightColor
     
-    var textColor: LiteChartDarkLightColor
-    
-    var inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]
-        
     var inputLegendTitles: [String] // 图例显示
+        
+    var inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]
+    
+    var valueTextColor: LiteChartDarkLightColor
+    
+    var coupleTextColor: LiteChartDarkLightColor
             
+    var isShowValueDividingLine: Bool
+    
     var dividingValueLineStyle: AxisViewLineStyle
     
     var dividingValueLineColor: LiteChartDarkLightColor
     
+    var isShowCoupleDividingLine: Bool
+    
     var dividingCoupleLineStyle: AxisViewLineStyle
     
     var dividingCoupleLineColor: LiteChartDarkLightColor
-    
-    var isShowValueDividingLine: Bool
-    
-    var isShowCoupleDividingLine: Bool
     
     var isShowValueUnitString: Bool
     
@@ -41,26 +43,52 @@ struct ScatterPlotChartParameters {
     
     var coupleUnitString: String
     
+    var valueUnitTextColor: LiteChartDarkLightColor
+    
+    var coupleUnitTextColor: LiteChartDarkLightColor
+    
     var axisColor: LiteChartDarkLightColor
     
     var isShowAxis: Bool
     
-    init(borderStyle: LiteChartViewBorderStyle, borderColor: LiteChartDarkLightColor, textColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])], inputLegendTitles: [String], dividingValueLineStyle: AxisViewLineStyle, dividingValueLineColor: LiteChartDarkLightColor, dividingCoupleLineStyle: AxisViewLineStyle, dividingCoupleLineColor: LiteChartDarkLightColor, isShowValueDividingLine: Bool, isShowCoupleDividingLine: Bool, isShowValueUnitString: Bool, valueUnitString: String, isShowCoupleUnitString: Bool, coupleUnitString: String, axisColor: LiteChartDarkLightColor, isShowAxis: Bool) {
+    init(borderStyle: LiteChartViewBorderStyle,
+         borderColor: LiteChartDarkLightColor,
+         inputLegendTitles: [String],
+         inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])],
+         valueTextColor: LiteChartDarkLightColor,
+         coupleTextColor: LiteChartDarkLightColor,
+         isShowValueDividingLine: Bool,
+         dividingValueLineStyle: AxisViewLineStyle,
+         dividingValueLineColor: LiteChartDarkLightColor,
+         isShowCoupleDividingLine: Bool,
+         dividingCoupleLineStyle: AxisViewLineStyle,
+         dividingCoupleLineColor: LiteChartDarkLightColor,
+         isShowValueUnitString: Bool,
+         valueUnitString: String,
+         isShowCoupleUnitString: Bool,
+         coupleUnitString: String,
+         valueUnitTextColor: LiteChartDarkLightColor,
+         coupleUnitTextColor: LiteChartDarkLightColor,
+         axisColor: LiteChartDarkLightColor,
+         isShowAxis: Bool) {
         self.borderStyle = borderStyle
         self.borderColor = borderColor
-        self.inputDatas = inputDatas
-        self.textColor = textColor
         self.inputLegendTitles = inputLegendTitles
+        self.inputDatas = inputDatas
+        self.valueTextColor = valueTextColor
+        self.coupleTextColor = coupleTextColor
+        self.isShowValueDividingLine = isShowValueDividingLine
         self.dividingValueLineColor = dividingValueLineColor
         self.dividingValueLineStyle = dividingValueLineStyle
+        self.isShowCoupleDividingLine = isShowCoupleDividingLine
         self.dividingCoupleLineColor = dividingCoupleLineColor
         self.dividingCoupleLineStyle = dividingCoupleLineStyle
-        self.isShowValueDividingLine = isShowValueDividingLine
-        self.isShowCoupleDividingLine = isShowCoupleDividingLine
         self.isShowCoupleUnitString = isShowCoupleUnitString
         self.isShowValueUnitString = isShowValueUnitString
         self.valueUnitString = valueUnitString
         self.coupleUnitString = coupleUnitString
+        self.valueUnitTextColor = valueUnitTextColor
+        self.coupleUnitTextColor = coupleUnitTextColor
         self.axisColor = axisColor
         self.isShowAxis = isShowAxis
     }
@@ -78,7 +106,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = self.inputDatas[index].1
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .scatterLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .scatterLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -141,7 +169,39 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
         }
         
         let axisOriginal = self.computeOriginalValueForAxis(xAxisValue: valueForAxis.xAxisValue, yAxisValue: valueForAxis.yAxisValue)
-        let plotChartViewConfigure = PlotChartViewConfigure(textColor: self.textColor, coupleTitle: coupleTitleString, valueTitle: valuesString, inputDatas: inputDatas, borderColor: self.borderColor, borderStyle: self.borderStyle, axisOriginal: axisOriginal, axisColor: self.axisColor, isShowAxis: self.isShowAxis, xDividingPoints: coupleDividingLineConfigure, yDividingPoints: valueDividingLineConfigure, isShowValueUnitString: self.isShowValueUnitString, valueUnitString: self.valueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, coupleUnitString: self.coupleUnitString)
+        
+        let valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .pointsUnitTitleLabel)
+        let coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, syncIdentifier: .pointsUnitTitleLabel)
+        
+        var coupleTitleConfigure: [DisplayLabelConfigure] = []
+        for title in coupleTitleString {
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: .pointsCoupleTitleLabel)
+            coupleTitleConfigure.append(configure)
+        }
+        
+        var valueTitleConfigure: [DisplayLabelConfigure] = []
+        for title in valuesString {
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: .pointsValueTitleLabel)
+            valueTitleConfigure.append(configure)
+        }
+        
+        let borderStlye = self.borderStyle.convertToAxisBorderStyle()
+        let axisConfigure = AxisViewConfigure(originPoint: axisOriginal, axisColor: self.axisColor, verticalDividingPoints: valueDividingLineConfigure, horizontalDividingPoints: coupleDividingLineConfigure, borderStyle: borderStlye, borderColor: self.borderColor, isShowXAxis: self.isShowAxis, isShowYAxis: self.isShowAxis)
+        
+        var configures: [PointsViewConfigure] = []
+        for inputData in inputDatas {
+            var pointConfigure: [PointConfigure] = []
+            for point in inputData.2 {
+                let configure = PointConfigure(location: point.2, legendConfigure: .init(type: inputData.1, color: inputData.0), size: point.0, opacity: point.1)
+                pointConfigure.append(configure)
+            }
+            let con = PointsViewConfigure(points: pointConfigure)
+            configures.append(con)
+        }
+        let pointViewsConfigure = PointViewsConfigure(models: configures)
+        
+        let plotChartViewConfigure = PlotChartViewConfigure(isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, axisConfigure: axisConfigure, valueUnitStringConfigure: valueUnitStringConfigure, coupleUnitStringConfigure: coupleUnitStringConfigure, coupleTitleConfigure: coupleTitleConfigure, valueTitleConfigure: valueTitleConfigure, pointViewsConfigure: pointViewsConfigure)
+        
         return PlotChartView(configure: plotChartViewConfigure)
     }
     

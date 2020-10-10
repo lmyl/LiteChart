@@ -66,6 +66,8 @@
 		088A258B249A235700B533D3 /* LineViewsConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258A249A235700B533D3 /* LineViewsConfigure.swift */; };
 		088A258D249A257300B533D3 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258C249A257300B533D3 /* LineChartView.swift */; };
 		088A258F249A25F600B533D3 /* LineChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */; };
+		089467BF2531538000BB5A15 /* LiteChartScatterChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089467BE2531538000BB5A15 /* LiteChartScatterChartInterface.swift */; };
+		089467C225315AE500BB5A15 /* LiteChartBubbleChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089467C125315AE500BB5A15 /* LiteChartBubbleChartInterface.swift */; };
 		089804D325300FBC001CCC19 /* LiteChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804D225300FBC001CCC19 /* LiteChartInterface.swift */; };
 		089804DB2530121C001CCC19 /* LiteChartBarChartInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */; };
 		089804DE253015B3001CCC19 /* LiteChartViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */; };
@@ -172,6 +174,8 @@
 		088A258A249A235700B533D3 /* LineViewsConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewsConfigure.swift; sourceTree = "<group>"; };
 		088A258C249A257300B533D3 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		088A258E249A25F600B533D3 /* LineChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewConfigure.swift; sourceTree = "<group>"; };
+		089467BE2531538000BB5A15 /* LiteChartScatterChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartScatterChartInterface.swift; sourceTree = "<group>"; };
+		089467C125315AE500BB5A15 /* LiteChartBubbleChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBubbleChartInterface.swift; sourceTree = "<group>"; };
 		089804D225300FBC001CCC19 /* LiteChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartInterface.swift; sourceTree = "<group>"; };
 		089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartBarChartInterface.swift; sourceTree = "<group>"; };
 		089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartViewInterface.swift; sourceTree = "<group>"; };
@@ -299,13 +303,13 @@
 				082E7BEB24A0C8FF00FF1F8B /* RadarChart */,
 				08D6299F249CEF6B0039AF6A /* BubbleChart */,
 				08D6299E249CEEDB0039AF6A /* ScatterPlotChart */,
+				08A756BD249DC20400BAEBC1 /* PointsView */,
 				08596E2D2499133900A3FC18 /* LineChart */,
 				083BC8E224907C83000B8DDE /* BarChart */,
 				08386C1C248E109500D0E655 /* PieChart */,
 				080368E2248A630200D1413C /* FunnelChart */,
 				08386C25248E51F300D0E655 /* Notification */,
 				08386C19248DD91000D0E655 /* ChartError */,
-				08A756BD249DC20400BAEBC1 /* PointsView */,
 				0876A4E5248CD1290015289B /* DisplayDataMode */,
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
@@ -443,6 +447,8 @@
 				089804D225300FBC001CCC19 /* LiteChartInterface.swift */,
 				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
 				089804DD253015B3001CCC19 /* LiteChartViewInterface.swift */,
+				089467C125315AE500BB5A15 /* LiteChartBubbleChartInterface.swift */,
+				089467BE2531538000BB5A15 /* LiteChartScatterChartInterface.swift */,
 				08C99DE32530A22700B56F1B /* LiteChartLineChartInterface.swift */,
 				089804DA2530121C001CCC19 /* LiteChartBarChartInterface.swift */,
 				089804E225303993001CCC19 /* LiteChartPieChartInterface.swift */,
@@ -455,8 +461,8 @@
 			isa = PBXGroup;
 			children = (
 				08A756BE249DC23600BAEBC1 /* PointsView.swift */,
-				08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */,
 				08A756C2249DC2EC00BAEBC1 /* PointConfigure.swift */,
+				08A756C0249DC25500BAEBC1 /* PointsViewConfigure.swift */,
 				08A756C4249DDB2B00BAEBC1 /* PointViews.swift */,
 				08A756C6249DDB3900BAEBC1 /* PointViewsConfigure.swift */,
 				08A756C8249DDC9E00BAEBC1 /* PlotChartView.swift */,
@@ -649,6 +655,7 @@
 				0832B5372489FED000110CBA /* ViewController.swift in Sources */,
 				08386C27248E521200D0E655 /* Notification+PieSectorView.swift in Sources */,
 				083BC8E72490865E000B8DDE /* AxisViewConfigure.swift in Sources */,
+				089467C225315AE500BB5A15 /* LiteChartBubbleChartInterface.swift in Sources */,
 				F56C193D2498713F00A002AE /* PentagramLegend.swift in Sources */,
 				08FF1A182492034900AE05F9 /* BarChartParameter.swift in Sources */,
 				089804D325300FBC001CCC19 /* LiteChartInterface.swift in Sources */,
@@ -722,6 +729,7 @@
 				0876ADB124FCC56E0089A34D /* DisplayLabelSyncIdentifier.swift in Sources */,
 				080368E4248A637100D1413C /* FunalFloorBackagroundView.swift in Sources */,
 				08F56E66248B6C7F000998F8 /* LegendView.swift in Sources */,
+				089467BF2531538000BB5A15 /* LiteChartScatterChartInterface.swift in Sources */,
 				082E7BF124A0D9E100FF1F8B /* RadarDataView.swift in Sources */,
 				08A756C1249DC25500BAEBC1 /* PointsViewConfigure.swift in Sources */,
 				08386C1E248E12B700D0E655 /* PieSectorView.swift in Sources */,

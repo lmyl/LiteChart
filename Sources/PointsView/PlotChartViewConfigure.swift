@@ -10,55 +10,47 @@ import Foundation
 import CoreGraphics
 
 struct PlotChartViewConfigure {
-    let textColor: LiteChartDarkLightColor
-    
-    let coupleTitle: [String]
-    
-    let valueTitle: [String]
-    
-    let inputDatas: [(LiteChartDarkLightColor, Legend ,[(scale: CGFloat, opacity: CGFloat, CGPoint)])]
-        
-    let borderColor: LiteChartDarkLightColor
-    
-    let borderStyle: LiteChartViewBorderStyle
-    
-    let axisOriginal: CGPoint
-    
-    let axisColor: LiteChartDarkLightColor
-    
-    let isShowAxis: Bool
-    
-    let xDividingPoints: [AxisDividingLineConfigure]
-    
-    let yDividingPoints: [AxisDividingLineConfigure]
     
     let isShowValueUnitString: Bool
     
-    let valueUnitString: String
-    
     let isShowCoupleUnitString: Bool
     
-    let coupleUnitString: String
+    let axisConfigure: AxisViewConfigure
+    
+    let valueUnitStringConfigure: DisplayLabelConfigure
+    
+    let coupleUnitStringConfigure: DisplayLabelConfigure
+    
+    let coupleTitleConfigure: [DisplayLabelConfigure]
+    
+    let valueTitleConfigure: [DisplayLabelConfigure]
+        
+    let pointViewsConfigure: PointViewsConfigure
 }
 
 extension PlotChartViewConfigure {
     private init() {
-        self.textColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.coupleTitle = []
-        self.valueTitle = []
-        self.inputDatas = []
-        self.borderColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.xDividingPoints = []
-        self.yDividingPoints = []
-        self.borderStyle = .halfSurrounded
-        self.valueUnitString = ""
-        self.coupleUnitString = ""
         self.isShowValueUnitString = false
         self.isShowCoupleUnitString = false
-        self.axisOriginal = .zero
-        self.axisColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.isShowAxis = true
+        self.axisConfigure = .emptyConfigure
+        self.valueUnitStringConfigure = .emptyConfigure
+        self.coupleUnitStringConfigure = .emptyConfigure
+        self.coupleTitleConfigure = []
+        self.valueTitleConfigure = []
+        self.pointViewsConfigure = .emptyConfigure
     }
     
     static let emptyConfigure = PlotChartViewConfigure()
+    
+    var yDividingPoints: [CGFloat] {
+        self.axisConfigure.verticalDividingPoints.map({
+            $0.location
+        })
+    }
+    
+    var xDividingPoints: [CGFloat] {
+        self.axisConfigure.horizontalDividingPoints.map({
+            $0.location
+        })
+    }
 }
