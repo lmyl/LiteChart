@@ -10,33 +10,42 @@ import UIKit
 
 struct RadarChartParameters {
     
-    var coupleTitles: [String]
+    var inputDatas: [(LiteChartDarkLightColor, [Double])]
     
     var isShowingCoupleTitles: Bool
     
-    var inputLegendTitles: [String]
+    var coupleTitles: [String]
     
-    var textColor: LiteChartDarkLightColor
+    var coupleTitlesColor: LiteChartDarkLightColor
+    
+    var inputLegendTitles: [String]
     
     var radarLineColor: LiteChartDarkLightColor
     
     var radarLightColor: LiteChartDarkLightColor
     
     var radarUnlightColor: LiteChartDarkLightColor
-        
-    var inputDatas: [(LiteChartDarkLightColor, [Double])]
     
     var radarCount: Int
     
-    init(coupleTitles: [String], isShowingCoupleTitles: Bool, inputLegendTitles: [String], textColor: LiteChartDarkLightColor, radarLineColor: LiteChartDarkLightColor, radarLightColor: LiteChartDarkLightColor, radarUnlightColor: LiteChartDarkLightColor, inputDatas: [(LiteChartDarkLightColor, [Double])], radarCount: Int) {
-        self.coupleTitles = coupleTitles
+    init(inputDatas: [(LiteChartDarkLightColor, [Double])],
+         isShowingCoupleTitles: Bool,
+         coupleTitles: [String],
+         coupleTitlesColor: LiteChartDarkLightColor,
+         inputLegendTitles: [String],
+         radarLineColor: LiteChartDarkLightColor,
+         radarLightColor: LiteChartDarkLightColor,
+         radarUnlightColor: LiteChartDarkLightColor,
+         radarCount: Int) {
+        self.inputDatas = inputDatas
         self.isShowingCoupleTitles = isShowingCoupleTitles
+        self.coupleTitles = coupleTitles
+        self.coupleTitlesColor = coupleTitlesColor
         self.inputLegendTitles = inputLegendTitles
-        self.textColor = textColor
+        self.inputLegendTitles = inputLegendTitles
         self.radarLineColor = radarLineColor
         self.radarLightColor = radarLightColor
         self.radarUnlightColor = radarUnlightColor
-        self.inputDatas = inputDatas
         self.radarCount = radarCount
     }
     
@@ -76,7 +85,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         var legendViewConfigures: [LegendViewConfigure] = []
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: textColor, textAlignment: .left, syncIdentifier: .radarLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .radarLegendTitleLabel)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -108,14 +117,30 @@ extension RadarChartParameters: LiteChartParametersProcesser {
             radarDataViewsConfigure.append(radarDataViewConfigure)
         }
         
+        let backgroundConfigure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, angleOfPoints: angles)
+        let locationOfPoints = backgroundConfigure.locationOfPoints
+        
         var coupleTitlesConfigure: [DisplayLabelConfigure] = []
-        for coupleTitle in self.coupleTitles {
-            let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: textColor, syncIdentifier: .radarCoupleTitleLabel)
-            coupleTitlesConfigure.append(coupleTitleConfigure)
+        if self.isShowingCoupleTitles {
+            guard locationOfPoints.count == self.coupleTitles.count else {
+                fatalError("框架内部错误，不给予拯救")
+            }
+            for (index, coupleTitle) in self.coupleTitles.enumerated() {
+                let textAligment: NSTextAlignment
+                switch locationOfPoints[index] {
+                case .left:
+                    textAligment = .right
+                case .right:
+                    textAligment = .left
+                case .bottom, .top:
+                    textAligment = .center
+                }
+                let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: self.coupleTitlesColor, textAlignment: textAligment, syncIdentifier: .radarCoupleTitleLabel)
+                coupleTitlesConfigure.append(coupleTitleConfigure)
+            }
         }
         
-        let configure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, angleOfPoints: angles)
-        let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: configure, radarDataViewsConfigure: radarDataViewsConfigure, isShowCoupleTitles: self.isShowingCoupleTitles, coupleTitlesConfigure: coupleTitlesConfigure)
+        let radarChartViewConfigure = RadarChartViewConfigure(backgroundConfigure: backgroundConfigure, radarDataViewsConfigure: radarDataViewsConfigure, isShowCoupleTitles: self.isShowingCoupleTitles, coupleTitlesConfigure: coupleTitlesConfigure)
         return RadarChartView(configure: radarChartViewConfigure)
         
     }

@@ -26,4 +26,18 @@ extension RadarBackgroundViewConfigure {
     }
     
     static let emptyConfigure = RadarBackgroundViewConfigure()
+    
+    var locationOfPoints: [RadarChartLabelLocation] {
+        self.angleOfPoints.map({
+            if $0 == 90 {
+                return .bottom
+            } else if $0 == -90 {
+                return .top
+            } else if $0 > 90 {
+                return .left
+            } else {
+                return .right
+            }
+        })
+    }
 }

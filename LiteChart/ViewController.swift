@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         scatterInterface.coupleUnitString = "月/年"
         scatterInterface.underlayerColor = .init(lightColor: .blue)
         scatterInterface.unitTextColor = .init(lightColor: .gold)*/
-        
+        /*
         let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: .yellow), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
         var bubbleInterface = LiteChartBubbleChartInterface(inputDatas: datas)
         bubbleInterface.isShowValueDividingLine = true
@@ -101,8 +101,17 @@ class ViewController: UIViewController {
         bubbleInterface.coupleUnitString = "月/年"
         bubbleInterface.underlayerColor = .init(lightColor: .blue)
         bubbleInterface.unitTextColor = .init(lightColor: .gold)
-        
-        var interface = LiteChartViewInterface(contentInterface: bubbleInterface)
+        */
+        var radarInterface = LiteChartRadarChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.20, 0.30, 0.40 ,0.50]), (LiteChartDarkLightColor.init(lightUIColor: .red), [0.30, 0.90, 0.70, 0.50 ,0.1]),(LiteChartDarkLightColor.init(lightUIColor: .yellow), [0.10, 0.60, 0.40, 0.90 ,0.5])])
+        radarInterface.radarCount = 3
+        radarInterface.inputLegendTitles = ["2019", "2020", "2021"]
+        radarInterface.coupleTitles = ["Water", "Electrnic", "Oil", "Gas", "Fire"]
+        radarInterface.isShowingCoupleTitles = true
+        radarInterface.coupleTitlesColor = .init(lightColor: .blue)
+        radarInterface.radarLineColor = .init(lightColor: .orange)
+        radarInterface.radarUnlightColor = .init(lightColor: .cyan)
+        radarInterface.radarLightColor = .init(lightColor: .pink)
+        var interface = LiteChartViewInterface(contentInterface: radarInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
