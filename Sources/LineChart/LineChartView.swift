@@ -138,10 +138,6 @@ class LineChartView: UIView {
         if self.yUnitLabel != nil {
             space += self.labelViewWidthSpace + self.leftUnitViewWidth
         }
-        if !self.coupleTitleView.isEmpty {
-            space += self.labelViewWidthSpace + self.leftViewWidth
-            return space
-        }
         if !self.valueView.isEmpty {
             space += self.labelViewWidthSpace + self.leftViewWidth
             return space
@@ -155,10 +151,6 @@ class LineChartView: UIView {
             space += self.labelViewHeightSpace + self.bottomUnitViewHeight
         }
         if !self.coupleTitleView.isEmpty {
-            space += self.labelViewHeightSpace + self.bottomViewHeight
-            return space
-        }
-        if !self.valueView.isEmpty {
             space += self.labelViewHeightSpace + self.bottomViewHeight
             return space
         }
