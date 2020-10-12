@@ -73,14 +73,12 @@ class PieView: UIView {
     }
     
     private var labelWidth: CGFloat {
-        var labelLength = self.bounds.width / 10
-        labelLength = min(labelLength, 50)
+        let labelLength = self.bounds.width / 8
         return labelLength
     }
     
     private var labelHeight: CGFloat {
-        var labelHeight = min(self.bounds.width - 2 * labelWidth, self.bounds.height) / 16
-        labelHeight = min(labelHeight, 20)
+        let labelHeight = min(self.bounds.width - 2 * labelWidth, self.bounds.height) / 12
         return labelHeight
     }
     

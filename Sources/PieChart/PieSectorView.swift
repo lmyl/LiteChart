@@ -51,7 +51,7 @@ class PieSectorView: UIView {
             let radius: CGFloat
             if self.configure.isShowLine {
                 let tempRadius = min(rect.width, rect.height) / 2
-                let polylineSegmentLength = min(tempRadius / 8, 20)
+                let polylineSegmentLength = tempRadius / 6
                 radius = tempRadius - polylineSegmentLength
             } else {
                 radius = min(rect.width, rect.height) / 2
