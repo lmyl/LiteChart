@@ -78,9 +78,12 @@ class LiteChartView: UIView {
         self.legendViews = legendViews
     }
     
+    var titleHeight: CGFloat {
+        self.bounds.height / 10
+    }
     
     private func updateTitleViewStaticConstraints() {
-        guard let titleView = self.titleView else {
+        guard let titleView = self.titleView, let content = self.contentView else {
             return
         }
         titleView.snp.updateConstraints{
@@ -91,9 +94,9 @@ class LiteChartView: UIView {
             case .bottom:
                 make.bottom.equalToSuperview()
             }
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(0)
+            make.leading.equalTo(content.snp.leading)
+            make.trailing.equalTo(content.snp.trailing)
+            make.height.equalTo(titleHeight)
         }
     }
     
@@ -101,12 +104,18 @@ class LiteChartView: UIView {
         guard let titleView = self.titleView else {
             return
         }
-        var titleHeight = self.bounds.height / 10
-        titleHeight = min(titleHeight, 20)
+        let spaceHeight = titleHeight / 2
         titleView.snp.updateConstraints{
             make in
+            switch self.configure.chartTitleDisplayLocation {
+            case .top:
+                make.top.equalToSuperview().offset(spaceHeight)
+            case .bottom:
+                make.bottom.equalToSuperview().offset(-spaceHeight)
+            }
             make.height.equalTo(titleHeight)
         }
+        titleView.layer.setNeedsDisplay()
     }
     
     private func updateContentViewStaticConstraints() {
@@ -129,9 +138,7 @@ class LiteChartView: UIView {
                 make.bottom.equalToSuperview()
             }
             
-            if let _ = self.legendViews {
-
-            } else {
+            if self.legendViews == nil {
                 make.trailing.equalToSuperview()
             }
             
@@ -143,18 +150,26 @@ class LiteChartView: UIView {
         guard let contentView = self.contentView else {
             return
         }
-        var spaceHeight = self.bounds.height / 20
-        spaceHeight = min(spaceHeight, 4)
+        let spaceHeight = titleHeight
         contentView.snp.updateConstraints{
             make in
             if let titleView = self.titleView {
                 switch self.configure.chartTitleDisplayLocation {
                 case .top:
-                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight)
+                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight / 2)
+                    make.bottom.equalToSuperview().offset(-spaceHeight)
                 case .bottom:
-                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight)
+                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight / 2)
+                    make.top.equalToSuperview().offset(spaceHeight)
                 }
+            } else {
+                make.top.equalToSuperview().offset(spaceHeight)
+                make.bottom.equalToSuperview().offset(-spaceHeight)
             }
+            if self.legendViews == nil {
+                make.trailing.equalToSuperview().offset(-spaceHeight)
+            }
+            make.leading.equalToSuperview().offset(spaceHeight)
         }
     }
     
@@ -167,13 +182,13 @@ class LiteChartView: UIView {
         }
         legendViews.snp.updateConstraints{
             make in
-            make.width.equalTo(0)
+            make.width.equalToSuperview().multipliedBy(0.2)
             make.leading.equalTo(contentView.snp.trailing)
             
             make.top.equalTo(contentView.snp.top)
             
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(contentView.snp.bottom)
         }
     }
     
@@ -184,13 +199,9 @@ class LiteChartView: UIView {
         guard let contentView = self.contentView else {
             return
         }
-        var spaceWidth = self.bounds.width / 20
-        spaceWidth = min(spaceWidth, 4)
-        var legendViewsWidth = self.bounds.width / 5
-        legendViewsWidth = min(legendViewsWidth, 100)
+        let spaceWidth = self.bounds.width / 45
         legendViews.snp.updateConstraints{
             make in
-            make.width.equalTo(legendViewsWidth)
             make.leading.equalTo(contentView.snp.trailing).offset(spaceWidth)
         }
     }

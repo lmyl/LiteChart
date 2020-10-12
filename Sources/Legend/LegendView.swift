@@ -105,7 +105,7 @@ class LegendView: UIView {
             return
         }
         let remain = self.bounds.width - min(self.bounds.width, self.bounds.height)
-        let offset = min(remain /  10, 4)
+        let offset = remain / 10
         rightView.snp.updateConstraints{
             make in
             make.leading.equalTo(leftView.snp.trailing).offset(offset).priority(.init(750))

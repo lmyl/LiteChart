@@ -35,11 +35,6 @@ class FunalFloorView: UIView {
         updateContentViewWithStaticConstraint()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateContentViewWithDynamicConstraint()
-    }
-    
     private func insertBackgroundView() {
         if let backgroundView = self.backgroundView {
             backgroundView.removeFromSuperview()
@@ -79,21 +74,9 @@ class FunalFloorView: UIView {
         }
         contentView.snp.remakeConstraints{
             make in
-            make.width.equalToSuperview().multipliedBy(0.2)
+            make.width.equalToSuperview().multipliedBy(0.5)
             make.center.equalToSuperview()
-            make.height.equalTo(0)
-        }
-    }
-    
-    private func updateContentViewWithDynamicConstraint() {
-        guard let contentView = self.contentView else {
-            return
-        }
-        var height = self.bounds.height / 2
-        height = min(height, 20)
-        contentView.snp.updateConstraints{
-            make in
-            make.height.equalTo(height)
+            make.height.equalToSuperview().multipliedBy(0.25)
         }
     }
 }

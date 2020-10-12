@@ -44,28 +44,14 @@ class LegendViews: UIView {
     }
     
     private func updateLegendViewsStaticConstraint() {
-        var frontView: LegendView?
         for lengendView in self.legendViews {
-            guard let front = frontView else {
-                frontView = lengendView
-                lengendView.snp.remakeConstraints{
-                    make in
-                    make.top.equalToSuperview()
-                    make.width.equalToSuperview()
-                    make.height.equalTo(0)
-                    make.leading.equalToSuperview()
-                }
-                continue
-            }
-            
             lengendView.snp.remakeConstraints{
                 make in
-                make.top.equalTo(front.snp.bottom)
-                make.width.equalToSuperview()
+                make.centerY.equalTo(0)
+                make.trailing.equalToSuperview()
                 make.height.equalTo(0)
                 make.leading.equalToSuperview()
             }
-            frontView = lengendView
         }
     }
     
@@ -74,28 +60,20 @@ class LegendViews: UIView {
             return
         }
         
-        var itemHeight = self.bounds.height / CGFloat(self.legendViews.count)
-        itemHeight = min(itemHeight, self.bounds.width / 2, 20)
+        var itemHeight = self.bounds.height / CGFloat(self.legendViews.count + 1)
+        itemHeight = min(itemHeight, self.bounds.width / 4)
         let spaceHeight = itemHeight / 10
-        itemHeight = itemHeight - spaceHeight
+        let legendHeight = itemHeight - spaceHeight
+        let fatherRect = self.bounds
         
-        var frontView: LegendView?
-        for lengendView in self.legendViews {
-            guard let front = frontView else {
-                frontView = lengendView
-                lengendView.snp.updateConstraints{
-                    make in
-                    make.height.equalTo(itemHeight)
-                }
-                continue
-            }
-            
+        for (index, lengendView) in self.legendViews.enumerated() {
+            let originalY = fatherRect.origin.y + CGFloat(index) * itemHeight
+            let centerY = originalY + legendHeight / 2
             lengendView.snp.updateConstraints{
                 make in
-                make.top.equalTo(front.snp.bottom).offset(spaceHeight)
-                make.height.equalTo(itemHeight)
+                make.centerY.equalTo(centerY)
+                make.height.equalTo(legendHeight)
             }
-            frontView = lengendView
         }
     }
 }
