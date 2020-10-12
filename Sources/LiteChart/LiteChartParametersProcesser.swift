@@ -14,5 +14,5 @@ protocol LiteChartParametersProcesser {
     
     func computeLegendViewConfigure() -> LegendViewsConfigure?
     
-    func computeContentView() -> UIView
+    func computeContentView() -> LiteChartContentView
 }

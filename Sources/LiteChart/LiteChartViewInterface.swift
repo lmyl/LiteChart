@@ -53,7 +53,7 @@ extension LiteChartViewInterface {
         return self.contentInterface.parametersProcesser.computeLegendViewConfigure()
     }
     
-    func computeContentView() -> UIView {
+    func computeContentView() -> LiteChartContentView {
         return self.contentInterface.parametersProcesser.computeContentView()
     }
 }

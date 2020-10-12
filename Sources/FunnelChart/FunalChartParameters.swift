@@ -62,7 +62,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         
     }
     
-    func computeContentView() -> UIView {
+    func computeContentView() -> LiteChartContentView {
         
         guard self.inputDatas.count > 0 else {
             let configure = FunalViewConfigure.emptyconfigure

@@ -135,7 +135,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         return LegendViewsConfigure(models: legendViewConfigures)
     }
 
-    func computeContentView() -> UIView {
+    func computeContentView() -> LiteChartContentView {
         guard self.inputDatas.count > 0 else {
             let configure = LineChartViewConfigure.emptyConfigure
             return LineChartView(configure: configure)

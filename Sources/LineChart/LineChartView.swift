@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LineChartView: UIView {
+class LineChartView: LiteChartContentView {
     private let configure: LineChartViewConfigure
     
     private var axisView: AxisView?
@@ -209,7 +209,7 @@ class LineChartView: UIView {
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
@@ -220,7 +220,7 @@ class LineChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }

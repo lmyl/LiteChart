@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FunalView: UIView {
+class FunalView: LiteChartContentView {
     private var configure: FunalViewConfigure
     private var funalFloorViews: [FunalFloorView] = []
     

@@ -139,7 +139,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
         return LegendViewsConfigure(models: legendViewConfigures)
     }
     
-    func computeContentView() -> UIView {
+    func computeContentView() -> LiteChartContentView {
         
         guard self.inputDatas.count > 0 else {
             let configure = BarChartViewConfigure.emptyConfigure

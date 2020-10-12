@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class PlotChartView: UIView {
+class PlotChartView: LiteChartContentView {
     private let configure: PlotChartViewConfigure
     
     private var axisView: AxisView?
@@ -218,7 +218,7 @@ class PlotChartView: UIView {
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }
@@ -229,7 +229,7 @@ class PlotChartView: UIView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace).priority(.init(750))
+            make.leading.equalToSuperview().offset(self.leftSpace)
             make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
         }
     }

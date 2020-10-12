@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PieViews: UIView {
+class PieViews: LiteChartContentView {
     private let configure: PieViewsConfigure
     
     private var pieViews: [PieView] = []

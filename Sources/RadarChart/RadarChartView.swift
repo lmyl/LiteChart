@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class RadarChartView: UIView {
+class RadarChartView: LiteChartContentView {
     private var configure: RadarChartViewConfigure
     
     private var backgroundView: RadarBackgroundView?

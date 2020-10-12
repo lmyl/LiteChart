@@ -126,7 +126,7 @@ class BarView: UIView {
                 make in
                 make.bottom.equalToSuperview()
                 make.leading.equalTo(bar.snp.trailing)
-                make.width.equalTo(0)
+                make.trailing.equalToSuperview()
                 make.height.equalToSuperview()
             }
         }
@@ -141,24 +141,18 @@ class BarView: UIView {
         }
         switch self.configure.direction {
         case .bottomToTop:
-            var space = self.bounds.height / 20
-            space = min(space, 4)
-            var height = self.bounds.height / 10
-            height = min(height, 20)
+            var height = self.bounds.height / 15
+            height = min(height, self.bounds.width * 2)
             label.snp.updateConstraints{
                 make in
-                make.bottom.equalTo(bar.snp.top).offset(0 - space)
+                make.bottom.equalTo(bar.snp.top)
                 make.height.equalTo(height)
             }
         case .leftToRight:
-            var space = self.bounds.width / 20
-            space = min(space, 4)
-            var length = self.bounds.width / 10
-            length = min(length, 20)
+            let space = self.bounds.width / 30
             label.snp.updateConstraints{
                 make in
                 make.leading.equalTo(bar.snp.trailing).offset(space)
-                make.width.equalTo(length)
             }
         }
         

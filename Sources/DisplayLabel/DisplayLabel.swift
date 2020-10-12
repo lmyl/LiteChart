@@ -88,6 +88,7 @@ class DisplayLabel: UIView {
     }
     
     override func display(_ layer: CALayer) {
+        layer.contents = nil
         LiteChartDispatchQueue.asyncDrawQueue.async {
             layer.contentsScale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)

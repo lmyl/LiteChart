@@ -12,7 +12,7 @@ class LiteChartView: UIView {
     
     private var configure: LiteChartViewInterface
     
-    private var contentView: UIView?
+    private var contentView: LiteChartContentView?
     private var titleView: DisplayLabel?
     private var legendViews: LegendViews?
     
@@ -94,8 +94,8 @@ class LiteChartView: UIView {
             case .bottom:
                 make.bottom.equalToSuperview()
             }
-            make.leading.equalTo(content.snp.leading)
-            make.trailing.equalTo(content.snp.trailing)
+            make.leading.equalTo(content.areaLayoutGuide.snp.leading)
+            make.trailing.equalTo(content.areaLayoutGuide.snp.trailing)
             make.height.equalTo(titleHeight)
         }
     }
@@ -127,22 +127,22 @@ class LiteChartView: UIView {
             if let titleView = self.titleView {
                 switch self.configure.chartTitleDisplayLocation {
                 case .top:
-                    make.top.equalTo(titleView.snp.bottom)
-                    make.bottom.equalToSuperview()
+                    make.top.equalTo(titleView.snp.bottom).priority(750)
+                    make.bottom.equalToSuperview().priority(750)
                 case .bottom:
-                    make.top.equalToSuperview()
-                    make.bottom.equalTo(titleView.snp.top)
+                    make.top.equalToSuperview().priority(750)
+                    make.bottom.equalTo(titleView.snp.top).priority(750)
                 }
             } else {
-                make.top.equalToSuperview()
-                make.bottom.equalToSuperview()
+                make.top.equalToSuperview().priority(750)
+                make.bottom.equalToSuperview().priority(750)
             }
             
             if self.legendViews == nil {
-                make.trailing.equalToSuperview()
+                make.trailing.equalToSuperview().priority(750)
             }
             
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().priority(750)
         }
     }
     
@@ -156,20 +156,20 @@ class LiteChartView: UIView {
             if let titleView = self.titleView {
                 switch self.configure.chartTitleDisplayLocation {
                 case .top:
-                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight / 2)
-                    make.bottom.equalToSuperview().offset(-spaceHeight)
+                    make.top.equalTo(titleView.snp.bottom).offset(spaceHeight / 2).priority(750)
+                    make.bottom.equalToSuperview().offset(-spaceHeight).priority(750)
                 case .bottom:
-                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight / 2)
-                    make.top.equalToSuperview().offset(spaceHeight)
+                    make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight / 2).priority(750)
+                    make.top.equalToSuperview().offset(spaceHeight).priority(750)
                 }
             } else {
-                make.top.equalToSuperview().offset(spaceHeight)
-                make.bottom.equalToSuperview().offset(-spaceHeight)
+                make.top.equalToSuperview().offset(spaceHeight).priority(750)
+                make.bottom.equalToSuperview().offset(-spaceHeight).priority(750)
             }
             if self.legendViews == nil {
-                make.trailing.equalToSuperview().offset(-spaceHeight)
+                make.trailing.equalToSuperview().offset(-spaceHeight).priority(750)
             }
-            make.leading.equalToSuperview().offset(spaceHeight)
+            make.leading.equalToSuperview().offset(spaceHeight).priority(750)
         }
     }
     
