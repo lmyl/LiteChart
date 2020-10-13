@@ -10,16 +10,16 @@ import UIKit
 import SnapKit
 
 class BarChartView: LiteChartContentView {
-    let configure: BarChartViewConfigure
+    private let configure: BarChartViewConfigure
     
-    var axisView: AxisView?
-    var yUnitLabel: DisplayLabel?
-    var xUnitLabel: DisplayLabel?
-    var coupleTitleView: [DisplayLabel] = []
-    var valueView: [DisplayLabel] = []
-    var barViewCollection: BarViewCoupleCollection?
+    private var axisView: AxisView?
+    private var yUnitLabel: DisplayLabel?
+    private var xUnitLabel: DisplayLabel?
+    private var coupleTitleView: [DisplayLabel] = []
+    private var valueView: [DisplayLabel] = []
+    private var barViewCollection: BarViewCoupleCollection?
     
-    let contentLayoutGuide = UILayoutGuide()
+    private let contentLayoutGuide = UILayoutGuide()
     
     init(configure: BarChartViewConfigure) {
         self.configure = configure

@@ -68,10 +68,8 @@ class PointsView: UIView {
             
             let center = CGPoint(x: self.bounds.width * pointLocation.x + self.bounds.origin.x, y: self.bounds.height * pointLocation.y + self.bounds.origin.y)
             
-            var initWidth = self.bounds.width / 50
-            var initHeight = self.bounds.height / 50
-            initWidth = min(initWidth, 5)
-            initHeight = min(initHeight, 5)
+            let initWidth = self.bounds.width / 40
+            let initHeight = self.bounds.height / 40
             let initLength = min(initWidth, initHeight)
             var scaleSize = self.configure.points[index].size
             if scaleSize < 1 {

@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (70, .init(lightUIColor: .blue)), (50, .init(lightUIColor: .purple)), (20, .init(lightUIColor: .blue))])
         funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022"]
         funnelInterface.displayDataMode = .mix*/
-       
+       /*
         var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
         lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
         lineInterface.underlayerColor = .init(lightColor: .blue)
@@ -51,8 +51,8 @@ class ViewController: UIViewController {
         lineInterface.isShowCoupleDividingLine = true
         lineInterface.dividingValueLineStyle = .segment
         lineInterface.dividingCoupleLineStyle = .segment
-        
-        /*let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
+        */
+        let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
         var scatterInterface = LiteChartScatterChartInterface(inputDatas: datas)
         scatterInterface.isShowValueDividingLine = true
         scatterInterface.isShowCoupleDividingLine = true
@@ -64,7 +64,7 @@ class ViewController: UIViewController {
         scatterInterface.valueUnitString = "kg/L"
         scatterInterface.coupleUnitString = "月/年"
         scatterInterface.underlayerColor = .init(lightColor: .blue)
-        scatterInterface.unitTextColor = .init(lightColor: .gold)*/
+        scatterInterface.unitTextColor = .init(lightColor: .gold)
         /*
         let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: .yellow), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
         var bubbleInterface = LiteChartBubbleChartInterface(inputDatas: datas)
@@ -91,9 +91,9 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
  */
-        var interface = LiteChartViewInterface(contentInterface: lineInterface)
+        var interface = LiteChartViewInterface(contentInterface: scatterInterface)
         interface.isShowLegendTitles = true
-        interface.isShowChartTitleString = false
+        interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
         interface.chartTitleColor = .init(lightUIColor: .red)
         let backgroundView = try! LiteChartView(interface: interface)

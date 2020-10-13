@@ -19,9 +19,12 @@ class PlotChartView: LiteChartContentView {
     private var valueView: [DisplayLabel] = []
     private var pointViews: PointViews?
     
+    private let contentLayoutGuide = UILayoutGuide()
+    
     init(configure: PlotChartViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
+        insertContentLayoutGuide()
         insertUnitLabel()
         insertAxisView()
         insertValueTitleView()
@@ -31,11 +34,13 @@ class PlotChartView: LiteChartContentView {
         updateAxisViewStaticConstraints()
         updateUnitLabelStaticConstraints()
         updatePointViewsStaticContraints()
+        updateAreaLayoutGuideStaticConstraints()
     }
     
     required init?(coder: NSCoder) {
         self.configure = PlotChartViewConfigure.emptyConfigure
         super.init(coder: coder)
+        insertContentLayoutGuide()
         insertUnitLabel()
         insertAxisView()
         insertValueTitleView()
@@ -45,6 +50,7 @@ class PlotChartView: LiteChartContentView {
         updateAxisViewStaticConstraints()
         updateUnitLabelStaticConstraints()
         updatePointViewsStaticContraints()
+        updateAreaLayoutGuideStaticConstraints()
     }
     
     override func layoutSubviews() {
@@ -53,6 +59,14 @@ class PlotChartView: LiteChartContentView {
         updateUnitLabelDynamicConstraints()
         updateValueViewDynamicConstraints()
         updateCoupleTitleViewDynamicConstraints()
+    }
+    
+    override var areaLayoutGuide: UILayoutGuide {
+        self.contentLayoutGuide
+    }
+    
+    private func insertContentLayoutGuide() {
+        self.addLayoutGuide(self.contentLayoutGuide)
     }
     
     private func insertUnitLabel() {
@@ -105,43 +119,39 @@ class PlotChartView: LiteChartContentView {
     }
     
     private var leftUnitViewWidth: CGFloat {
-        let leftSpace = self.bounds.width / 10
-        return min(leftSpace, 20)
+        let leftSpace = self.bounds.width / 12
+        return leftSpace
     }
     
     private var leftViewWidth: CGFloat {
         let leftSpace = self.bounds.width / 10
-        return min(leftSpace, 20)
+        return leftSpace
     }
     
     private var bottomUnitViewHeight: CGFloat {
-        let bottomSpace = self.bounds.height / 10
-        return min(bottomSpace, 20)
+        let bottomSpace = self.bounds.height / 12
+        return bottomSpace
     }
     
     private var bottomViewHeight: CGFloat {
         let bottomSpace = self.bounds.height / 10
-        return min(bottomSpace, 20)
+        return bottomSpace
     }
     
     private var labelViewHeightSpace: CGFloat {
-        let space = self.bounds.height / 10
-        return min(space, 4)
+        let space = bottomViewHeight / 6
+        return space
     }
     
     private var labelViewWidthSpace: CGFloat {
-        let space = self.bounds.width / 10
-        return min(space, 4)
+        let space = leftViewWidth / 6
+        return space
     }
     
     private var leftSpace: CGFloat {
         var space: CGFloat = 0
         if self.yUnitLabel != nil {
-            space += self.labelViewWidthSpace + self.leftUnitViewWidth
-        }
-        if !self.coupleTitleView.isEmpty {
-            space += self.labelViewWidthSpace + self.leftViewWidth
-            return space
+            space += self.labelViewWidthSpace
         }
         if !self.valueView.isEmpty {
             space += self.labelViewWidthSpace + self.leftViewWidth
@@ -159,11 +169,17 @@ class PlotChartView: LiteChartContentView {
             space += self.labelViewHeightSpace + self.bottomViewHeight
             return space
         }
-        if !self.valueView.isEmpty {
-            space += self.labelViewHeightSpace + self.bottomViewHeight
-            return space
-        }
         return space
+    }
+    
+    private func updateAreaLayoutGuideStaticConstraints() {
+        guard let axis = self.axisView else {
+            return
+        }
+        areaLayoutGuide.snp.remakeConstraints{
+            make in
+            make.bottom.top.leading.trailing.equalTo(axis)
+        }
     }
     
     private func updateUnitLabelStaticConstraints() {
@@ -174,7 +190,7 @@ class PlotChartView: LiteChartContentView {
         if let unit = self.yUnitLabel {
             unit.snp.updateConstraints{
                 make in
-                make.leading.equalToSuperview()
+                make.trailing.equalTo(self.snp.leading)
                 make.width.equalTo(self.leftUnitViewWidth)
                 make.top.equalToSuperview()
                 make.bottom.equalTo(axis.snp.bottom)
@@ -256,8 +272,7 @@ class PlotChartView: LiteChartContentView {
             let pointY = axis.bounds.height * (1 - yPoint)
             let endPoint = CGPoint(x: self.bounds.origin.x + self.leftSpace, y: self.bounds.origin.y + pointY)
             let center = CGPoint(x: endPoint.x - self.labelViewWidthSpace - self.leftViewWidth / 2, y: endPoint.y)
-            var labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitleConfigure.count + 1)
-            labelHeight = min(labelHeight, 20)
+            let labelHeight = axis.bounds.height / CGFloat(self.configure.valueTitleConfigure.count + 1)
             let labelView = self.valueView[index]
             labelView.snp.updateConstraints{
                 make in
@@ -276,8 +291,8 @@ class PlotChartView: LiteChartContentView {
         guard self.configure.coupleTitleConfigure.count == self.configure.xDividingPoints.count, self.configure.coupleTitleConfigure.count == self.coupleTitleView.count else {
             fatalError("框架内部数据处理错误，不给予拯救")
         }
-        var labelWidth = axis.bounds.width / CGFloat(self.configure.coupleTitleConfigure.count + 1)
-        labelWidth = min(labelWidth, 20)
+        let labelWidth = axis.bounds.width / CGFloat(self.configure.coupleTitleConfigure.count + 1)
+        let labelSpace = labelWidth / 10
         
         for index in 0 ..< self.configure.coupleTitleConfigure.count {
             let xPoint = self.configure.xDividingPoints[index]
@@ -289,7 +304,7 @@ class PlotChartView: LiteChartContentView {
                 make in
                 make.center.equalTo(center)
                 make.height.equalTo(self.bottomViewHeight)
-                make.width.equalTo(labelWidth)
+                make.width.equalTo(labelWidth - labelSpace)
             }
         }
     }

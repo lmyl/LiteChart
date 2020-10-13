@@ -18,7 +18,7 @@ class LineChartView: LiteChartContentView {
     private var valueView: [DisplayLabel] = []
     private var lineViews: LineViews?
     
-    let contentLayoutGuide = UILayoutGuide()
+    private let contentLayoutGuide = UILayoutGuide()
     
     init(configure: LineChartViewConfigure) {
         self.configure = configure
