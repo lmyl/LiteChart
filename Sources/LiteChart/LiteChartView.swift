@@ -14,8 +14,8 @@ class LiteChartView: UIView {
     
     private var contentView: LiteChartContentView?
     private var titleView: DisplayLabel?
-    private var legendViews: LegendViews?
-    
+    private var legendViews: UIView?
+        
     init(interface: LiteChartViewInterface) throws {
         self.configure = interface
         try self.configure.contentInterface.parametersProcesser.checkInputDatasParameterInvalid()
@@ -70,10 +70,9 @@ class LiteChartView: UIView {
     }
     
     private func insertLegendViews() {
-        guard let legendConfigure = self.configure.computeLegendViewConfigure() else {
+        guard let legendViews = self.configure.computeLegendViews() else {
             return
         }
-        let legendViews = LegendViews(configure: legendConfigure)
         self.addSubview(legendViews)
         self.legendViews = legendViews
     }

@@ -99,7 +99,7 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
         
     }
 
-    func computeLegendViewConfigure() -> LegendViewsConfigure? {
+    func computeLegendViews() -> UIView? {
         guard self.inputLegendTitles.count == self.inputDatas.count else {
             return nil
         }
@@ -112,7 +112,8 @@ extension ScatterPlotChartParameters: LiteChartParametersProcesser {
             legendViewConfigures.append(legendViewConfigure)
             
         }
-        return LegendViewsConfigure(models: legendViewConfigures)
+        let legendConfigure = LegendViewsConfigure(models: legendViewConfigures)
+        return LegendViews(configure: legendConfigure)
     }
 
     func computeContentView() -> LiteChartContentView {

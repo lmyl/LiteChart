@@ -44,7 +44,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         }
     }
     
-    func computeLegendViewConfigure() -> LegendViewsConfigure? {
+    func computeLegendViews() -> UIView? {
         guard self.inputDatas.count == inputLegendTitles.count else {
             return nil
         }
@@ -58,8 +58,8 @@ extension FunalChartParameters: LiteChartParametersProcesser {
             legendViewConfigures.append(legendViewConfigure)
         }
         
-        return LegendViewsConfigure(models: legendViewConfigures)
-        
+        let legendConfigure = LegendViewsConfigure(models: legendViewConfigures)
+        return LegendViews(configure: legendConfigure)
     }
     
     func computeContentView() -> LiteChartContentView {

@@ -124,7 +124,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
         }
     }
     
-    func computeLegendViewConfigure() -> LegendViewsConfigure? {
+    func computeLegendViews() -> UIView? {
         guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
@@ -136,7 +136,8 @@ extension BarChartParameter: LiteChartParametersProcesser {
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
         }
-        return LegendViewsConfigure(models: legendViewConfigures)
+        let legendConfigure = LegendViewsConfigure(models: legendViewConfigures)
+        return LegendViews(configure: legendConfigure)
     }
     
     func computeContentView() -> LiteChartContentView {

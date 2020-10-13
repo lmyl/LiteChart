@@ -119,7 +119,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
     }
 
-    func computeLegendViewConfigure() -> LegendViewsConfigure? {
+    func computeLegendViews() -> UIView? {
         guard self.inputLegendTitles.count == self.inputDatas.count else {
             return nil
         }
@@ -132,7 +132,8 @@ extension LineChartParameters: LiteChartParametersProcesser {
             legendViewConfigures.append(legendViewConfigure)
             
         }
-        return LegendViewsConfigure(models: legendViewConfigures)
+        let legendConfigure = LegendViewsConfigure(models: legendViewConfigures)
+        return LegendViews(configure: legendConfigure)
     }
 
     func computeContentView() -> LiteChartContentView {

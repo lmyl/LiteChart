@@ -39,6 +39,7 @@
 		083BC8EB24908974000B8DDE /* AxisViewLineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */; };
 		083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */; };
 		083BC8EF2490C260000B8DDE /* AxisViewBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */; };
+		083DDDF42535A7B600D81B06 /* LiteChartAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083DDDF32535A7B600D81B06 /* LiteChartAnimatable.swift */; };
 		08433EB424E394BC0089FB6D /* LegendFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08433EB324E394BB0089FB6D /* LegendFactory.swift */; };
 		08512BAC2524687300510730 /* BarViewCoupleCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08512BAB2524687300510730 /* BarViewCoupleCollection.swift */; };
 		08512BAF2524688E00510730 /* BarViewCoupleCollectionConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08512BAE2524688E00510730 /* BarViewCoupleCollectionConfigure.swift */; };
@@ -151,6 +152,7 @@
 		083BC8EA24908974000B8DDE /* AxisViewLineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewLineStyle.swift; sourceTree = "<group>"; };
 		083BC8EC24908A50000B8DDE /* AxisDividingLineConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisDividingLineConfigure.swift; sourceTree = "<group>"; };
 		083BC8EE2490C260000B8DDE /* AxisViewBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisViewBorderStyle.swift; sourceTree = "<group>"; };
+		083DDDF32535A7B600D81B06 /* LiteChartAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartAnimatable.swift; sourceTree = "<group>"; };
 		08433EB324E394BB0089FB6D /* LegendFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendFactory.swift; sourceTree = "<group>"; };
 		08512BAB2524687300510730 /* BarViewCoupleCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCoupleCollection.swift; sourceTree = "<group>"; };
 		08512BAE2524688E00510730 /* BarViewCoupleCollectionConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewCoupleCollectionConfigure.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				087DEA8C248E736A001A40B9 /* LiteChartView.swift */,
+				083DDDF32535A7B600D81B06 /* LiteChartAnimatable.swift */,
 				085CFE7824922D4C008E0E0E /* LiteChartViewBorderStyle.swift */,
 				089804D225300FBC001CCC19 /* LiteChartInterface.swift */,
 				087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */,
@@ -676,6 +679,7 @@
 				080368EC248A7D5E00D1413C /* DisplayLabelConfigure.swift in Sources */,
 				0839B64324FBC1C700E59F6B /* LiteChartDispatchQueue.swift in Sources */,
 				080368E6248A63EA00D1413C /* FunalFloorBackagroundViewConfigure.swift in Sources */,
+				083DDDF42535A7B600D81B06 /* LiteChartAnimatable.swift in Sources */,
 				08C99DE42530A22700B56F1B /* LiteChartLineChartInterface.swift in Sources */,
 				08386C20248E12E300D0E655 /* PieSectorViewConfigure.swift in Sources */,
 				08A756BF249DC23600BAEBC1 /* PointsView.swift in Sources */,

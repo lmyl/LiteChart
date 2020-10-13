@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-       /*
+       
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .bottomToTop
-*/
+
         /*
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         scatterInterface.coupleUnitString = "月/年"
         scatterInterface.underlayerColor = .init(lightColor: .blue)
         scatterInterface.unitTextColor = .init(lightColor: .gold)*/
-        
+        /*
         let datas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: .red), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
         var bubbleInterface = LiteChartBubbleChartInterface(inputDatas: datas)
         bubbleInterface.isShowValueDividingLine = true
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
         bubbleInterface.coupleUnitString = "月/年"
         bubbleInterface.underlayerColor = .init(lightColor: .blue)
         bubbleInterface.unitTextColor = .init(lightColor: .gold)
-        
+        */
         /*
         var radarInterface = LiteChartRadarChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.20, 0.30, 0.40 ,0.50]), (LiteChartDarkLightColor.init(lightUIColor: .red), [0.30, 0.90, 0.70, 0.50 ,0.1]),(LiteChartDarkLightColor.init(lightUIColor: .yellow), [0.10, 0.60, 0.40, 0.90 ,0.5])])
         radarInterface.radarCount = 3
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 */
-        var interface = LiteChartViewInterface(contentInterface: bubbleInterface)
+        var interface = LiteChartViewInterface(contentInterface: barInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -104,11 +104,10 @@ class ViewController: UIViewController {
         self.displayView = backgroundView
         backgroundView.snp.updateConstraints{
             make in
-            make.width.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.3)
             make.center.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(100)
         }
-        backgroundView.backgroundColor = .cyan
         
         let button = UIButton()
         self.view.addSubview(button)

@@ -46,11 +46,11 @@ extension LiteChartViewInterface {
         try self.contentInterface.parametersProcesser.checkInputDatasParameterInvalid()
     }
     
-    func computeLegendViewConfigure() -> LegendViewsConfigure? {
+    func computeLegendViews() -> UIView? {
         guard self.isShowLegendTitles else {
             return nil
         }
-        return self.contentInterface.parametersProcesser.computeLegendViewConfigure()
+        return self.contentInterface.parametersProcesser.computeLegendViews()
     }
     
     func computeContentView() -> LiteChartContentView {
