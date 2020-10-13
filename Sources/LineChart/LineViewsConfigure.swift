@@ -10,11 +10,15 @@ import Foundation
 
 struct LineViewsConfigure {
     let models: [LineViewConfigure]
+    let valueModel: LineValueViewConfigure
+    let isShowLabel: Bool
 }
 
 extension LineViewsConfigure {
     private init() {
         self.models = []
+        self.valueModel = .emptyConfigure
+        self.isShowLabel = false
     }
     
     static let emptyConfigure = LineViewsConfigure()

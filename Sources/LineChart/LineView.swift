@@ -12,43 +12,25 @@ import SnapKit
 class LineView: UIView {
     private let configure: LineViewConfigure
     
-    private var labels: [DisplayLabel] = []
     private var legend: [UIView] = []
     
     init(configure: LineViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        insertLabel()
         insertLegend()
     }
     
     required init?(coder: NSCoder) {
         self.configure = LineViewConfigure.emptyConfigure
         super.init(coder: coder)
-        insertLabel()
         insertLegend()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateLabelsDynamicConstraints()
         updateLegendsDynamicConstraints()
         
         layer.setNeedsDisplay()
-    }
-    
-    private func insertLabel() {
-        guard self.configure.isShowLabel else {
-            return
-        }
-        guard self.configure.labelConfigure.count == self.configure.points.count else {
-            fatalError("框架内部数据处理错误，不给予拯救")
-        }
-        for con in self.configure.labelConfigure {
-            let label = DisplayLabel(configure: con)
-            self.labels.append(label)
-            self.addSubview(label)
-        }
     }
     
     private func insertLegend() {
@@ -59,31 +41,9 @@ class LineView: UIView {
         }
     }
     
-    private func updateLabelsDynamicConstraints() {
-        var labelWidth = self.bounds.width / CGFloat(self.labels.count + 1)
-        var labelHeight = self.bounds.height / 10
-        var space = labelHeight
-        labelWidth = min(labelWidth, 40)
-        labelHeight = min(labelHeight, 20)
-        space = min(space, 8)
-        
-        for (index, label) in self.labels.enumerated() {
-            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index], rect: self.bounds)
-            let center = CGPoint(x: realPoint.x, y: realPoint.y - space - labelHeight / 2)
-            label.snp.updateConstraints{
-                make in
-                make.center.equalTo(center)
-                make.width.equalTo(labelWidth)
-                make.height.equalTo(labelHeight)
-            }
-        }
-    }
-    
     private func updateLegendsDynamicConstraints() {
-        var legendWidth = self.bounds.width / 20
-        var legendHeight = self.bounds.height / 20
-        legendWidth = min(legendWidth, 8)
-        legendHeight = min(legendHeight, 8)
+        let legendWidth = self.bounds.width / CGFloat(self.configure.points.count + 1)
+        let legendHeight = self.bounds.height / 20
         let legendLength = min(legendHeight, legendWidth)
         for (index, legend) in self.legend.enumerated() {
             let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index], rect: self.bounds)

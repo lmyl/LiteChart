@@ -19,7 +19,7 @@ class BarChartView: LiteChartContentView {
     var valueView: [DisplayLabel] = []
     var barViewCollection: BarViewCoupleCollection?
     
-    var contentLayoutGuide = UILayoutGuide()
+    let contentLayoutGuide = UILayoutGuide()
     
     init(configure: BarChartViewConfigure) {
         self.configure = configure

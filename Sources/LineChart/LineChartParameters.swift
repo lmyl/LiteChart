@@ -222,6 +222,8 @@ extension LineChartParameters: LiteChartParametersProcesser {
         let axisConfigure = AxisViewConfigure(originPoint: axisOriginal, axisColor: self.axisColor, verticalDividingPoints: valueDividingLineConfigure, horizontalDividingPoints: coupleDividingLineConfigure, borderStyle: borderStlye, borderColor: self.borderColor, isShowXAxis: self.isShowAxis, isShowYAxis: false)
         
         var lineConfigures: [LineViewConfigure] = []
+        var lineValueViewPoints: [[CGPoint]] = []
+        var lineValueViewLabel: [[DisplayLabelConfigure]] = []
         for inputData in inputDatas {
             let titleStringConfigure = inputData.3.map{
                 DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0, syncIdentifier: .lineTitleLabel)
@@ -229,10 +231,14 @@ extension LineChartParameters: LiteChartParametersProcesser {
             let points = inputData.3.map{
                 $0.1
             }
-            let lineConfigure = LineViewConfigure(points: points, legendConfigure: .init(type: inputData.2, color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0, labelConfigure: titleStringConfigure, isShowLabel: isShowLabel)
+            lineValueViewPoints.append(points)
+            lineValueViewLabel.append(titleStringConfigure)
+            let lineConfigure = LineViewConfigure(points: points, legendConfigure: .init(type: inputData.2, color: inputData.0), lineStyle: inputData.1, lineColor: inputData.0)
             lineConfigures.append(lineConfigure)
         }
-        let lineViewsConfigure = LineViewsConfigure(models: lineConfigures)
+        
+        let lineValueViewConfigure = LineValueViewConfigure(points: lineValueViewPoints, labelConfigure: lineValueViewLabel)
+        let lineViewsConfigure = LineViewsConfigure(models: lineConfigures, valueModel: lineValueViewConfigure, isShowLabel: isShowLabel)
         let lineChartConfigure = LineChartViewConfigure(isShowValueUnitString: self.isShowValueUnitString, isShowCoupleUnitString: self.isShowCoupleUnitString, axisConfigure: axisConfigure, valueUnitStringConfigure: valueUnitStringConfigure, coupleUnitStringConfigure: coupleUnitStringConfigure, coupleTitleConfigure: coupleTitleConfigures, valueTitleConfigure: valueTitleConfigures, lineViewsConfigure: lineViewsConfigure)
         return LineChartView(configure: lineChartConfigure)
     }
