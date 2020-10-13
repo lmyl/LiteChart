@@ -118,7 +118,7 @@ class LineChartView: LiteChartContentView {
     }
     
     private var leftUnitViewWidth: CGFloat {
-        let leftSpace = self.bounds.width / 12
+        let leftSpace = self.bounds.width / 15
         return leftSpace
     }
     
@@ -128,7 +128,7 @@ class LineChartView: LiteChartContentView {
     }
     
     private var bottomUnitViewHeight: CGFloat {
-        let bottomSpace = self.bounds.height / 12
+        let bottomSpace = self.bounds.height / 15
         return bottomSpace
     }
     
@@ -150,7 +150,7 @@ class LineChartView: LiteChartContentView {
     private var leftSpace: CGFloat {
         var space: CGFloat = 0
         if self.yUnitLabel != nil {
-            space += self.labelViewWidthSpace
+            space += self.labelViewWidthSpace + leftUnitViewWidth
         }
         if !self.valueView.isEmpty {
             space += self.labelViewWidthSpace + self.leftViewWidth
@@ -189,7 +189,7 @@ class LineChartView: LiteChartContentView {
         if let unit = self.yUnitLabel {
             unit.snp.updateConstraints{
                 make in
-                make.trailing.equalTo(self.snp.leading)
+                make.leading.equalToSuperview()
                 make.width.equalTo(self.leftUnitViewWidth)
                 make.top.equalToSuperview()
                 make.bottom.equalTo(axis.snp.bottom)
@@ -215,6 +215,7 @@ class LineChartView: LiteChartContentView {
                 make in
                 make.width.equalTo(self.leftUnitViewWidth)
             }
+            unit.layer.setNeedsDisplay()
         }
         
         if let xUnit = self.xUnitLabel {
@@ -222,6 +223,7 @@ class LineChartView: LiteChartContentView {
                 make in
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
+            xUnit.layer.setNeedsDisplay()
         }
     }
     

@@ -154,7 +154,6 @@ class LiteChartView: UIView {
                     make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight / 2).priority(750)
                 }
             }
-            make.leading.equalToSuperview().offset(spaceHeight).priority(750)
         }
     }
     
