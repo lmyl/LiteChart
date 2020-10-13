@@ -54,7 +54,11 @@ class DisplayLabel: UIView {
             }
             
             DispatchQueue.main.async {
-                if self.isSuitFontForSize(font: font, size: self.layer.bounds.size) {
+                var textSizeArea = self.layer.bounds.size
+                if self.configure.textDirection == .vertical {
+                    textSizeArea = CGSize(width: textSizeArea.height, height: textSizeArea.width)
+                }
+                if self.isSuitFontForSize(font: font, size: textSizeArea) {
                     self.font = font
                     self.layer.displayIfNeeded()
                 }
@@ -78,7 +82,11 @@ class DisplayLabel: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let font = self.computeSuitableFont(for: layer.bounds.size).0
+        var textSizeArea = layer.bounds.size
+        if self.configure.textDirection == .vertical {
+            textSizeArea = CGSize(width: textSizeArea.height, height: textSizeArea.width)
+        }
+        let font = self.computeSuitableFont(for: textSizeArea).0
         self.font = font
         
         if self.configure.syncIdentifier != .none {
@@ -98,10 +106,8 @@ class DisplayLabel: UIView {
             context?.clear(rect)
             context?.setShouldAntialias(true)
             context?.setAllowsAntialiasing(true)
-            var textSizeArea = rect.size
             if self.configure.textDirection == .vertical {
                 context?.rotate(by: CGFloat(0 - Double.pi / 2))
-                textSizeArea = CGSize(width: textSizeArea.height, height: textSizeArea.width)
             }
             
             let adjustFont = self.font

@@ -299,6 +299,7 @@ class BarChartView: LiteChartContentView {
                     make.width.equalTo(self.leftViewWidth)
                     make.height.equalTo(labelHeight)
                 }
+                labelView.layer.setNeedsDisplay()
             }
         case .leftToRight:
             guard self.configure.xDividingPoints.count == self.configure.valueTitleConfigure.count, self.configure.valueTitleConfigure.count == self.valueView.count else {
@@ -348,6 +349,7 @@ class BarChartView: LiteChartContentView {
                         make.width.equalTo(labelWidth - labelSpace)
                     }
                     frontView = labelView
+                    labelView.layer.setNeedsDisplay()
                     continue
                 }
                 labelView.snp.updateConstraints{
@@ -358,6 +360,7 @@ class BarChartView: LiteChartContentView {
                     make.width.equalTo(labelWidth - labelSpace)
                 }
                 frontView = labelView
+                labelView.layer.setNeedsDisplay()
             }
         case .leftToRight:
             guard self.configure.coupleTitleConfigure.count == self.configure.barViewCoupleNumber else {
@@ -376,6 +379,7 @@ class BarChartView: LiteChartContentView {
                         make.width.equalTo(self.leftViewWidth)
                     }
                     frontView = labelView
+                    labelView.layer.setNeedsDisplay()
                     continue
                 }
                 labelView.snp.updateConstraints{
@@ -386,6 +390,7 @@ class BarChartView: LiteChartContentView {
                     make.width.equalTo(self.leftViewWidth)
                 }
                 frontView = labelView
+                labelView.layer.setNeedsDisplay()
             }
         }
     }
