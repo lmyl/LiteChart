@@ -118,10 +118,10 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         }
         
         let backgroundConfigure = RadarBackgroundViewConfigure(radarLineColor: self.radarLineColor, radarLightColor: self.radarLightColor, radarUnlightColor: self.radarUnlightColor, radarLayerCount: self.radarCount, angleOfPoints: angles)
-        let locationOfPoints = backgroundConfigure.locationOfPoints
         
         var coupleTitlesConfigure: [DisplayLabelConfigure] = []
         if self.isShowingCoupleTitles {
+            let locationOfPoints = backgroundConfigure.locationOfPoints
             guard locationOfPoints.count == self.coupleTitles.count else {
                 fatalError("框架内部错误，不给予拯救")
             }

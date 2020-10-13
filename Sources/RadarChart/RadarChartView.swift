@@ -49,13 +49,17 @@ class RadarChartView: LiteChartContentView {
     }
     
     private var coupleTitleWidth: CGFloat {
-        let width = self.bounds.width / 10
-        return min(width, 40)
+        let width = self.bounds.width / 8
+        return width
     }
 
     private var coupleTitleHeight: CGFloat {
-        let height = self.bounds.height / 20
-        return min(height, 20)
+        let height = self.bounds.height / 13
+        return height
+    }
+    
+    private var titleSpace: CGFloat {
+        coupleTitleWidth / 4
     }
     
     private func insertCoupleTitleView() {
@@ -114,8 +118,8 @@ class RadarChartView: LiteChartContentView {
         var width: CGFloat
         var height: CGFloat
         if self.configure.isShowCoupleTitles {
-            width = self.bounds.width - 2 * coupleTitleWidth
-            height = self.bounds.height - 2 * coupleTitleHeight
+            width = self.bounds.width - 2 * coupleTitleWidth - 2 * titleSpace
+            height = self.bounds.height - 2 * coupleTitleHeight - 2 * titleSpace
         } else {
             width = self.bounds.width
             height = self.bounds.height
@@ -159,18 +163,18 @@ class RadarChartView: LiteChartContentView {
             switch locationOfPoints[index] {
             case .left:
                 let centerY = endPoints[index].y
-                let centerX = endPoints[index].x - coupleTitleWidth / 2
+                let centerX = endPoints[index].x - coupleTitleWidth / 2 - titleSpace
                 center = CGPoint(x: centerX, y: centerY)
             case .right:
                 let centerY = endPoints[index].y
-                let centerX = endPoints[index].x + coupleTitleWidth / 2
+                let centerX = endPoints[index].x + coupleTitleWidth / 2 + titleSpace
                 center = CGPoint(x: centerX, y: centerY)
             case .top:
-                let centerY = endPoints[index].y - coupleTitleHeight / 2
+                let centerY = endPoints[index].y - coupleTitleHeight / 2 - titleSpace
                 let centerX = endPoints[index].x
                 center = CGPoint(x: centerX, y: centerY)
             case .bottom:
-                let centerY = endPoints[index].y + coupleTitleHeight / 2
+                let centerY = endPoints[index].y + coupleTitleHeight / 2 + titleSpace
                 let centerX = endPoints[index].x
                 center = CGPoint(x: centerX, y: centerY)
             }

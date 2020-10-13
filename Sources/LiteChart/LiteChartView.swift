@@ -104,15 +104,8 @@ class LiteChartView: UIView {
         guard let titleView = self.titleView else {
             return
         }
-        let spaceHeight = titleHeight / 2
         titleView.snp.updateConstraints{
             make in
-            switch self.configure.chartTitleDisplayLocation {
-            case .top:
-                make.top.equalToSuperview().offset(spaceHeight)
-            case .bottom:
-                make.bottom.equalToSuperview().offset(-spaceHeight)
-            }
             make.height.equalTo(titleHeight)
         }
         titleView.layer.setNeedsDisplay()
@@ -157,17 +150,9 @@ class LiteChartView: UIView {
                 switch self.configure.chartTitleDisplayLocation {
                 case .top:
                     make.top.equalTo(titleView.snp.bottom).offset(spaceHeight / 2).priority(750)
-                    make.bottom.equalToSuperview().offset(-spaceHeight).priority(750)
                 case .bottom:
                     make.bottom.equalTo(titleView.snp.top).offset(0 - spaceHeight / 2).priority(750)
-                    make.top.equalToSuperview().offset(spaceHeight).priority(750)
                 }
-            } else {
-                make.top.equalToSuperview().offset(spaceHeight).priority(750)
-                make.bottom.equalToSuperview().offset(-spaceHeight).priority(750)
-            }
-            if self.legendViews == nil {
-                make.trailing.equalToSuperview().offset(-spaceHeight).priority(750)
             }
             make.leading.equalToSuperview().offset(spaceHeight).priority(750)
         }
