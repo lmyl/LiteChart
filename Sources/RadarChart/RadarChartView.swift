@@ -48,6 +48,18 @@ class RadarChartView: LiteChartContentView {
         updateRadarBackgroundViewDynamicConstraints()
     }
     
+    deinit {
+        self.clearNotification()
+    }
+    
+    private func clearNotification() {
+        guard let token = self.notificationToken else {
+            return
+        }
+        NotificationCenter.default.removeObserver(token)
+        self.notificationToken = nil
+    }
+    
     private var coupleTitleWidth: CGFloat {
         let width = self.bounds.width / 8
         return width
@@ -63,6 +75,10 @@ class RadarChartView: LiteChartContentView {
     }
     
     private func insertCoupleTitleView() {
+        for view in self.coupleTitles {
+            view.removeFromSuperview()
+        }
+        self.coupleTitles = []
         guard self.configure.isShowCoupleTitles else {
             return
         }
@@ -74,6 +90,10 @@ class RadarChartView: LiteChartContentView {
     }
     
     private func insertRadarDateView() {
+        for view in self.radarDataViews {
+            view.removeFromSuperview()
+        }
+        self.radarDataViews = []
         let configures = self.configure.radarDataViewsConfigure
         for dataViewConfigure in configures {
             let view = RadarDataView(configure: dataViewConfigure)
@@ -83,6 +103,11 @@ class RadarChartView: LiteChartContentView {
     }
     
     private func insertRadarBackgroundView(){
+        if let backgroundView = self.backgroundView {
+            backgroundView.removeFromSuperview()
+            self.backgroundView = nil
+            self.clearNotification()
+        }
         let configure = self.configure.backgroundConfigure
         let radarBackgroundView = RadarBackgroundView(configure: configure)
         self.addSubview(radarBackgroundView)
@@ -103,7 +128,7 @@ class RadarChartView: LiteChartContentView {
         guard let background = self.backgroundView else {
             return
         }
-        background.snp.updateConstraints{
+        background.snp.remakeConstraints{
             make in
             make.center.equalToSuperview()
             make.width.equalTo(0)
@@ -136,7 +161,7 @@ class RadarChartView: LiteChartContentView {
             return
         }
         for dataView in self.radarDataViews {
-            dataView.snp.updateConstraints{
+            dataView.snp.remakeConstraints{
                 make in
                 make.bottom.top.trailing.leading.equalTo(background)
             }
@@ -185,6 +210,7 @@ class RadarChartView: LiteChartContentView {
                 make.width.equalTo(coupleTitleWidth)
                 make.center.equalTo(center)
             }
+            coupleTitleView.setNeedsLayout()
             coupleTitleView.layoutIfNeeded()
         }
     }
