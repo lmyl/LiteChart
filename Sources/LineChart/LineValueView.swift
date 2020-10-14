@@ -33,6 +33,10 @@ class LineValueView: UIView {
     }
     
     private func insertValueView() {
+        for label in self.valuesView.joined() {
+            label.removeFromSuperview()
+        }
+        self.valuesView = []
         guard self.configure.labelConfigure.count == self.configure.points.count else {
             return
         }

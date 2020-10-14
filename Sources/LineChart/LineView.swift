@@ -34,6 +34,10 @@ class LineView: UIView {
     }
     
     private func insertLegend() {
+        for legend in self.legend {
+            legend.removeFromSuperview()
+        }
+        self.legend = []
         for _ in self.configure.points {
             let legend = LegendFactory.shared.makeNewLegend(from: self.configure.legendConfigure)
             self.legend.append(legend)

@@ -36,6 +36,10 @@ class LineViews: UIView {
     }
     
     private func insertLineViews() {
+        for line in self.lineViews {
+            line.removeFromSuperview()
+        }
+        self.lineViews = []
         for model in self.configure.models {
             let line = LineView(configure: model)
             self.addSubview(line)
@@ -44,6 +48,10 @@ class LineViews: UIView {
     }
     
     private func insertLineValueView() {
+        if let valueView = self.lineValueView {
+            valueView.removeFromSuperview()
+            self.lineValueView = nil
+        }
         guard self.configure.isShowLabel else {
             return
         }
@@ -65,7 +73,7 @@ class LineViews: UIView {
     
     private func updateLineViewsStaticConstraints() {
         for line in self.lineViews {
-            line.snp.updateConstraints{
+            line.snp.remakeConstraints{
                 make in
                 make.trailing.leading.bottom.top.equalToSuperview()
             }

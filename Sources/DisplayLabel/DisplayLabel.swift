@@ -65,6 +65,7 @@ class DisplayLabel: UIView {
                 }
                 if self.isSuitFontForSize(font: font, size: textSizeArea) {
                     self.font = font
+                    self.layer.displayIfNeeded()
                 }
             }
         })

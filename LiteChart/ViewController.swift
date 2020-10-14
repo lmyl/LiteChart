@@ -18,7 +18,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-      
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
@@ -31,7 +30,6 @@ class ViewController: UIViewController {
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .bottomToTop
 
-        
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
         pieInterface.displayDataMode = .original
@@ -41,7 +39,6 @@ class ViewController: UIViewController {
         funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019", "2020", "2021", "2022", "2023", "2024"]
         funnelInterface.displayDataMode = .mix
         
-       /*
         var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
         lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
         lineInterface.underlayerColor = .init(lightColor: .blue)
@@ -54,7 +51,6 @@ class ViewController: UIViewController {
         lineInterface.isShowCoupleDividingLine = true
         lineInterface.dividingValueLineStyle = .segment
         lineInterface.dividingCoupleLineStyle = .segment
-        */
         /*
         let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
         var scatterInterface = LiteChartScatterChartInterface(inputDatas: datas)
@@ -95,7 +91,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: barInterface)
+        var interface = LiteChartViewInterface(contentInterface: lineInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
