@@ -43,12 +43,20 @@ class LegendView: UIView {
     }
     
     private func insertLegendLeftView() {
+        if let legend = self.legendLeftView {
+            legend.removeFromSuperview()
+            self.legendLeftView = nil
+        }
         let legend = LegendFactory.shared.makeNewLegend(from: self.configure.legendConfigure)
         self.addSubview(legend)
         self.legendLeftView = legend
     }
     
     private func insertLegendRightView() {
+        if let legendLabel = self.legendRightView {
+            legendLabel.removeFromSuperview()
+            self.legendRightView = nil
+        }
         let legendLabel = DisplayLabel(configure: self.configure.contentConfigure)
         self.addSubview(legendLabel)
         self.legendRightView = legendLabel
@@ -88,7 +96,7 @@ class LegendView: UIView {
         guard let leftView = self.legendLeftView else {
             return
         }
-        rightView.snp.updateConstraints{
+        rightView.snp.remakeConstraints{
             make in
             make.leading.equalTo(leftView.snp.trailing).priority(.init(750))
             make.trailing.equalToSuperview()

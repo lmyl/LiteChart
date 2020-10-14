@@ -8,20 +8,8 @@
 
 import UIKit
 
-class LiteChartContentView: UIView, LiteChartAreaLayoutGuide, LiteChartAnimatable {
+class LiteChartContentView: UIView, LiteChartAreaLayoutGuide {
     var areaLayoutGuide: UILayoutGuide {
         self.safeAreaLayoutGuide
-    }
-    
-    func startAnimation() {
-        
-    }
-    
-    func stopAnimation() {
-        
-    }
-    
-    func pauseAnimation() {
-        
     }
 }

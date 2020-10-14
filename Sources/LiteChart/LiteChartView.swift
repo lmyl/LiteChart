@@ -55,6 +55,10 @@ class LiteChartView: UIView {
     }
     
     private func insertTitleView() {
+        if let title = self.titleView {
+            title.removeFromSuperview()
+            self.titleView = nil
+        }
         guard let titleConfigure = self.configure.computeTitleConfigure() else {
             return
         }
@@ -64,12 +68,20 @@ class LiteChartView: UIView {
     }
     
     private func insertContentView() {
+        if let content = self.contentView {
+            content.removeFromSuperview()
+            self.contentView = nil
+        }
         let contentView = self.configure.computeContentView()
         self.addSubview(contentView)
         self.contentView = contentView
     }
     
     private func insertLegendViews() {
+        if let legend = self.legendViews {
+            legend.removeFromSuperview()
+            self.legendViews = nil
+        }
         guard let legendViews = self.configure.computeLegendViews() else {
             return
         }
@@ -85,7 +97,7 @@ class LiteChartView: UIView {
         guard let titleView = self.titleView, let content = self.contentView else {
             return
         }
-        titleView.snp.updateConstraints{
+        titleView.snp.remakeConstraints{
             make in
             switch self.configure.chartTitleDisplayLocation {
             case .top:
@@ -107,34 +119,33 @@ class LiteChartView: UIView {
             make in
             make.height.equalTo(titleHeight)
         }
-        titleView.layer.setNeedsDisplay()
     }
     
     private func updateContentViewStaticConstraints() {
         guard let contentView = self.contentView else {
             return
         }
-        contentView.snp.updateConstraints{
+        contentView.snp.remakeConstraints{
             make in
             if let titleView = self.titleView {
                 switch self.configure.chartTitleDisplayLocation {
                 case .top:
                     make.top.equalTo(titleView.snp.bottom).priority(750)
-                    make.bottom.equalToSuperview().priority(750)
+                    make.bottom.equalToSuperview()
                 case .bottom:
-                    make.top.equalToSuperview().priority(750)
+                    make.top.equalToSuperview()
                     make.bottom.equalTo(titleView.snp.top).priority(750)
                 }
             } else {
-                make.top.equalToSuperview().priority(750)
-                make.bottom.equalToSuperview().priority(750)
+                make.top.equalToSuperview()
+                make.bottom.equalToSuperview()
             }
             
             if self.legendViews == nil {
-                make.trailing.equalToSuperview().priority(750)
+                make.trailing.equalToSuperview()
             }
             
-            make.leading.equalToSuperview().priority(750)
+            make.leading.equalToSuperview()
         }
     }
     
@@ -163,10 +174,10 @@ class LiteChartView: UIView {
         guard let contentView = self.contentView else {
             return
         }
-        legendViews.snp.updateConstraints{
+        legendViews.snp.remakeConstraints{
             make in
             make.width.equalToSuperview().multipliedBy(0.2)
-            make.leading.equalTo(contentView.snp.trailing)
+            make.leading.equalTo(contentView.snp.trailing).priority(750)
             
             make.top.equalTo(contentView.snp.top)
             
@@ -185,7 +196,7 @@ class LiteChartView: UIView {
         let spaceWidth = self.bounds.width / 45
         legendViews.snp.updateConstraints{
             make in
-            make.leading.equalTo(contentView.snp.trailing).offset(spaceWidth)
+            make.leading.equalTo(contentView.snp.trailing).offset(spaceWidth).priority(750)
         }
     }
 }

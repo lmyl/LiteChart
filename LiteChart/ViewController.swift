@@ -11,14 +11,14 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    var displayView: LiteChartView?
+    var displayView: UIView?
     var showType = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-       
+       /*
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
@@ -28,16 +28,17 @@ class ViewController: UIViewController {
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .bottomToTop
-
+*/
         /*
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
         pieInterface.displayDataMode = .original
  */
-        /*
-        var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (70, .init(lightUIColor: .blue)), (50, .init(lightUIColor: .purple)), (20, .init(lightUIColor: .blue))])
-        funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022"]
-        funnelInterface.displayDataMode = .mix*/
+        
+        var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (90, .init(lightUIColor: .blue)), (80, .init(lightUIColor: .purple)), (70, .init(lightUIColor: .blue)),(60, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue))])
+        funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019", "2020", "2021", "2022", "2023", "2024"]
+        funnelInterface.displayDataMode = .mix
+        
        /*
         var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
         lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
@@ -81,18 +82,18 @@ class ViewController: UIViewController {
         bubbleInterface.underlayerColor = .init(lightColor: .blue)
         bubbleInterface.unitTextColor = .init(lightColor: .gold)
         */
-        /*
+        
         var radarInterface = LiteChartRadarChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.20, 0.30, 0.40 ,0.50]), (LiteChartDarkLightColor.init(lightUIColor: .red), [0.30, 0.90, 0.70, 0.50 ,0.1]),(LiteChartDarkLightColor.init(lightUIColor: .yellow), [0.10, 0.60, 0.40, 0.90 ,0.5])])
         radarInterface.radarCount = 3
         radarInterface.inputLegendTitles = ["2019", "2020", "2021"]
-        radarInterface.coupleTitles = ["Water", "Elec", "Oil", "Gas", "Fire"]
+        radarInterface.coupleTitles = ["Water", "ElectricEle", "Oil", "Gas", "Fire"]
         radarInterface.isShowingCoupleTitles = true
         radarInterface.coupleTitlesColor = .init(lightColor: .blue)
         radarInterface.radarLineColor = .init(lightColor: .orange)
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
-*/
-        var interface = LiteChartViewInterface(contentInterface: barInterface)
+
+        var interface = LiteChartViewInterface(contentInterface: funnelInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -104,9 +105,9 @@ class ViewController: UIViewController {
         self.displayView = backgroundView
         backgroundView.snp.updateConstraints{
             make in
-            make.width.equalToSuperview().multipliedBy(0.3)
+            make.width.equalToSuperview()
             make.center.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(300)
         }
         
         let button = UIButton()

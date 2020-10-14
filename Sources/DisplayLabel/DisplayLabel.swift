@@ -13,10 +13,15 @@ class DisplayLabel: UIView {
     static let notificationInfoSyncIdentitiferKey = "sync"
     
     private let configure: DisplayLabelConfigure
-    private var suitFont = UIFont.systemFont(ofSize: 17)
+    private var suitFont = UIFont.systemFont(ofSize: 18)
+    private let maxFont = UIFont.systemFont(ofSize: 17)
     private var token: NSObjectProtocol?
     private var rwFontSignal = DispatchSemaphore(value: 1)
-    private var processNotificationQueue = OperationQueue()
+    private var processNotificationQueue: OperationQueue {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }
     
     private var font: UIFont {
         set {
@@ -60,7 +65,6 @@ class DisplayLabel: UIView {
                 }
                 if self.isSuitFontForSize(font: font, size: textSizeArea) {
                     self.font = font
-                    self.layer.displayIfNeeded()
                 }
             }
         })
@@ -144,7 +148,7 @@ class DisplayLabel: UIView {
 
 extension DisplayLabel {
     private func computeSuitableFont(for size: CGSize) -> (UIFont, CGSize) {
-        var newFont = UIFont.systemFont(ofSize: 17)
+        var newFont = self.maxFont
         var fontSize = newFont.pointSize
         let nsstring = self.configure.contentString as NSString
         var rect = nsstring.boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : newFont], context: nil)
