@@ -41,13 +41,23 @@ class PieView: UIView {
     }
     
     deinit {
+        self.clearNotification()
+    }
+    
+    private func clearNotification() {
         guard let token = self.notificationToken else {
             return
         }
         NotificationCenter.default.removeObserver(token)
+        self.notificationToken = nil
     }
     
     private func insertSectorView() {
+        if let sector = self.sectorView {
+            sector.removeFromSuperview()
+            self.sectorView = nil
+            self.clearNotification()
+        }
         let sectorView = PieSectorView(configure: self.configure.pieSectorViewConfigure)
         self.sectorView = sectorView
         self.addSubview(sectorView)
@@ -64,6 +74,10 @@ class PieView: UIView {
     }
     
     private func insertTextView() {
+        if let text = self.textView {
+            text.removeFromSuperview()
+            self.textView = nil
+        }
         guard self.configure.isShowLabel else {
             return
         }
@@ -133,7 +147,7 @@ class PieView: UIView {
             make.height.equalTo(labelHeight)
             make.width.equalTo(labelLength)
         }
+        textView.setNeedsLayout()
         textView.layoutIfNeeded()
-        textView.setNeedsDisplay()
     }
 }

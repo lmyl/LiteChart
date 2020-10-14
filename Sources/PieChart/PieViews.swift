@@ -30,6 +30,10 @@ class PieViews: LiteChartContentView {
     }
     
     private func insertPieView() {
+        for pie in self.pieViews {
+            pie.removeFromSuperview()
+        }
+        self.pieViews = []
         for pieConfigure in self.configure.models {
             let pie = PieView(configure: pieConfigure)
             self.addSubview(pie)
