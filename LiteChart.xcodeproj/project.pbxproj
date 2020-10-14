@@ -321,7 +321,7 @@
 				080368E2248A630200D1413C /* FunnelChart */,
 				08386C25248E51F300D0E655 /* Notification */,
 				08386C19248DD91000D0E655 /* ChartError */,
-				0876A4E5248CD1290015289B /* DisplayDataMode */,
+				0876A4E5248CD1290015289B /* DisplayMode */,
 				0866FDC02489FF4E004AF645 /* Color */,
 				0866FDBE2489FF4E004AF645 /* DisplayLabel */,
 				08F56E5C248B52D3000998F8 /* Legend */,
@@ -441,13 +441,13 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
-		0876A4E5248CD1290015289B /* DisplayDataMode */ = {
+		0876A4E5248CD1290015289B /* DisplayMode */ = {
 			isa = PBXGroup;
 			children = (
 				08D0D465248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift */,
 				0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */,
 			);
-			path = DisplayDataMode;
+			path = DisplayMode;
 			sourceTree = "<group>";
 		};
 		087DEA8B248E7353001A40B9 /* LiteChart */ = {
