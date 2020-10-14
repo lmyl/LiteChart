@@ -31,6 +31,10 @@ class PointViews: UIView {
     }
     
     private func insertPointsView() {
+        for view in self.pointsView {
+            view.removeFromSuperview()
+        }
+        self.pointsView = []
         for configure in self.configure.models {
             let view = PointsView(configure: configure)
             self.addSubview(view)
@@ -40,7 +44,7 @@ class PointViews: UIView {
     
     private func updatePointsViewStaticConstraints() {
         for view in self.pointsView {
-            view.snp.updateConstraints{
+            view.snp.remakeConstraints{
                 make in
                 make.leading.trailing.top.bottom.equalToSuperview()
             }

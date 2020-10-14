@@ -19,7 +19,7 @@ class PlotChartView: LiteChartContentView {
     private var valueView: [DisplayLabel] = []
     private var pointViews: PointViews?
     
-    private let contentLayoutGuide = UILayoutGuide()
+    private var contentLayoutGuide: UILayoutGuide?
     
     init(configure: PlotChartViewConfigure) {
         self.configure = configure
@@ -62,16 +62,34 @@ class PlotChartView: LiteChartContentView {
     }
     
     override var areaLayoutGuide: UILayoutGuide {
-        self.contentLayoutGuide
+        if let layout = self.contentLayoutGuide {
+            return layout
+        } else {
+            return super.areaLayoutGuide
+        }
     }
     
     private func insertContentLayoutGuide() {
-        self.addLayoutGuide(self.contentLayoutGuide)
+        if let layout = self.contentLayoutGuide {
+            self.removeLayoutGuide(layout)
+            self.contentLayoutGuide = nil
+        }
+        let layout = UILayoutGuide()
+        self.contentLayoutGuide = layout
+        self.addLayoutGuide(layout)
     }
     
     private func insertUnitLabel() {
-        var unitLabel: DisplayLabel
+        if let unitLabel = self.yUnitLabel {
+            unitLabel.removeFromSuperview()
+            self.yUnitLabel = nil
+        }
+        if let unitLabel = self.xUnitLabel {
+            unitLabel.removeFromSuperview()
+            self.xUnitLabel = nil
+        }
         
+        var unitLabel: DisplayLabel
         if self.configure.isShowValueUnitString {
             unitLabel = DisplayLabel(configure: self.configure.valueUnitStringConfigure)
             self.yUnitLabel = unitLabel
@@ -88,6 +106,10 @@ class PlotChartView: LiteChartContentView {
     }
     
     private func insertCoupleTitleView() {
+        for titleView in self.coupleTitleView {
+            titleView.removeFromSuperview()
+        }
+        self.coupleTitleView = []
         for configure in self.configure.coupleTitleConfigure {
             let titleView = DisplayLabel(configure: configure)
             self.addSubview(titleView)
@@ -96,6 +118,10 @@ class PlotChartView: LiteChartContentView {
     }
     
     private func insertValueTitleView() {
+        for valueView in self.valueView {
+            valueView.removeFromSuperview()
+        }
+        self.valueView = []
         for configure in self.configure.valueTitleConfigure {
             let valueView = DisplayLabel(configure: configure)
             self.addSubview(valueView)
@@ -104,12 +130,20 @@ class PlotChartView: LiteChartContentView {
     }
     
     private func insertAxisView() {
+        if let axisView = self.axisView {
+            axisView.removeFromSuperview()
+            self.axisView = nil
+        }
         let axisView = AxisView(configure: self.configure.axisConfigure)
         self.addSubview(axisView)
         self.axisView = axisView
     }
     
     private func insertPointViews() {
+        if let pointViews = self.pointViews {
+            pointViews.removeFromSuperview()
+            self.pointViews = nil
+        }
         guard let axis = self.axisView else {
             return
         }
@@ -188,7 +222,7 @@ class PlotChartView: LiteChartContentView {
         }
         
         if let unit = self.yUnitLabel {
-            unit.snp.updateConstraints{
+            unit.snp.remakeConstraints{
                 make in
                 make.leading.equalToSuperview()
                 make.width.equalTo(self.leftUnitViewWidth)
@@ -198,7 +232,7 @@ class PlotChartView: LiteChartContentView {
         }
         
         if let xUnit = self.xUnitLabel {
-            xUnit.snp.updateConstraints{
+            xUnit.snp.remakeConstraints{
                 make in
                 make.leading.equalTo(axis.snp.leading)
                 make.trailing.equalToSuperview()
@@ -216,7 +250,6 @@ class PlotChartView: LiteChartContentView {
                 make in
                 make.width.equalTo(self.leftUnitViewWidth)
             }
-            unit.layer.setNeedsDisplay()
         }
         
         if let xUnit = self.xUnitLabel {
@@ -224,7 +257,6 @@ class PlotChartView: LiteChartContentView {
                 make in
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
-            xUnit.layer.setNeedsDisplay()
         }
     }
     
@@ -232,12 +264,12 @@ class PlotChartView: LiteChartContentView {
         guard let axis = self.axisView else {
             return
         }
-        axis.snp.updateConstraints{
+        axis.snp.remakeConstraints{
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(self.leftSpace)
-            make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(750)
+            make.bottom.equalToSuperview().offset(0 - self.bottomSpace).priority(750)
         }
     }
     
@@ -247,8 +279,8 @@ class PlotChartView: LiteChartContentView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace)
-            make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(750)
+            make.bottom.equalToSuperview().offset(0 - self.bottomSpace).priority(750)
         }
     }
     
@@ -256,7 +288,7 @@ class PlotChartView: LiteChartContentView {
         guard let pointViews = self.pointViews else {
             return
         }
-        pointViews.snp.updateConstraints{
+        pointViews.snp.remakeConstraints{
             make in
             make.trailing.top.bottom.leading.equalToSuperview()
         }

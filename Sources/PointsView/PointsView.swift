@@ -31,6 +31,10 @@ class PointsView: UIView {
     }
     
     private func insertPoints() {
+        for uiView in self.points {
+            uiView.removeFromSuperview()
+        }
+        self.points = []
         for point in self.configure.points {
             let uiview = LegendFactory.shared.makeNewLegend(from: point.legendConfigure)
             var opacity = point.opacity
