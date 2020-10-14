@@ -19,7 +19,7 @@ class BarChartView: LiteChartContentView {
     private var valueView: [DisplayLabel] = []
     private var barViewCollection: BarViewCoupleCollection?
     
-    private let contentLayoutGuide = UILayoutGuide()
+    private var contentLayoutGuide: UILayoutGuide?
     
     init(configure: BarChartViewConfigure) {
         self.configure = configure
@@ -62,16 +62,35 @@ class BarChartView: LiteChartContentView {
     }
     
     override var areaLayoutGuide: UILayoutGuide {
-        self.contentLayoutGuide
+        if let layout = self.contentLayoutGuide {
+            return layout
+        } else {
+            return super.areaLayoutGuide
+        }
     }
     
     private func insertContentLayoutGuide() {
-        self.addLayoutGuide(self.contentLayoutGuide)
+        if let layout = self.contentLayoutGuide {
+            self.removeLayoutGuide(layout)
+            self.contentLayoutGuide = nil
+        }
+        let layout = UILayoutGuide()
+        self.contentLayoutGuide = layout
+        self.addLayoutGuide(layout)
     }
     
     private func insertUnitLabel() {
-        var unitLabel: DisplayLabel
+        if let xUnitLabel = self.xUnitLabel {
+            xUnitLabel.removeFromSuperview()
+            self.xUnitLabel = nil
+        }
         
+        if let yUnitLabel = self.yUnitLabel {
+            yUnitLabel.removeFromSuperview()
+            self.yUnitLabel = nil
+        }
+        
+        var unitLabel: DisplayLabel
         if self.configure.isShowValueUnitString {
             unitLabel = DisplayLabel(configure: self.configure.valueUnitStringConfigure)
             self.addSubview(unitLabel)
@@ -97,6 +116,10 @@ class BarChartView: LiteChartContentView {
     }
     
     private func insertCoupleTitleView() {
+        for titleView in self.coupleTitleView {
+            titleView.removeFromSuperview()
+        }
+        self.coupleTitleView = []
         for coupleTitleConfigure in self.configure.coupleTitleConfigure {
             let titleView = DisplayLabel(configure: coupleTitleConfigure)
             self.addSubview(titleView)
@@ -105,6 +128,10 @@ class BarChartView: LiteChartContentView {
     }
     
     private func insertValueTitleView() {
+        for valueView in self.valueView {
+            valueView.removeFromSuperview()
+        }
+        self.valueView = []
         for valueTitleConfigure in self.configure.valueTitleConfigure {
             let valueView = DisplayLabel(configure: valueTitleConfigure)
             self.addSubview(valueView)
@@ -113,12 +140,20 @@ class BarChartView: LiteChartContentView {
     }
     
     private func insertAxisView() {
+        if let axisView = self.axisView {
+            axisView.removeFromSuperview()
+            self.axisView = nil
+        }
         let axisView = AxisView(configure: self.configure.axisConfigure)
         self.addSubview(axisView)
         self.axisView = axisView
     }
     
     private func insertBarViewCollection() {
+        if let barView = self.barViewCollection {
+            barView.removeFromSuperview()
+            self.barViewCollection = nil
+        }
         guard let axis = self.axisView else {
             return
         }
@@ -196,7 +231,7 @@ class BarChartView: LiteChartContentView {
         }
         
         if let unit = self.yUnitLabel {
-            unit.snp.updateConstraints{
+            unit.snp.remakeConstraints{
                 make in
                 make.leading.equalToSuperview()
                 make.width.equalTo(self.leftUnitViewWidth)
@@ -206,7 +241,7 @@ class BarChartView: LiteChartContentView {
         }
         
         if let xUnit = self.xUnitLabel {
-            xUnit.snp.updateConstraints{
+            xUnit.snp.remakeConstraints{
                 make in
                 make.leading.equalTo(axis.snp.leading)
                 make.trailing.equalToSuperview()
@@ -223,7 +258,6 @@ class BarChartView: LiteChartContentView {
                 make in
                 make.width.equalTo(self.leftUnitViewWidth)
             }
-            unit.layer.setNeedsDisplay()
         }
         
         if let xUnit = self.xUnitLabel {
@@ -231,7 +265,6 @@ class BarChartView: LiteChartContentView {
                 make in
                 make.height.equalTo(self.bottomUnitViewHeight)
             }
-            xUnit.layer.setNeedsDisplay()
         }
     }
     
@@ -239,12 +272,12 @@ class BarChartView: LiteChartContentView {
         guard let axis = self.axisView else {
             return
         }
-        axis.snp.updateConstraints{
+        axis.snp.remakeConstraints{
             make in
             make.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview().priority(750)
+            make.bottom.equalToSuperview().priority(750)
         }
     }
     
@@ -254,8 +287,8 @@ class BarChartView: LiteChartContentView {
         }
         axis.snp.updateConstraints{
             make in
-            make.leading.equalToSuperview().offset(self.leftSpace)
-            make.bottom.equalToSuperview().offset(0 - self.bottomSpace)
+            make.leading.equalToSuperview().offset(self.leftSpace).priority(750)
+            make.bottom.equalToSuperview().offset(0 - self.bottomSpace).priority(750)
         }
     }
     
@@ -301,7 +334,6 @@ class BarChartView: LiteChartContentView {
                     make.width.equalTo(self.leftViewWidth)
                     make.height.equalTo(labelHeight)
                 }
-                labelView.layer.setNeedsDisplay()
             }
         case .leftToRight:
             guard self.configure.xDividingPoints.count == self.configure.valueTitleConfigure.count, self.configure.valueTitleConfigure.count == self.valueView.count else {
@@ -320,7 +352,6 @@ class BarChartView: LiteChartContentView {
                     make.height.equalTo(self.bottomViewHeight)
                     make.width.equalTo(labelWidth)
                 }
-                labelView.layer.setNeedsDisplay()
             }
         }
     }
@@ -342,27 +373,18 @@ class BarChartView: LiteChartContentView {
             let labelSpace = labelWidth / 10
             var frontView: DisplayLabel?
             for labelView in self.coupleTitleView {
-                guard let front = frontView else {
-                    labelView.snp.updateConstraints{
-                        make in
-                        make.leading.equalTo(axis.snp.leading).offset(labelSpace / 2)
-                        make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
-                        make.height.equalTo(self.bottomViewHeight)
-                        make.width.equalTo(labelWidth - labelSpace)
-                    }
-                    frontView = labelView
-                    labelView.layer.setNeedsDisplay()
-                    continue
-                }
                 labelView.snp.updateConstraints{
                     make in
-                    make.leading.equalTo(front.snp.trailing).offset(labelSpace)
-                    make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace)
+                    if let front = frontView {
+                        make.leading.equalTo(front.snp.trailing).offset(labelSpace).priority(750)
+                    } else {
+                        make.leading.equalTo(axis.snp.leading).offset(labelSpace / 2).priority(750)
+                    }
+                    make.top.equalTo(axis.snp.bottom).offset(self.labelViewHeightSpace).priority(750)
                     make.height.equalTo(self.bottomViewHeight)
                     make.width.equalTo(labelWidth - labelSpace)
                 }
                 frontView = labelView
-                labelView.layer.setNeedsDisplay()
             }
         case .leftToRight:
             guard self.configure.coupleTitleConfigure.count == self.configure.barViewCoupleNumber else {
@@ -372,27 +394,18 @@ class BarChartView: LiteChartContentView {
             let labelSpace = labelHeight / 10
             var frontView: DisplayLabel?
             for labelView in self.coupleTitleView {
-                guard let front = frontView else {
-                    labelView.snp.updateConstraints{
-                        make in
-                        make.trailing.equalTo(axis.snp.leading).offset(0 - self.labelViewWidthSpace)
-                        make.bottom.equalTo(axis.snp.bottom).offset(0 - labelSpace / 2)
-                        make.height.equalTo(labelHeight - labelSpace)
-                        make.width.equalTo(self.leftViewWidth)
-                    }
-                    frontView = labelView
-                    labelView.layer.setNeedsDisplay()
-                    continue
-                }
                 labelView.snp.updateConstraints{
                     make in
-                    make.trailing.equalTo(axis.snp.leading).offset(0 - self.labelViewWidthSpace)
-                    make.bottom.equalTo(front.snp.top).offset(0 - labelSpace)
+                    if let front = frontView {
+                        make.bottom.equalTo(front.snp.top).offset(0 - labelSpace).priority(750)
+                    } else {
+                        make.bottom.equalTo(axis.snp.bottom).offset(0 - labelSpace / 2).priority(750)
+                    }
+                    make.trailing.equalTo(axis.snp.leading).offset(0 - self.labelViewWidthSpace).priority(750)
                     make.height.equalTo(labelHeight - labelSpace)
                     make.width.equalTo(self.leftViewWidth)
                 }
                 frontView = labelView
-                labelView.layer.setNeedsDisplay()
             }
         }
     }

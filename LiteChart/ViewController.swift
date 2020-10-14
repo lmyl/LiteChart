@@ -18,17 +18,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-       /*
+      
         var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
         barInterface.inputLegendTitles = ["2019", "2020", "2021"]
         barInterface.underlayerColor = .init(lightColor: .blue)
         barInterface.unitTextColor = .init(lightColor: .gold)
         barInterface.isShowValueUnitString = true
         barInterface.isShowCoupleUnitString = true
+        barInterface.isShowValueDividingLine = true
+        barInterface.isShowCoupleDividingLine = false
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
         barInterface.direction = .bottomToTop
-*/
+
         
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
@@ -93,7 +95,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: pieInterface)
+        var interface = LiteChartViewInterface(contentInterface: barInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"

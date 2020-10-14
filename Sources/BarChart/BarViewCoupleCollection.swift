@@ -18,8 +18,8 @@ class BarViewCoupleCollection: UIView {
     init(configure: BarViewCoupleCollectionConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        
         insertBarViewCoupleView()
+        
         updateBarViewCoupleViewStaticConstraints()
     }
     
@@ -27,8 +27,8 @@ class BarViewCoupleCollection: UIView {
     required init?(coder: NSCoder) {
         self.configure = BarViewCoupleCollectionConfigure.emptyConfigure
         super.init(coder: coder)
-        
         insertBarViewCoupleView()
+        
         updateBarViewCoupleViewStaticConstraints()
     }
     
@@ -39,6 +39,10 @@ class BarViewCoupleCollection: UIView {
     }
     
     private func insertBarViewCoupleView() {
+        for view in self.barViewCoupleViews {
+            view.removeFromSuperview()
+        }
+        self.barViewCoupleViews = []
         for configure in self.configure.models {
             let view = BarViewCouple(configure: configure)
             self.addSubview(view)
@@ -53,25 +57,18 @@ class BarViewCoupleCollection: UIView {
         }
         
         var frontView: BarViewCouple?
-        
         switch self.configure.direction {
         case .bottomToTop:
             for barView in self.barViewCoupleViews {
-                guard let front = frontView else {
-                    barView.snp.updateConstraints{
-                        make in
+                barView.snp.remakeConstraints{
+                    make in
+                    if let front = frontView {
+                        make.leading.equalTo(front.snp.trailing)
+                        make.width.equalTo(front.snp.width)
+                    } else {
                         make.leading.equalToSuperview()
                         make.width.equalTo(0)
-                        make.bottom.equalToSuperview()
-                        make.top.equalToSuperview()
                     }
-                    frontView = barView
-                    continue
-                }
-                barView.snp.updateConstraints{
-                    make in
-                    make.leading.equalTo(front.snp.trailing)
-                    make.width.equalTo(front.snp.width)
                     make.bottom.equalToSuperview()
                     make.top.equalToSuperview()
                 }
@@ -79,22 +76,16 @@ class BarViewCoupleCollection: UIView {
             }
         case .leftToRight:
             for barView in self.barViewCoupleViews {
-                guard let front = frontView else {
-                    barView.snp.updateConstraints{
-                        make in
-                        make.leading.equalToSuperview()
+                barView.snp.remakeConstraints{
+                    make in
+                    if let front = frontView {
+                        make.height.equalTo(front.snp.height)
+                        make.bottom.equalTo(front.snp.top)
+                    } else {
                         make.height.equalTo(0)
                         make.bottom.equalToSuperview()
-                        make.trailing.equalToSuperview()
                     }
-                    frontView = barView
-                    continue
-                }
-                barView.snp.updateConstraints{
-                    make in
                     make.leading.equalToSuperview()
-                    make.height.equalTo(front.snp.height)
-                    make.bottom.equalTo(front.snp.top)
                     make.trailing.equalToSuperview()
                 }
                 frontView = barView

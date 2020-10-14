@@ -42,6 +42,10 @@ class BarView: UIView {
     }
     
     private func insertBar() {
+        if let bar = self.bar {
+            bar.removeFromSuperview()
+            self.bar = nil
+        }
         let bar = UIView()
         bar.backgroundColor = self.configure.barColor.color
         self.bar = bar
@@ -50,6 +54,10 @@ class BarView: UIView {
     
     
     private func insertLabel() {
+        if let label = self.label {
+            label.removeFromSuperview()
+            self.label = nil
+        }
         guard self.configure.isShowLabel else {
             return
         }
@@ -87,7 +95,7 @@ class BarView: UIView {
         bar.backgroundColor = self.configure.barColor.color
         switch self.configure.direction {
         case .bottomToTop:
-            bar.snp.updateConstraints{
+            bar.snp.remakeConstraints{
                 make in
                 make.bottom.equalToSuperview()
                 make.leading.equalToSuperview()
@@ -95,7 +103,7 @@ class BarView: UIView {
                 make.height.equalTo(0)
             }
         case .leftToRight:
-            bar.snp.updateConstraints{
+            bar.snp.remakeConstraints{
                 make in
                 make.bottom.equalToSuperview()
                 make.leading.equalToSuperview()
@@ -114,7 +122,7 @@ class BarView: UIView {
         }
         switch self.configure.direction {
         case .bottomToTop:
-            label.snp.updateConstraints{
+            label.snp.remakeConstraints{
                 make in
                 make.bottom.equalTo(bar.snp.top)
                 make.leading.equalToSuperview()
@@ -122,10 +130,10 @@ class BarView: UIView {
                 make.height.equalTo(0)
             }
         case .leftToRight:
-            label.snp.updateConstraints{
+            label.snp.remakeConstraints{
                 make in
                 make.bottom.equalToSuperview()
-                make.leading.equalTo(bar.snp.trailing)
+                make.leading.equalTo(bar.snp.trailing).priority(750)
                 make.trailing.equalToSuperview()
                 make.height.equalToSuperview()
             }
@@ -152,7 +160,7 @@ class BarView: UIView {
             let space = self.bounds.width / 30
             label.snp.updateConstraints{
                 make in
-                make.leading.equalTo(bar.snp.trailing).offset(space)
+                make.leading.equalTo(bar.snp.trailing).offset(space).priority(750)
             }
         }
         

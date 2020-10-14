@@ -36,6 +36,10 @@ class BarViewCouple: UIView {
     }
     
     private func insertBars() {
+        for bar in self.barViews {
+            bar.removeFromSuperview()
+        }
+        self.barViews = []
         for barviewConfigure in self.configure.models {
             let barview = BarView(configure: barviewConfigure)
             self.addSubview(barview)
@@ -48,46 +52,34 @@ class BarViewCouple: UIView {
         case .bottomToTop:
             var frontBar: BarView?
             for bar in self.barViews {
-                guard let front = frontBar else {
-                    bar.snp.updateConstraints{
-                        make in
-                        make.leading.equalToSuperview()
-                        make.width.equalTo(0)
-                        make.top.equalToSuperview()
-                        make.bottom.equalToSuperview()
-                    }
-                    frontBar = bar
-                    continue
-                }
-                bar.snp.updateConstraints{
+                bar.snp.remakeConstraints{
                     make in
-                    make.leading.equalTo(front.snp.trailing)
-                    make.bottom.equalToSuperview()
+                    if let front = frontBar {
+                        make.leading.equalTo(front.snp.trailing)
+                        make.width.equalTo(front.snp.width)
+                    } else {
+                        make.leading.equalToSuperview().priority(750)
+                        make.width.equalTo(0)
+                    }
                     make.top.equalToSuperview()
-                    make.width.equalTo(0)
+                    make.bottom.equalToSuperview()
                 }
                 frontBar = bar
             }
         case .leftToRight:
             var frontBar: BarView?
             for bar in self.barViews {
-                guard let front = frontBar else {
-                    bar.snp.updateConstraints{
-                        make in
-                        make.leading.equalToSuperview()
-                        make.trailing.equalToSuperview()
-                        make.top.equalToSuperview()
+                bar.snp.remakeConstraints{
+                    make in
+                    if let front = frontBar {
+                        make.top.equalTo(front.snp.bottom)
+                        make.height.equalTo(front.snp.height)
+                    } else {
+                        make.top.equalToSuperview().priority(750)
                         make.height.equalTo(0)
                     }
-                    frontBar = bar
-                    continue
-                }
-                bar.snp.updateConstraints{
-                    make in
                     make.leading.equalToSuperview()
                     make.trailing.equalToSuperview()
-                    make.top.equalTo(front.snp.bottom)
-                    make.height.equalTo(0)
                 }
                 frontBar = bar
             }
@@ -99,42 +91,24 @@ class BarViewCouple: UIView {
         case .bottomToTop:
             let itemWidth = self.bounds.width / CGFloat(self.barViews.count + 1)
             let leftSpace = itemWidth / 2
-            var frontBar: BarView?
-            for bar in self.barViews {
-                guard let _ = frontBar else {
-                    bar.snp.updateConstraints{
-                        make in
-                        make.leading.equalToSuperview().offset(leftSpace)
-                        make.width.equalTo(itemWidth)
-                    }
-                    frontBar = bar
-                    continue
-                }
-                bar.snp.updateConstraints{
-                    make in
-                    make.width.equalTo(itemWidth)
-                }
-                frontBar = bar
+            guard let frontBar = self.barViews.first else {
+                return
+            }
+            frontBar.snp.updateConstraints{
+                make in
+                make.leading.equalToSuperview().offset(leftSpace).priority(750)
+                make.width.equalTo(itemWidth)
             }
         case .leftToRight:
             let itemHeight = self.bounds.height / CGFloat(self.barViews.count + 1)
             let topSpace = itemHeight / 2
-            var frontBar: BarView?
-            for bar in self.barViews {
-                guard let _ = frontBar else {
-                    bar.snp.updateConstraints{
-                        make in
-                        make.top.equalToSuperview().offset(topSpace)
-                        make.height.equalTo(itemHeight)
-                    }
-                    frontBar = bar
-                    continue
-                }
-                bar.snp.updateConstraints{
-                    make in
-                    make.height.equalTo(itemHeight)
-                }
-                frontBar = bar
+            guard let frontBar = self.barViews.first else {
+                return
+            }
+            frontBar.snp.updateConstraints{
+                make in
+                make.top.equalToSuperview().offset(topSpace).priority(750)
+                make.height.equalTo(itemHeight)
             }
         }
         
