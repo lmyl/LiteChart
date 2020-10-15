@@ -12,7 +12,7 @@ import UIKit
 protocol LiteChartParametersProcesser {
     func checkInputDatasParameterInvalid() throws
     
-    func computeLegendViews() -> UIView?
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView?
     
-    func computeContentView() -> LiteChartContentView
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView
 }

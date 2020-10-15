@@ -44,15 +44,15 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         }
     }
     
-    func computeLegendViews() -> UIView? {
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.inputDatas.count == inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
-        
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .funalLegendTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: .funalLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: syncIdentifier)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -62,7 +62,7 @@ extension FunalChartParameters: LiteChartParametersProcesser {
         return LegendViews(configure: legendConfigure)
     }
     
-    func computeContentView() -> LiteChartContentView {
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         
         guard self.inputDatas.count > 0 else {
             let configure = FunalViewConfigure.emptyconfigure
@@ -109,7 +109,8 @@ extension FunalChartParameters: LiteChartParametersProcesser {
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: false)
                 funalViewConfigure.append(funalFloorConfigure)
             } else {
-                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: valueTextColor, textAlignment: .center, syncIdentifier: .funalTitleLabel)
+                let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .funalTitleLabel)
+                let contentViewConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: valueTextColor, textAlignment: .center, syncIdentifier: syncIdentifier)
                 let funalFloorConfigure = FunalFloorViewConfigure(backgroundViewConfigure: backgroundViewConfigure, isShowLabel: true, contentViewConfigure: contentViewConfigure)
                 funalViewConfigure.append(funalFloorConfigure)
             }

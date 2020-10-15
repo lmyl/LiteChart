@@ -124,14 +124,15 @@ extension BarChartParameter: LiteChartParametersProcesser {
         }
     }
     
-    func computeLegendViews() -> UIView? {
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barLegendTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .barLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: syncIdentifier)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -140,7 +141,7 @@ extension BarChartParameter: LiteChartParametersProcesser {
         return LegendViews(configure: legendConfigure)
     }
     
-    func computeContentView() -> LiteChartContentView {
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         
         guard self.inputDatas.count > 0 else {
             let configure = BarChartViewConfigure.emptyConfigure
@@ -227,12 +228,12 @@ extension BarChartParameter: LiteChartParametersProcesser {
         case .leftToRight:
             textAlignment = .left
         }
-        
+        let barTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barTitleLabel)
         for coupleBars in coupleBarsInputDatas {
             var barViewsConfigure: [BarViewConfigure] = []
             for input in coupleBars {
                 if isShowLabel {
-                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: input.0, textAlignment: textAlignment, syncIdentifier: .barTitleLabel), direction: self.direction)
+                    let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: true, label: DisplayLabelConfigure(contentString: input.2, contentColor: input.0, textAlignment: textAlignment, syncIdentifier: barTitleSyncIdentifier), direction: self.direction)
                     barViewsConfigure.append(barViewConfigure)
                 } else {
                     let barViewConfigure = BarViewConfigure(length: input.1, barColor: input.0, isShowLabel: false, direction: self.direction)
@@ -243,8 +244,9 @@ extension BarChartParameter: LiteChartParametersProcesser {
             barViewCoupleConfigures.append(barViewCoupleConfigure)
         }
         
-        var valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, syncIdentifier: .barUnitTitleLabel)
-        var coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, syncIdentifier: .barUnitTitleLabel)
+        let unitSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barUnitTitleLabel)
+        var valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, syncIdentifier: unitSyncIdentifier)
+        var coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, syncIdentifier: unitSyncIdentifier)
         
         switch self.direction {
         case .bottomToTop:
@@ -254,14 +256,16 @@ extension BarChartParameter: LiteChartParametersProcesser {
             coupleUnitStringConfigure.textDirection = .horizontal
             
             var coupleTitleConfigures: [DisplayLabelConfigure] = []
+            let coupleTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barCoupleTitleLabel)
             for title in coupleTitles {
-                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: .barCoupleTitleLabel)
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: coupleTitleSyncIdentifier)
                 coupleTitleConfigures.append(config)
             }
             
             var valueTitleConfigures: [DisplayLabelConfigure] = []
+            let barValueSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barValueTitleLabel)
             for title in valuesString {
-                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: .barValueTitleLabel)
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: barValueSyncIdentifier)
                 valueTitleConfigures.append(config)
             }
             
@@ -275,14 +279,16 @@ extension BarChartParameter: LiteChartParametersProcesser {
             coupleUnitStringConfigure.textDirection = .vertical
             
             var coupleTitleConfigures: [DisplayLabelConfigure] = []
+            let coupleTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barCoupleTitleLabel)
             for title in coupleTitles {
-                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, textAlignment: .right, syncIdentifier: .barCoupleTitleLabel)
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, textAlignment: .right, syncIdentifier: coupleTitleSyncIdentifier)
                 coupleTitleConfigures.append(config)
             }
             
             var valueTitleConfigures: [DisplayLabelConfigure] = []
+            let barValueSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .barValueTitleLabel)
             for title in valuesString {
-                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, syncIdentifier: .barValueTitleLabel)
+                let config = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, syncIdentifier: barValueSyncIdentifier)
                 valueTitleConfigures.append(config)
             }
             

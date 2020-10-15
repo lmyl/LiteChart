@@ -78,14 +78,15 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         }
     }
     
-    func computeLegendViews() -> UIView? {
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .radarLegendTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .radarLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: syncIdentifier)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -94,7 +95,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
         return LegendViews(configure: legendConfigure)
     }
     
-    func computeContentView() -> LiteChartContentView {
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         guard self.inputDatas.count > 0 else {
             let configure = RadarChartViewConfigure.emptyConfigure
             return RadarChartView(configure: configure)
@@ -126,6 +127,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
             guard locationOfPoints.count == self.coupleTitles.count else {
                 fatalError("框架内部错误，不给予拯救")
             }
+            let coupleTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .radarCoupleTitleLabel)
             for (index, coupleTitle) in self.coupleTitles.enumerated() {
                 let textAligment: NSTextAlignment
                 switch locationOfPoints[index] {
@@ -136,7 +138,7 @@ extension RadarChartParameters: LiteChartParametersProcesser {
                 case .bottom, .top:
                     textAligment = .center
                 }
-                let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: self.coupleTitlesColor, textAlignment: textAligment, syncIdentifier: .radarCoupleTitleLabel)
+                let coupleTitleConfigure = DisplayLabelConfigure(contentString: coupleTitle, contentColor: self.coupleTitlesColor, textAlignment: textAligment, syncIdentifier: coupleTitleSyncIdentifier)
                 coupleTitlesConfigure.append(coupleTitleConfigure)
             }
         }

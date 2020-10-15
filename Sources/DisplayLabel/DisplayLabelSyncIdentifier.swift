@@ -2,89 +2,82 @@
 //  DisplayLabelSyncIdentifier.swift
 //  LiteChart
 //
-//  Created by 刘洋 on 2020/8/31.
+//  Created by 刘洋 on 2020/10/15.
 //  Copyright © 2020 刘洋. All rights reserved.
 //
 
 import Foundation
 
-enum DisplayLabelSyncIdentifier {
-    case none
-    case funalLegendTitleLabel
-    case funalTitleLabel
-    case pieLegendTitleLabel
-    case pieTitleLabel
-    case barLegendTitleLabel
-    case barUnitTitleLabel
-    case barTitleLabel
-    case barValueTitleLabel
-    case barCoupleTitleLabel
-    case lineCoupleTitleLabel
-    case lineLegendTitleLabel
-    case lineTitleLabel
-    case lineValueTitleLabel
-    case lineUnitTitleLabel
-    case pointsCoupleTitleLabel
-    case scatterLegendTitleLabel
-    case pointsValueTitleLabel
-    case pointsUnitTitleLabel
-    case bubbleLegendTitleLabel
-    case radarLegendTitleLabel
-    case radarCoupleTitleLabel
-}
-
-
-extension DisplayLabelSyncIdentifier: Hashable {
+struct DisplayLabelSyncIdentifier {
+    let syncCenterIdentifier: String
     
+    let syncIdentifierType: DisplayLabelSyncIdentifierType
 }
 
 extension DisplayLabelSyncIdentifier {
     var identifier: Notification.Name {
-        switch self {
+        switch syncIdentifierType {
         case .funalLegendTitleLabel:
-            return .init("updateFunalLegendTitleLabelFont")
+            return .init("updateFunalLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .funalTitleLabel:
-            return .init("updateFunalTitleLabelFont")
+            return .init("updateFunalTitleLabelFont" + "-" + syncCenterIdentifier)
         case .pieLegendTitleLabel:
-            return .init("updatePieLegendTitleLabelFont")
+            return .init("updatePieLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .pieTitleLabel:
-            return .init("updatePieTitleLabelFont")
+            return .init("updatePieTitleLabelFont" + "-" + syncCenterIdentifier)
         case .barLegendTitleLabel:
-            return .init("updateBarLegendTitleLabelFont")
+            return .init("updateBarLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .barTitleLabel:
-            return .init("updateBarTitleLabelFont")
+            return .init("updateBarTitleLabelFont" + "-" + syncCenterIdentifier)
         case .barUnitTitleLabel:
-            return .init("updateBarUnitTitleLabelFont")
+            return .init("updateBarUnitTitleLabelFont" + "-" + syncCenterIdentifier)
         case .barValueTitleLabel:
-            return .init("updateBarValueTitleLabelFont")
+            return .init("updateBarValueTitleLabelFont" + "-" + syncCenterIdentifier)
         case .barCoupleTitleLabel:
-            return .init("updateBarCoupleTitleLabelFont")
+            return .init("updateBarCoupleTitleLabelFont" + "-" + syncCenterIdentifier)
         case .lineCoupleTitleLabel:
-            return .init("updateLineCoupleTitleLabelFont")
+            return .init("updateLineCoupleTitleLabelFont" + "-" + syncCenterIdentifier)
         case .lineLegendTitleLabel:
-            return .init("updateLineLegendTitleLabelFont")
+            return .init("updateLineLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .lineTitleLabel:
-            return .init("updateLineTitleLabelFont")
+            return .init("updateLineTitleLabelFont" + "-" + syncCenterIdentifier)
         case .lineValueTitleLabel:
-            return .init("updateLineValueTitleLabelFont")
+            return .init("updateLineValueTitleLabelFont" + "-" + syncCenterIdentifier)
         case .lineUnitTitleLabel:
-            return .init("updateLineUnitTitleLabelFont")
+            return .init("updateLineUnitTitleLabelFont" + "-" + syncCenterIdentifier)
         case .pointsCoupleTitleLabel:
-            return .init("updatePointsCoupleTitleLabelFont")
+            return .init("updatePointsCoupleTitleLabelFont" + "-" + syncCenterIdentifier)
         case .scatterLegendTitleLabel:
-            return .init("updateScatterLegendTitleLabelFont")
+            return .init("updateScatterLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .pointsValueTitleLabel:
-            return .init("updatePointsValueTitleLabelFont")
+            return .init("updatePointsValueTitleLabelFont" + "-" + syncCenterIdentifier)
         case .pointsUnitTitleLabel:
-            return .init("updatePointsUnitTitleLabelFont")
+            return .init("updatePointsUnitTitleLabelFont" + "-" + syncCenterIdentifier)
         case .bubbleLegendTitleLabel:
-            return .init("updateBubbleLegendTitleLabelFont")
+            return .init("updateBubbleLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .radarLegendTitleLabel:
-            return .init("updateRadarLegendTitleLabelFont")
+            return .init("updateRadarLegendTitleLabelFont" + "-" + syncCenterIdentifier)
         case .radarCoupleTitleLabel:
-            return .init("updateRadarCoupleTitleLabelFont")
+            return .init("updateRadarCoupleTitleLabelFont" + "-" + syncCenterIdentifier)
         case .none:
             return .init(" ")
         }
     }
+}
+
+extension DisplayLabelSyncIdentifier {
+    private init() {
+        self.syncCenterIdentifier = ""
+        self.syncIdentifierType = .none
+    }
+    
+    static let emptyIdentifier = DisplayLabelSyncIdentifier()
+}
+
+extension DisplayLabelSyncIdentifier: Equatable {
+    
+}
+
+extension DisplayLabelSyncIdentifier: Hashable {
+    
 }

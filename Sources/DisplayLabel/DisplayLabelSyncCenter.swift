@@ -23,10 +23,11 @@ class DisplayLabelSyncCenter {
     
     private let processNotificationQueue = OperationQueue()
     
-    static let shared = DisplayLabelSyncCenter()
-    
-    private init() {
-        self.token = NotificationCenter.default.addObserver(forName: .updateLabelFont, object: nil, queue: processNotificationQueue, using: {
+    private let syncCenterIdentifier: String
+        
+    init(syncCenterIdentifier: String) {
+        self.syncCenterIdentifier = syncCenterIdentifier
+        self.token = NotificationCenter.default.addObserver(forName: .updateLabelFont(syncCenterIdentifier), object: nil, queue: processNotificationQueue, using: {
             [weak self] notification in
             self?.processNotification(for: notification)
         })
@@ -84,7 +85,7 @@ class DisplayLabelSyncCenter {
     }
         
     private func processNotification(for notication: Notification) {
-        guard let object = notication.object, let label = object as? DisplayLabel, let userInfo = notication.userInfo, let font = userInfo[DisplayLabel.notificationInfoFontKey] as? UIFont, let identifier = userInfo[DisplayLabel.notificationInfoSyncIdentitiferKey] as? DisplayLabelSyncIdentifier, identifier != .none else {
+        guard let object = notication.object, let label = object as? DisplayLabel, let userInfo = notication.userInfo, let font = userInfo[DisplayLabel.notificationInfoFontKey] as? UIFont, let identifier = userInfo[DisplayLabel.notificationInfoSyncIdentitiferKey] as? DisplayLabelSyncIdentifier, identifier != .emptyIdentifier else {
             return
         }
         let processQueue = readSyncQueue(for: identifier)

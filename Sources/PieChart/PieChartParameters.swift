@@ -33,16 +33,16 @@ extension PieChartParameters: LiteChartParametersProcesser {
         }
     }
 
-    func computeLegendViews() -> UIView? {
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.inputDatas.count == self.inputLegendTitles.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
-        
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .pieLegendTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             let legendType = Legend.square
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].1)
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: .pieLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].1, textAlignment: .left, syncIdentifier: syncIdentifier)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
         }
@@ -50,7 +50,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
         return LegendViews(configure: legendConfigure)
     }
 
-    func computeContentView() -> LiteChartContentView {
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         guard self.inputDatas.count > 0 else {
             let configure = PieViewsConfigure.emptyConfigure
             return PieViews(configure: configure)
@@ -85,7 +85,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
         if self.displayDataMode != .none && displayString.count != self.inputDatas.count {
             fatalError("此为框架内部处理数据不当产生的bug，不给予拯救!")
         }
-        
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .pieTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             if self.displayDataMode == .none {
                 let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: false, lineColor: self.inputDatas[index].1)
@@ -94,7 +94,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
             } else {
                 let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: true, lineColor: self.inputDatas[index].1)
                 let alignment: NSTextAlignment = pieSectorViewConfigure.isLeftSector ? .right : .left
-                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, textAlignment: alignment, syncIdentifier: .pieTitleLabel)
+                let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, textAlignment: alignment, syncIdentifier: syncIdentifier)
                 let pieViewConfigure = PieViewConfigure(isShowLabel: true, pieSectorViewConfigure: pieSectorViewConfigure, displayTextConfigure: labelConfigure)
                 pieViewsConfigure.append(pieViewConfigure)
             }

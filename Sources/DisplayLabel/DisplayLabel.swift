@@ -46,7 +46,7 @@ class DisplayLabel: UIView {
         self.configure = configure
         super.init(frame: CGRect())
         
-        guard self.configure.syncIdentifier != .none else {
+        guard self.configure.syncIdentifier != .emptyIdentifier else {
             return
         }
         let token = NotificationCenter.default.addObserver(forName: self.configure.syncIdentifier.identifier, object: nil, queue: self.processNotificationQueue, using: {
@@ -94,8 +94,8 @@ class DisplayLabel: UIView {
         let font = self.computeSuitableFont(for: textSizeArea).0
         self.font = font
         
-        if self.configure.syncIdentifier != .none {
-            NotificationCenter.default.post(name: .updateLabelFont, object: self, userInfo: [DisplayLabel.notificationInfoFontKey: font, DisplayLabel.notificationInfoSyncIdentitiferKey: self.configure.syncIdentifier])
+        if self.configure.syncIdentifier != .emptyIdentifier {
+            NotificationCenter.default.post(name: .updateLabelFont(self.configure.syncCenterIdentifier), object: self, userInfo: [DisplayLabel.notificationInfoFontKey: font, DisplayLabel.notificationInfoSyncIdentitiferKey: self.configure.syncIdentifier])
         }
         
     }

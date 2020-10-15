@@ -119,14 +119,15 @@ extension LineChartParameters: LiteChartParametersProcesser {
         }
     }
 
-    func computeLegendViews() -> UIView? {
+    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.inputLegendTitles.count == self.inputDatas.count else {
             return nil
         }
         var legendViewConfigures: [LegendViewConfigure] = []
+        let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .lineLegendTitleLabel)
         for index in 0 ..< self.inputDatas.count {
             let legendType = self.inputDatas[index].2
-            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: .lineLegendTitleLabel)
+            let displayLabelConfigure = DisplayLabelConfigure(contentString: inputLegendTitles[index], contentColor: self.inputDatas[index].0, textAlignment: .left, syncIdentifier: syncIdentifier)
             let legendConfigure = LegendConfigure(type: legendType, color: self.inputDatas[index].0)
             let legendViewConfigure = LegendViewConfigure(legendConfigure: legendConfigure, contentConfigure: displayLabelConfigure)
             legendViewConfigures.append(legendViewConfigure)
@@ -136,7 +137,7 @@ extension LineChartParameters: LiteChartParametersProcesser {
         return LegendViews(configure: legendConfigure)
     }
 
-    func computeContentView() -> LiteChartContentView {
+    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         guard self.inputDatas.count > 0 else {
             let configure = LineChartViewConfigure.emptyConfigure
             return LineChartView(configure: configure)
@@ -204,18 +205,21 @@ extension LineChartParameters: LiteChartParametersProcesser {
         let axisOriginal = self.computeOriginalValueForAxis(valueForAxis.axisValue)
         let isShowLabel = self.displayDataMode == .original
         
-        let valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: .lineUnitTitleLabel)
-        let coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, textAlignment: .center, textDirection: .horizontal, syncIdentifier: .lineUnitTitleLabel)
+        let unitSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .lineUnitTitleLabel)
+        let valueUnitStringConfigure = DisplayLabelConfigure(contentString: self.valueUnitString, contentColor: self.valueUnitTextColor, textAlignment: .center, textDirection: .vertical, syncIdentifier: unitSyncIdentifier)
+        let coupleUnitStringConfigure = DisplayLabelConfigure(contentString: self.coupleUnitString, contentColor: self.coupleUnitTextColor, textAlignment: .center, textDirection: .horizontal, syncIdentifier: unitSyncIdentifier)
         
         var coupleTitleConfigures: [DisplayLabelConfigure] = []
+        let coupleTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .lineCoupleTitleLabel)
         for title in coupleTitleString {
-            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: .lineCoupleTitleLabel)
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.coupleTextColor, syncIdentifier: coupleTitleSyncIdentifier)
             coupleTitleConfigures.append(configure)
         }
         
         var valueTitleConfigures: [DisplayLabelConfigure] = []
+        let valueTitleSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .lineValueTitleLabel)
         for title in valuesString {
-            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: .lineValueTitleLabel)
+            let configure = DisplayLabelConfigure(contentString: title, contentColor: self.valueTextColor, textAlignment: .right, syncIdentifier: valueTitleSyncIdentifier)
             valueTitleConfigures.append(configure)
         }
         
@@ -225,9 +229,10 @@ extension LineChartParameters: LiteChartParametersProcesser {
         var lineConfigures: [LineViewConfigure] = []
         var lineValueViewPoints: [[CGPoint]] = []
         var lineValueViewLabel: [[DisplayLabelConfigure]] = []
+        let titleStringSyncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .lineTitleLabel)
         for inputData in inputDatas {
             let titleStringConfigure = inputData.3.map{
-                DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0, syncIdentifier: .lineTitleLabel)
+                DisplayLabelConfigure(contentString: $0.0, contentColor: inputData.0, syncIdentifier: titleStringSyncIdentifier)
             }
             let points = inputData.3.map{
                 $0.1

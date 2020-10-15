@@ -9,5 +9,7 @@
 import Foundation
 
 extension Notification.Name {
-    static let updateLabelFont = Notification.Name.init("LiteChartUpdateLabelFont")
+    static var updateLabelFont: (_ syncCenterIdentifier: String) -> Self = {
+        Notification.Name.init("LiteChartUpdateLabelFont" + "-" + $0)
+    }
 }

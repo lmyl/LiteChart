@@ -15,13 +15,14 @@ class LiteChartView: UIView {
     private var contentView: LiteChartContentView?
     private var titleView: DisplayLabel?
     private var legendViews: UIView?
+    private let syncCenter: DisplayLabelSyncCenter
+    private let syncCenterIdentifier = UUID().uuidString
         
     init(interface: LiteChartViewInterface) throws {
         self.configure = interface
-        try self.configure.contentInterface.parametersProcesser.checkInputDatasParameterInvalid()
+        self.syncCenter = DisplayLabelSyncCenter(syncCenterIdentifier: syncCenterIdentifier)
+        try self.configure.checkInputDatasParameterInvalid()
         super.init(frame: CGRect())
-        
-        let _ = DisplayLabelSyncCenter.shared
         
         insertTitleView()
         insertContentView()
@@ -34,9 +35,9 @@ class LiteChartView: UIView {
     
     required init?(coder: NSCoder) {
         self.configure = LiteChartViewInterface.emptyInterface
+        self.syncCenter = DisplayLabelSyncCenter(syncCenterIdentifier: syncCenterIdentifier)
         super.init(coder: coder)
         
-        let _ = DisplayLabelSyncCenter.shared
         insertTitleView()
         insertContentView()
         insertLegendViews()
@@ -72,7 +73,7 @@ class LiteChartView: UIView {
             content.removeFromSuperview()
             self.contentView = nil
         }
-        let contentView = self.configure.computeContentView()
+        let contentView = self.configure.computeContentView(syncCenterIdentifier: syncCenterIdentifier)
         self.addSubview(contentView)
         self.contentView = contentView
     }
@@ -82,7 +83,7 @@ class LiteChartView: UIView {
             legend.removeFromSuperview()
             self.legendViews = nil
         }
-        guard let legendViews = self.configure.computeLegendViews() else {
+        guard let legendViews = self.configure.computeLegendViews(syncCenterIdentifier: syncCenterIdentifier) else {
             return
         }
         self.addSubview(legendViews)
