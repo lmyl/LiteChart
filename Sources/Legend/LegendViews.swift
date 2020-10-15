@@ -62,8 +62,18 @@ class LegendViews: UIView {
         
         var itemHeight = self.bounds.height / CGFloat(self.legendViews.count + 1)
         itemHeight = min(itemHeight, self.bounds.width / 4)
-        let spaceHeight = itemHeight / 10
-        let legendHeight = itemHeight - spaceHeight
+        var spaceHeight = itemHeight / 10
+        var legendHeight = itemHeight - spaceHeight
+        let scale = UIScreen.main.scale
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: true)
+        var heightDecimalNumber = NSDecimalNumber(value: Double(legendHeight * scale))
+        heightDecimalNumber = heightDecimalNumber.rounding(accordingToBehavior: handler)
+        legendHeight = CGFloat(heightDecimalNumber.doubleValue) / scale
+        var spaceDecimalNumber = NSDecimalNumber(value: Double(spaceHeight * scale))
+        spaceDecimalNumber = spaceDecimalNumber.rounding(accordingToBehavior: handler)
+        spaceHeight = CGFloat(spaceDecimalNumber.doubleValue) / scale
+        itemHeight = spaceHeight + legendHeight
+        
         let fatherRect = self.bounds
         
         for (index, lengendView) in self.legendViews.enumerated() {
