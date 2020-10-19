@@ -175,7 +175,7 @@ class ViewController: UIViewController {
     }
     
     @objc func animation() {
-        let interface = LiteChartAnimationInterface(animationType: .base(duration: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
+        let interface = LiteChartAnimationInterface(animationType: .spring(damping: 10, mass: 1, stiffness: 1, initalVelocity: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
         self.displayView?.startAnimation(animation: interface)
     }
     

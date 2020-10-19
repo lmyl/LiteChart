@@ -178,29 +178,73 @@ extension BarView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .finish || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready else {
             return
         }
-        guard case .base(var duration) = animation.animationType else {
-            return
-        }
-        duration = duration * Double(self.configure.length)
+        
+        let boundsSizeKey = "bounds.size"
+        let positionXKey = "position.x"
+        let positionYKey = "position.y"
+        
         let current = CACurrentMediaTime()
         let animationGrowGroup = CAAnimationGroup()
-        let animationGrow = CABasicAnimation(keyPath: "bounds.size")
+        let animationGrow: CABasicAnimation
         let animationPan: CABasicAnimation
+        
         switch self.configure.direction {
         case .bottomToTop:
+            switch animation.animationType {
+            case .base(let duration):
+                let dur = duration * Double(self.configure.length)
+                animationGrow = CABasicAnimation(keyPath: boundsSizeKey)
+                animationGrow.duration = dur
+                animationPan = CABasicAnimation(keyPath: positionYKey)
+                animationPan.duration = dur
+            case .spring(let damping, let mass, let stiffness, let initalVelocity):
+                let animationSpringGrow = CASpringAnimation(keyPath: boundsSizeKey)
+                animationSpringGrow.damping = damping
+                animationSpringGrow.mass = mass
+                animationSpringGrow.stiffness = stiffness
+                animationSpringGrow.initialVelocity = initalVelocity
+                animationSpringGrow.duration = animationSpringGrow.settlingDuration
+                animationGrow = animationSpringGrow
+                let animationSpringPan = CASpringAnimation(keyPath: positionYKey)
+                animationSpringPan.damping = damping
+                animationSpringPan.mass = mass
+                animationSpringPan.stiffness = stiffness
+                animationSpringPan.initialVelocity = initalVelocity
+                animationSpringPan.duration = animationSpringPan.settlingDuration
+                animationPan = animationSpringPan
+            }
             animationGrow.fromValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: 0))
             animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
-            animationPan = CABasicAnimation(keyPath: "position.y")
             animationPan.fromValue = bar.frame.maxY
             animationPan.toValue = bar.center.y
         case .leftToRight:
+            switch animation.animationType {
+            case .base(let duration):
+                animationGrow = CABasicAnimation(keyPath: boundsSizeKey)
+                animationPan = CABasicAnimation(keyPath: positionXKey)
+                animationGrowGroup.duration = duration * Double(self.configure.length)
+            case .spring(let damping, let mass, let stiffness, let initalVelocity):
+                let animationSpringGrow = CASpringAnimation(keyPath: boundsSizeKey)
+                animationSpringGrow.damping = damping
+                animationSpringGrow.mass = mass
+                animationSpringGrow.stiffness = stiffness
+                animationSpringGrow.initialVelocity = initalVelocity
+                animationSpringGrow.duration = animationSpringGrow.settlingDuration
+                animationGrow = animationSpringGrow
+                let animationSpringPan = CASpringAnimation(keyPath: positionXKey)
+                animationSpringPan.damping = damping
+                animationSpringPan.mass = mass
+                animationSpringPan.stiffness = stiffness
+                animationSpringPan.initialVelocity = initalVelocity
+                animationSpringPan.duration = animationSpringPan.settlingDuration
+                animationPan = animationSpringPan
+                animationGrowGroup.duration = animationSpringGrow.settlingDuration
+            }
             animationGrow.fromValue = NSValue(cgSize: CGSize(width: 0, height: bar.bounds.height))
             animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
-            animationPan = CABasicAnimation(keyPath: "position.x")
             animationPan.fromValue = bar.frame.minX
             animationPan.toValue = bar.center.x
         }
-        animationGrowGroup.duration = duration
         animationGrowGroup.timingFunction = animation.timingFunction
         animationGrowGroup.fillMode = animation.fillModel
         animationGrowGroup.beginTime = current + animation.delay
@@ -221,15 +265,38 @@ extension BarView: LiteChartAnimatable {
         switch self.configure.direction {
         case .bottomToTop:
             labelPositionXOrY = label.center.y
-            animationLabelGrow = CABasicAnimation(keyPath: "position.y")
+            switch animation.animationType {
+            case .base(let duration):
+                animationLabelGrow = CABasicAnimation(keyPath: positionYKey)
+                animationLabelGrow.duration = duration * Double(self.configure.length)
+            case .spring(let damping, let mass, let stiffness, let initalVelocity):
+                let animationSpringLabelGrow = CASpringAnimation(keyPath: positionYKey)
+                animationSpringLabelGrow.damping = damping
+                animationSpringLabelGrow.mass = mass
+                animationSpringLabelGrow.stiffness = stiffness
+                animationSpringLabelGrow.initialVelocity = initalVelocity
+                animationSpringLabelGrow.duration = animationSpringLabelGrow.settlingDuration
+                animationLabelGrow = animationSpringLabelGrow
+            }
             animationLabelGrow.fromValue = bar.frame.maxY - label.bounds.height / 2
         case .leftToRight:
             labelPositionXOrY = label.center.x
-            animationLabelGrow = CABasicAnimation(keyPath: "position.x")
+            switch animation.animationType {
+            case .base(let duration):
+                animationLabelGrow = CABasicAnimation(keyPath: positionXKey)
+                animationLabelGrow.duration = duration * Double(self.configure.length)
+            case .spring(let damping, let mass, let stiffness, let initalVelocity):
+                let animationSpringLabelGrow = CASpringAnimation(keyPath: positionXKey)
+                animationSpringLabelGrow.damping = damping
+                animationSpringLabelGrow.mass = mass
+                animationSpringLabelGrow.stiffness = stiffness
+                animationSpringLabelGrow.initialVelocity = initalVelocity
+                animationSpringLabelGrow.duration = animationSpringLabelGrow.settlingDuration
+                animationLabelGrow = animationSpringLabelGrow
+            }
             animationLabelGrow.fromValue = label.frame.minX - bar.frame.maxX + label.bounds.width / 2
         }
         animationLabelGrow.toValue = labelPositionXOrY
-        animationLabelGrow.duration = duration
         animationLabelGrow.timingFunction = animation.timingFunction
         animationLabelGrow.fillMode = animation.fillModel
         animationLabelGrow.beginTime = current + animation.delay

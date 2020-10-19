@@ -129,49 +129,38 @@ class FunalView: LiteChartContentView {
         let initCenterY = fatherRect.origin.y + floorViewHeight / 2
         let keyPath = "position.y"
         
+        let currentTime = CACurrentMediaTime()
+        let down: CABasicAnimation
         switch animation.animationType {
-        case .base(let duration):
-            let down = CABasicAnimation(keyPath: keyPath)
-            let currentTime = CACurrentMediaTime()
-            down.fromValue = initCenterY
-            down.beginTime = currentTime + animation.delay
-            down.fillMode = animation.fillModel
-            down.timingFunction = animation.timingFunction
-            down.delegate = self
-            for (index, floorView) in self.funalFloorViews.enumerated() {
-                if index == 0 {
-                    continue
-                }
-                let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
-                let centerY = originY + floorViewHeight / 2
-                down.toValue = centerY
-                down.duration = duration * Double(index) / Double(self.funalFloorViews.count - 1)
-                floorView.layer.syncTimeSystemToFather()
-                floorView.layer.add(down, forKey: animationKey)
-            }
+        case .base:
+            down = CABasicAnimation(keyPath: keyPath)
         case .spring(let damping, let mass, let stiffness, let initalVelocity):
-            let down = CASpringAnimation(keyPath: keyPath)
-            let currentTime = CACurrentMediaTime()
-            down.damping = damping
-            down.mass = mass
-            down.stiffness = stiffness
-            down.initialVelocity = initalVelocity
-            down.fromValue = initCenterY
-            down.beginTime = currentTime + animation.delay
-            down.fillMode = animation.fillModel
-            down.timingFunction = animation.timingFunction
-            down.duration = down.settlingDuration
-            down.delegate = self
-            for (index, floorView) in self.funalFloorViews.enumerated() {
-                if index == 0 {
-                    continue
-                }
-                let originY = fatherRect.origin.y + CGFloat(index) * floorViewHeight
-                let centerY = originY + floorViewHeight / 2
-                down.toValue = centerY
-                floorView.layer.syncTimeSystemToFather()
-                floorView.layer.add(down, forKey: animationKey)
+            let springDown = CASpringAnimation(keyPath: keyPath)
+            springDown.damping = damping
+            springDown.mass = mass
+            springDown.stiffness = stiffness
+            springDown.initialVelocity = initalVelocity
+            springDown.duration = springDown.settlingDuration
+            down = springDown
+        }
+        down.fromValue = initCenterY
+        down.beginTime = currentTime + animation.delay
+        down.fillMode = animation.fillModel
+        down.timingFunction = animation.timingFunction
+        down.delegate = self
+        for (index, floorView) in self.funalFloorViews.enumerated() {
+            if index == 0 {
+                continue
             }
+            down.toValue = floorView.center.y
+            switch animation.animationType {
+            case .base(let duration):
+                down.duration = duration * Double(index) / Double(self.funalFloorViews.count - 1)
+            case .spring:
+                break
+            }
+            floorView.layer.syncTimeSystemToFather()
+            floorView.layer.add(down, forKey: animationKey)
         }
         self.insideAnimationStatus = .running
     }
