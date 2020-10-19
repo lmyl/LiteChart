@@ -15,6 +15,10 @@ class BarView: UIView {
     private var bar: UIView?
     private var label: DisplayLabel?
     
+    private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private let animationGrowKey = "Grow"
+    private var animationCompleteCount = 0
+    
     init(configure: BarViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
@@ -163,7 +167,143 @@ class BarView: UIView {
                 make.leading.equalTo(bar.snp.trailing).offset(space).priority(750)
             }
         }
+    }
+}
+
+extension BarView: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard let bar = self.bar else {
+            return
+        }
+        guard self.insideAnimationStatus == .finish || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready else {
+            return
+        }
+        guard case .base(var duration) = animation.animationType else {
+            return
+        }
+        duration = duration * Double(self.configure.length)
+        let current = CACurrentMediaTime()
+        let animationGrowGroup = CAAnimationGroup()
+        let animationGrow = CABasicAnimation(keyPath: "bounds.size")
+        let animationPan: CABasicAnimation
+        switch self.configure.direction {
+        case .bottomToTop:
+            animationGrow.fromValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: 0))
+            animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
+            animationPan = CABasicAnimation(keyPath: "position.y")
+            animationPan.fromValue = bar.frame.maxY
+            animationPan.toValue = bar.center.y
+        case .leftToRight:
+            animationGrow.fromValue = NSValue(cgSize: CGSize(width: 0, height: bar.bounds.height))
+            animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
+            animationPan = CABasicAnimation(keyPath: "position.x")
+            animationPan.fromValue = bar.frame.minX
+            animationPan.toValue = bar.center.x
+        }
+        animationGrowGroup.duration = duration
+        animationGrowGroup.timingFunction = animation.timingFunction
+        animationGrowGroup.fillMode = animation.fillModel
+        animationGrowGroup.beginTime = current + animation.delay
+        animationGrowGroup.delegate = self
+        animationGrowGroup.animations = [animationPan, animationGrow]
+        defer {
+            bar.layer.syncTimeSystemToFather()
+            bar.layer.add(animationGrowGroup, forKey: animationGrowKey)
+            self.insideAnimationStatus = .running
+        }
         
+        guard let label = self.label else {
+            return
+        }
+        
+        let labelPositionXOrY: CGFloat
+        let animationLabelGrow: CABasicAnimation
+        switch self.configure.direction {
+        case .bottomToTop:
+            labelPositionXOrY = label.center.y
+            animationLabelGrow = CABasicAnimation(keyPath: "position.y")
+            animationLabelGrow.fromValue = bar.frame.maxY - label.bounds.height / 2
+        case .leftToRight:
+            labelPositionXOrY = label.center.x
+            animationLabelGrow = CABasicAnimation(keyPath: "position.x")
+            animationLabelGrow.fromValue = label.frame.minX - bar.frame.maxX + label.bounds.width / 2
+        }
+        animationLabelGrow.toValue = labelPositionXOrY
+        animationLabelGrow.duration = duration
+        animationLabelGrow.timingFunction = animation.timingFunction
+        animationLabelGrow.fillMode = animation.fillModel
+        animationLabelGrow.beginTime = current + animation.delay
+        animationLabelGrow.delegate = self
+        
+        label.layer.syncTimeSystemToFather()
+        label.layer.add(animationLabelGrow, forKey: animationGrowKey)
     }
     
+    func stopAnimation() {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
+            return
+        }
+        if let bar = self.bar {
+            bar.layer.removeAnimation(forKey: animationGrowKey)
+            bar.layer.syncTimeSystemToFather()
+        }
+        if let label = self.label {
+            label.layer.removeAnimation(forKey: animationGrowKey)
+            label.layer.syncTimeSystemToFather()
+        }
+        self.insideAnimationStatus = .cancel
+    }
+    
+    func pauseAnimation() {
+        guard self.insideAnimationStatus == .running else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        if let bar = self.bar {
+            let pauseTime = (current - bar.layer.beginTime) * Double(bar.layer.speed) + bar.layer.timeOffset
+            bar.layer.speed = 0
+            bar.layer.timeOffset = pauseTime
+        }
+        if let label = self.label {
+            let pauseTime = (current - label.layer.beginTime) * Double(label.layer.speed) + label.layer.timeOffset
+            label.layer.speed = 0
+            label.layer.timeOffset = pauseTime
+        }
+        self.insideAnimationStatus = .pause
+    }
+    
+    func continueAnimation() {
+        guard self.insideAnimationStatus == .pause else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        if let bar = self.bar {
+            bar.layer.beginTime = current
+            bar.layer.speed = 1
+        }
+        if let label = self.label {
+            label.layer.beginTime = current
+            label.layer.speed = 1
+        }
+        self.insideAnimationStatus = .running
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        insideAnimationStatus
+    }
+    
+}
+
+extension BarView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.animationCompleteCount += 1
+        if self.animationCompleteCount == 1 && self.label == nil {
+            self.insideAnimationStatus = .finish
+            self.animationCompleteCount = 0
+        }
+        if self.animationCompleteCount == 2 && self.label != nil {
+            self.insideAnimationStatus = .finish
+            self.animationCompleteCount = 0
+        }
+    }
 }

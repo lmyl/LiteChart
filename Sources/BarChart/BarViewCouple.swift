@@ -114,3 +114,47 @@ class BarViewCouple: UIView {
         
     }
 }
+
+extension BarViewCouple: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.animationStatus == .ready || self.animationStatus == .cancel || self.animationStatus == .finish else {
+            return
+        }
+        for bar in self.barViews {
+            bar.startAnimation(animation: animation)
+        }
+    }
+    
+    func stopAnimation() {
+        guard self.animationStatus == .running || self.animationStatus == .pause else {
+            return
+        }
+        for bar in self.barViews {
+            bar.stopAnimation()
+        }
+    }
+    
+    func pauseAnimation() {
+        guard self.animationStatus == .running else {
+            return
+        }
+        for bar in self.barViews {
+            bar.pauseAnimation()
+        }
+    }
+    
+    func continueAnimation() {
+        guard self.animationStatus == .pause else {
+            return
+        }
+        for bar in self.barViews {
+            bar.continueAnimation()
+        }
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        self.barViews.reduce(LiteChartAnimationStatus.ready, {
+            $0.compactAnimatoinStatus(another: $1.animationStatus)
+        })
+    }
+}

@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         barInterface.isShowCoupleDividingLine = false
         barInterface.valueUnitString = "kg/L"
         barInterface.coupleUnitString = "月/年"
-        barInterface.direction = .bottomToTop
+        barInterface.direction = .leftToRight
 
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (30, .init(lightUIColor: .yellow)), (30, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: pieInterface)
+        var interface = LiteChartViewInterface(contentInterface: barInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
     }
     
     @objc func animation() {
-        let interface = LiteChartAnimationInterface(animationType: .base(duration: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .easeIn))
+        let interface = LiteChartAnimationInterface(animationType: .base(duration: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
         self.displayView?.startAnimation(animation: interface)
     }
     

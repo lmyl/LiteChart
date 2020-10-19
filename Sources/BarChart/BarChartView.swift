@@ -54,6 +54,7 @@ class BarChartView: LiteChartContentView {
     }
     
     override func layoutSubviews() {
+        stopAnimation()
         super.layoutSubviews()
         updateAxisViewDynamicConstraints()
         updateUnitLabelDynamicConstraints()
@@ -410,4 +411,26 @@ class BarChartView: LiteChartContentView {
         }
     }
     
+    override func startAnimation(animation: LiteChartAnimationInterface) {
+        self.barViewCollection?.startAnimation(animation: animation)
+    }
+    
+    override func stopAnimation() {
+        self.barViewCollection?.stopAnimation()
+    }
+    
+    override func pauseAnimation() {
+        self.barViewCollection?.pauseAnimation()
+    }
+    
+    override func continueAnimation() {
+        self.barViewCollection?.continueAnimation()
+    }
+    
+    override var animationStatus: LiteChartAnimationStatus {
+        guard let barViewCollection = self.barViewCollection else {
+            return .ready
+        }
+        return barViewCollection.animationStatus
+    }
 }

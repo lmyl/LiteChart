@@ -98,7 +98,7 @@ class FunalView: LiteChartContentView {
     }
     
     override func stopAnimation() {
-        guard self.insideAnimationStatus == .running else {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
             return
         }
         for floorView in self.funalFloorViews {
