@@ -9,9 +9,13 @@
 import Foundation
 
 protocol LiteChartAnimatable {
-    func startAnimation()
+    func startAnimation(animation: LiteChartAnimationInterface)
     
     func stopAnimation()
     
     func pauseAnimation()
+    
+    func continueAnimation()
+    
+    var animationStatus: LiteChartAnimationStatus { get }
 }

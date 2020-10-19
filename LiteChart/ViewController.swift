@@ -11,7 +11,7 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    var displayView: UIView?
+    var displayView: LiteChartView?
     var showType = 1
 
     override func viewDidLoad() {
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: lineInterface)
+        var interface = LiteChartViewInterface(contentInterface: funnelInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -112,13 +112,83 @@ class ViewController: UIViewController {
         self.view.addSubview(button)
         button.snp.updateConstraints{
             make in
-            make.width.equalTo(100)
+            make.width.equalTo(50)
             make.height.equalTo(50)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
         }
         button.addTarget(self, action: #selector(action), for: .touchUpInside)
         button.backgroundColor = .yellow
+        
+        let animationSatrtButton = UIButton()
+        self.view.addSubview(animationSatrtButton)
+        animationSatrtButton.snp.updateConstraints{
+            make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.leading.equalTo(button.snp.trailing)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        }
+        animationSatrtButton.addTarget(self, action: #selector(animation), for: .touchUpInside)
+        animationSatrtButton.backgroundColor = .green
+        
+        let animationPauseButton = UIButton()
+        self.view.addSubview(animationPauseButton)
+        animationPauseButton.snp.updateConstraints{
+            make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.leading.equalTo(animationSatrtButton.snp.trailing)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        }
+        animationPauseButton.addTarget(self, action: #selector(pauseAnimation), for: .touchUpInside)
+        animationPauseButton.backgroundColor = .blue
+        
+        let animationCountinueButton = UIButton()
+        self.view.addSubview(animationCountinueButton)
+        animationCountinueButton.snp.updateConstraints{
+            make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.leading.equalTo(animationPauseButton.snp.trailing)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        }
+        animationCountinueButton.addTarget(self, action: #selector(continueAnimation), for: .touchUpInside)
+        animationCountinueButton.backgroundColor = .cyan
+        
+        let animationStopButton = UIButton()
+        self.view.addSubview(animationStopButton)
+        animationStopButton.snp.updateConstraints{
+            make in
+            make.width.equalTo(50)
+            make.height.equalTo(50)
+            make.leading.equalTo(animationCountinueButton.snp.trailing)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        }
+        animationStopButton.addTarget(self, action: #selector(stopAnimation), for: .touchUpInside)
+        animationStopButton.backgroundColor = .orange
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.animation()
+    }
+    
+    @objc func animation() {
+        let interface = LiteChartAnimationInterface(animationType: .spring(damping: 10, mass: 10, stiffness: 100, initalVelocity: 20), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
+        self.displayView?.startAnimation(animation: interface)
+    }
+    
+    @objc func stopAnimation() {
+        self.displayView?.stopAnimation()
+    }
+    
+    @objc func pauseAnimation() {
+        self.displayView?.pauseAnimation()
+    }
+    
+    @objc func continueAnimation() {
+        self.displayView?.continueAnimation()
     }
 
     @objc func action() {

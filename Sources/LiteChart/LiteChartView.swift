@@ -201,3 +201,40 @@ class LiteChartView: UIView {
         }
     }
 }
+
+extension LiteChartView: LiteChartAnimatable {
+    var animationStatus: LiteChartAnimationStatus {
+        guard let contentView = self.contentView else {
+            return .ready
+        }
+        return contentView.animationStatus
+    }
+    
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard let contentView = self.contentView else {
+            return
+        }
+        contentView.startAnimation(animation: animation)
+    }
+    
+    func pauseAnimation() {
+        guard let contentView = self.contentView else {
+            return
+        }
+        contentView.pauseAnimation()
+    }
+    
+    func stopAnimation() {
+        guard let contentView = self.contentView else {
+            return
+        }
+        contentView.stopAnimation()
+    }
+    
+    func continueAnimation() {
+        guard let contentView = self.contentView else {
+            return
+        }
+        contentView.continueAnimation()
+    }
+}
