@@ -194,24 +194,12 @@ extension BarView: LiteChartAnimatable {
             case .base(let duration):
                 let dur = duration * Double(self.configure.length)
                 animationGrow = CABasicAnimation(keyPath: boundsSizeKey)
-                animationGrow.duration = dur
                 animationPan = CABasicAnimation(keyPath: positionYKey)
-                animationPan.duration = dur
-            case .spring(let damping, let mass, let stiffness, let initalVelocity):
-                let animationSpringGrow = CASpringAnimation(keyPath: boundsSizeKey)
-                animationSpringGrow.damping = damping
-                animationSpringGrow.mass = mass
-                animationSpringGrow.stiffness = stiffness
-                animationSpringGrow.initialVelocity = initalVelocity
-                animationSpringGrow.duration = animationSpringGrow.settlingDuration
-                animationGrow = animationSpringGrow
-                let animationSpringPan = CASpringAnimation(keyPath: positionYKey)
-                animationSpringPan.damping = damping
-                animationSpringPan.mass = mass
-                animationSpringPan.stiffness = stiffness
-                animationSpringPan.initialVelocity = initalVelocity
-                animationSpringPan.duration = animationSpringPan.settlingDuration
-                animationPan = animationSpringPan
+                animationGrowGroup.duration = dur
+            case .spring:
+                animationGrow = animation.animationType.quickAnimation(keyPath: boundsSizeKey)
+                animationPan = animation.animationType.quickAnimation(keyPath: positionYKey)
+                animationGrowGroup.duration = animationPan.duration
             }
             animationGrow.fromValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: 0))
             animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
@@ -223,22 +211,10 @@ extension BarView: LiteChartAnimatable {
                 animationGrow = CABasicAnimation(keyPath: boundsSizeKey)
                 animationPan = CABasicAnimation(keyPath: positionXKey)
                 animationGrowGroup.duration = duration * Double(self.configure.length)
-            case .spring(let damping, let mass, let stiffness, let initalVelocity):
-                let animationSpringGrow = CASpringAnimation(keyPath: boundsSizeKey)
-                animationSpringGrow.damping = damping
-                animationSpringGrow.mass = mass
-                animationSpringGrow.stiffness = stiffness
-                animationSpringGrow.initialVelocity = initalVelocity
-                animationSpringGrow.duration = animationSpringGrow.settlingDuration
-                animationGrow = animationSpringGrow
-                let animationSpringPan = CASpringAnimation(keyPath: positionXKey)
-                animationSpringPan.damping = damping
-                animationSpringPan.mass = mass
-                animationSpringPan.stiffness = stiffness
-                animationSpringPan.initialVelocity = initalVelocity
-                animationSpringPan.duration = animationSpringPan.settlingDuration
-                animationPan = animationSpringPan
-                animationGrowGroup.duration = animationSpringGrow.settlingDuration
+            case .spring:
+                animationGrow = animation.animationType.quickAnimation(keyPath: boundsSizeKey)
+                animationPan = animation.animationType.quickAnimation(keyPath: positionXKey)
+                animationGrowGroup.duration = animationPan.duration
             }
             animationGrow.fromValue = NSValue(cgSize: CGSize(width: 0, height: bar.bounds.height))
             animationGrow.toValue = NSValue(cgSize: CGSize(width: bar.bounds.width, height: bar.bounds.height))
@@ -269,14 +245,8 @@ extension BarView: LiteChartAnimatable {
             case .base(let duration):
                 animationLabelGrow = CABasicAnimation(keyPath: positionYKey)
                 animationLabelGrow.duration = duration * Double(self.configure.length)
-            case .spring(let damping, let mass, let stiffness, let initalVelocity):
-                let animationSpringLabelGrow = CASpringAnimation(keyPath: positionYKey)
-                animationSpringLabelGrow.damping = damping
-                animationSpringLabelGrow.mass = mass
-                animationSpringLabelGrow.stiffness = stiffness
-                animationSpringLabelGrow.initialVelocity = initalVelocity
-                animationSpringLabelGrow.duration = animationSpringLabelGrow.settlingDuration
-                animationLabelGrow = animationSpringLabelGrow
+            case .spring:
+                animationLabelGrow = animation.animationType.quickAnimation(keyPath: positionYKey)
             }
             animationLabelGrow.fromValue = bar.frame.maxY - label.bounds.height / 2
         case .leftToRight:
@@ -285,14 +255,8 @@ extension BarView: LiteChartAnimatable {
             case .base(let duration):
                 animationLabelGrow = CABasicAnimation(keyPath: positionXKey)
                 animationLabelGrow.duration = duration * Double(self.configure.length)
-            case .spring(let damping, let mass, let stiffness, let initalVelocity):
-                let animationSpringLabelGrow = CASpringAnimation(keyPath: positionXKey)
-                animationSpringLabelGrow.damping = damping
-                animationSpringLabelGrow.mass = mass
-                animationSpringLabelGrow.stiffness = stiffness
-                animationSpringLabelGrow.initialVelocity = initalVelocity
-                animationSpringLabelGrow.duration = animationSpringLabelGrow.settlingDuration
-                animationLabelGrow = animationSpringLabelGrow
+            case .spring:
+                animationLabelGrow = animation.animationType.quickAnimation(keyPath: positionXKey)
             }
             animationLabelGrow.fromValue = label.frame.minX - bar.frame.maxX + label.bounds.width / 2
         }

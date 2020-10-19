@@ -69,7 +69,7 @@ class PieViews: LiteChartContentView {
         guard self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish || self.insideAnimationStatus == .ready else {
             return
         }
-        guard case .base(let duration) = animation.animationType else {
+        guard case .base(_) = animation.animationType else {
             return
         }
         
@@ -85,8 +85,7 @@ class PieViews: LiteChartContentView {
         
         
         let current = CACurrentMediaTime()
-        let animationExpand = CABasicAnimation(keyPath: "strokeEnd")
-        animationExpand.duration = duration
+        let animationExpand = animation.animationType.quickAnimation(keyPath: "strokeEnd")
         animationExpand.fromValue = 0
         animationExpand.toValue = 1
         animationExpand.fillMode = animation.fillModel
@@ -95,8 +94,7 @@ class PieViews: LiteChartContentView {
         animationExpand.delegate = self
         animationExpand.setValue(self.maskAnimationName, forKey: "name")
         
-        let animationOpacity = CABasicAnimation(keyPath: "opacity")
-        animationOpacity.duration = duration
+        let animationOpacity = animation.animationType.quickAnimation(keyPath: "opacity")
         animationOpacity.fromValue = 0
         animationOpacity.toValue = 1
         animationOpacity.fillMode = animation.fillModel

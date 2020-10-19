@@ -130,19 +130,7 @@ class FunalView: LiteChartContentView {
         let keyPath = "position.y"
         
         let currentTime = CACurrentMediaTime()
-        let down: CABasicAnimation
-        switch animation.animationType {
-        case .base:
-            down = CABasicAnimation(keyPath: keyPath)
-        case .spring(let damping, let mass, let stiffness, let initalVelocity):
-            let springDown = CASpringAnimation(keyPath: keyPath)
-            springDown.damping = damping
-            springDown.mass = mass
-            springDown.stiffness = stiffness
-            springDown.initialVelocity = initalVelocity
-            springDown.duration = springDown.settlingDuration
-            down = springDown
-        }
+        let down = animation.animationType.quickAnimation(keyPath: keyPath)
         down.fromValue = initCenterY
         down.beginTime = currentTime + animation.delay
         down.fillMode = animation.fillModel
