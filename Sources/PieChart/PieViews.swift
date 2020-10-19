@@ -15,7 +15,9 @@ class PieViews: LiteChartContentView {
         
     private let animationExpandKey = "expand"
     private let animationOpacityKey = "opacity"
+    private let maskAnimationName = "maskAnimation"
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private var animationCompleteCount = 0
     override var animationStatus: LiteChartAnimationStatus {
         return insideAnimationStatus
     }
@@ -74,25 +76,24 @@ class PieViews: LiteChartContentView {
         let maskLayer = CAShapeLayer()
         maskLayer.frame = self.layer.bounds
         maskLayer.strokeColor = UIColor.black.cgColor
-        maskLayer.fillColor = UIColor.black.cgColor
-        maskLayer.opacity = 1
+        maskLayer.fillColor = UIColor.clear.cgColor
+        
         let center = CGPoint(x: self.layer.bounds.width / 2, y: self.layer.bounds.height / 2)
-        let maxDiameter = max(self.layer.bounds.width, self.layer.bounds.height)
-        let rectOrginal = CGPoint(x: center.x - maxDiameter / 2, y: center.y - maxDiameter / 2)
-        let maxSize = CGSize(width: maxDiameter, height: maxDiameter)
-        let maxRect = CGRect(origin: rectOrginal, size: maxSize)
-        maskLayer.path = UIBezierPath(ovalIn: maxRect).cgPath
+        let maxDiameter = max(self.layer.bounds.width, self.layer.bounds.height) / 2
+        maskLayer.lineWidth = maxDiameter
+        maskLayer.path = UIBezierPath(arcCenter: center, radius: maxDiameter / 2, startAngle: 0, endAngle: 2 * CGFloat(Double.pi), clockwise: true).cgPath
         
         
         let current = CACurrentMediaTime()
-        let animationExpand = CABasicAnimation(keyPath: "path")
+        let animationExpand = CABasicAnimation(keyPath: "strokeEnd")
         animationExpand.duration = duration
-        animationExpand.fromValue = UIBezierPath(ovalIn: CGRect(origin: center, size: .zero)).cgPath
-        animationExpand.toValue = UIBezierPath(ovalIn: maxRect).cgPath
+        animationExpand.fromValue = 0
+        animationExpand.toValue = 1
         animationExpand.fillMode = animation.fillModel
         animationExpand.beginTime = current + animation.delay
         animationExpand.timingFunction = animation.timingFunction
         animationExpand.delegate = self
+        animationExpand.setValue(self.maskAnimationName, forKey: "name")
         
         let animationOpacity = CABasicAnimation(keyPath: "opacity")
         animationOpacity.duration = duration
@@ -101,6 +102,7 @@ class PieViews: LiteChartContentView {
         animationOpacity.fillMode = animation.fillModel
         animationOpacity.beginTime = current + animation.delay
         animationOpacity.timingFunction = animation.timingFunction
+        animationOpacity.delegate = self
         
         self.layer.syncTimeSystemToFather()
         self.layer.add(animationOpacity, forKey: animationOpacityKey)
@@ -122,7 +124,7 @@ class PieViews: LiteChartContentView {
     }
     
     override func stopAnimation() {
-        guard self.insideAnimationStatus == .running else {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
             return
         }
         self.layer.removeAnimation(forKey: animationOpacityKey)
@@ -144,7 +146,15 @@ class PieViews: LiteChartContentView {
 
 extension PieViews: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        self.layer.mask = nil
-        self.insideAnimationStatus = .finish
+        self.animationCompleteCount += 1
+        if let name = anim.value(forKey: "name") as? String, name == self.maskAnimationName {
+            self.layer.mask = nil
+        }
+        if self.animationCompleteCount == 2 {
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
+            self.animationCompleteCount = 0
+        }
     }
 }

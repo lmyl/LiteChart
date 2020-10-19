@@ -26,9 +26,9 @@ extension LiteChartAnimationStatus {
         case .pause:
             return 4
         case .cancel:
-            return 2
-        case .finish:
             return 3
+        case .finish:
+            return 2
         }
     }
     

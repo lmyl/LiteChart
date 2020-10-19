@@ -181,7 +181,9 @@ extension FunalView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         self.animationCompleteCount += 1
         if self.animationCompleteCount == self.funalFloorViews.count - 1 {
-            self.insideAnimationStatus = .finish
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
             self.animationCompleteCount = 0
         }
     }

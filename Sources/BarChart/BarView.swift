@@ -298,11 +298,15 @@ extension BarView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         self.animationCompleteCount += 1
         if self.animationCompleteCount == 1 && self.label == nil {
-            self.insideAnimationStatus = .finish
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
             self.animationCompleteCount = 0
         }
         if self.animationCompleteCount == 2 && self.label != nil {
-            self.insideAnimationStatus = .finish
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
             self.animationCompleteCount = 0
         }
     }
