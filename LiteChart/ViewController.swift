@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: funnelInterface)
+        var interface = LiteChartViewInterface(contentInterface: pieInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
     }
     
     @objc func animation() {
-        let interface = LiteChartAnimationInterface(animationType: .spring(damping: 10, mass: 10, stiffness: 100, initalVelocity: 20), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
+        let interface = LiteChartAnimationInterface(animationType: .base(duration: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .easeIn))
         self.displayView?.startAnimation(animation: interface)
     }
     
