@@ -33,6 +33,7 @@ class LineView: UIView {
     }
     
     override func display(_ layer: CALayer) {
+        layer.contents = nil
         LiteChartDispatchQueue.asyncDrawQueue.async {
             layer.contentsScale = UIScreen.main.scale
             UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, layer.contentsScale)
@@ -212,14 +213,22 @@ extension LineView: LiteChartAnimatable {
         let firstPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[0], rect: self.layer.bounds)
         let lastPoint = self.convertScalePointToRealPointWtihLimit(for: last, rect: self.layer.bounds)
         let maskRect = CGRect(x: firstPoint.x, y: self.layer.bounds.origin.y, width: lastPoint.x - firstPoint.x, height: self.layer.bounds.height)
-        let initRect = CGRect(x: firstPoint.x, y: self.layer.bounds.origin.y, width: 0, height: self.layer.bounds.height)
         maskLayer.path = UIBezierPath(rect: maskRect).cgPath
         
         let current = CACurrentMediaTime()
         let pathKey = "path"
-        let maskExpandAnimation = animation.animationType.quickAnimation(keyPath: pathKey)
-        maskExpandAnimation.fromValue = UIBezierPath(rect: initRect).cgPath
-        maskExpandAnimation.toValue = UIBezierPath(rect: maskRect).cgPath
+        let maskExpandAnimation = CAKeyframeAnimation(keyPath: pathKey)
+        let stride = 1.0 / Double(self.configure.points.count - 1)
+        var keyValue: [CGPath] = []
+        var keyTime: [NSNumber] = []
+        for index in 0 ..< self.configure.points.count {
+            let tempRect = CGRect(x: firstPoint.x, y: self.layer.bounds.origin.y, width: CGFloat(Double(index) * stride) * (lastPoint.x - firstPoint.x), height: self.layer.bounds.height)
+            let cgPath = UIBezierPath(rect: tempRect).cgPath
+            keyValue.append(cgPath)
+            keyTime.append(NSNumber(value: Double(index) * stride))
+        }
+        maskExpandAnimation.values = keyValue
+        maskExpandAnimation.keyTimes = keyTime
         
         maskExpandAnimation.beginTime = current + animation.delay
         maskExpandAnimation.fillMode = animation.fillModel

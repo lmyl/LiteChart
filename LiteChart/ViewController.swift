@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         lineInterface.isShowCoupleDividingLine = true
         lineInterface.dividingValueLineStyle = .segment
         lineInterface.dividingCoupleLineStyle = .segment
+        lineInterface.displayDataMode = .original
         
         let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
         var scatterInterface = LiteChartScatterChartInterface(inputDatas: datas)
@@ -91,7 +92,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: radarInterface)
+        var interface = LiteChartViewInterface(contentInterface: lineInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"

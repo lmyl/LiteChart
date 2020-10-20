@@ -107,26 +107,43 @@ extension LineLegendView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
             return
         }
+        guard case .base(let duration) = animation.animationType else {
+            return
+        }
         self.animationTotalCount = self.legendsView.joined().count
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
-        let springExpandAnimation = CASpringAnimation(keyPath: animationKey)
-        springExpandAnimation.damping = 10
-        springExpandAnimation.mass = 1
-        springExpandAnimation.stiffness = 100
-        springExpandAnimation.initialVelocity = 0
-        springExpandAnimation.duration = springExpandAnimation.settlingDuration
-        springExpandAnimation.fromValue = 0
-        springExpandAnimation.toValue = 1
-        springExpandAnimation.beginTime = current + animation.delay
-        springExpandAnimation.fillMode = animation.fillModel
-        springExpandAnimation.timingFunction = animation.timingFunction
-        springExpandAnimation.delegate = self
+        
+        let keyAnimation = CAKeyframeAnimation(keyPath: animationKey)
+        keyAnimation.values = [0, 0, 1, 1]
+        keyAnimation.beginTime = current + animation.delay
+        keyAnimation.fillMode = animation.fillModel
+        keyAnimation.timingFunction = animation.timingFunction
+        keyAnimation.duration = duration
+        keyAnimation.delegate = self
         
         for legends in self.legendsView {
-            for legend in legends {
+            for (index, legend) in legends.enumerated() {
+                let startTime: Double
+                let endTime: Double
+                if index == 0 {
+                    if legends.count == 0 {
+                        startTime = 0
+                        endTime = 0
+                    } else {
+                        startTime = 0
+                        endTime = 1.0 / (2 * Double(legends.count - 1))
+                    }
+                } else if index == legends.count - 1 {
+                    startTime = 1 - 1.0 / (2 * Double(legends.count - 1))
+                    endTime = 1
+                } else {
+                    startTime = (4 * Double(index) - 1) / (4 * Double(legends.count - 1))
+                    endTime = (4 * Double(index) + 1) / (4 * Double(legends.count - 1))
+                }
+                keyAnimation.keyTimes = [0 ,NSNumber(value: startTime), NSNumber(value: endTime), 1,]
                 legend.layer.syncTimeSystemToFather()
-                legend.layer.add(springExpandAnimation, forKey: self.springExpandAnimationKey)
+                legend.layer.add(keyAnimation, forKey: self.springExpandAnimationKey)
             }
         }
         

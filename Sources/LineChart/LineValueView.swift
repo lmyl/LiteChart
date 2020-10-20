@@ -104,26 +104,43 @@ extension LineValueView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
             return
         }
+        guard case .base(let duration) = animation.animationType else {
+            return
+        }
         self.animationTotalCount = self.valuesView.joined().count
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
-        let springExpandAnimation = CASpringAnimation(keyPath: animationKey)
-        springExpandAnimation.damping = 10
-        springExpandAnimation.mass = 1
-        springExpandAnimation.stiffness = 100
-        springExpandAnimation.initialVelocity = 0
-        springExpandAnimation.duration = springExpandAnimation.settlingDuration
-        springExpandAnimation.fromValue = 0
-        springExpandAnimation.toValue = 1
-        springExpandAnimation.beginTime = current + animation.delay
-        springExpandAnimation.fillMode = animation.fillModel
-        springExpandAnimation.timingFunction = animation.timingFunction
-        springExpandAnimation.delegate = self
+        
+        let keyAnimation = CAKeyframeAnimation(keyPath: animationKey)
+        keyAnimation.values = [0, 0, 1, 1]
+        keyAnimation.beginTime = current + animation.delay
+        keyAnimation.fillMode = animation.fillModel
+        keyAnimation.timingFunction = animation.timingFunction
+        keyAnimation.duration = duration
+        keyAnimation.delegate = self
         
         for values in self.valuesView {
-            for value in values {
+            for (index, value) in values.enumerated() {
+                let startTime: Double
+                let endTime: Double
+                if index == 0 {
+                    if values.count == 0 {
+                        startTime = 0
+                        endTime = 0
+                    } else {
+                        startTime = 0
+                        endTime = 1.0 / (2 * Double(values.count - 1))
+                    }
+                } else if index == values.count - 1 {
+                    startTime = 1 - 1.0 / (2 * Double(values.count - 1))
+                    endTime = 1
+                } else {
+                    startTime = (4 * Double(index) - 1) / (4 * Double(values.count - 1))
+                    endTime = (4 * Double(index) + 1) / (4 * Double(values.count - 1))
+                }
+                keyAnimation.keyTimes = [0 ,NSNumber(value: startTime), NSNumber(value: endTime), 1,]
                 value.layer.syncTimeSystemToFather()
-                value.layer.add(springExpandAnimation, forKey: self.springExpandAnimationKey)
+                value.layer.add(keyAnimation, forKey: self.springExpandAnimationKey)
             }
         }
         
