@@ -58,6 +58,8 @@
 		0866FDC52489FF4E004AF645 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */; };
 		0866FDC62489FF4E004AF645 /* LiteChartDarkLightColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */; };
 		0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866FDC32489FF4E004AF645 /* LiteChartColor.swift */; };
+		086A8223253E76CB0078FCF4 /* LineLegendViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086A8222253E76CB0078FCF4 /* LineLegendViewConfigure.swift */; };
+		086A8226253E77160078FCF4 /* LineLegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086A8225253E77160078FCF4 /* LineLegendView.swift */; };
 		0876A4E4248CCCE40015289B /* FunalChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E3248CCCE40015289B /* FunalChartParameters.swift */; };
 		0876A4E7248CD4110015289B /* ChartValueDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */; };
 		0876ADB124FCC56E0089A34D /* DisplayLabelSyncIdentifierType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876ADB024FCC56E0089A34D /* DisplayLabelSyncIdentifierType.swift */; };
@@ -176,6 +178,8 @@
 		0866FDC12489FF4E004AF645 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		0866FDC22489FF4E004AF645 /* LiteChartDarkLightColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartDarkLightColor.swift; sourceTree = "<group>"; };
 		0866FDC32489FF4E004AF645 /* LiteChartColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiteChartColor.swift; sourceTree = "<group>"; };
+		086A8222253E76CB0078FCF4 /* LineLegendViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineLegendViewConfigure.swift; sourceTree = "<group>"; };
+		086A8225253E77160078FCF4 /* LineLegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineLegendView.swift; sourceTree = "<group>"; };
 		0876A4E3248CCCE40015289B /* FunalChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunalChartParameters.swift; sourceTree = "<group>"; };
 		0876A4E6248CD4110015289B /* ChartValueDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartValueDisplayMode.swift; sourceTree = "<group>"; };
 		0876ADB024FCC56E0089A34D /* DisplayLabelSyncIdentifierType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelSyncIdentifierType.swift; sourceTree = "<group>"; };
@@ -418,6 +422,8 @@
 			children = (
 				08596E2E2499145400A3FC18 /* LineView.swift */,
 				08596E302499145F00A3FC18 /* LineViewConfigure.swift */,
+				086A8225253E77160078FCF4 /* LineLegendView.swift */,
+				086A8222253E76CB0078FCF4 /* LineLegendViewConfigure.swift */,
 				085B880B2535567200851072 /* LineValueView.swift */,
 				085B88082535552300851072 /* LineValueViewConfigure.swift */,
 				08596E322499156200A3FC18 /* LineStyle.swift */,
@@ -686,6 +692,7 @@
 				08F2ACCD25230CF0009D9D55 /* AxisViewBorderMaskLayerDelegate.swift in Sources */,
 				08A5449625221C3700772F65 /* Notification+RadarView.swift in Sources */,
 				08512BAF2524688E00510730 /* BarViewCoupleCollectionConfigure.swift in Sources */,
+				086A8223253E76CB0078FCF4 /* LineLegendViewConfigure.swift in Sources */,
 				08F56E5E248B52F4000998F8 /* Legend.swift in Sources */,
 				08F56E6A248B77B0000998F8 /* LegendViews.swift in Sources */,
 				085CFE7924922D4C008E0E0E /* LiteChartViewBorderStyle.swift in Sources */,
@@ -748,6 +755,7 @@
 				F5DFCC88248F88B900FB000C /* PieChartParameters.swift in Sources */,
 				083BC8ED24908A50000B8DDE /* AxisDividingLineConfigure.swift in Sources */,
 				0883AF3F25383CFD00BFB14D /* DisplayLabelSyncIdentifier.swift in Sources */,
+				086A8226253E77160078FCF4 /* LineLegendView.swift in Sources */,
 				08596E332499156200A3FC18 /* LineStyle.swift in Sources */,
 				F56C193F249874C100A002AE /* HexagonLegend.swift in Sources */,
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,

@@ -14,51 +14,22 @@ class LineView: UIView {
     
     private var legend: [UIView] = []
     
+    private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private let animationGrowKey = "Grow"
+    
     init(configure: LineViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
-        insertLegend()
     }
     
     required init?(coder: NSCoder) {
         self.configure = LineViewConfigure.emptyConfigure
         super.init(coder: coder)
-        insertLegend()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateLegendsDynamicConstraints()
-        
         layer.setNeedsDisplay()
-    }
-    
-    private func insertLegend() {
-        for legend in self.legend {
-            legend.removeFromSuperview()
-        }
-        self.legend = []
-        for _ in self.configure.points {
-            let legend = LegendFactory.shared.makeNewLegend(from: self.configure.legendConfigure)
-            self.legend.append(legend)
-            self.addSubview(legend)
-        }
-    }
-    
-    private func updateLegendsDynamicConstraints() {
-        let legendWidth = self.bounds.width / CGFloat(self.configure.points.count + 1)
-        let legendHeight = self.bounds.height / 20
-        let legendLength = min(legendHeight, legendWidth)
-        for (index, legend) in self.legend.enumerated() {
-            let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index], rect: self.bounds)
-            legend.snp.updateConstraints{
-                make in
-                make.center.equalTo(realPoint)
-                make.width.equalTo(legendLength)
-                make.height.equalTo(legendLength)
-            }
-        }
-        
     }
     
     override func display(_ layer: CALayer) {
@@ -221,4 +192,88 @@ class LineView: UIView {
         context?.drawPath(using: .stroke)
     }
     
+}
+
+extension LineView: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
+            return
+        }
+        guard case .base(let duration) = animation.animationType else {
+            return
+        }
+        guard self.configure.points.count >= 2, let last = self.configure.points.last else {
+            return
+        }
+        let maskLayer = CAShapeLayer()
+        maskLayer.fillColor = UIColor.black.cgColor
+        maskLayer.opacity = 1
+        maskLayer.frame = self.layer.bounds
+        let firstPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[0], rect: self.layer.bounds)
+        let lastPoint = self.convertScalePointToRealPointWtihLimit(for: last, rect: self.layer.bounds)
+        let maskRect = CGRect(x: firstPoint.x, y: self.layer.bounds.origin.y, width: lastPoint.x - firstPoint.x, height: self.layer.bounds.height)
+        let initRect = CGRect(x: firstPoint.x, y: self.layer.bounds.origin.y, width: 0, height: self.layer.bounds.height)
+        maskLayer.path = UIBezierPath(rect: maskRect).cgPath
+        
+        let current = CACurrentMediaTime()
+        let pathKey = "path"
+        let maskExpandAnimation = animation.animationType.quickAnimation(keyPath: pathKey)
+        maskExpandAnimation.fromValue = UIBezierPath(rect: initRect).cgPath
+        maskExpandAnimation.toValue = UIBezierPath(rect: maskRect).cgPath
+        
+        maskExpandAnimation.beginTime = current + animation.delay
+        maskExpandAnimation.fillMode = animation.fillModel
+        maskExpandAnimation.timingFunction = animation.timingFunction
+        maskExpandAnimation.duration = duration
+        maskExpandAnimation.delegate = self
+        
+        self.layer.syncTimeSystemToFather()
+        self.layer.mask = maskLayer
+        maskLayer.add(maskExpandAnimation, forKey: animationGrowKey)
+        
+        self.insideAnimationStatus = .running
+    }
+    
+    func stopAnimation() {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
+            return
+        }
+        self.layer.mask?.removeAnimation(forKey: animationGrowKey)
+        self.layer.syncTimeSystemToFather()
+        self.insideAnimationStatus = .cancel
+    }
+    
+    func pauseAnimation() {
+        guard self.insideAnimationStatus == .running else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        let pauseTime = (current - self.layer.beginTime) * Double(self.layer.speed) + self.layer.timeOffset
+        self.layer.speed = 0
+        self.layer.timeOffset = pauseTime
+        self.insideAnimationStatus = .pause
+    }
+    
+    func continueAnimation() {
+        guard self.insideAnimationStatus == .pause else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        self.layer.beginTime = current
+        self.layer.speed = 1
+        self.insideAnimationStatus = .running
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        self.insideAnimationStatus
+    }
+}
+
+extension LineView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.layer.mask = nil
+        if self.insideAnimationStatus != .cancel {
+            self.insideAnimationStatus = .finish
+        }
+    }
 }

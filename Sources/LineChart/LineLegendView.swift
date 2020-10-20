@@ -1,85 +1,88 @@
 //
-//  LineValueView.swift
+//  LineLegendView.swift
 //  LiteChart
 //
-//  Created by 刘洋 on 2020/10/13.
+//  Created by 刘洋 on 2020/10/20.
 //  Copyright © 2020 刘洋. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import SnapKit
 
-class LineValueView: UIView {
-    private let configure: LineValueViewConfigure
+class LineLegendView: UIView {
+    private let configure: LineLegendViewConfigure
     
-    private var valuesView: [[DisplayLabel]] = []
-    
+    private var legendsView: [[UIView]] = []
     private var completeAnimationCount = 0
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
     private let springExpandAnimationKey = "ExpandKey"
     private var animationTotalCount = 0
     
-    init(configure: LineValueViewConfigure) {
+    init(configure: LineLegendViewConfigure) {
         self.configure = configure
         super.init(frame: .zero)
-        insertValueView()
+        insertLegend()
     }
     
     required init?(coder: NSCoder) {
         self.configure = .emptyConfigure
         super.init(coder: coder)
-        insertValueView()
+        insertLegend()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateValueViewsDynamicConstraints()
+        
+        updateLegendsDynamicConstraints()
     }
     
-    private func insertValueView() {
-        for label in self.valuesView.joined() {
-            label.removeFromSuperview()
+    private func insertLegend() {
+        for legends in self.legendsView {
+            for legend in legends {
+                legend.removeFromSuperview()
+            }
         }
-        self.valuesView = []
-        guard self.configure.labelConfigure.count == self.configure.points.count else {
+        self.legendsView = []
+        guard self.configure.points.count == self.configure.legendConfigure.count else {
             return
         }
-        for labelConfigures in self.configure.labelConfigure {
-            var result: [DisplayLabel] = []
-            for labelConfigure in labelConfigures {
-                let label = DisplayLabel(configure: labelConfigure)
-                self.addSubview(label)
-                result.append(label)
+        for (index, points) in self.configure.points.enumerated() {
+            var legends: [UIView] = []
+            for _ in points {
+                let legend = LegendFactory.shared.makeNewLegend(from: self.configure.legendConfigure[index])
+                legends.append(legend)
+                self.addSubview(legend)
             }
-            self.valuesView.append(result)
+            self.legendsView.append(legends)
         }
     }
     
-    private func updateValueViewsDynamicConstraints() {
-        for (rowIndex, labels) in self.valuesView.enumerated() {
-            let labelWidth = self.bounds.width / CGFloat(labels.count + 1)
-            let labelHeight = self.bounds.height / 10
-            let space = labelHeight / 3
-            
-            guard labels.count == self.configure.points[rowIndex].count else {
+    private func updateLegendsDynamicConstraints() {
+        guard self.configure.points.count >= 1 else {
+            return
+        }
+        guard self.legendsView.count == self.configure.points.count else {
+            fatalError("框架内部数据处理错误，不给予拯救")
+        }
+        let legendHeight = self.bounds.height / 20
+        for (index, legends) in self.legendsView.enumerated() {
+            let legendWidth = self.bounds.width / CGFloat(self.configure.points[index].count + 1)
+            let legendLength = min(legendHeight, legendWidth)
+            guard legends.count == self.configure.points[index].count else {
                 fatalError("框架内部数据处理错误，不给予拯救")
             }
-            
-            for (index, label) in labels.enumerated() {
-                let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[rowIndex][index], rect: self.bounds)
-                let center = CGPoint(x: realPoint.x, y: realPoint.y - space - labelHeight / 2)
-                label.snp.updateConstraints{
+            for (indexInside, legend) in legends.enumerated() {
+                let realPoint = self.convertScalePointToRealPointWtihLimit(for: self.configure.points[index][indexInside], rect: self.bounds)
+                legend.snp.updateConstraints{
                     make in
-                    make.center.equalTo(center)
-                    make.width.equalTo(labelWidth)
-                    make.height.equalTo(labelHeight)
+                    make.center.equalTo(realPoint)
+                    make.width.equalTo(legendLength)
+                    make.height.equalTo(legendLength)
                 }
             }
         }
+        
     }
-    
-    
     
     private func convertScalePointToRealPointWtihLimit(for point: CGPoint, rect: CGRect) -> CGPoint {
         var realPoint = point
@@ -99,12 +102,12 @@ class LineValueView: UIView {
     }
 }
 
-extension LineValueView: LiteChartAnimatable {
+extension LineLegendView: LiteChartAnimatable {
     func startAnimation(animation: LiteChartAnimationInterface) {
         guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
             return
         }
-        self.animationTotalCount = self.valuesView.joined().count
+        self.animationTotalCount = self.legendsView.joined().count
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
         let springExpandAnimation = CASpringAnimation(keyPath: animationKey)
@@ -120,10 +123,10 @@ extension LineValueView: LiteChartAnimatable {
         springExpandAnimation.timingFunction = animation.timingFunction
         springExpandAnimation.delegate = self
         
-        for values in self.valuesView {
-            for value in values {
-                value.layer.syncTimeSystemToFather()
-                value.layer.add(springExpandAnimation, forKey: self.springExpandAnimationKey)
+        for legends in self.legendsView {
+            for legend in legends {
+                legend.layer.syncTimeSystemToFather()
+                legend.layer.add(springExpandAnimation, forKey: self.springExpandAnimationKey)
             }
         }
         
@@ -134,10 +137,10 @@ extension LineValueView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
             return
         }
-        for values in self.valuesView {
-            for value in values {
-                value.layer.removeAnimation(forKey: self.springExpandAnimationKey)
-                value.layer.syncTimeSystemToFather()
+        for legends in self.legendsView {
+            for legend in legends {
+                legend.layer.removeAnimation(forKey: self.springExpandAnimationKey)
+                legend.layer.syncTimeSystemToFather()
             }
         }
         self.insideAnimationStatus = .cancel
@@ -148,11 +151,11 @@ extension LineValueView: LiteChartAnimatable {
             return
         }
         let current = CACurrentMediaTime()
-        for values in self.valuesView {
-            for value in values {
-                let pauseTime = (current - value.layer.beginTime) * Double(value.layer.speed) + value.layer.timeOffset
-                value.layer.speed = 0
-                value.layer.timeOffset = pauseTime
+        for legends in self.legendsView {
+            for legend in legends {
+                let pauseTime = (current - legend.layer.beginTime) * Double(legend.layer.speed) + legend.layer.timeOffset
+                legend.layer.speed = 0
+                legend.layer.timeOffset = pauseTime
             }
         }
         self.insideAnimationStatus = .pause
@@ -163,23 +166,21 @@ extension LineValueView: LiteChartAnimatable {
             return
         }
         let current = CACurrentMediaTime()
-        for values in self.valuesView {
-            for value in values {
-                value.layer.beginTime = current
-                value.layer.speed = 1
+        for legends in self.legendsView {
+            for legend in legends {
+                legend.layer.beginTime = current
+                legend.layer.speed = 1
             }
         }
         self.insideAnimationStatus = .running
     }
     
     var animationStatus: LiteChartAnimationStatus {
-        self.insideAnimationStatus
+        insideAnimationStatus
     }
-    
-    
 }
 
-extension LineValueView: CAAnimationDelegate {
+extension LineLegendView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         self.completeAnimationCount += 1
         if self.completeAnimationCount == self.animationTotalCount {

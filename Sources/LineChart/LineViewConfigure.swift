@@ -11,7 +11,6 @@ import CoreGraphics
 
 struct LineViewConfigure {
     let points: [CGPoint]
-    let legendConfigure: LegendConfigure
     let lineStyle: LineStyle
     let lineColor: LiteChartDarkLightColor
 }
@@ -19,7 +18,6 @@ struct LineViewConfigure {
 extension LineViewConfigure {
     private init() {
         self.points = []
-        self.legendConfigure = .emptyConfigure
         self.lineColor = .init(lightUIColor: .black, darkUIColor: .white)
         self.lineStyle = .dottedPolyline
     }

@@ -53,6 +53,7 @@ class LineChartView: LiteChartContentView {
     }
     
     override func layoutSubviews() {
+        stopAnimation()
         super.layoutSubviews()
         updateAxisViewDynamicConstraints()
         updateUnitLabelDynamicConstraints()
@@ -342,4 +343,26 @@ class LineChartView: LiteChartContentView {
         }
     }
     
+    override func startAnimation(animation: LiteChartAnimationInterface) {
+        self.lineViews?.startAnimation(animation: animation)
+    }
+    
+    override func stopAnimation() {
+        self.lineViews?.stopAnimation()
+    }
+    
+    override func pauseAnimation() {
+        self.lineViews?.pauseAnimation()
+    }
+    
+    override func continueAnimation() {
+        self.lineViews?.continueAnimation()
+    }
+    
+    override var animationStatus: LiteChartAnimationStatus {
+        guard let lineView = self.lineViews else {
+            return .ready
+        }
+        return lineView.animationStatus
+    }
 }
