@@ -54,6 +54,7 @@ class PlotChartView: LiteChartContentView {
     }
     
     override func layoutSubviews() {
+        stopAnimation()
         super.layoutSubviews()
         updateAxisViewDynamicConstraints()
         updateUnitLabelDynamicConstraints()
@@ -341,5 +342,25 @@ class PlotChartView: LiteChartContentView {
                 make.width.equalTo(labelWidth - labelSpace)
             }
         }
+    }
+    
+    override func startAnimation(animation: LiteChartAnimationInterface) {
+        self.pointViews?.startAnimation(animation: animation)
+    }
+    
+    override func stopAnimation() {
+        self.pointViews?.stopAnimation()
+    }
+    
+    override func pauseAnimation() {
+        self.pointViews?.pauseAnimation()
+    }
+    
+    override func continueAnimation() {
+        self.pointViews?.continueAnimation()
+    }
+    
+    override var animationStatus: LiteChartAnimationStatus {
+        self.pointViews?.animationStatus ?? .ready
     }
 }

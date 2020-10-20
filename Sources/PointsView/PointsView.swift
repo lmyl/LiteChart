@@ -13,6 +13,10 @@ class PointsView: UIView {
     private let configure: PointsViewConfigure
     private var points: [UIView] = []
     
+    private var completeAnimationCount = 0
+    private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private let expandAnimationKey = "ExpandAndLiftKey"
+    
     init(configure: PointsViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
@@ -87,6 +91,90 @@ class PointsView: UIView {
                 make.height.equalTo(finalLength)
                 make.center.equalTo(center)
             }
+        }
+    }
+}
+
+
+extension PointsView: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        let animationScaleKey = "transform.scale"
+        let animationPositionYKey = "position.y"
+        let expandAnimation = animation.animationType.quickAnimation(keyPath: animationScaleKey)
+        expandAnimation.fromValue = 0
+        expandAnimation.toValue = 1
+        
+        let expandAnimationGroup = CAAnimationGroup()
+        expandAnimationGroup.beginTime = current + animation.delay
+        expandAnimationGroup.timingFunction = animation.timingFunction
+        expandAnimationGroup.fillMode = animation.fillModel
+        expandAnimationGroup.duration = expandAnimation.duration
+        expandAnimationGroup.delegate = self
+        for point in self.points {
+            let liftAnimation = animation.animationType.quickAnimation(keyPath: animationPositionYKey)
+            liftAnimation.fromValue = self.layer.bounds.maxY
+            liftAnimation.toValue = point.center.y
+            expandAnimationGroup.animations = [liftAnimation, expandAnimation]
+            point.layer.syncTimeSystemToFather()
+            point.layer.add(expandAnimationGroup, forKey: expandAnimationKey)
+        }
+        
+        self.insideAnimationStatus = .running
+    }
+    
+    func stopAnimation() {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
+            return
+        }
+        for point in self.points {
+            point.layer.removeAnimation(forKey: expandAnimationKey)
+            point.layer.syncTimeSystemToFather()
+        }
+        self.insideAnimationStatus = .cancel
+    }
+    
+    func pauseAnimation() {
+        guard self.insideAnimationStatus == .running else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        for point in self.points {
+            let pauseTime = (current - point.layer.beginTime) * Double(point.layer.speed) + point.layer.timeOffset
+            point.layer.speed = 0
+            point.layer.timeOffset = pauseTime
+        }
+        self.insideAnimationStatus = .pause
+    }
+    
+    func continueAnimation() {
+        guard self.insideAnimationStatus == .pause else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        for point in self.points {
+            point.layer.beginTime = current
+            point.layer.speed = 1
+        }
+        self.insideAnimationStatus = .running
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        self.insideAnimationStatus
+    }
+}
+
+extension PointsView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.completeAnimationCount += 1
+        if self.completeAnimationCount == self.points.count {
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
+            self.completeAnimationCount = 0
         }
     }
 }

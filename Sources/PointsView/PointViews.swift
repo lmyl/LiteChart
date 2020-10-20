@@ -51,3 +51,47 @@ class PointViews: UIView {
         }
     }
 }
+
+extension PointViews: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.animationStatus == .cancel || self.animationStatus == .ready || self.animationStatus == .finish else {
+            return
+        }
+        for point in self.pointsView {
+            point.startAnimation(animation: animation)
+        }
+    }
+    
+    func stopAnimation() {
+        guard self.animationStatus == .running || self.animationStatus == .pause else {
+            return
+        }
+        for point in self.pointsView {
+            point.stopAnimation()
+        }
+    }
+    
+    func pauseAnimation() {
+        guard self.animationStatus == .running else {
+            return
+        }
+        for point in self.pointsView {
+            point.pauseAnimation()
+        }
+    }
+    
+    func continueAnimation() {
+        guard self.animationStatus == .pause else {
+            return
+        }
+        for point in self.pointsView {
+            point.continueAnimation()
+        }
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        self.pointsView.reduce(LiteChartAnimationStatus.ready, {
+            $0.compactAnimatoinStatus(another: $1.animationStatus)
+        })
+    }
+}
