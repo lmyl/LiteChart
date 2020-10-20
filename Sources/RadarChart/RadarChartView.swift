@@ -20,6 +20,10 @@ class RadarChartView: LiteChartContentView {
     
     private var notificationToken: NSObjectProtocol?
     
+    private var completeAnimationCount = 0
+    private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private let springExpandAnimationKey = "SpringExpandKey"
+    
     init(configure: RadarChartViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
@@ -43,6 +47,7 @@ class RadarChartView: LiteChartContentView {
     }
     
     override func layoutSubviews() {
+        stopAnimation()
         super.layoutSubviews()
         
         updateRadarBackgroundViewDynamicConstraints()
@@ -212,6 +217,121 @@ class RadarChartView: LiteChartContentView {
             }
             coupleTitleView.setNeedsLayout()
             coupleTitleView.layoutIfNeeded()
+        }
+    }
+    
+    override func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.animationStatus == .ready || self.animationStatus == .cancel || self.animationStatus == .finish else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        let animationKey = "transform.scale"
+        let springExpandAnimation = CASpringAnimation(keyPath: animationKey)
+        springExpandAnimation.damping = 10
+        springExpandAnimation.mass = 1
+        springExpandAnimation.stiffness = 100
+        springExpandAnimation.initialVelocity = 0
+        springExpandAnimation.duration = springExpandAnimation.settlingDuration
+        springExpandAnimation.fromValue = 0
+        springExpandAnimation.toValue = 1
+        springExpandAnimation.beginTime = current + animation.delay
+        springExpandAnimation.fillMode = animation.fillModel
+        springExpandAnimation.timingFunction = animation.timingFunction
+        springExpandAnimation.delegate = self
+        
+        for label in self.coupleTitles {
+            label.layer.syncTimeSystemToFather()
+            label.layer.add(springExpandAnimation, forKey: springExpandAnimationKey)
+        }
+        
+        for radar in self.radarDataViews {
+            radar.startAnimation(animation: animation)
+        }
+        self.insideAnimationStatus = .running
+    }
+    
+    override func stopAnimation() {
+        guard self.animationStatus == .running || self.animationStatus == .pause else {
+            return
+        }
+        self.stopInsideAnimation()
+        for radar in self.radarDataViews {
+            radar.stopAnimation()
+        }
+    }
+    
+    private func stopInsideAnimation() {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
+            return
+        }
+        for label in self.coupleTitles {
+            label.layer.removeAnimation(forKey: springExpandAnimationKey)
+            label.layer.syncTimeSystemToFather()
+        }
+        self.insideAnimationStatus = .cancel
+    }
+    
+    override func pauseAnimation() {
+        guard self.animationStatus == .running else {
+            return
+        }
+        pauseInsideAnimation()
+        for radar in self.radarDataViews {
+            radar.pauseAnimation()
+        }
+    }
+    
+    private func pauseInsideAnimation() {
+        guard self.insideAnimationStatus == .running else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        for label in self.coupleTitles {
+            let pauseTime = (current - label.layer.beginTime) * Double(label.layer.speed) + label.layer.timeOffset
+            label.layer.speed = 0
+            label.layer.timeOffset = pauseTime
+        }
+        self.insideAnimationStatus = .pause
+    }
+    
+    override func continueAnimation() {
+        guard self.animationStatus == .pause else {
+            return
+        }
+        continueInsideAnimation()
+        for radar in self.radarDataViews {
+            radar.continueAnimation()
+        }
+    }
+    
+    private func continueInsideAnimation() {
+        guard self.insideAnimationStatus == .pause else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        for label in self.coupleTitles {
+            label.layer.beginTime = current
+            label.layer.speed = 1
+        }
+        self.insideAnimationStatus = .running
+    }
+    
+    override var animationStatus: LiteChartAnimationStatus {
+        self.radarDataViews.reduce(self.insideAnimationStatus, {
+            $0.compactAnimatoinStatus(another: $1.animationStatus)
+        })
+    }
+}
+
+
+extension RadarChartView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.completeAnimationCount += 1
+        if self.completeAnimationCount ==  self.coupleTitles.count {
+            if self.insideAnimationStatus != .cancel {
+                self.insideAnimationStatus = .finish
+            }
+            self.completeAnimationCount = 0
         }
     }
 }

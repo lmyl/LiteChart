@@ -11,6 +11,9 @@ import UIKit
 class RadarDataView: UIView {
     private let configure: RadarDataViewConfigure
     
+    private var insideAnimationStatus: LiteChartAnimationStatus = .ready
+    private let scanAnimationKey = "ScanKey"
+    
     init(configure: RadarDataViewConfigure) {
         self.configure = configure
         super.init(frame: CGRect())
@@ -101,5 +104,86 @@ class RadarDataView: UIView {
             result.append(realPoint)
         }
         return result
+    }
+}
+
+extension RadarDataView: LiteChartAnimatable {
+    func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready || self.insideAnimationStatus == .finish else {
+            return
+        }
+        guard case .base(_) = animation.animationType else {
+            return
+        }
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.layer.bounds
+        maskLayer.strokeColor = UIColor.black.cgColor
+        maskLayer.fillColor = UIColor.clear.cgColor
+        let center = CGPoint(x: self.layer.bounds.width / 2, y: self.layer.bounds.height / 2)
+        let radius = min(self.layer.bounds.width, self.layer.bounds.height) / 2
+        maskLayer.lineWidth = radius
+        let storkeRadius = radius / 2
+        maskLayer.path = UIBezierPath(arcCenter: center, radius: storkeRadius, startAngle: 0, endAngle: 2 * CGFloat(Double.pi), clockwise: true).cgPath
+        
+        let current = CACurrentMediaTime()
+        let animationKey = "strokeEnd"
+        let scanAnimation = animation.animationType.quickAnimation(keyPath: animationKey)
+        scanAnimation.beginTime = current + animation.delay
+        scanAnimation.timingFunction = animation.timingFunction
+        scanAnimation.fillMode = animation.fillModel
+        scanAnimation.fromValue = 0
+        scanAnimation.toValue = 1
+        scanAnimation.delegate = self
+        
+        layer.syncTimeSystemToFather()
+        layer.mask = maskLayer
+        maskLayer.add(scanAnimation, forKey: scanAnimationKey)
+        
+        self.insideAnimationStatus = .running
+    }
+    
+    func stopAnimation() {
+        guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
+            return
+        }
+        self.layer.mask?.removeAnimation(forKey: scanAnimationKey)
+        self.layer.syncTimeSystemToFather()
+        self.insideAnimationStatus = .cancel
+    }
+    
+    func pauseAnimation() {
+        guard self.insideAnimationStatus == .running else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        let pauseTime = (current - self.layer.beginTime) * Double(self.layer.speed) + self.layer.timeOffset
+        self.layer.speed = 0
+        self.layer.timeOffset = pauseTime
+        self.insideAnimationStatus = .pause
+    }
+    
+    func continueAnimation() {
+        guard self.insideAnimationStatus == .pause else {
+            return
+        }
+        let current = CACurrentMediaTime()
+        self.layer.beginTime = current
+        self.layer.speed = 1
+        self.insideAnimationStatus = .running
+    }
+    
+    var animationStatus: LiteChartAnimationStatus {
+        self.insideAnimationStatus
+    }
+    
+    
+}
+
+extension RadarDataView: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        self.layer.mask = nil
+        if self.insideAnimationStatus != .cancel {
+            self.insideAnimationStatus = .finish
+        }
     }
 }
