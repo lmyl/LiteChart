@@ -14,10 +14,7 @@ class PieViews: LiteChartContentView {
     private var pieViews: [PieView] = []
         
     private let animationExpandKey = "expand"
-    private let animationOpacityKey = "opacity"
-    private let maskAnimationName = "maskAnimation"
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
-    private var animationCompleteCount = 0
     override var animationStatus: LiteChartAnimationStatus {
         return insideAnimationStatus
     }
@@ -92,18 +89,8 @@ class PieViews: LiteChartContentView {
         animationExpand.beginTime = current + animation.delay
         animationExpand.timingFunction = animation.timingFunction
         animationExpand.delegate = self
-        animationExpand.setValue(self.maskAnimationName, forKey: "name")
-        
-        let animationOpacity = animation.animationType.quickAnimation(keyPath: "opacity")
-        animationOpacity.fromValue = 0
-        animationOpacity.toValue = 1
-        animationOpacity.fillMode = animation.fillModel
-        animationOpacity.beginTime = current + animation.delay
-        animationOpacity.timingFunction = animation.timingFunction
-        animationOpacity.delegate = self
         
         self.layer.syncTimeSystemToFather()
-        self.layer.add(animationOpacity, forKey: animationOpacityKey)
         self.layer.mask = maskLayer
         maskLayer.add(animationExpand, forKey: animationExpandKey)
         
@@ -125,7 +112,6 @@ class PieViews: LiteChartContentView {
         guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
             return
         }
-        self.layer.removeAnimation(forKey: animationOpacityKey)
         self.layer.mask?.removeAnimation(forKey: animationExpandKey)
         self.layer.syncTimeSystemToFather()
         self.insideAnimationStatus = .cancel
@@ -144,15 +130,9 @@ class PieViews: LiteChartContentView {
 
 extension PieViews: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        self.animationCompleteCount += 1
-        if let name = anim.value(forKey: "name") as? String, name == self.maskAnimationName {
-            self.layer.mask = nil
-        }
-        if self.animationCompleteCount == 2 {
-            if self.insideAnimationStatus != .cancel {
-                self.insideAnimationStatus = .finish
-            }
-            self.animationCompleteCount = 0
+        self.layer.mask = nil
+        if self.insideAnimationStatus != .cancel {
+            self.insideAnimationStatus = .finish
         }
     }
 }
