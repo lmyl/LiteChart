@@ -123,7 +123,7 @@ extension RadarDataView: LiteChartAnimatable {
         let radius = min(self.layer.bounds.width, self.layer.bounds.height) / 2
         maskLayer.lineWidth = radius
         let storkeRadius = radius / 2
-        maskLayer.path = UIBezierPath(arcCenter: center, radius: storkeRadius, startAngle: 0, endAngle: 2 * CGFloat(Double.pi), clockwise: true).cgPath
+        maskLayer.path = UIBezierPath(arcCenter: center, radius: storkeRadius, startAngle: -CGFloat(Double.pi / 2), endAngle: 1.5 * CGFloat(Double.pi), clockwise: true).cgPath
         
         let current = CACurrentMediaTime()
         let animationKey = "strokeEnd"

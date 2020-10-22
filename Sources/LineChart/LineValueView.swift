@@ -17,7 +17,7 @@ class LineValueView: UIView {
     
     private var completeAnimationCount = 0
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
-    private let springExpandAnimationKey = "ExpandKey"
+    private let expandAnimationKey = "ExpandKey"
     private var animationTotalCount = 0
     
     init(configure: LineValueViewConfigure) {
@@ -140,7 +140,7 @@ extension LineValueView: LiteChartAnimatable {
                 }
                 keyAnimation.keyTimes = [0 ,NSNumber(value: startTime), NSNumber(value: endTime), 1,]
                 value.layer.syncTimeSystemToFather()
-                value.layer.add(keyAnimation, forKey: self.springExpandAnimationKey)
+                value.layer.add(keyAnimation, forKey: self.expandAnimationKey)
             }
         }
         
@@ -153,7 +153,7 @@ extension LineValueView: LiteChartAnimatable {
         }
         for values in self.valuesView {
             for value in values {
-                value.layer.removeAnimation(forKey: self.springExpandAnimationKey)
+                value.layer.removeAnimation(forKey: self.expandAnimationKey)
                 value.layer.syncTimeSystemToFather()
             }
         }

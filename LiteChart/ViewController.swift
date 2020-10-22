@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019", "2020", "2021", "2022", "2023", "2024"]
         funnelInterface.displayDataMode = .mix
         
-        var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20])], coupleTitle: ["煤气"])
+        var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
         lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
         lineInterface.underlayerColor = .init(lightColor: .blue)
         lineInterface.unitTextColor = .init(lightColor: .gold)
@@ -96,7 +96,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: lineInterface)
+        var interface = LiteChartViewInterface(contentInterface: radarInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
@@ -192,7 +192,7 @@ class ViewController: UIViewController {
     
     @objc func animation() {
         
-        let interface = LiteChartAnimationInterface(animationType: .base(duration: 1), delay: 0, fillModel: .both, timingFunction: .init(name: .easeOut))
+        let interface = LiteChartAnimationInterface(animationType: .base(duration: 4), delay: 0, fillModel: .both, timingFunction: .init(name: .easeOut))
         self.timer?.cancel()
         let timer = DispatchSource.makeTimerSource(queue: .main)
         timer.schedule(deadline: .now(), repeating: .milliseconds(1))

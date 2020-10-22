@@ -22,7 +22,7 @@ class RadarChartView: LiteChartContentView {
     
     private var completeAnimationCount = 0
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
-    private let springExpandAnimationKey = "SpringExpandKey"
+    private let expandAnimationKey = "ExpandKey"
     
     init(configure: RadarChartViewConfigure) {
         self.configure = configure
@@ -224,26 +224,39 @@ class RadarChartView: LiteChartContentView {
         guard self.animationStatus == .ready || self.animationStatus == .cancel || self.animationStatus == .finish else {
             return
         }
+        guard case .base(let duration) = animation.animationType else {
+            return
+        }
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
-        let springExpandAnimation = CASpringAnimation(keyPath: animationKey)
-        springExpandAnimation.damping = 10
-        springExpandAnimation.mass = 1
-        springExpandAnimation.stiffness = 100
-        springExpandAnimation.initialVelocity = 0
-        springExpandAnimation.duration = springExpandAnimation.settlingDuration
-        springExpandAnimation.fromValue = 0
-        springExpandAnimation.toValue = 1
-        springExpandAnimation.beginTime = current + animation.delay
-        springExpandAnimation.fillMode = animation.fillModel
-        springExpandAnimation.timingFunction = animation.timingFunction
-        springExpandAnimation.delegate = self
+        let keyAnimation = CAKeyframeAnimation(keyPath: animationKey)
+        keyAnimation.values = [0, 0, 1, 1]
+        keyAnimation.duration = duration
+        keyAnimation.beginTime = current + animation.delay
+        keyAnimation.fillMode = animation.fillModel
+        keyAnimation.timingFunction = animation.timingFunction
+        keyAnimation.delegate = self
         
-        for label in self.coupleTitles {
+        for (index, label) in self.coupleTitles.enumerated() {
+            let startTime: Double
+            let endTime: Double
+            if index == 0 {
+                if self.coupleTitles.count == 1 {
+                    startTime = 0
+                    endTime = 1
+                } else {
+                    startTime = 0
+                    endTime = 1.0 / (2 * Double(self.coupleTitles.count))
+                }
+            } else {
+                startTime = (4 * Double(index) - 1) / (4 * Double(self.coupleTitles.count))
+                endTime = (4 * Double(index) + 1) / (4 * Double(self.coupleTitles.count))
+            }
+            keyAnimation.keyTimes = [0 ,NSNumber(value: startTime), NSNumber(value: endTime), 1,]
+            
             label.layer.syncTimeSystemToFather()
-            label.layer.add(springExpandAnimation, forKey: springExpandAnimationKey)
+            label.layer.add(keyAnimation, forKey: expandAnimationKey)
         }
-        
         for radar in self.radarDataViews {
             radar.startAnimation(animation: animation)
         }
@@ -265,7 +278,7 @@ class RadarChartView: LiteChartContentView {
             return
         }
         for label in self.coupleTitles {
-            label.layer.removeAnimation(forKey: springExpandAnimationKey)
+            label.layer.removeAnimation(forKey: expandAnimationKey)
             label.layer.syncTimeSystemToFather()
         }
         self.insideAnimationStatus = .cancel
