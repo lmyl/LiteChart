@@ -110,7 +110,11 @@ extension LineLegendView: LiteChartAnimatable {
         guard case .base(let duration) = animation.animationType else {
             return
         }
-        self.animationTotalCount = self.legendsView.joined().count
+        let totalCount = self.legendsView.joined().count
+        guard totalCount >= 1 else {
+            return
+        }
+        self.animationTotalCount = totalCount
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
         

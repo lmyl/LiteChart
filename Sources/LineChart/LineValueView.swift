@@ -107,7 +107,11 @@ extension LineValueView: LiteChartAnimatable {
         guard case .base(let duration) = animation.animationType else {
             return
         }
-        self.animationTotalCount = self.valuesView.joined().count
+        let totalCount = self.valuesView.joined().count
+        guard totalCount >= 1 else {
+            return
+        }
+        self.animationTotalCount = totalCount
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
         

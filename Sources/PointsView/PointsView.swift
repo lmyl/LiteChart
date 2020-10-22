@@ -101,6 +101,9 @@ extension PointsView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .ready || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish else {
             return
         }
+        guard self.points.count >= 1 else {
+            return
+        }
         let current = CACurrentMediaTime()
         let animationScaleKey = "transform.scale"
         let animationPositionYKey = "position.y"

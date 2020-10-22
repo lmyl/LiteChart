@@ -121,7 +121,10 @@ class FunalView: LiteChartContentView {
     }
     
     override func startAnimation(animation: LiteChartAnimationInterface) {
-        guard self.funalFloorViews.count >= 1 && (self.insideAnimationStatus == .finish || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready)  else {
+        guard self.funalFloorViews.count >= 2 else {
+            return
+        }
+        guard self.insideAnimationStatus == .finish || self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready  else {
             return
         }
         let fatherRect = self.bounds

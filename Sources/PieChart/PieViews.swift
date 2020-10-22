@@ -63,6 +63,9 @@ class PieViews: LiteChartContentView {
     }
     
     override func startAnimation(animation: LiteChartAnimationInterface) {
+        guard self.pieViews.count >= 1 else {
+            return
+        }
         guard self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .finish || self.insideAnimationStatus == .ready else {
             return
         }
