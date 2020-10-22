@@ -124,9 +124,9 @@ extension LineValueView: LiteChartAnimatable {
                 let startTime: Double
                 let endTime: Double
                 if index == 0 {
-                    if values.count == 0 {
+                    if values.count == 1 {
                         startTime = 0
-                        endTime = 0
+                        endTime = 1
                     } else {
                         startTime = 0
                         endTime = 1.0 / (2 * Double(values.count - 1))

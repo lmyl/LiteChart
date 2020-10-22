@@ -127,9 +127,9 @@ extension LineLegendView: LiteChartAnimatable {
                 let startTime: Double
                 let endTime: Double
                 if index == 0 {
-                    if legends.count == 0 {
+                    if legends.count == 1 {
                         startTime = 0
-                        endTime = 0
+                        endTime = 1
                     } else {
                         startTime = 0
                         endTime = 1.0 / (2 * Double(legends.count - 1))

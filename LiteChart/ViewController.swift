@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     
     var displayView: LiteChartView?
     var showType = 1
+    
+    var timer: DispatchSourceTimer?
+    var timerLabel: UILabel?
+    var timerCount = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +43,7 @@ class ViewController: UIViewController {
         funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019", "2020", "2021", "2022", "2023", "2024"]
         funnelInterface.displayDataMode = .mix
         
-        var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.dottedPolyline, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
+        var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20])], coupleTitle: ["煤气"])
         lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
         lineInterface.underlayerColor = .init(lightColor: .blue)
         lineInterface.unitTextColor = .init(lightColor: .gold)
@@ -168,6 +172,17 @@ class ViewController: UIViewController {
         }
         animationStopButton.addTarget(self, action: #selector(stopAnimation), for: .touchUpInside)
         animationStopButton.backgroundColor = .orange
+        
+        let timerLabel = UILabel()
+        self.view.addSubview(timerLabel)
+        self.timerLabel = timerLabel
+        timerLabel.snp.updateConstraints{
+            make in
+            make.trailing.equalToSuperview()
+            make.height.equalTo(50)
+            make.leading.equalToSuperview()
+            make.top.equalTo(animationStopButton.snp.bottom)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -176,12 +191,23 @@ class ViewController: UIViewController {
     }
     
     @objc func animation() {
-        let interface = LiteChartAnimationInterface(animationType: .base(duration: 2), delay: 0, fillModel: .both, timingFunction: .init(name: .linear))
+        
+        let interface = LiteChartAnimationInterface(animationType: .base(duration: 1), delay: 0, fillModel: .both, timingFunction: .init(name: .easeOut))
+        self.timer?.cancel()
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.schedule(deadline: .now(), repeating: .milliseconds(1))
+        timer.setEventHandler(handler: {
+            [weak self] in
+            self?.timerLabel?.text = String(CACurrentMediaTime())
+        })
+        timer.resume()
+        self.timer = timer
         self.displayView?.startAnimation(animation: interface)
     }
     
     @objc func stopAnimation() {
         self.displayView?.stopAnimation()
+        self.timer?.cancel()
     }
     
     @objc func pauseAnimation() {
