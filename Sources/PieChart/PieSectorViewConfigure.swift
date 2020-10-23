@@ -14,10 +14,18 @@ struct PieSectorViewConfigure {
     let endAngle: CGFloat
     
     let backgroundColor: LiteChartDarkLightColor
+
+    init(startAngle: CGFloat, endAngle: CGFloat, backgroundColor: LiteChartDarkLightColor) {
+        self.startAngle = startAngle
+        self.endAngle = endAngle
+        self.backgroundColor = backgroundColor
+    }
     
-    var lineColor: LiteChartDarkLightColor
-    
-    let isShowLine: Bool
+    private init() {
+        self.startAngle = 0
+        self.endAngle = 360
+        self.backgroundColor = .init(lightUIColor: .black, darkUIColor: .white)
+    }
     
     var averageAngle: CGFloat {
         self.computeAverageAngle(start: startAngle, end: endAngle)
@@ -25,23 +33,6 @@ struct PieSectorViewConfigure {
     
     var isLeftSector: Bool {
          self.averageAngle >= 90 && self.averageAngle < 270
-    }
-    
-    
-    init(startAngle: CGFloat, endAngle: CGFloat, backgroundColor: LiteChartDarkLightColor, isShowLine: Bool, lineColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)) {
-        self.startAngle = startAngle
-        self.endAngle = endAngle
-        self.backgroundColor = backgroundColor
-        self.lineColor = lineColor
-        self.isShowLine = isShowLine
-    }
-    
-    private init() {
-        self.startAngle = 0
-        self.endAngle = 360
-        self.backgroundColor = .init(lightUIColor: .black, darkUIColor: .white)
-        self.lineColor = .init(lightColor: .black, darkColor: .white)
-        self.isShowLine = false
     }
     
     private func computeAverageAngle(start: CGFloat, end: CGFloat) -> CGFloat {

@@ -9,14 +9,14 @@
 import Foundation
 
 struct PieViewsConfigure {
-    let models: [PieViewConfigure]
+    let model: PieValueViewConfigure
     
-    init(models: [PieViewConfigure]) {
-        self.models = models
+    init(model: PieValueViewConfigure) {
+        self.model = model
     }
     
     private init() {
-        self.models = []
+        self.model = .emptyConfigure
     }
 }
 

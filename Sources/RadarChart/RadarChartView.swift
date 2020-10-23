@@ -245,7 +245,6 @@ class RadarChartView: LiteChartContentView {
         let time = animation.animationTimingFunction.getTimeForSortedProgress(for: progress).map({
             Double($0) * duration
         })
-        print(time)
         for (index, label) in self.coupleTitles.enumerated() {
             springAnimation.beginTime = current + animation.delay + time[index]
             label.layer.syncTimeSystemToFather()

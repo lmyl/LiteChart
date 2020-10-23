@@ -12,26 +12,14 @@ import UIKit
 
 struct PieViewConfigure {
     
-    let displayTextConfigure: DisplayLabelConfigure
+    let pieSectorViewConfigures: [PieSectorViewConfigure]
     
-    let pieSectorViewConfigure: PieSectorViewConfigure
-    
-    let isShowLabel: Bool
-    
-    var isLeftSector: Bool {
-        self.pieSectorViewConfigure.isLeftSector
-    }
-    
-    init(isShowLabel: Bool, pieSectorViewConfigure: PieSectorViewConfigure, displayTextConfigure: DisplayLabelConfigure = .emptyConfigure) {
-        self.isShowLabel = isShowLabel
-        self.displayTextConfigure = displayTextConfigure
-        self.pieSectorViewConfigure = pieSectorViewConfigure
+    init(pieSectorViewConfigure: [PieSectorViewConfigure]) {
+        self.pieSectorViewConfigures = pieSectorViewConfigure
     }
     
     private init() {
-        self.pieSectorViewConfigure = PieSectorViewConfigure.emptyConfigure
-        self.displayTextConfigure = .emptyConfigure
-        self.isShowLabel = false
+        self.pieSectorViewConfigures = []
     }
 }
 

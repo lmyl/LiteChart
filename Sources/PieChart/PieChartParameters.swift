@@ -80,27 +80,31 @@ extension PieChartParameters: LiteChartParametersProcesser {
         
         }
         
-        var pieViewsConfigure: [PieViewConfigure] = []
         
         if self.displayDataMode != .none && displayString.count != self.inputDatas.count {
             fatalError("此为框架内部处理数据不当产生的bug，不给予拯救!")
         }
         let syncIdentifier = DisplayLabelSyncIdentifier(syncCenterIdentifier: syncCenterIdentifier, syncIdentifierType: .pieTitleLabel)
+        var pieSectorViewConfigures: [PieSectorViewConfigure] = []
+        var lineColors: [LiteChartDarkLightColor] = []
+        var displayTextConfigures: [DisplayLabelConfigure] = []
+        let isShowLabel = self.displayDataMode != .none
         for index in 0 ..< self.inputDatas.count {
-            if self.displayDataMode == .none {
-                let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: false, lineColor: self.inputDatas[index].1)
-                let pieViewConfigure = PieViewConfigure(isShowLabel: false, pieSectorViewConfigure: pieSectorViewConfigure)
-                pieViewsConfigure.append(pieViewConfigure)
+            let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1)
+            pieSectorViewConfigures.append(pieSectorViewConfigure)
+            lineColors.append(self.inputDatas[index].1)
+            if !isShowLabel {
+                displayTextConfigures.append(.emptyConfigure)
             } else {
-                let pieSectorViewConfigure = PieSectorViewConfigure(startAngle: CGFloat(angle[index].0), endAngle: CGFloat(angle[index].1), backgroundColor: self.inputDatas[index].1, isShowLine: true, lineColor: self.inputDatas[index].1)
                 let alignment: NSTextAlignment = pieSectorViewConfigure.isLeftSector ? .right : .left
                 let labelConfigure = DisplayLabelConfigure(contentString: displayString[index], contentColor: self.inputDatas[index].1, textAlignment: alignment, syncIdentifier: syncIdentifier)
-                let pieViewConfigure = PieViewConfigure(isShowLabel: true, pieSectorViewConfigure: pieSectorViewConfigure, displayTextConfigure: labelConfigure)
-                pieViewsConfigure.append(pieViewConfigure)
+                displayTextConfigures.append(labelConfigure)
             }
         }
-        
-        let configure = PieViewsConfigure(models: pieViewsConfigure)
+        let pieViewConfigure = PieViewConfigure(pieSectorViewConfigure: pieSectorViewConfigures)
+        let pieLineViewConfigure = PieLineViewConfigure(pieViewConfigure: pieViewConfigure, lineColors: lineColors, isShowLine: isShowLabel)
+        let pieValueViewConfigure = PieValueViewConfigure(pieLineViewConfigure: pieLineViewConfigure, displayTextConfigures: displayTextConfigures, isShowLable: isShowLabel)
+        let configure = PieViewsConfigure(model: pieValueViewConfigure)
         return PieViews(configure: configure)
     }
     
