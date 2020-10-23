@@ -66,6 +66,7 @@
 		0876ADB524FD526D0089A34D /* DisplayLabelSyncCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876ADB424FD526D0089A34D /* DisplayLabelSyncCenter.swift */; };
 		0876ADB924FDD47C0089A34D /* WeakObjectPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876ADB824FDD47C0089A34D /* WeakObjectPackage.swift */; };
 		0876ADBB24FE18110089A34D /* Notification+SyncLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876ADBA24FE18110089A34D /* Notification+SyncLabel.swift */; };
+		0877EA4B2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0877EA4A2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift */; };
 		087DEA8D248E736A001A40B9 /* LiteChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA8C248E736A001A40B9 /* LiteChartView.swift */; };
 		087DEA98248E824F001A40B9 /* LiteChartParametersProcesser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */; };
 		088044DA253449500021F2FA /* LiteChartAreaLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088044D9253449500021F2FA /* LiteChartAreaLayoutGuide.swift */; };
@@ -186,6 +187,7 @@
 		0876ADB424FD526D0089A34D /* DisplayLabelSyncCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLabelSyncCenter.swift; sourceTree = "<group>"; };
 		0876ADB824FDD47C0089A34D /* WeakObjectPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakObjectPackage.swift; sourceTree = "<group>"; };
 		0876ADBA24FE18110089A34D /* Notification+SyncLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+SyncLabel.swift"; sourceTree = "<group>"; };
+		0877EA4A2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartAnimationTimingFunction.swift; sourceTree = "<group>"; };
 		087DEA8C248E736A001A40B9 /* LiteChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartView.swift; sourceTree = "<group>"; };
 		087DEA97248E824F001A40B9 /* LiteChartParametersProcesser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartParametersProcesser.swift; sourceTree = "<group>"; };
 		088044D9253449500021F2FA /* LiteChartAreaLayoutGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteChartAreaLayoutGuide.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				085F8CCE25396B080018092E /* LiteChartAnimationInterface.swift */,
 				085F8CCA25394F970018092E /* LiteChartAnimationType.swift */,
 				08AB1107253C746C00DD7E6E /* LiteChartAnimationStatus.swift */,
+				0877EA4A2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				08F56E60248B532F000998F8 /* SquareLegend.swift in Sources */,
 				085F8CCB25394F970018092E /* LiteChartAnimationType.swift in Sources */,
 				085B880C2535567200851072 /* LineValueView.swift in Sources */,
+				0877EA4B2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift in Sources */,
 				08A756C7249DDB3900BAEBC1 /* PointViewsConfigure.swift in Sources */,
 				08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */,
 				0876ADB524FD526D0089A34D /* DisplayLabelSyncCenter.swift in Sources */,

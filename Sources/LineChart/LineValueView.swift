@@ -17,7 +17,7 @@ class LineValueView: UIView {
     
     private var completeAnimationCount = 0
     private var insideAnimationStatus: LiteChartAnimationStatus = .ready
-    private let expandAnimationKey = "ExpandKey"
+    private let springExpandAnimationKey = "SpringExpandKey"
     private var animationTotalCount = 0
     
     init(configure: LineValueViewConfigure) {
@@ -115,36 +115,33 @@ extension LineValueView: LiteChartAnimatable {
         let current = CACurrentMediaTime()
         let animationKey = "transform.scale"
         
-        let keyAnimation = CAKeyframeAnimation(keyPath: animationKey)
-        keyAnimation.values = [0, 0, 1, 1]
-        keyAnimation.beginTime = current + animation.delay
-        keyAnimation.fillMode = animation.fillModel
-        keyAnimation.timingFunction = animation.timingFunction
-        keyAnimation.duration = duration
-        keyAnimation.delegate = self
+        let springAnimation = CASpringAnimation(keyPath: animationKey)
+        springAnimation.initialVelocity = 10
+        springAnimation.mass = 1
+        springAnimation.damping = 10
+        springAnimation.stiffness = 100
+        springAnimation.fromValue = 0
+        springAnimation.toValue = 1
+        springAnimation.fillMode = animation.fillModel
+        springAnimation.duration = springAnimation.settlingDuration
+        springAnimation.delegate = self
         
+        // 之前的guard和参数校验时已经保证这里的数组必然有值
+        let progress: [CGFloat]
+        let simple = self.valuesView[0]
+        if simple.count == 1 {
+            progress = [0]
+        } else {
+            progress = Array(stride(from: 0, through: 1, by: 1 / CGFloat(simple.count - 1)))
+        }
+        let time = animation.animationTimingFunction.getTimeForSortedProgress(for: progress).map({
+            Double($0) * duration
+        })
         for values in self.valuesView {
             for (index, value) in values.enumerated() {
-                let startTime: Double
-                let endTime: Double
-                if index == 0 {
-                    if values.count == 1 {
-                        startTime = 0
-                        endTime = 1
-                    } else {
-                        startTime = 0
-                        endTime = 1.0 / (2 * Double(values.count - 1))
-                    }
-                } else if index == values.count - 1 {
-                    startTime = 1 - 1.0 / (2 * Double(values.count - 1))
-                    endTime = 1
-                } else {
-                    startTime = (4 * Double(index) - 1) / (4 * Double(values.count - 1))
-                    endTime = (4 * Double(index) + 1) / (4 * Double(values.count - 1))
-                }
-                keyAnimation.keyTimes = [0 ,NSNumber(value: startTime), NSNumber(value: endTime), 1,]
+                springAnimation.beginTime = current + animation.delay + time[index]
                 value.layer.syncTimeSystemToFather()
-                value.layer.add(keyAnimation, forKey: self.expandAnimationKey)
+                value.layer.add(springAnimation, forKey: self.springExpandAnimationKey)
             }
         }
         
@@ -157,7 +154,7 @@ extension LineValueView: LiteChartAnimatable {
         }
         for values in self.valuesView {
             for value in values {
-                value.layer.removeAnimation(forKey: self.expandAnimationKey)
+                value.layer.removeAnimation(forKey: self.springExpandAnimationKey)
                 value.layer.syncTimeSystemToFather()
             }
         }

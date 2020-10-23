@@ -15,5 +15,9 @@ struct LiteChartAnimationInterface {
     
     var fillModel: CAMediaTimingFillMode
     
-    var timingFunction: CAMediaTimingFunction
+    var animationTimingFunction: LiteChartAnimationTimingFunction
+    
+    internal var timingFunction: CAMediaTimingFunction {
+        animationTimingFunction.timingFunction
+    }
 }

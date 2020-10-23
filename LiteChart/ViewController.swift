@@ -192,7 +192,7 @@ class ViewController: UIViewController {
     
     @objc func animation() {
         
-        let interface = LiteChartAnimationInterface(animationType: .base(duration: 5), delay: 0, fillModel: .both, timingFunction: .init(name: .easeOut))
+        let interface = LiteChartAnimationInterface(animationType: .base(duration: 4), delay: 0, fillModel: .both, animationTimingFunction: .init(name: .easeInEaseOut))
         self.timer?.cancel()
         let timer = DispatchSource.makeTimerSource(queue: .main)
         timer.schedule(deadline: .now(), repeating: .milliseconds(1))

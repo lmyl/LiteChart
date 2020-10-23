@@ -114,8 +114,6 @@ extension LineChartParameters: LiteChartParametersProcesser {
                     throw ChartError.inputDatasNumberMustEqualForCouple
                 }
             }
-        } else {
-            return
         }
     }
 
