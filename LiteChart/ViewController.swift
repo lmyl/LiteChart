@@ -96,7 +96,7 @@ class ViewController: UIViewController {
         radarInterface.radarUnlightColor = .init(lightColor: .cyan)
         radarInterface.radarLightColor = .init(lightColor: .pink)
 
-        var interface = LiteChartViewInterface(contentInterface: lineInterface)
+        var interface = LiteChartViewInterface(contentInterface: radarInterface)
         interface.isShowLegendTitles = true
         interface.isShowChartTitleString = true
         interface.chartTitleString = "年度费用"
