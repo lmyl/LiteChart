@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
         var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (45, .init(lightUIColor: .yellow)), (45, .init(lightUIColor: .green))])
         pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
-        pieInterface.displayDataMode = .original
+        pieInterface.displayDataMode = .mix
  
         
         var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (90, .init(lightUIColor: .blue)), (80, .init(lightUIColor: .purple)), (70, .init(lightUIColor: .blue)),(60, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue))])

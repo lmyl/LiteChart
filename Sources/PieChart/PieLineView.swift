@@ -113,7 +113,15 @@ extension PieLineView: LiteChartAnimatable {
         guard self.animationStatus == .cancel || self.animationStatus == .ready || self.animationStatus == .finish else {
             return
         }
-        guard self.lineLayers.count >= 1 else {
+        startInsideAnimation(animation: animation)
+        self.pieView?.startAnimation(animation: animation)
+    }
+    
+    func startInsideAnimation(animation: LiteChartAnimationInterface) {
+        guard self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready || self.insideAnimationStatus == .finish else {
+            return
+        }
+        guard self.configure.isShowLine && self.lineLayers.count >= 1 else {
             return
         }
         guard case .base(let duration) = animation.animationType else {
@@ -140,7 +148,6 @@ extension PieLineView: LiteChartAnimatable {
             lineLayer.syncTimeSystemToFather()
             lineLayer.add(animationGrow, forKey: self.animationGrowKey)
         }
-        self.pieView?.startAnimation(animation: animation)
         self.insideAnimationStatus = .running
     }
     

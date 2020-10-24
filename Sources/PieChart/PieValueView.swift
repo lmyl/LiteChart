@@ -163,7 +163,15 @@ extension PieValueView: LiteChartAnimatable {
         guard self.animationStatus == .cancel || self.animationStatus == .ready || self.animationStatus == .finish else {
             return
         }
-        guard self.textViews.count >= 1 else {
+        startInsideAnimation(animation: animation)
+        self.pieLineView?.startAnimation(animation: animation)
+    }
+    
+    func startInsideAnimation(animation: LiteChartAnimationInterface) {
+        guard self.insideAnimationStatus == .cancel || self.insideAnimationStatus == .ready || self.insideAnimationStatus == .finish else {
+            return
+        }
+        guard self.configure.isShowLable && self.textViews.count >= 1 else {
             return
         }
         guard case .base(let duration) = animation.animationType else {
@@ -197,7 +205,6 @@ extension PieValueView: LiteChartAnimatable {
             textView.layer.syncTimeSystemToFather()
             textView.layer.add(springAnimation, forKey: self.animationExpandKey)
         }
-        self.pieLineView?.startAnimation(animation: animation)
         self.insideAnimationStatus = .running
     }
     
