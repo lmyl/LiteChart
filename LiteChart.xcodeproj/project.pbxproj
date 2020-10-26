@@ -123,6 +123,8 @@
 		F501A68A24A1EAB6007FD6DF /* RadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501A68924A1EAB6007FD6DF /* RadarChartView.swift */; };
 		F501A68C24A1EACA007FD6DF /* RadarChartViewConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501A68B24A1EACA007FD6DF /* RadarChartViewConfigure.swift */; };
 		F501A68E24A235BB007FD6DF /* RadarChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501A68D24A235BB007FD6DF /* RadarChartParameters.swift */; };
+		F54DE1F72546C17E002DDF97 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54DE1F62546C17E002DDF97 /* DetailViewController.swift */; };
+		F54DE1FF2546CFD9002DDF97 /* ChartKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54DE1FE2546CFD9002DDF97 /* ChartKind.swift */; };
 		F565C5EF249A5F95009527E0 /* LineChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565C5EE249A5F95009527E0 /* LineChartParameters.swift */; };
 		F56C1939249863BE00A002AE /* TriangleLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C1938249863BE00A002AE /* TriangleLegend.swift */; };
 		F56C193B24986AD800A002AE /* CircleLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C193A24986AD800A002AE /* CircleLegend.swift */; };
@@ -252,6 +254,8 @@
 		F501A68924A1EAB6007FD6DF /* RadarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartView.swift; sourceTree = "<group>"; };
 		F501A68B24A1EACA007FD6DF /* RadarChartViewConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartViewConfigure.swift; sourceTree = "<group>"; };
 		F501A68D24A235BB007FD6DF /* RadarChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarChartParameters.swift; sourceTree = "<group>"; };
+		F54DE1F62546C17E002DDF97 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		F54DE1FE2546CFD9002DDF97 /* ChartKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartKind.swift; sourceTree = "<group>"; };
 		F565C5EE249A5F95009527E0 /* LineChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartParameters.swift; sourceTree = "<group>"; };
 		F56C1938249863BE00A002AE /* TriangleLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleLegend.swift; sourceTree = "<group>"; };
 		F56C193A24986AD800A002AE /* CircleLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLegend.swift; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 				0832B5322489FED000110CBA /* AppDelegate.swift */,
 				0832B5342489FED000110CBA /* SceneDelegate.swift */,
 				0832B5362489FED000110CBA /* ViewController.swift */,
+				F54DE1F62546C17E002DDF97 /* DetailViewController.swift */,
+				F54DE1FE2546CFD9002DDF97 /* ChartKind.swift */,
 				0832B5382489FED000110CBA /* Main.storyboard */,
 				0832B53B2489FED100110CBA /* Assets.xcassets */,
 				0832B53D2489FED100110CBA /* LaunchScreen.storyboard */,
@@ -751,6 +757,7 @@
 				089467C5253163B900BB5A15 /* RadarChartLabelLocation.swift in Sources */,
 				08A756C3249DC2EC00BAEBC1 /* PointConfigure.swift in Sources */,
 				082E7BED24A0C92900FF1F8B /* RadarBackgroundView.swift in Sources */,
+				F54DE1FF2546CFD9002DDF97 /* ChartKind.swift in Sources */,
 				0866FDC72489FF4E004AF645 /* LiteChartColor.swift in Sources */,
 				08596E312499145F00A3FC18 /* LineViewConfigure.swift in Sources */,
 				08A756C9249DDC9E00BAEBC1 /* PlotChartView.swift in Sources */,
@@ -789,6 +796,7 @@
 				0877EA4B2541C3FA0038FE7D /* LiteChartAnimationTimingFunction.swift in Sources */,
 				08A756C7249DDB3900BAEBC1 /* PointViewsConfigure.swift in Sources */,
 				08D0D466248F1CBB00E03C4B /* ChartTitleDisplayLocation.swift in Sources */,
+				F54DE1F72546C17E002DDF97 /* DetailViewController.swift in Sources */,
 				0876ADB524FD526D0089A34D /* DisplayLabelSyncCenter.swift in Sources */,
 				08386C2B248E580400D0E655 /* PieViewsConfigure.swift in Sources */,
 				085B88092535552300851072 /* LineValueViewConfigure.swift in Sources */,
