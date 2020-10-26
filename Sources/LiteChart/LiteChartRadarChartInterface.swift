@@ -8,30 +8,30 @@
 
 import Foundation
 
-struct LiteChartRadarChartInterface: LiteChartInterface {
-    var inputDatas: [(LiteChartDarkLightColor, [Double])]
+public struct LiteChartRadarChartInterface: LiteChartInterface {
+    public var inputDatas: [(LiteChartDarkLightColor, [Double])]
     
-    var isShowingCoupleTitles = false
+    public var isShowingCoupleTitles = false
     
-    var coupleTitles: [String] = []
+    public var coupleTitles: [String] = []
     
-    var coupleTitlesColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var coupleTitlesColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var inputLegendTitles: [String] = []
+    public var inputLegendTitles: [String] = []
     
-    var radarLineColor: LiteChartDarkLightColor = .init(lightColor: .Gray)
+    public var radarLineColor: LiteChartDarkLightColor = .init(lightColor: .Gray)
     
-    var radarLightColor: LiteChartDarkLightColor = .init(lightColor: .white)
+    public var radarLightColor: LiteChartDarkLightColor = .init(lightColor: .white)
     
-    var radarUnlightColor: LiteChartDarkLightColor = .init(lightColor: .lightGray)
+    public var radarUnlightColor: LiteChartDarkLightColor = .init(lightColor: .lightGray)
     
-    var radarCount = 1
+    public var radarCount = 1
     
-    init(inputDatas: [(LiteChartDarkLightColor, [Double])]) {
+    public init(inputDatas: [(LiteChartDarkLightColor, [Double])]) {
         self.inputDatas = inputDatas
     }
     
-    var parametersProcesser: LiteChartParametersProcesser {
+    public var parametersProcesser: LiteChartParametersProcesser {
         RadarChartParameters(inputDatas: inputDatas, isShowingCoupleTitles: isShowingCoupleTitles, coupleTitles: coupleTitles, coupleTitlesColor: coupleTitlesColor, inputLegendTitles: inputLegendTitles, radarLineColor: radarLineColor, radarLightColor: radarLightColor, radarUnlightColor: radarUnlightColor, radarCount: radarCount)
     }
     

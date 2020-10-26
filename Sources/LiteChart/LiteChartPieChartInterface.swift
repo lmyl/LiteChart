@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct LiteChartPieChartInterface: LiteChartInterface {
-    var inputDatas: [(Double, LiteChartDarkLightColor)]
+public struct LiteChartPieChartInterface: LiteChartInterface {
+    public var inputDatas: [(Double, LiteChartDarkLightColor)]
     
-    var inputLegendTitles: [String] = []
+    public var inputLegendTitles: [String] = []
     
-    var displayDataMode: ChartValueDisplayMode = .original
+    public var displayDataMode: ChartValueDisplayMode = .original
     
-    init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
+    public init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
         self.inputDatas = inputDatas
     }
     
-    var parametersProcesser: LiteChartParametersProcesser {
+    public var parametersProcesser: LiteChartParametersProcesser {
         PieChartParameters(inputDatas: inputDatas, inputLegendTitles: inputLegendTitles, displayDataMode: displayDataMode)
     }
 }

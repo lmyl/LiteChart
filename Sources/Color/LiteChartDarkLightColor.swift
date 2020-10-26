@@ -7,33 +7,33 @@
 
 import UIKit
 
-struct LiteChartDarkLightColor {
+public struct LiteChartDarkLightColor {
     
     private let lightColor: LiteChartColor
     private let darkColor: LiteChartColor?
     
-    init(lightColor: LiteChartColor, darkColor: LiteChartColor) {
+    public init(lightColor: LiteChartColor, darkColor: LiteChartColor) {
         self.lightColor = lightColor
         self.darkColor = darkColor
     }
     
-    init(lightColor: LiteChartColor) {
+    public init(lightColor: LiteChartColor) {
         self.lightColor = lightColor
         self.darkColor = nil
     }
     
-    init(lightUIColor: UIColor, darkUIColor: UIColor) {
+    public init(lightUIColor: UIColor, darkUIColor: UIColor) {
         let light = LiteChartColor.customColor(color: lightUIColor)
         let dark = LiteChartColor.customColor(color: darkUIColor)
         self.init(lightColor: light, darkColor: dark)
     }
     
-    init(lightUIColor: UIColor) {
+    public init(lightUIColor: UIColor) {
         let light = LiteChartColor.customColor(color: lightUIColor)
         self.init(lightColor: light)
     }
     
-    var color: UIColor {
+    internal var color: UIColor {
         if let darkColor = self.darkColor {
             return  UIColor(dynamicProvider: {
                 traitCollection in

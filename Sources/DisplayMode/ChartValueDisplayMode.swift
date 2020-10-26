@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ChartValueDisplayMode {
+public enum ChartValueDisplayMode {
     case original
     case percent
     case mix

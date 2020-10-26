@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-struct LiteChartAnimationTimingFunction {
+public struct LiteChartAnimationTimingFunction {
     internal var timingFunction: CAMediaTimingFunction
     
-    init(name: CAMediaTimingFunctionName) {
+    public init(name: CAMediaTimingFunctionName) {
         self.timingFunction = .init(name: name)
     }
     
-    init(firstControl: CGPoint, secondControl: CGPoint) {
+    public init(firstControl: CGPoint, secondControl: CGPoint) {
         var newFirst = firstControl
         if newFirst.x > 1 {
             newFirst.x = 1

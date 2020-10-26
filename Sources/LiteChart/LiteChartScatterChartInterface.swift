@@ -9,42 +9,42 @@
 import Foundation
 import CoreGraphics
 
-struct LiteChartScatterChartInterface: LiteChartInterface {
-    var borderStyle: LiteChartViewBorderStyle = .halfSurrounded
+public struct LiteChartScatterChartInterface: LiteChartInterface {
+    public var borderStyle: LiteChartViewBorderStyle = .halfSurrounded
     
-    var underlayerColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var underlayerColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var inputLegendTitles: [String] = []
+    public var inputLegendTitles: [String] = []
         
-    var inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]
+    public var inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]
     
-    var isShowValueDividingLine = false
+    public var isShowValueDividingLine = false
     
-    var dividingValueLineStyle: AxisViewLineStyle = .dotted
+    public var dividingValueLineStyle: AxisViewLineStyle = .dotted
     
-    var isShowCoupleDividingLine = false
+    public var isShowCoupleDividingLine = false
     
-    var dividingCoupleLineStyle: AxisViewLineStyle = .dotted
+    public var dividingCoupleLineStyle: AxisViewLineStyle = .dotted
         
-    var isShowValueUnitString = false
+    public var isShowValueUnitString = false
     
-    var isShowCoupleUnitString = false
+    public var isShowCoupleUnitString = false
     
-    var valueUnitString = ""
+    public var valueUnitString = ""
     
-    var coupleUnitString = ""
+    public var coupleUnitString = ""
     
-    var unitTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var unitTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
         
-    var axisColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var axisColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var isShowAxis = false
+    public var isShowAxis = false
     
-    init(inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]) {
+    public init(inputDatas: [(LiteChartDarkLightColor, Legend , [CGPoint])]) {
         self.inputDatas = inputDatas
     }
     
-    var parametersProcesser: LiteChartParametersProcesser {
+    public var parametersProcesser: LiteChartParametersProcesser {
         ScatterPlotChartParameters(borderStyle: borderStyle, borderColor: underlayerColor, inputLegendTitles: inputLegendTitles, inputDatas: inputDatas, valueTextColor: underlayerColor, coupleTextColor: underlayerColor, isShowValueDividingLine: isShowValueDividingLine, dividingValueLineStyle: dividingValueLineStyle, dividingValueLineColor: underlayerColor, isShowCoupleDividingLine: isShowCoupleDividingLine, dividingCoupleLineStyle: dividingCoupleLineStyle, dividingCoupleLineColor: underlayerColor, isShowValueUnitString: isShowValueUnitString, valueUnitString: valueUnitString, isShowCoupleUnitString: isShowCoupleUnitString, coupleUnitString: coupleUnitString, valueUnitTextColor: unitTextColor, coupleUnitTextColor: unitTextColor, axisColor: axisColor, isShowAxis: isShowAxis)
     }
 }

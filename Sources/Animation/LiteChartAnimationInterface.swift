@@ -8,14 +8,14 @@
 
 import UIKit
 
-struct LiteChartAnimationInterface {
-    var animationType: LiteChartAnimationType
+public struct LiteChartAnimationInterface {
+    public var animationType: LiteChartAnimationType
     
-    var delay: CFTimeInterval
+    public var delay: CFTimeInterval
     
-    var fillModel: CAMediaTimingFillMode
+    public var fillModel: CAMediaTimingFillMode
     
-    var animationTimingFunction: LiteChartAnimationTimingFunction
+    public var animationTimingFunction: LiteChartAnimationTimingFunction
     
     internal var timingFunction: CAMediaTimingFunction {
         animationTimingFunction.timingFunction

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LiteChartView: UIView {
+public class LiteChartView: UIView {
     
     private var configure: LiteChartViewInterface
     
@@ -18,7 +18,7 @@ class LiteChartView: UIView {
     private let syncCenter: DisplayLabelSyncCenter
     private let syncCenterIdentifier = UUID().uuidString
         
-    init(interface: LiteChartViewInterface) throws {
+    public init(interface: LiteChartViewInterface) throws {
         self.configure = interface
         self.syncCenter = DisplayLabelSyncCenter(syncCenterIdentifier: syncCenterIdentifier)
         try self.configure.checkInputDatasParameterInvalid()
@@ -33,7 +33,7 @@ class LiteChartView: UIView {
         updateLegendViewsStaticConstraints()
     }
     
-    required init?(coder: NSCoder) {
+    internal required init?(coder: NSCoder) {
         self.configure = LiteChartViewInterface.emptyInterface
         self.syncCenter = DisplayLabelSyncCenter(syncCenterIdentifier: syncCenterIdentifier)
         super.init(coder: coder)
@@ -47,7 +47,7 @@ class LiteChartView: UIView {
         updateLegendViewsStaticConstraints()
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         
         updateTitleViewDynamicConstraints()
@@ -90,7 +90,7 @@ class LiteChartView: UIView {
         self.legendViews = legendViews
     }
     
-    var titleHeight: CGFloat {
+    private var titleHeight: CGFloat {
         self.bounds.height / 10
     }
     
@@ -203,38 +203,23 @@ class LiteChartView: UIView {
 }
 
 extension LiteChartView: LiteChartAnimatable {
-    var animationStatus: LiteChartAnimationStatus {
-        guard let contentView = self.contentView else {
-            return .ready
-        }
-        return contentView.animationStatus
+    public var animationStatus: LiteChartAnimationStatus {
+        self.contentView?.animationStatus ?? .ready
     }
     
-    func startAnimation(animation: LiteChartAnimationInterface) {
-        guard let contentView = self.contentView else {
-            return
-        }
-        contentView.startAnimation(animation: animation)
+    public func startAnimation(animation: LiteChartAnimationInterface) {
+        self.contentView?.startAnimation(animation: animation)
     }
     
-    func pauseAnimation() {
-        guard let contentView = self.contentView else {
-            return
-        }
-        contentView.pauseAnimation()
+    public func pauseAnimation() {
+        self.contentView?.pauseAnimation()
     }
     
-    func stopAnimation() {
-        guard let contentView = self.contentView else {
-            return
-        }
-        contentView.stopAnimation()
+    public func stopAnimation() {
+        self.contentView?.stopAnimation()
     }
     
-    func continueAnimation() {
-        guard let contentView = self.contentView else {
-            return
-        }
-        contentView.continueAnimation()
+    public func continueAnimation() {
+        self.contentView?.continueAnimation()
     }
 }

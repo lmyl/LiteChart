@@ -8,20 +8,20 @@
 
 import Foundation
 
-struct LiteChartFunnelChartInterface: LiteChartInterface {
-    var inputDatas: [(Double, LiteChartDarkLightColor)]
+public struct LiteChartFunnelChartInterface: LiteChartInterface {
+    public var inputDatas: [(Double, LiteChartDarkLightColor)]
     
-    var valueTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var valueTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var inputLegendTitles: [String] = []
+    public var inputLegendTitles: [String] = []
     
-    var displayDataMode: ChartValueDisplayMode = .original
+    public var displayDataMode: ChartValueDisplayMode = .original
     
-    init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
+    public init(inputDatas: [(Double, LiteChartDarkLightColor)]) {
         self.inputDatas = inputDatas
     }
     
-    var parametersProcesser: LiteChartParametersProcesser {
+    public var parametersProcesser: LiteChartParametersProcesser {
         FunalChartParameters(inputDatas: inputDatas, inputLegendTitles: inputLegendTitles, displayDataMode: displayDataMode, valueTextColor: valueTextColor)
     }
 }

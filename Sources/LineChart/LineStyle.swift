@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LineStyle {
+public enum LineStyle {
     case solidPolyline
     case dottedPolyline
     case solidCubicBezierCurve

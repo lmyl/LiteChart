@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum LiteChartViewBorderStyle {
+public enum LiteChartViewBorderStyle {
     case halfSurrounded
     case fullySurrounded
 }
 
 extension LiteChartViewBorderStyle {
-    func convertToAxisBorderStyle() -> [AxisViewBorderStyle] {
+    internal func convertToAxisBorderStyle() -> [AxisViewBorderStyle] {
         let borderStlye: [AxisViewBorderStyle]
         switch self {
         case .halfSurrounded:

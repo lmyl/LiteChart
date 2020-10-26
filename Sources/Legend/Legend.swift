@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Legend {
+public enum Legend {
     case square
     case triangle
     case circle

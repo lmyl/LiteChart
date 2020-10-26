@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    convenience init(sRGB3PRed red: Int, green: Int, blue: Int) {
+    internal convenience init(sRGB3PRed red: Int, green: Int, blue: Int) {
         self.init(displayP3Red: CGFloat(red) / 255 , green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: 1)
     }
 }

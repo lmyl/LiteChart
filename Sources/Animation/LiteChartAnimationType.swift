@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum LiteChartAnimationType {
+public enum LiteChartAnimationType {
     case base(duration: CFTimeInterval)
     case spring(damping: CGFloat, mass: CGFloat, stiffness: CGFloat, initalVelocity: CGFloat)
 }

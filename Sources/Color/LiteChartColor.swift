@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Color Library
-enum LiteChartColor {
+public enum LiteChartColor {
     
     case lightPink
     case pink
@@ -162,7 +162,7 @@ enum LiteChartColor {
 
 extension LiteChartColor {
     /// Get the actual color value
-    var color: UIColor {
+    internal var color: UIColor {
         switch self {
         case .lightPink:
             return UIColor(sRGB3PRed: 255, green: 182, blue: 193)

@@ -8,45 +8,45 @@
 
 import Foundation
 
-struct LiteChartBarChartInterface: LiteChartInterface {
-    var inputDatas: [(LiteChartDarkLightColor, [Double])]
+public struct LiteChartBarChartInterface: LiteChartInterface {
+    public var inputDatas: [(LiteChartDarkLightColor, [Double])]
     
-    var coupleTitle: [String]
+    public var coupleTitle: [String]
     
-    var borderStyle: LiteChartViewBorderStyle = .halfSurrounded
+    public var borderStyle: LiteChartViewBorderStyle = .halfSurrounded
     
-    var underlayerColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var underlayerColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var direction: BarChartDirection = .bottomToTop
+    public var direction: BarChartDirection = .bottomToTop
     
-    var displayDataMode: ChartValueDisplayMode = .original
+    public var displayDataMode: ChartValueDisplayMode = .original
     
-    var inputLegendTitles: [String] = []
+    public var inputLegendTitles: [String] = []
     
-    var isShowValueDividingLine = true
+    public var isShowValueDividingLine = true
                     
-    var dividingValueLineStyle: AxisViewLineStyle = .dotted
+    public var dividingValueLineStyle: AxisViewLineStyle = .dotted
         
-    var isShowCoupleDividingLine = true
+    public var isShowCoupleDividingLine = true
     
-    var dividingCoupleLineStyle: AxisViewLineStyle = .dotted
+    public var dividingCoupleLineStyle: AxisViewLineStyle = .dotted
     
-    var isShowValueUnitString = false
+    public var isShowValueUnitString = false
     
-    var isShowCoupleUnitString = false
+    public var isShowCoupleUnitString = false
     
-    var unitTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var unitTextColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
         
-    var valueUnitString = ""
+    public var valueUnitString = ""
     
-    var coupleUnitString = ""
+    public var coupleUnitString = ""
     
-    init(inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String]) {
+    public init(inputDatas: [(LiteChartDarkLightColor, [Double])], coupleTitle: [String]) {
         self.inputDatas = inputDatas
         self.coupleTitle = coupleTitle
     }
     
-    var parametersProcesser: LiteChartParametersProcesser {
+    public var parametersProcesser: LiteChartParametersProcesser {
         BarChartParameter(borderStyle: borderStyle, borderColor: underlayerColor, direction: direction, displayDataMode: displayDataMode, inputLegendTitles: inputLegendTitles, inputDatas: inputDatas, valueTextColor: underlayerColor, coupleTitle: coupleTitle, coupleTextColor: underlayerColor, isShowValueDividingLine: isShowValueDividingLine, dividingValueLineStyle: dividingValueLineStyle, dividingValueLineColor: underlayerColor, isShowCoupleDividingLine: isShowCoupleDividingLine, dividingCoupleLineStyle: dividingCoupleLineStyle, dividingCoupleLineColor: underlayerColor, isShowValueUnitString: isShowValueUnitString, isShowCoupleUnitString: isShowCoupleUnitString, valueUnitString: valueUnitString, coupleUnitString: coupleUnitString, valueUnitTextColor: unitTextColor, coupleUnitTextColor: unitTextColor)
     }
 }

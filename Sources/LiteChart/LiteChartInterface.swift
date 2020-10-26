@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol LiteChartInterface {    
+public protocol LiteChartInterface {
     var parametersProcesser: LiteChartParametersProcesser { get }
 }

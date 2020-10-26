@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LiteChartAnimationStatus {
+public enum LiteChartAnimationStatus {
     case ready
     case running
     case pause
@@ -17,7 +17,7 @@ enum LiteChartAnimationStatus {
 }
 
 extension LiteChartAnimationStatus {
-    var priority: Int {
+    internal var priority: Int {
         switch self {
         case .ready:
             return 1
@@ -32,7 +32,7 @@ extension LiteChartAnimationStatus {
         }
     }
     
-    func compactAnimatoinStatus(another: LiteChartAnimationStatus) -> Self {
+    internal func compactAnimatoinStatus(another: LiteChartAnimationStatus) -> Self {
         if self.priority >= another.priority {
             return self
         } else {

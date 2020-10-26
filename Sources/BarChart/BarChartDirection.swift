@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum BarChartDirection {
+public enum BarChartDirection {
     case bottomToTop
     case leftToRight
 }

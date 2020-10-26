@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ChartTitleDisplayLocation {
+public enum ChartTitleDisplayLocation {
     case top
     case bottom
 }

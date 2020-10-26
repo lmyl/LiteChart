@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol LiteChartParametersProcesser {
+public protocol LiteChartParametersProcesser {
     func checkInputDatasParameterInvalid() throws
     
     func computeLegendViews(syncCenterIdentifier: String) -> UIView?

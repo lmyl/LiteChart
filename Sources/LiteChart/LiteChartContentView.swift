@@ -8,28 +8,28 @@
 
 import UIKit
 
-class LiteChartContentView: UIView, LiteChartAreaLayoutGuide, LiteChartAnimatable {
-    var areaLayoutGuide: UILayoutGuide {
+public class LiteChartContentView: UIView, LiteChartAreaLayoutGuide, LiteChartAnimatable {
+    internal var areaLayoutGuide: UILayoutGuide {
         self.safeAreaLayoutGuide
     }
     
-    var animationStatus: LiteChartAnimationStatus {
+    internal var animationStatus: LiteChartAnimationStatus {
         return .ready
     }
     
-    func startAnimation(animation: LiteChartAnimationInterface) {
+    internal func startAnimation(animation: LiteChartAnimationInterface) {
         
     }
     
-    func pauseAnimation() {
+    internal func pauseAnimation() {
         
     }
     
-    func stopAnimation() {
+    internal func stopAnimation() {
         
     }
     
-    func continueAnimation() {
+    internal func continueAnimation() {
         
     }
 }

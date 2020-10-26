@@ -9,21 +9,21 @@
 import Foundation
 import UIKit
 
-struct LiteChartViewInterface {
+public struct LiteChartViewInterface {
     
-    var isShowChartTitleString = false
+    public var isShowChartTitleString = false
     
-    var chartTitleColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
+    public var chartTitleColor: LiteChartDarkLightColor = .init(lightColor: .black, darkColor: .white)
     
-    var chartTitleString = ""
+    public var chartTitleString = ""
     
-    var chartTitleDisplayLocation: ChartTitleDisplayLocation = .top
+    public var chartTitleDisplayLocation: ChartTitleDisplayLocation = .top
     
-    var isShowLegendTitles = false
+    public var isShowLegendTitles = false
     
-    var contentInterface: LiteChartInterface
+    private var contentInterface: LiteChartInterface
     
-    init(contentInterface: LiteChartInterface) {
+    public init(contentInterface: LiteChartInterface) {
         self.contentInterface = contentInterface
     }
     
@@ -33,27 +33,27 @@ struct LiteChartViewInterface {
 }
 
 extension LiteChartViewInterface {
-    static let emptyInterface = LiteChartViewInterface()
+    public static let emptyInterface = LiteChartViewInterface()
     
-    func computeTitleConfigure() -> DisplayLabelConfigure? {
+    internal func computeTitleConfigure() -> DisplayLabelConfigure? {
         guard self.isShowChartTitleString else {
             return nil
         }
         return DisplayLabelConfigure(contentString: self.chartTitleString, contentColor: chartTitleColor, textAlignment: .center)
     }
     
-    func checkInputDatasParameterInvalid() throws {
+    internal func checkInputDatasParameterInvalid() throws {
         try self.contentInterface.parametersProcesser.checkInputDatasParameterInvalid()
     }
     
-    func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
+    internal func computeLegendViews(syncCenterIdentifier: String) -> UIView? {
         guard self.isShowLegendTitles else {
             return nil
         }
         return self.contentInterface.parametersProcesser.computeLegendViews(syncCenterIdentifier: syncCenterIdentifier)
     }
     
-    func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
+    internal func computeContentView(syncCenterIdentifier: String) -> LiteChartContentView {
         return self.contentInterface.parametersProcesser.computeContentView(syncCenterIdentifier: syncCenterIdentifier)
     }
 }

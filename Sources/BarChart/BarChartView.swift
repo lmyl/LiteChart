@@ -428,9 +428,6 @@ class BarChartView: LiteChartContentView {
     }
     
     override var animationStatus: LiteChartAnimationStatus {
-        guard let barViewCollection = self.barViewCollection else {
-            return .ready
-        }
-        return barViewCollection.animationStatus
+        self.barViewCollection?.animationStatus ?? .ready
     }
 }
