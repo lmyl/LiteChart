@@ -131,6 +131,7 @@ extension PieLineView: LiteChartAnimatable {
         let animationGrow = CABasicAnimation(keyPath: "strokeEnd")
         animationGrow.fromValue = 0
         animationGrow.toValue = 1
+        animationGrow.timingFunction = .init(name: .easeIn)
         animationGrow.fillMode = animation.fillModel
         animationGrow.delegate = self
         animationGrow.duration = duration / Double(2 * self.lineLayers.count)

@@ -140,7 +140,7 @@ extension PieChartParameters: LiteChartParametersProcesser {
     
     private var displayPercentFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.positiveFormat = "0.00%"
+        formatter.positiveFormat = "0.##%"
         return formatter
     }
 

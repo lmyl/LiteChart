@@ -159,7 +159,14 @@ extension DisplayLabel {
                 rect = nsstring.boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : newFont], context: nil)
                 return (UIFont.systemFont(ofSize: fontSize), rect.size)
             }
-            fontSize -= 0.5
+            let scaleHeight = rect.height / size.height
+            let scaleWidth = rect.width / size.width
+            let scale = max(scaleWidth, scaleHeight)
+            let oldFontSize = fontSize
+            fontSize = fontSize / scale
+            if oldFontSize - fontSize < 0.1 {
+                fontSize = oldFontSize - 0.1
+            }
             newFont = UIFont.systemFont(ofSize: fontSize)
             rect = nsstring.boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : newFont], context: nil)
         }

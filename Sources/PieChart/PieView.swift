@@ -104,7 +104,7 @@ extension PieView: LiteChartAnimatable {
         guard self.insideAnimationStatus == .running || self.insideAnimationStatus == .pause else {
             return
         }
-        self.layer.removeAnimation(forKey: animationExpandKey)
+        self.layer.mask?.removeAnimation(forKey: animationExpandKey)
         self.layer.syncTimeSystemToFather()
         self.insideAnimationStatus = .cancel
     }
