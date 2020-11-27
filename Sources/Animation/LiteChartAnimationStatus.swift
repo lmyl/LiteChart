@@ -8,11 +8,17 @@
 
 import Foundation
 
+/// Enumeration representing the execution status of the animation
 public enum LiteChartAnimationStatus {
+    /// The animation is ready to be excuted
     case ready
+    /// The animation is being excuted
     case running
+    /// The animation is paused
     case pause
+    /// The animation is canceled
     case cancel
+    /// The animation is finished
     case finish
 }
 

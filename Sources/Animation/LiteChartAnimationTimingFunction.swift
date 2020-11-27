@@ -9,13 +9,20 @@
 import Foundation
 import UIKit
 
+///
 public struct LiteChartAnimationTimingFunction {
     internal var timingFunction: CAMediaTimingFunction
     
+    /// Timing function initialization using predefined system timing function names.
+    /// - Parameter name: `CAMediaTimingFunctionName`, choose from `default`, `easeIn`, `easeOut`, `easeInOut` and `linear`
     public init(name: CAMediaTimingFunctionName) {
         self.timingFunction = .init(name: name)
     }
     
+    /// Timing function initialization, returns an intialized timing function modeled as a cubic Bézier curve using the specified control points.
+    /// - Parameters:
+    ///   - firstControl: `CGPoint`in the range of (0, 0) ~ (1,1)
+    ///   - secondControl: `CGPoint` in the range of (0, 0) ~ (1,1)
     public init(firstControl: CGPoint, secondControl: CGPoint) {
         var newFirst = firstControl
         if newFirst.x > 1 {

@@ -23,19 +23,19 @@ extension ChartKind: CustomStringConvertible {
     var description: String {
         switch self {
         case .RadarChart:
-            return "雷达图"
+            return "雷达图(Radar)"
         case .BubbleChart:
-            return "气泡图"
+            return "气泡图(Bubble)"
         case .ScatterPlotChart:
-            return "散点图"
+            return "散点图(Scatter)"
         case .LineChart:
-            return "折线图"
+            return "折线图(Line)"
         case .BarChart:
-            return "柱状图"
+            return "柱状图(Bar)"
         case .PieChart:
-            return "饼图"
+            return "饼图(Pie)"
         case .FunnelChart:
-            return "漏斗图"
+            return "漏斗图(Funnel)"
         }
     }
 }

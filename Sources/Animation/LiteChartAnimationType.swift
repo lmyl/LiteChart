@@ -8,8 +8,13 @@
 
 import UIKit
 
+/// Enumeration of chart animation types
 public enum LiteChartAnimationType {
+    /// Base animation.
+    /// 基本动画
     case base(duration: CFTimeInterval)
+    /// Spring animation. Radar Chart, Funnel Chart, Line Chart and Pie Chart are not supported.
+    /// 弹簧动画，不支持漏斗图、饼状图、折线图、雷达图
     case spring(damping: CGFloat, mass: CGFloat, stiffness: CGFloat, initalVelocity: CGFloat)
 }
 

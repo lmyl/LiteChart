@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The whole chart view
 public class LiteChartView: UIView {
     
     private var configure: LiteChartViewInterface
@@ -17,7 +18,9 @@ public class LiteChartView: UIView {
     private var legendViews: UIView?
     private let syncCenter: DisplayLabelSyncCenter
     private let syncCenterIdentifier = UUID().uuidString
-        
+    
+    /// The whole chart initialization
+    /// - Parameter interface: parameters interface of the whole chart.
     public init(interface: LiteChartViewInterface) throws {
         self.configure = interface
         self.syncCenter = DisplayLabelSyncCenter(syncCenterIdentifier: syncCenterIdentifier)
@@ -203,22 +206,28 @@ public class LiteChartView: UIView {
 }
 
 extension LiteChartView: LiteChartAnimatable {
+    /// The animation status of chart, ready by default
     public var animationStatus: LiteChartAnimationStatus {
         self.contentView?.animationStatus ?? .ready
     }
     
+    /// Start animation when the animation status is `ready`, `cancel` or `finish`
+    /// - Parameter animation:parameters interface of chart's animation
     public func startAnimation(animation: LiteChartAnimationInterface) {
         self.contentView?.startAnimation(animation: animation)
     }
     
+    /// Pause animation when the animation status is `running`
     public func pauseAnimation() {
         self.contentView?.pauseAnimation()
     }
     
+    /// Stop animation immediately when the animation status is `running` or `pause`
     public func stopAnimation() {
         self.contentView?.stopAnimation()
     }
     
+    /// Continue animation when the animation status is `pause`
     public func continueAnimation() {
         self.contentView?.continueAnimation()
     }

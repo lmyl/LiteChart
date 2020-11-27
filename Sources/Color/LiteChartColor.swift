@@ -13,7 +13,9 @@ public enum LiteChartColor {
     
     case lightPink
     case pink
+    /// 赤红
     case crimson
+    /// 薰衣草红
     case lavenderBlush
     case paleVioletRed
     case hotPink

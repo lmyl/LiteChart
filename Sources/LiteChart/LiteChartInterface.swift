@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Protocol that all chart interface files should meet.
 public protocol LiteChartInterface {
     var parametersProcesser: LiteChartParametersProcesser { get }
 }

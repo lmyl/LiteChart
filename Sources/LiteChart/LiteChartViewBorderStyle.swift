@@ -8,8 +8,12 @@
 
 import Foundation
 
+/// The border style of chart view, the default type is half surrounded to show axis
+/// 绘图区边框的类型，默认半包围显示坐标轴
 public enum LiteChartViewBorderStyle {
+    /// half surrounded
     case halfSurrounded
+    /// fully surrounded
     case fullySurrounded
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Represents the content of the drawing area in the entire chart, and displays various type of chart.
 public class LiteChartContentView: UIView, LiteChartAreaLayoutGuide, LiteChartAnimatable {
     internal var areaLayoutGuide: UILayoutGuide {
         self.safeAreaLayoutGuide

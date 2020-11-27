@@ -14,11 +14,6 @@ class DetailViewController: UIViewController {
     
     var chartKind = ChartKind.PieChart
     var displayView: LiteChartView?
-    var showType = 1
-    
-    var timer: DispatchSourceTimer?
-    var timerLabel: UILabel?
-    var timerCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +22,15 @@ class DetailViewController: UIViewController {
         
         switch self.chartKind {
         case .PieChart:
-            var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: .red)), (60, .init(lightUIColor: .yellow)), (45, .init(lightUIColor: .green))])
+            var pieInterface = LiteChartPieChartInterface(inputDatas: [(90, .init(lightUIColor: UIColor(red: 2/255, green: 211/255, blue: 180/255, alpha: 1))), (60, .init(lightUIColor: UIColor(red: 0, green: 95/255, blue: 151/255, alpha: 1))), (45, .init(lightUIColor: UIColor(red: 255/255, green: 165/255, blue: 180/255, alpha: 1)))])
             pieInterface.inputLegendTitles = ["2019", "2020", "2021"]
             pieInterface.displayDataMode = .percent
+            
             var interface = LiteChartViewInterface(contentInterface: pieInterface)
             interface.isShowLegendTitles = true
             interface.isShowChartTitleString = true
             interface.chartTitleString = "年度费用"
-            interface.chartTitleColor = .init(lightUIColor: .red)
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
             interface.chartTitleDisplayLocation = .top
             
             let backgroundView = try! LiteChartView(interface: interface)
@@ -47,12 +43,12 @@ class DetailViewController: UIViewController {
                 make.height.equalTo(300)
             }
         case .LineChart:
-            var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .blue), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: .green), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: .systemPink), LineStyle.solidCubicBezierCurve, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["煤气", "天然气", "自来水", "电", "太阳能"])
+            var lineInterface = LiteChartLineChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: UIColor(red: 2/255, green: 211/255, blue: 180/255, alpha: 1)), LineStyle.dottedCubicBezierCurve, Legend.circle, [-20, 30, 40, 50, 60]), (LiteChartDarkLightColor.init(lightUIColor: UIColor(red: 0, green: 95/255, blue: 151/255, alpha: 1)), LineStyle.solidCubicBezierCurve, Legend.square, [1, 55, 123, 20, 70]), (LiteChartDarkLightColor.init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180)), LineStyle.solidCubicBezierCurve, Legend.triangle, [-5.7, 67.89, 99.99, 155, 60.6])], coupleTitle: ["Swift", "Python", "Java", "Ruby", "PHP"])
             lineInterface.inputLegendTitles = ["2019", "2020", "2021"]
-            lineInterface.underlayerColor = .init(lightColor: .blue)
-            lineInterface.unitTextColor = .init(lightColor: .gold)
-            lineInterface.valueUnitString = "kg/L"
-            lineInterface.coupleUnitString = "月/年"
+            lineInterface.underlayerColor = .init(lightColor: .dimGray)
+            lineInterface.unitTextColor = .init(lightColor: .dimGray)
+            lineInterface.valueUnitString = "usage"
+            lineInterface.coupleUnitString = "language"
             lineInterface.isShowValueUnitString = true
             lineInterface.isShowCoupleUnitString = true
             lineInterface.isShowValueDividingLine = true
@@ -63,7 +59,9 @@ class DetailViewController: UIViewController {
             
             var interface = LiteChartViewInterface(contentInterface: lineInterface)
             interface.isShowChartTitleString = true
-            interface.chartTitleString = "资源占比"
+            interface.chartTitleString = "example"
+            interface.isShowLegendTitles = true
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
             self.displayView = backgroundView
@@ -74,19 +72,20 @@ class DetailViewController: UIViewController {
                 make.height.equalTo(300)
             }
         case .RadarChart:
-            var radarInterface = LiteChartRadarChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: .green), [0.20, 0.20, 0.30, 0.40 ,0.50]), (LiteChartDarkLightColor.init(lightUIColor: .red), [0.30, 0.90, 0.70, 0.50 ,0.1]),(LiteChartDarkLightColor.init(lightUIColor: .yellow), [0.10, 0.60, 0.40, 0.90 ,0.5])])
+            var radarInterface = LiteChartRadarChartInterface(inputDatas: [(LiteChartDarkLightColor.init(lightUIColor: UIColor(sRGB3PRed: 2, green: 211, blue: 180)), [0.20, 0.20, 0.30, 0.40 ,0.50]), (LiteChartDarkLightColor.init(lightUIColor: UIColor(sRGB3PRed: 0, green: 95, blue: 151)), [0.30, 0.90, 0.70, 0.50 ,0.1]),(LiteChartDarkLightColor.init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180)), [0.10, 0.60, 0.40, 0.90 ,0.5])])
             radarInterface.radarCount = 3
             radarInterface.inputLegendTitles = ["2019", "2020", "2021"]
-            radarInterface.coupleTitles = ["Water", "ElectricEle", "Oil", "Gas", "Fire"]
+            radarInterface.coupleTitles = ["一月", "二月", "三月", "四月", "五月"]
             radarInterface.isShowingCoupleTitles = true
-            radarInterface.coupleTitlesColor = .init(lightColor: .blue)
-            radarInterface.radarLineColor = .init(lightColor: .orange)
-            radarInterface.radarUnlightColor = .init(lightColor: .cyan)
-            radarInterface.radarLightColor = .init(lightColor: .pink)
+            radarInterface.coupleTitlesColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
+            radarInterface.radarLineColor = .init(lightUIColor: UIColor(sRGB3PRed: 165, green: 165, blue: 165))
+            radarInterface.radarUnlightColor = .init(lightColor: .lightGray)
+            radarInterface.radarLightColor = .init(lightColor: .white)
             var interface = LiteChartViewInterface(contentInterface: radarInterface)
             interface.isShowChartTitleString = true
             interface.chartTitleString = "资源占比"
-            interface.chartTitleDisplayLocation = .bottom
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
+            interface.chartTitleDisplayLocation = .top
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
             self.displayView = backgroundView
@@ -98,22 +97,23 @@ class DetailViewController: UIViewController {
             }
            
         case .BubbleChart:
-            let bubbleDatas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: .green), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: .red), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
+            let bubbleDatas: [(LiteChartDarkLightColor, [(CGFloat, CGPoint)])] = [(LiteChartDarkLightColor.init(lightUIColor: UIColor(red: 2/255, green: 211/255, blue: 180/255, alpha: 1)), [(1.0, CGPoint(x: 20, y: 20)), (5, CGPoint(x: 10, y: 20)), (10, CGPoint(x: 10, y: 17)), (20, CGPoint(x: 2, y: 10)), (17, CGPoint(x: -20, y: 20)), (27, CGPoint(x: -20, y: -20))]), (LiteChartDarkLightColor.init(lightUIColor: UIColor(red: 0, green: 95/255, blue: 151/255, alpha: 1)), [(1.0, CGPoint(x: -20, y: 20)), (5, CGPoint(x: 10, y: -20)), (10, CGPoint(x: -10, y: 17)), (20, CGPoint(x: 2, y: -10)), (17, CGPoint(x: 20, y: 20)), (27, CGPoint(x: -20, y: 20))])]
             var bubbleInterface = LiteChartBubbleChartInterface(inputDatas: bubbleDatas)
             bubbleInterface.isShowValueDividingLine = true
             bubbleInterface.isShowCoupleDividingLine = true
             bubbleInterface.dividingValueLineStyle = .segment
             bubbleInterface.dividingCoupleLineStyle = .segment
             bubbleInterface.inputLegendTitles = ["2019", "2020"]
-            bubbleInterface.isShowValueUnitString = true
-            bubbleInterface.isShowCoupleUnitString = true
+            bubbleInterface.isShowValueUnitString = false
+            bubbleInterface.isShowCoupleUnitString = false
             bubbleInterface.valueUnitString = "kg/L"
             bubbleInterface.coupleUnitString = "月/年"
-            bubbleInterface.underlayerColor = .init(lightColor: .blue)
-            bubbleInterface.unitTextColor = .init(lightColor: .gold)
+            bubbleInterface.underlayerColor = .init(lightUIColor: UIColor(sRGB3PRed: 165, green: 165, blue: 165))
+            bubbleInterface.unitTextColor = .init(lightColor: .dimGray)
             var interface = LiteChartViewInterface(contentInterface: bubbleInterface)
             interface.isShowChartTitleString = true
             interface.chartTitleString = "年产量"
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
             self.displayView = backgroundView
@@ -125,7 +125,7 @@ class DetailViewController: UIViewController {
             }
 
         case .ScatterPlotChart:
-            let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: .red), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: .orange), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: .blue), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
+            let datas: [(LiteChartDarkLightColor, Legend, [CGPoint])] = [(.init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180)), .circle, [CGPoint(x: 10, y: 17), CGPoint(x: 2, y: 10), CGPoint(x: -20, y: 20)]), (.init(lightUIColor: UIColor(sRGB3PRed: 2, green: 211, blue: 180)), .triangle, [CGPoint(x: -10, y: 17), CGPoint(x: 2, y: -10), CGPoint(x: -20, y: -20)]), (.init(lightUIColor: UIColor(sRGB3PRed: 0, green: 95, blue: 151)), .square, [CGPoint(x: -10, y: -17), CGPoint(x: -2, y: -10), CGPoint(x: -25, y: -10)])]
             var scatterInterface = LiteChartScatterChartInterface(inputDatas: datas)
             scatterInterface.isShowValueDividingLine = true
             scatterInterface.isShowCoupleDividingLine = true
@@ -136,8 +136,8 @@ class DetailViewController: UIViewController {
             scatterInterface.isShowCoupleUnitString = true
             scatterInterface.valueUnitString = "kg/L"
             scatterInterface.coupleUnitString = "月/年"
-            scatterInterface.underlayerColor = .init(lightColor: .blue)
-            scatterInterface.unitTextColor = .init(lightColor: .gold)
+            scatterInterface.underlayerColor = .init(lightColor: .dimGray)
+            scatterInterface.unitTextColor = .init(lightUIColor: UIColor(sRGB3PRed: 165, green: 165, blue: 165))
             let interface = LiteChartViewInterface(contentInterface: scatterInterface)
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
@@ -150,10 +150,10 @@ class DetailViewController: UIViewController {
             }
             
         case .BarChart:
-            var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: .green), [20, 30, 40, 50]), (.init(lightUIColor: .red), [20, 30, 40, 20]), (.init(lightUIColor: .yellow), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
+            var barInterface = LiteChartBarChartInterface(inputDatas: [(.init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180)), [20, 30, 40, 50]), (.init(lightUIColor: UIColor(sRGB3PRed: 2, green: 211, blue: 180)), [20, 30, 40, 20]), (.init(lightUIColor: UIColor(sRGB3PRed: 0, green: 95, blue: 151)), [20, 30, 100, 20])], coupleTitle: ["W", "E", "G", "A"])
             barInterface.inputLegendTitles = ["2019", "2020", "2021"]
-            barInterface.underlayerColor = .init(lightColor: .blue)
-            barInterface.unitTextColor = .init(lightColor: .gold)
+            barInterface.underlayerColor = .init(lightUIColor: UIColor(sRGB3PRed: 165, green: 165, blue: 165))
+            barInterface.unitTextColor = .init(lightColor: .dimGray, darkColor: .dimGray)
             barInterface.isShowValueUnitString = true
             barInterface.isShowCoupleUnitString = true
             barInterface.isShowValueDividingLine = true
@@ -161,9 +161,13 @@ class DetailViewController: UIViewController {
             barInterface.valueUnitString = "kg/L"
             barInterface.coupleUnitString = "月/年"
             barInterface.direction = .bottomToTop
+            barInterface.borderStyle = .fullySurrounded
             var interface = LiteChartViewInterface(contentInterface: barInterface)
             interface.isShowChartTitleString = true
+            interface.chartTitleColor = .init(lightColor: .dimGray)
             interface.chartTitleString = "年度报表"
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
+            interface.chartTitleDisplayLocation = .top
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
             self.displayView = backgroundView
@@ -175,13 +179,14 @@ class DetailViewController: UIViewController {
             }
             
         case .FunnelChart:
-            var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: .red)), (90, .init(lightUIColor: .blue)), (80, .init(lightUIColor: .purple)), (70, .init(lightUIColor: .blue)),(60, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue)),(50, .init(lightUIColor: .blue))])
-            funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019", "2020", "2021", "2022", "2023", "2024"]
+            var funnelInterface = LiteChartFunnelChartInterface(inputDatas: [(100, .init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180))), (80, .init(lightUIColor: UIColor(sRGB3PRed: 2, green: 211, blue: 180))), (60, .init(lightUIColor: UIColor(sRGB3PRed: 0, green: 95, blue: 151))), (40, .init(lightUIColor: UIColor(sRGB3PRed: 255, green: 165, blue: 180))),(20, .init(lightUIColor: UIColor(sRGB3PRed: 2, green: 211, blue: 180)))])
+            funnelInterface.inputLegendTitles = ["2019", "2020", "2021", "2022","2019"]
             funnelInterface.displayDataMode = .mix
+            funnelInterface.valueTextColor = .init(lightColor: .white)
             var interface = LiteChartViewInterface(contentInterface: funnelInterface)
             interface.isShowChartTitleString = true
             interface.chartTitleString = "收入逐年减少"
-            
+            interface.chartTitleColor = .init(lightUIColor: UIColor(sRGB3PRed: 62, green: 62, blue: 62))
             let backgroundView = try! LiteChartView(interface: interface)
             self.view.addSubview(backgroundView)
             self.displayView = backgroundView
@@ -257,21 +262,11 @@ class DetailViewController: UIViewController {
     
     @objc func animation() {
         let interface = LiteChartAnimationInterface(animationType: .base(duration: 4), delay: 0, fillModel: .both, animationTimingFunction: .init(name: .easeInEaseOut))
-        self.timer?.cancel()
-        let timer = DispatchSource.makeTimerSource(queue: .main)
-        timer.schedule(deadline: .now(), repeating: .milliseconds(1))
-        timer.setEventHandler(handler: {
-            [weak self] in
-            self?.timerLabel?.text = String(CACurrentMediaTime())
-        })
-        timer.resume()
-        self.timer = timer
         self.displayView?.startAnimation(animation: interface)
     }
     
     @objc func stopAnimation() {
         self.displayView?.stopAnimation()
-        self.timer?.cancel()
     }
     
     @objc func pauseAnimation() {
