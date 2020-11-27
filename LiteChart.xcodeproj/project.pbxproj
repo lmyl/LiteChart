@@ -261,6 +261,7 @@
 		F56C193A24986AD800A002AE /* CircleLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLegend.swift; sourceTree = "<group>"; };
 		F56C193C2498713F00A002AE /* PentagramLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PentagramLegend.swift; sourceTree = "<group>"; };
 		F56C193E249874C100A002AE /* HexagonLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonLegend.swift; sourceTree = "<group>"; };
+		F5A209182570B4D1002C160F /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		F5DFCC87248F88B900FB000C /* PieChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartParameters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -308,6 +309,7 @@
 		0832B5262489FED000110CBA = {
 			isa = PBXGroup;
 			children = (
+				F5A209182570B4D1002C160F /* README_CN.md */,
 				0832B5312489FED000110CBA /* LiteChart */,
 				0832B5462489FF0A00110CBA /* Sources */,
 				0832B5302489FED000110CBA /* Products */,
