@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LiteChart"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "A lightweight data visualization chart framework for iOS platform. 轻量级的iOS图表可视化框架"
 
   spec.homepage     = "https://github.com/lmyl/LiteChart"
@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
 
   spec.author             = { "刘洋" => "1269458422ly@gamail.com" }
   spec.platform     = :ios
-  spec.ios.deployment_target = "13"
+  spec.ios.deployment_target = "13.0"
  
   spec.source       = { :git => "https://github.com/lmyl/LiteChart.git", :tag => spec.version }
 
@@ -58,6 +58,6 @@ Pod::Spec.new do |spec|
   # spec.requires_arc = true
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  spec.dependency "SnapKit", "~> 5.0"
+  spec.dependency "SnapKit", "~> 5.0.0"
   spec.swift_version = '5.0'
 end
